@@ -1,0 +1,27 @@
+/* Tüm CSS dosyalarını buraya import edin */
+@import url('../../assets/css/plugins/bootstrap.min.css');
+@import url('../../assets/css/plugins/fontawesome.min.css');
+@import url('../../assets/css/plugins/animate.css');
+@import url('../../assets/css/plugins/slick.css');
+@import url('../../assets/css/plugins/odometer.css');
+@import url('../../assets/css/plugins/lightgallery.min.css');
+@import url('../../assets/css/plugins/jquery.timepicker.min.css');
+@import url('../../assets/css/plugins/jquery-ui.css');
+@import url('../../assets/css/plugins/select2.min.css');
+@import url('../../assets/css/plugins/animated-headline.css');
+@import url('../../assets/css/style.css');
+
+
+/* Tüm CSS dosyalarını buraya import edin */
+@import url('../../assets/css2/animate.css');
+@import url('../../assets/css2/bootstrap-icons.min.css');
+@import url('../../assets/css2/daterangepicker.css');
+@import url('../../assets/css2/fancybox.min.css');
+@import url('../../assets/css2/jarallax.css');
+@import url('../../assets/css2/jquery-ui.css');
+@import url('../../assets/css2/leaflet.css');
+@import url('../../assets/css2/select2.min.css');
+@import url('../../assets/css2/swiper-bundle.min.css');
+@import url('../../assets/css2/styles.css');
+
+
