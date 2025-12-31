@@ -82,11 +82,11 @@ export default function BlogPage() {
       <div className="cs_height_170" />
 
       <div className="container">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
+        <ol className="breadcrumb2">
+          <li className="breadcrumb-item2">
             <Link href="/medical">Anasayfa</Link>
           </li>
-          <li className="breadcrumb-item active">Blog</li>
+          <li className="breadcrumb-item2 active">Blog</li>
         </ol>
 
         <div className="cs_height_18" />

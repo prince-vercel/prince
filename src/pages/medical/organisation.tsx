@@ -77,11 +77,11 @@ export default function OrganisationPage() {
 
       <section>
         <div className="container" style={{ marginBottom: 20 }}>
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
+          <ol className="breadcrumb2">
+            <li className="breadcrumb-item2">
               <Link href="/medical">Anasayfa</Link>
             </li>
-            <li className="breadcrumb-item active">Kurumlar</li>
+            <li className="breadcrumb-item2 active">Kurumlar</li>
           </ol>
 
           <div className="cs_banner_text">
@@ -99,7 +99,7 @@ export default function OrganisationPage() {
 
       <div className="container">
         <div className="cs_doctors_heading">
-          <div className="cs_isotop_filter cs_style1">
+          <div className="cs_isotop_filter cs_style1 mb-5">
             <p className="mb-0">Filtre</p>
             <ul className="cs_mp0">
               {(['Tümü', 'Oteller', 'Hastaneler'] as const).map(key => (

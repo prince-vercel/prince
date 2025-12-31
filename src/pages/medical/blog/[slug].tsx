@@ -23,14 +23,14 @@ export default function BlogDetailPage() {
       <div className="cs_height_170" />
 
       <div className="container">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
+        <ol className="breadcrumb2">
+          <li className="breadcrumb-item2">
             <Link href="/medical">Home</Link>
           </li>
-          <li className="breadcrumb-item">
+          <li className="breadcrumb-item2">
             <Link href="/medical/blog">Blog</Link>
           </li>
-          <li className="breadcrumb-item active">
+          <li className="breadcrumb-item2 active">
             The Importance of Mental Health: Understanding and Managing Anxiety Disorders
           </li>
         </ol>

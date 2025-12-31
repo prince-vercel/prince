@@ -63,11 +63,11 @@ export default function AppointmentSection() {
       <Header/>
       <section className="cs_appointment_section_1 cs_bg_filed">
         <div className="container">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
+          <ol className="breadcrumb2">
+            <li className="breadcrumb-item2">
               <Link href="/medical">Anasayfa</Link>
             </li>
-          <li className="breadcrumb-item active">Başvuru</li>
+          <li className="breadcrumb-item2 active">Başvuru</li>
           </ol>
           <div className="cs_height_132"></div>
           

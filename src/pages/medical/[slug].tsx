@@ -101,12 +101,12 @@ export default function MedicalDetailPage() {
       <Header />
 
         <div className="container">
-              <ol className="breadcrumb">
-          <li className="breadcrumb-item">
+              <ol className="breadcrumb2">
+          <li className="breadcrumb-item2">
             <Link href="/medical">Anasayfa</Link>
           </li>
      
-              <li className="breadcrumb-item active">{title}</li>
+              <li className="breadcrumb-item2 active">{title}</li>
             </ol>
         </div>
 

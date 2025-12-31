@@ -102,11 +102,11 @@ export default function ResultsPage() {
       <div className="cs_height_190 cs_height_xl_150 cs_height_lg_105" />
 
       <div className="container">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
+        <ol className="breadcrumb2">
+          <li className="breadcrumb-item2">
             <Link href="/medical">Anasayfa</Link>
           </li>
-          <li className="breadcrumb-item active">Mutlu Sonuçlar</li>
+          <li className="breadcrumb-item2 active">Mutlu Sonuçlar</li>
         </ol>
 
         <div className="cs_height_200 cs_height_xl_150 cs_height_lg_110" />

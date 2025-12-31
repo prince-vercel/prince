@@ -99,11 +99,11 @@ useEffect(() => {
   return (
     <>
       <Header />
-      <ol className="breadcrumb" style={{marginLeft:'7%'}}>
-          <li className="breadcrumb-item">
+      <ol className="breadcrumb2" style={{marginLeft:'7%'}}>
+          <li className="breadcrumb-item2">
             <Link href="/medical">Anasayfa</Link>
           </li>
-          <li className="breadcrumb-item">
+          <li className="breadcrumb-item2">
            Hakkımızda
           </li>
         </ol>
