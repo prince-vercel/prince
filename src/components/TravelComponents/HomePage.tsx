@@ -24,7 +24,14 @@ import blog1 from '@/assets/images/blog/b1-2.webp'
 import blog2 from '@/assets/images/blog/b1-2.webp'
 import blog3 from '@/assets/images/blog/b1-2.webp'
 
+const packages = [
+  { id: 1, img: p1, title: 'Cusco & Salkantay – Machu Picchu' },
+  { id: 2, img: p2, title: 'Casablanca Vadisi Şarap Turu' },
+  { id: 3, img: p3, title: 'Maldivler Macera Turu' },
+]
+
 export default function TravelHomePage() {
+
   return (
     <>
      <div className="hero_style__start">
@@ -259,106 +266,45 @@ export default function TravelHomePage() {
 
     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-base">
 
-      {/* CARD 1 */}
-      <div className="group/card package-card-style-one wow fadeInUp">
-        <div className="overflow-hidden relative">
-          <a href="#">
-            <img src={p1.src} alt="Machu Picchu" className="w-full group-hover/card:scale-105 duration-300" />
-          </a>
-          <span className="absolute top-5 right-5 text-sm text-white rounded-full bg-[#219FFF] py-1 px-3">
-            %20 İndirim
-          </span>
-        </div>
+      {packages.map((item, index) => (
+        <div key={item.id} className="group/card package-card-style-one wow fadeInUp" data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}>
+          <div className="overflow-hidden relative">
+            <a href="#">
+              <img src={item.img.src} alt={item.title} className="w-full group-hover/card:scale-105 duration-300" />
+            </a>
+            {index === 0 && <span className="absolute top-5 right-5 text-sm text-white rounded-full bg-[#219FFF] py-1 px-3">%20 İndirim</span>}
+            {index === 2 && <span className="absolute top-5 right-5 text-sm text-white rounded-full bg-status-success py-1 px-3">Macera</span>}
+          </div>
 
-        <h3 className="card-title-alpha group-hover/card:text-primary-1 lg:mt-6 mt-5">
-          <a href="#">Cusco & Salkantay – Machu Picchu</a>
-        </h3>
+          <h3 className="card-title-alpha group-hover/card:text-primary-1 lg:mt-6 mt-5">
+            <a href="#">{item.title}</a>
+          </h3>
 
-        <ul className="flex flex-wrap lg:text-[15px] text-[13px] font-medium text-dark-2 mt-4 package-feature">
-          <li>
-            <span className="text-primary-1"><i className="bi bi-people"></i></span>
-            <span>05 Kişi</span>
-          </li>
-          <li>
-            <span className="text-primary-1"><i className="bi bi-clock"></i></span>
-            <span>03 Gün</span>
-          </li>
-          <li>
-            <span className="text-primary-1"><i className="bi bi-coin"></i></span>
-            <span>Başlangıç <span className="text-primary-1 font-bold">$250</span></span>
-          </li>
-        </ul>
+          <ul className="flex flex-wrap lg:text-[15px] text-[13px] font-medium text-dark-2 mt-4 package-feature">
+            <li>
+              <span className="text-primary-1"><i className="bi bi-people"></i></span>
+              <span>05 Kişi</span>
+            </li>
+            <li>
+              <span className="text-primary-1"><i className="bi bi-clock"></i></span>
+              <span>03 Gün</span>
+            </li>
+            <li>
+              <span className="text-primary-1"><i className="bi bi-coin"></i></span>
+              <span>Başlangıç <span className="text-primary-1 font-bold">$250</span></span>
+            </li>
+          </ul>
 
-        <a href="#" className="package-explore-btn group/btn">
-          <span className="mr-2">Hemen İncele</span>
-          <svg className="group-hover/btn:translate-x-2 duration-200" width="27" height="14" viewBox="0 0 27 14" fill="none">
-            <path d="M0.217443 6.25H18.4827V7.75H0.217443Z" fill="currentColor" />
-            <path d="M20.7 12.28L25.05 7.93C25.56 7.42 25.56 6.58 25.05 6.07L20.7 1.72"
-              stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </a>
-      </div>
-
-      {/* CARD 2 */}
-      <div className="group/card package-card-style-one wow fadeInUp" data-wow-delay="0.2s">
-        <div className="overflow-hidden relative">
-          <a href="#">
-            <img src={p2.src} alt="Şarap Turu" className="w-full group-hover/card:scale-105 duration-300" />
+          <a href={`/travel/all/${item.id}`} className="package-explore-btn group/btn">
+            <span className="mr-2">Hemen İncele</span>
+            <svg className="group-hover/btn:translate-x-2 duration-200" width="27" height="14" viewBox="0 0 27 14" fill="none">
+              <path d="M0.217443 6.25H18.4827V7.75H0.217443Z" fill="currentColor" />
+              <path d="M20.7 12.28L25.05 7.93C25.56 7.42 25.56 6.58 25.05 6.07L20.7 1.72"
+                stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </a>
         </div>
-
-        <h3 className="card-title-alpha group-hover/card:text-primary-1 lg:mt-6 mt-5">
-          <a href="#">Casablanca Vadisi Şarap Turu</a>
-        </h3>
-
-        <ul className="flex flex-wrap lg:text-[15px] text-[13px] font-medium text-dark-2 mt-4 package-feature">
-          <li><span className="text-primary-1"><i className="bi bi-people"></i></span><span>05 Kişi</span></li>
-          <li><span className="text-primary-1"><i className="bi bi-clock"></i></span><span>03 Gün</span></li>
-          <li><span className="text-primary-1"><i className="bi bi-coin"></i></span><span>$250</span></li>
-        </ul>
-
-        <a href="#" className="package-explore-btn group/btn">
-          <span className="mr-2">Hemen İncele</span>
-                 <svg className="group-hover/btn:translate-x-2 duration-200" width="27" height="14" viewBox="0 0 27 14" fill="none">
-            <path d="M0.217443 6.25H18.4827V7.75H0.217443Z" fill="currentColor" />
-            <path d="M20.7 12.28L25.05 7.93C25.56 7.42 25.56 6.58 25.05 6.07L20.7 1.72"
-              stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </a>
-      </div>
-
-      {/* CARD 3 */}
-      <div className="group/card package-card-style-one wow fadeInUp" data-wow-delay="0.4s">
-        <div className="overflow-hidden relative">
-          <a href="#">
-            <img src={p3.src} alt="Maldivler" className="w-full group-hover/card:scale-105 duration-300" />
-          </a>
-          <span className="absolute top-5 right-5 text-sm text-white rounded-full bg-status-success py-1 px-3">
-            Macera
-          </span>
-        </div>
-
-        <h3 className="card-title-alpha group-hover/card:text-primary-1 lg:mt-6 mt-5">
-          <a href="#">Maldivler Macera Turu</a>
-        </h3>
-
-        <ul className="flex flex-wrap lg:text-[15px] text-[13px] font-medium text-dark-2 mt-4 package-feature">
-          <li><span className="text-primary-1"><i className="bi bi-people"></i></span><span>05 Kişi</span></li>
-          <li><span className="text-primary-1"><i className="bi bi-clock"></i></span><span>03 Gün</span></li>
-          <li><span className="text-primary-1"><i className="bi bi-coin"></i></span><span>$250</span></li>
-        </ul>
-
-        <a href="#" className="package-explore-btn group/btn">
-          <span className="mr-2">Hemen İncele</span>
-                 <svg className="group-hover/btn:translate-x-2 duration-200" width="27" height="14" viewBox="0 0 27 14" fill="none">
-            <path d="M0.217443 6.25H18.4827V7.75H0.217443Z" fill="currentColor" />
-            <path d="M20.7 12.28L25.05 7.93C25.56 7.42 25.56 6.58 25.05 6.07L20.7 1.72"
-              stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </a>
-      </div>
-
-      
+      ))}
 
     </div>
   </div>

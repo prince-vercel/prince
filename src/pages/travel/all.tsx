@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable @next/next/no-html-link-for-pages */
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 
@@ -82,11 +81,11 @@ export default function PackageList() {
         <img src={birdWhite.src} alt="bird" className="absolute top-[10%] right-[4%] z-1 w-[7.5%]" />
 
         <div className="container relative z-2 pb-10">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
+          <ol className="breadcrumb2" style={{color:'white'}}>
+            <li className="breadcrumb-item2">
               <Link href="/travel">Anasayfa</Link>
             </li>
-            <li className="breadcrumb-item">/ Seyahatler</li>
+            <li className="breadcrumb-item2"> Seyahatler</li>
           </ol>
 
           <h2 className="xl:text-[54px] mt-2 lg:text-4xl md:text-2xl text-[30px] text-white font-medium max-w-[640px]">
@@ -120,19 +119,19 @@ export default function PackageList() {
 
                   <ul className="flex flex-wrap text-sm font-medium text-dark-2 mt-4 package-feature">
                     <li className="mr-4 ">
-                      <i className="bi bi-people text-primary-1 ml-1 "></i>05 People
+                      <i className="bi bi-people text-primary-1 ml-1 mr-2"></i>05 People
                     </li>
                     <li className="mr-4">
-                      <i className="bi bi-clock text-primary-1 "></i>
+                      <i className="bi bi-clock text-primary-1 mr-2"></i>
                       {pkg.duration}
                     </li>
                     <li>
-                      <i className="bi bi-coin text-primary-1 mr-1"></i>
-                      From <span className="text-primary-1 font-bold">${pkg.price}</span>
+                      <i className="bi bi-coin text-primary-1 mr-2"></i>
+                      <span>From </span><span className="text-primary-1 font-bold"> ${pkg.price}</span>
                     </li>
                   </ul>
 
-                  <a href="/package-details" className="package-explore-btn">
+                  <a href={`/travel/all/${index + 1}`} className="package-explore-btn">
                     Explore Now
                   </a>
                 </div>
@@ -142,39 +141,39 @@ export default function PackageList() {
             {/* ===== FILTER SIDEBAR (AYNI STİL, SADECE BAĞLI) ===== */}
             <div className="lg:col-span-4 col-span-12">
               <div className="pb-[10px] mb-8 border-b border-dark-1 border-opacity-10">
-                <h4 className="text-lg font-semibold text-dark-1">Filter by :</h4>
+                <h4 className="text-lg font-semibold text-dark-1">Filtrele</h4>
               </div>
 
-{/* PRICE FILTER */}
-<aside>
-  <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">
-    Filter Price:
-  </h5>
+            {/* PRICE FILTER */}
+            <aside>
+              <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">
+                Filter Price:
+              </h5>
 
-  <div className="pt-4 flex gap-3 items-center">
-    <input
-      type="number"
-      placeholder="Min"
-      value={priceRange[0]}
-      onChange={(e) =>
-        setPriceRange([Number(e.target.value), priceRange[1]])
-      }
-      className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
-    />
+              <div className="pt-4 flex gap-3 items-center">
+                <input
+                  type="number"
+                  placeholder="Min"
+                  value={priceRange[0]}
+                  onChange={(e) =>
+                    setPriceRange([Number(e.target.value), priceRange[1]])
+                  }
+                  className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
+                />
 
-    <span className="text-dark-2">–</span>
+                <span className="text-dark-2">–</span>
 
-    <input
-      type="number"
-      placeholder="Max"
-      value={priceRange[1]}
-      onChange={(e) =>
-        setPriceRange([priceRange[0], Number(e.target.value)])
-      }
-      className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
-    />
-  </div>
-</aside>
+                <input
+                  type="number"
+                  placeholder="Max"
+                  value={priceRange[1]}
+                  onChange={(e) =>
+                    setPriceRange([priceRange[0], Number(e.target.value)])
+                  }
+                  className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
+                />
+              </div>
+            </aside>
 
 
 
