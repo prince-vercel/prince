@@ -7,9 +7,7 @@ import HomePage from "@/src/components/TravelComponents/HomePage";
 export default function TravelPage() {
   return (
     <div >
-    <Header />
     <HomePage/>
-    <Footer/>
     </div>
   )
 }

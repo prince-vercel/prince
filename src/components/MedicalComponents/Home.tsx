@@ -90,7 +90,7 @@ const departments = [
   { icon: dep9, title: 'Saç Ekimi', slug: 'sac-ekimi' },
   { icon: dep10, title: 'Vücut', slug: 'vucut-sekillendirme-liposuction' },
 ]
-const words = ['Dentist', 'Crutches', 'Laboratory', 'Cardiology', 'Neurology']
+const words = ['Dişçi', 'Koltuk Değnekleri', 'Laboratuvar', 'Kardiyoloji', 'Nöroloji']
 const [activeIndex, setActiveIndex] = useState(0)
 
 useEffect(() => {
@@ -128,7 +128,7 @@ useEffect(() => {
         <div className="col-lg-6">
           <div className="cs_hero_text">
            <h1 className="cs_hero_title cs_white_color cs_fs_84">
-  Take Best Treatment with Our{' '}
+  En İyi Tedaviyi Bizimle Alın{' '}
   <span className="cd-headline slide cs_accent_color">
     <span className="cd-words-wrapper">
       {words.map((word, i) => (
@@ -278,11 +278,15 @@ useEffect(() => {
       {/* VALUES */}
       <section className="cs_shape_wrap" style={{ marginTop: '15vh' }}>
         <div className="container">
-          <div className="cs_section_heading text-center "style={{ marginBottom: '10vh' }}>
+          <div className="cs_section_heading text-center "style={{ marginBottom: '5vh' }}>
             <h2 className="cs_section_title cs_fs_72">Our Values</h2>
           </div>
 
-          <div className="cs_random_features">
+          <div className="cs_random_features" style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '50px'
+          }}>
            {[
         {
           title: 'Compassion',
@@ -309,6 +313,7 @@ useEffect(() => {
           desc: 'We work together across disciplines to deliver the best outcomes.',
           icon: teamwork,
         },
+       
       ].map((item, i) => (
               <div key={i} className="cs_random_features_col">
                 <div className="cs_feature cs_style_1 cs_shadow_1 cs_radius_25 cs_white_bg">
@@ -338,10 +343,9 @@ useEffect(() => {
   <div className="container">
 
     {/* HEADING */}
-    <div className="cs_section_heading cs_style_1 text-center">
+    <div className="cs_section_heading cs_style_1 text-center " style={{ marginTop: '5vh' }}>
 
-      <div className="cs_height_5"></div>
-      <h2 className="cs_section_title cs_fs_72 m-0" >
+      <h2 className="cs_section_title cs_fs_72 m-0 " >
        Blog
       </h2>
     </div>

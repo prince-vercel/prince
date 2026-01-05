@@ -1,54 +1,95 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-
-import Header from '@/src/components/MedicalComponents/Header'
-import Footer from '@/src/components/MedicalComponents/Footer'
+import { db } from '@/src/lib/firebase'
+import { getDocs, collection } from 'firebase/firestore'
 
 const ITEMS_PER_PAGE = 3
 
-const organisations = [
-  {
-    img: 'hotel_1.png',
-    name: 'Luxury Health Hotel',
-    type: 'Oteller',
-    desc: 'Deniz manzaralı, sağlık turizmine uygun lüks otel.',
-    stars: 5,
-  },
-  {
-    img: 'hotel_2.png',
-    name: 'City Medical Hotel',
-    type: 'Oteller',
-    desc: 'Merkezi konum, uygun fiyatlı konaklama.',
-    stars: 4,
-  },
-  {
-    img: 'hotel_3.png',
-    name: 'Comfort Stay Hotel',
-    type: 'Oteller',
-    desc: 'Ameliyat sonrası konaklama için ideal.',
-    stars: 3,
-  },
-  {
-    img: 'hospital_1.png',
-    name: 'MedCare Hospital',
-    type: 'Hastaneler',
-    desc: 'Uluslararası sertifikalı özel hastane.',
-  },
-  {
-    img: 'hospital_2.png',
-    name: 'HealthPlus Hospital',
-    type: 'Hastaneler',
-    desc: 'Estetik ve cerrahi alanlarında uzman.',
-  },
-]
+interface Hotel {
+  id: string
+  name: string
+  location: string
+  stars: number
+  image: string
+}
+
+interface Hospital {
+  id: string
+  name: string
+  location: string
+  image: string
+}
+
+interface OrganisationItem {
+  id: string
+  name: string
+  location: string
+  type: 'Oteller' | 'Hastaneler'
+  desc: string
+  image: string
+  stars?: number
+}
 
 export default function OrganisationPage() {
   const [activeFilter, setActiveFilter] = useState<'Tümü' | 'Oteller' | 'Hastaneler'>('Tümü')
   const [selectedStars, setSelectedStars] = useState<number[]>([])
   const [currentPage, setCurrentPage] = useState(1)
+  const [organisations, setOrganisations] = useState<OrganisationItem[]>([])
+  const [loading, setLoading] = useState(true)
+
+  // Fetch data on mount
+  useEffect(() => {
+    fetchOrganisations()
+  }, [])
+
+  const fetchOrganisations = async () => {
+    try {
+      setLoading(true)
+      const allOrganisations: OrganisationItem[] = []
+
+      // Fetch hotels
+      const hotelsRef = collection(db, 'medicalcontents/hotels/list')
+      const hotelsSnapshot = await getDocs(hotelsRef)
+      const hotels = hotelsSnapshot.docs.map((doc) => {
+        const data = doc.data() as Hotel
+        return {
+          id: data.id,
+          name: data.name,
+          location: data.location,
+          type: 'Oteller' as const,
+          desc: `${data.location}`,
+          image: data.image,
+          stars: data.stars,
+        }
+      })
+      allOrganisations.push(...hotels)
+
+      // Fetch hospitals
+      const hospitalsRef = collection(db, 'medicalcontents/hospitals/list')
+      const hospitalsSnapshot = await getDocs(hospitalsRef)
+      const hospitals = hospitalsSnapshot.docs.map((doc) => {
+        const data = doc.data() as Hospital
+        return {
+          id: data.id,
+          name: data.name,
+          location: data.location,
+          type: 'Hastaneler' as const,
+          desc: `${data.location}`,
+          image: data.image,
+        }
+      })
+      allOrganisations.push(...hospitals)
+
+      setOrganisations(allOrganisations)
+    } catch (error) {
+      console.error('Kurumlar çekilirken hata:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const filteredItems = useMemo(() => {
     let list = organisations
@@ -58,11 +99,11 @@ export default function OrganisationPage() {
     }
 
     if (activeFilter === 'Oteller' && selectedStars.length > 0) {
-      list = list.filter(item => selectedStars.includes(item.stars!))
+      list = list.filter(item => item.stars && selectedStars.includes(item.stars))
     }
 
     return list
-  }, [activeFilter, selectedStars])
+  }, [activeFilter, selectedStars, organisations])
 
   const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE)
 
@@ -73,8 +114,7 @@ export default function OrganisationPage() {
 
   return (
     <>
-      <Header />
-
+-
       <section>
         <div className="container" style={{ marginBottom: 20 }}>
           <ol className="breadcrumb2">
@@ -100,7 +140,6 @@ export default function OrganisationPage() {
       <div className="container">
         <div className="cs_doctors_heading">
           <div className="cs_isotop_filter cs_style1 mb-5">
-            <p className="mb-0">Filtre</p>
             <ul className="cs_mp0">
               {(['Tümü', 'Oteller', 'Hastaneler'] as const).map(key => (
                 <li key={key} className={activeFilter === key ? 'active' : ''}>
@@ -129,7 +168,7 @@ export default function OrganisationPage() {
           </div>
 
           <div className="cs_view_box">
-            <span>Showing {filteredItems.length} items</span>
+            <span>{filteredItems.length} Öğe</span>
           </div>
         </div>
 
@@ -159,30 +198,40 @@ export default function OrganisationPage() {
         <div className="cs_height_65" />
 
         <div className="row cs_gap_y_40">
-          {paginatedItems.map((item, i) => (
-            <div key={i} className="col-xl-4 col-lg-4 col-md-6">
-              <div className="cs_team cs_style_1 cs_type_2 text-center cs_radius_20 overflow-hidden">
-                <div className="cs_member_img">
-                  <Image
-                    src={`/assets/img/organisations/${item.img}`}
-                    alt={item.name}
-                    width={500}
-                    height={500}
-                  />
-                  {item.type === 'Oteller' && (
-                    <div className="cs_label cs_white_color cs_accent_bg">
-                      {item.stars} Yıldız
-                    </div>
-                  )}
-                </div>
+          {loading ? (
+            <div style={{ width: '100%', textAlign: 'center', padding: '40px' }}>
+              <p>Yükleniyor...</p>
+            </div>
+          ) : paginatedItems.length === 0 ? (
+            <div style={{ width: '100%', textAlign: 'center', padding: '40px' }}>
+              <p>Bu kriterlere uygun kurum bulunamadı</p>
+            </div>
+          ) : (
+            paginatedItems.map((item) => (
+              <div key={item.id} className="col-xl-4 col-lg-4 col-md-6">
+                <div className="cs_team cs_style_1 cs_type_2 text-center cs_radius_20 overflow-hidden">
+                  <div className="cs_member_img">
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      width={500}
+                      height={500}
+                    />
+                    {item.type === 'Oteller' && item.stars && (
+                      <div className="cs_label cs_white_color cs_accent_bg">
+                        {item.stars} Yıldız
+                      </div>
+                    )}
+                  </div>
 
-                <div className="cs_team_meta cs_white_bg">
-                  <h3 className="cs_member_name cs_fs_32">{item.name}</h3>
-                  <p className="cs_member_description">{item.desc}</p>
+                  <div className="cs_team_meta cs_white_bg">
+                    <h3 className="cs_member_name cs_fs_32">{item.name}</h3>
+                    <p className="cs_member_description">{item.desc}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
 
         <div className="cs_height_60" />
@@ -203,7 +252,6 @@ export default function OrganisationPage() {
 
       <div className="cs_height_200" />
 
-      <Footer />
-    </>
+-    </>
   )
 }

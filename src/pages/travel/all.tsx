@@ -20,14 +20,14 @@ import Footer from "@/src/components/TravelComponents/Footer";
 
 /* ---------------- DATA ---------------- */
 const packages = [
-  { image: p1, category: "Adventure", destination: "Italy", duration: "3 - 5 Days", price: 250 },
-  { image: p2, category: "Honeymoon", destination: "Maldives", duration: "5 - 7 Days", price: 420 },
-  { image: p3, category: "Cruise Tours", destination: "Singapore", duration: "2 - 4 Days", price: 180 },
-  { image: p4, category: "City Tours", destination: "Thailand", duration: "Fullday (+8 hours)", price: 90 },
-  { image: p5, category: "Museum Tours", destination: "Italy", duration: "2 - 8 hours", price: 60 },
-  { image: p6, category: "Adventure", destination: "Hong Kong", duration: "More Than 7 Days", price: 520 },
-  { image: p7, category: "City Tours", destination: "Singapore", duration: "3 - 5 Days", price: 210 },
-  { image: p8, category: "Honeymoon", destination: "Maldives", duration: "5 - 7 Days", price: 480 },
+  { slug: "cusco-machu-picchu", title: "Cusco & Salkantay – Machu Picchu", image: p1, category: "Adventure", destination: "Italy", duration: "3 - 5 Days", price: 250 },
+  { slug: "casablanca-sarap-turu", title: "Casablanca Vadisi Şarap Turu", image: p2, category: "Honeymoon", destination: "Maldives", duration: "5 - 7 Days", price: 420 },
+  { slug: "maldivler-macera-turu", title: "Maldivler Macera Turu", image: p3, category: "Cruise Tours", destination: "Singapore", duration: "2 - 4 Days", price: 180 },
+  { slug: "thailand-city-tours", title: "Tayland Şehir Turu", image: p4, category: "City Tours", destination: "Thailand", duration: "Fullday (+8 hours)", price: 90 },
+  { slug: "italy-museum-tours", title: "İtalya Müze Turu", image: p5, category: "Museum Tours", destination: "Italy", duration: "2 - 8 hours", price: 60 },
+  { slug: "hong-kong-adventure", title: "Hong Kong Macerası", image: p6, category: "Adventure", destination: "Hong Kong", duration: "More Than 7 Days", price: 520 },
+  { slug: "singapore-city-tours", title: "Singapur Şehir Turu", image: p7, category: "City Tours", destination: "Singapore", duration: "3 - 5 Days", price: 210 },
+  { slug: "maldives-honeymoon", title: "Maldivler Balayı Turu", image: p8, category: "Honeymoon", destination: "Maldives", duration: "5 - 7 Days", price: 480 },
 ];
 
 export default function PackageList() {
@@ -69,7 +69,6 @@ export default function PackageList() {
 
   return (
     <>
-      <Header />
 
       {/* ===== HERO / BREADCRUMB (AYNI) ===== */}
       <div className="paralax-container lg:py-36 py-20 relative overflow-hidden">
@@ -101,25 +100,25 @@ export default function PackageList() {
 
             {/* LIST (AYNI STİL) */}
             <div className="lg:col-span-8 col-span-12 grid md:grid-cols-2 grid-cols-1 gap-base">
-              {filteredPackages.map((pkg, index) => (
-                <div key={index} className="group/card package-card-style-one">
+              {filteredPackages.map((pkg) => (
+                <div key={pkg.slug} className="group/card package-card-style-one">
                   <div className="overflow-hidden relative">
                     <a href="/package-details">
                       <img
                         src={pkg.image.src}
-                        alt={`package-${index + 1}`}
+                        alt={pkg.title}
                         className="w-full group-hover/card:scale-105 duration-300"
                       />
                     </a>
                   </div>
 
                   <h3 className="card-title-alpha group-hover/card:text-primary-1 lg:mt-6 mt-5">
-                    <a href="/package-details">Tour Package {index + 1}</a>
+                    <a href="/package-details">{pkg.title}</a>
                   </h3>
 
                   <ul className="flex flex-wrap text-sm font-medium text-dark-2 mt-4 package-feature">
                     <li className="mr-4 ">
-                      <i className="bi bi-people text-primary-1 ml-1 mr-2"></i>05 People
+                      <i className="bi bi-people text-primary-1 ml-1 mr-2"></i>05 Kişi
                     </li>
                     <li className="mr-4">
                       <i className="bi bi-clock text-primary-1 mr-2"></i>
@@ -127,12 +126,12 @@ export default function PackageList() {
                     </li>
                     <li>
                       <i className="bi bi-coin text-primary-1 mr-2"></i>
-                      <span>From </span><span className="text-primary-1 font-bold"> ${pkg.price}</span>
+                      <span>Başlayan Fiyat </span><span className="text-primary-1 font-bold"> ${pkg.price}</span>
                     </li>
                   </ul>
 
-                  <a href={`/travel/all/${index + 1}`} className="package-explore-btn">
-                    Explore Now
+                  <a href={`/travel/all/${pkg.slug}`} className="package-explore-btn">
+                    Şimdi Keşfet
                   </a>
                 </div>
               ))}
@@ -147,7 +146,7 @@ export default function PackageList() {
             {/* PRICE FILTER */}
             <aside>
               <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">
-                Filter Price:
+                Fiyata Göre Filtrele:
               </h5>
 
               <div className="pt-4 flex gap-3 items-center">
@@ -254,7 +253,6 @@ export default function PackageList() {
         </div>
       </div>
 
-      <Footer />
     </>
   );
 }

@@ -1,26 +1,19 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { db } from '@/src/lib/firebase'
+import { doc, getDoc } from 'firebase/firestore'
 
 import departmentImg from '@/assets/img/departments/department_img_1.png'
 import icon9 from '@/assets/img/departments/icon_9.svg'
 import icon10 from '@/assets/img/departments/icon_10.svg'
 import icon11 from '@/assets/img/departments/icon_11.svg'
 import icon12 from '@/assets/img/departments/icon_12.svg'
-import appointmentImg from '@/assets/img/home_1/appointment.jpeg'
-import fillingImg from '@/assets/img/dis/dentist-examining-female-patient-with-tools.jpg'
-import implantImg from '@/assets/img/dis/close-up-doctor-checking-patient.jpg'
-import hollywoodImg from '@/assets/img/dis/beautiful-girl-sitting-dentist-s-office.jpg'
-import laminateImg from '@/assets/img/dis/woman-smiling-while-male-dentist-keeping-teeth-color-range.jpg'
-import orthoImg from '@/assets/img/dis/smiling-young-woman-with-braces-teeth.jpg'
-import canalImg from '@/assets/img/dis/dentist-examining-female-patient-with-tools.jpg'
-import zirconiumImg from '@/assets/img/dis/woman-smiling-while-male-dentist-keeping-teeth-color-range (1).jpg'
 
-
-import Header from '@/src/components/MedicalComponents/Header'
-import Footer from '@/src/components/MedicalComponents/Footer'
 
 const slugToTurkishTitle = (slug: string) => {
   const map: Record<string, string> = {
@@ -40,65 +33,61 @@ const slugToTurkishTitle = (slug: string) => {
   return map[slug] ?? slug
 }
 
-
-const departmentServices: Record<
-  string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  { title: string; desc: string; image: any }[]
-> = {
-  dis: [
-    {
-      title: 'Diş Dolgusu',
-      desc: 'Çürük veya hasar görmüş dişlerin estetik ve fonksiyonel olarak onarılması.',
-      image: fillingImg,
-    },
-    {
-      title: 'Diş İmplantı',
-      desc: 'Eksik dişlerin yerine uygulanan, doğal diş görünümüne sahip kalıcı implant çözümleri.',
-      image: implantImg,
-    },
-    {
-      title: 'Hollywood Smile',
-      desc: 'Daha estetik ve simetrik bir gülüş elde etmek için yapılan kapsamlı gülüş tasarımı.',
-      image: hollywoodImg,
-    },
-    {
-      title: 'Lamine Kaplama (Porselen Lamina)',
-      desc: 'Dişlerin ön yüzeyine uygulanan ince porselen kaplamalar ile estetik görünüm sağlanması.',
-      image: laminateImg,
-    },
-    {
-      title: 'Ortodontik Tedavi',
-      desc: 'Diş ve çene bozukluklarını düzeltmeye yönelik tel ve şeffaf plak tedavileri.',
-      image: orthoImg,
-    },
-    {
-      title: 'Kanal Tedavisi',
-      desc: 'Diş kökünde oluşan enfeksiyonların temizlenmesi ve dişin kurtarılmasını sağlayan tedavi.',
-      image: canalImg,
-    },
-    {
-      title: 'Zirkonyum Kaplama',
-      desc: 'Dayanıklı yapısı ve doğal görünümü ile estetik diş kaplama uygulamaları.',
-      image: zirconiumImg,
-    },
-  ],
+interface TreatmentItem {
+  title: string
+  description: string
+  image: string
 }
-
-
-
 
 export default function MedicalDetailPage() {
   const router = useRouter()
   const { slug } = router.query
+  
+  const [treatments, setTreatments] = useState<TreatmentItem[]>([])
+  const [content, setContent] = useState({
+    title: '',
+    description: '',
+    image: ''
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
 
-  if (!slug) return null
+  useEffect(() => {
+    if (!slug) return
 
-  const title = slugToTurkishTitle(String(slug))
+    const fetchContent = async () => {
+      setIsLoading(true)
+      setError('')
+      try {
+        const docRef = doc(db, 'medicalcontents', String(slug))
+        const snapshot = await getDoc(docRef)
+
+        if (snapshot.exists()) {
+          const data = snapshot.data()
+          setContent({
+            title: data.title || '',
+            description: data.description || '',
+            image: data.image || ''
+          })
+          setTreatments(data.treatments || [])
+        } else {
+          setError('İçerik bulunamadı')
+          setTreatments([])
+        }
+      } catch (err) {
+        console.error('Veri çekilirken hata:', err)
+        setError('Veri çekilirken hata oluştu')
+        setTreatments([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchContent()
+  }, [slug])
 
   return (
     <>
-      <Header />
 
         <div className="container">
               <ol className="breadcrumb2">
@@ -106,79 +95,120 @@ export default function MedicalDetailPage() {
             <Link href="/medical">Anasayfa</Link>
           </li>
      
-              <li className="breadcrumb-item2 active">{title}</li>
+              <li className="breadcrumb-item2 active">{slugToTurkishTitle(String(slug))}</li>
             </ol>
         </div>
 
-      <div className="cs_height_135 cs_height_lg_100"></div>
 
       <section className="cs_shape_wrap" >
         <div className="container">
           <div className="row align-items-center mt-5">
             <div className="col-lg-4">
               <div className="cs_section_heading cs_style_1">
-                <h2 className="cs_section_title cs_fs_72 m-0">{title}</h2>
+                <h2 className="cs_section_title cs_fs_72 m-0">{slugToTurkishTitle(String(slug))}</h2>
                 <div className="cs_height_54"></div>
                 <p>
-                  {title} bölümü modern tıbbi tedaviler ve hasta odaklı sağlık
-                  çözümleri sunmaktadır.
+                  {content.description}
                 </p>
                 <div className="cs_height_120"></div>
               </div>
             </div>
             <div className="col-lg-7 offset-lg-1">
-              <Image src={departmentImg} alt={title} />
+              {content.image ? (
+                <Image
+                  src={content.image}
+                  alt={slugToTurkishTitle(String(slug))}
+                  width={600}
+                  height={400}
+                  quality={60}
+                  priority={true}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                    borderRadius: '8px',
+                    display: 'block'
+                  }}
+                />
+              ) : (
+               <p></p>
+              )}
             </div>
           </div>
         </div>
       </section>
 
     <section id="department-services" style={{margin:'30px'}}>
-  <div className="cs_height_190 cs_height_xl_150 cs_height_lg_105"></div>
 
   <div className="container">
     <div className="cs_section_heading cs_style_1 text-center">
 
       <div className="cs_height_5"></div>
       <h2 className="cs_section_title cs_fs_72 m-0">
-        Treatments & Procedures
+        Tedaviler
       </h2>
     </div>
 
-    <div className="cs_height_72 cs_height_lg_50"></div>
 
     <div className="cs_iconbox_12_wrap">
-      {(departmentServices[String(slug)] ?? []).map((item, i) => (
-        <div key={i}>
-          <div className="cs_iconbox cs_style_12">
-            <div className="cs_iconbox_info cs_radius_20">
-              <span className="cs_iconbox_circle cs_accent_bg"></span>
-
-              <h2 className="cs_iconbox_title cs_fs_32 cs_semibold">
-                {item.title}
-              </h2>
-
-              <p className="cs_iconbox_subtitle mb-0 cs_heading_color">
-                {item.desc}
-              </p>
-            </div>
-
-            <div className="cs_iconbox_icon cs_center">
-  <Image
-    src={item.image}
-    alt={item.title}
-    width={80}
-    height={80}
-    style={{
-      objectFit: 'cover',
-      borderRadius: '50%',
-    }}
-  />
-</div>
-
-          </div>
+      {isLoading ? (
+        <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
+          <p>Tedaviler yükleniyor...</p>
         </div>
-      ))}
+      ) : error ? (
+        <div style={{ textAlign: 'center', padding: '40px', width: '100%', color: '#dc2626' }}>
+          <p>{error}</p>
+        </div>
+      ) : treatments.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
+          <p>Tedavi listesi bulunamadı</p>
+        </div>
+      ) : (
+        treatments.map((item, i) => (
+          <div key={i}>
+            <div className="cs_iconbox cs_style_12">
+              <div className="cs_iconbox_info cs_radius_20">
+                <span className="cs_iconbox_circle cs_accent_bg"></span>
+
+                <h2 className="cs_iconbox_title cs_fs_32 cs_semibold">
+                  {item.title}
+                </h2>
+
+                <p className="cs_iconbox_subtitle mb-0 cs_heading_color">
+                  {item.description}
+                </p>
+              </div>
+
+              <div className="cs_iconbox_icon cs_center">
+                {item.image ? (
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={80}
+                    height={80}
+                    quality={50}
+                    loading="lazy"
+                    sizes="80px"
+                    style={{
+                      objectFit: 'cover',
+                      borderRadius: '50%',
+                      width: '80px',
+                      height: '80px'
+                    }}
+                  />
+                ) : (
+                  <div style={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '50%',
+                    background: '#e5e7eb'
+                  }} />
+                )}
+              </div>
+            </div>
+          </div>
+        ))
+      )}
     </div>
   </div>
 </section>
@@ -186,19 +216,17 @@ export default function MedicalDetailPage() {
 
       {/* TREATMENTS */}
       <section>
-        <div className="cs_height_170 cs_height_xl_145 cs_height_lg_90"></div>
         <div className="container">
           <div className="cs_section_heading cs_style_1">
             <h3 className="cs_section_subtitle cs_accent_color cs_fs_32">
-              TEDAVİ TÜRLERİ
+              YÖNTEM TÜRLERİ
             </h3>
             <div className="cs_height_5"></div>
             <h2 className="cs_section_title cs_fs_72">
-              Treatments
+              Yöntemler
             </h2>
           </div>
 
-          <div className="cs_height_30"></div>
 
           <div
             className="cs_iconbox_8_wrap cs_radius_30"
@@ -255,8 +283,8 @@ export default function MedicalDetailPage() {
   <div className="cs_shape_2">
     <svg
       width="1089"
-      height="1002"
-      viewBox="0 0 1089 1002"
+      height="520"
+      viewBox="0 0 1089 520"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -281,13 +309,10 @@ export default function MedicalDetailPage() {
     </svg>
   </div>
 
-  <div className="cs_height_190 cs_height_xl_145 cs_height_lg_105"></div>
 
 <div
   className="container cs_radius_30"
   style={{
-    background: 'linear-gradient(135deg, #f4f9fd 0%, #e8f2fb 100%)',
-    padding: '80px 40px',
   }}
 >
     
@@ -295,13 +320,24 @@ export default function MedicalDetailPage() {
 
   <div className="cs_section_heading cs_style_1 text-center">
     <h3 className="cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_fs_32">
-      BOOK AN
     </h3>
-    <div className="cs_height_5"></div>
-    <h2 className="cs_section_title cs_fs_72 m-0">Appointment</h2>
     <div className="cs_animated_btn_wrap">
-  <Link href="/medical/form" className="cs_btn cs_style_1 cs_center cs_animated_btn">
-    <span>→</span>
+      
+  <Link 
+    href="/medical/form" 
+    className="cs_btn cs_style_1 cs_center cs_animated_btn mt-2"
+    style={{
+      padding: '30px 60px',
+      fontSize: '20px',
+      fontWeight: '600',
+      minHeight: '70px',
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}
+  >
+    <span>       Başvuru Ekle
+→</span>
   </Link>
 </div>
 
@@ -312,7 +348,6 @@ export default function MedicalDetailPage() {
 </section>
 
 
-      <Footer />
     </>
   )
 }

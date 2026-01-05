@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { useState } from 'react'
-import Footer from '@/src/components/MedicalComponents/Footer'
-import Header from '@/src/components/MedicalComponents/Header'
 import Image from 'next/image'
 import Link from 'next/link'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { db } from '@/src/lib/firebase'
+import { MedicalFormData } from '@/src/types/medical'
+import appointmentImg from '@/assets/img/departments/banner_img_3.png'
 
 // CheckboxOption component'ini dışarıda tanımla
 const CheckboxOption = ({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) => (
@@ -32,10 +35,10 @@ const CheckboxOption = ({ label, selected, onClick }: { label: string; selected:
 )
 
 export default function AppointmentSection() {
-  const [travelTime, setTravelTime] = useState('Net Tarih')
-  const [chronicDisease, setChronicDisease] = useState('Hayır')
-  const [airport, setAirport] = useState('İstanbul Havalimanı')
-  const [operation, setOperation] = useState('Saç Ekimi')
+  const [travelTime, setTravelTime] = useState('')
+  const [chronicDisease, setChronicDisease] = useState('')
+  const [airport, setAirport] = useState('')
+  const [operation, setOperation] = useState('')
   const [gender, setGender] = useState('')
   const [heartDisease, setHeartDisease] = useState('')
   const [diabetes, setDiabetes] = useState('')
@@ -57,10 +60,259 @@ export default function AppointmentSection() {
   const [vehicleChoice, setVehicleChoice] = useState('')
   const [consultation, setConsultation] = useState('')
   const [firstSurgery, setFirstSurgery] = useState('')
+  const [showSuccess, setShowSuccess] = useState(false)
+  const [showError, setShowError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [travelDate, setTravelDate] = useState('')
+  const [chronicDiseaseDetail, setChronicDiseaseDetail] = useState('')
+  const [otherAirport, setOtherAirport] = useState('')
+  const [otherOperation, setOtherOperation] = useState('')
+  const [extraInfo, setExtraInfo] = useState('')
+
+  const validateForm = (formData: any) => {
+    const required = [
+      { name: 'fullName', label: 'Ad Soyad' },
+      { name: 'birthDate', label: 'Doğum Tarihi' },
+      { name: 'phone', label: 'Telefon' },
+      { name: 'email', label: 'E-posta' },
+      { name: 'nationality', label: 'Uyruk' }
+    ]
+
+    for (const field of required) {
+      if (!formData[field.name]) {
+        setErrorMessage(`${field.label} alanı zorunludur`)
+        setShowError(true)
+        setTimeout(() => setShowError(false), 3000)
+        return false
+      }
+    }
+
+    const selectFields = [
+      { value: gender, label: 'Cinsiyet' },
+      { value: chronicDisease, label: 'Kronik Hastalık' },
+      { value: heartDisease, label: 'Kalp Rahatsızlığı' },
+      { value: diabetes, label: 'Diyabet' },
+      { value: hypertension, label: 'Yüksek Tansiyon' },
+      { value: cancer, label: 'Kanser Geçmişi' },
+      { value: smoking, label: 'Sigara Kullanımı' },
+      { value: alcohol, label: 'Alkol Kullanımı' },
+      { value: drugs, label: 'Uyuşturucu Madde' },
+      { value: medication, label: 'Düzenli İlaç' },
+      { value: allergy, label: 'İlaç Alerjisi' },
+      { value: surgery, label: 'Ameliyat Geçmişi' },
+      { value: anesthesia, label: 'Anestezi Komplikasyonu' },
+      { value: pregnancy, label: 'Hamilelik Durumu' },
+      { value: breastfeeding, label: 'Emzirme Durumu' },
+      { value: travelTime, label: 'Seyahat Zamanı' },
+      { value: personCount, label: 'Kişi Sayısı' },
+      { value: ticketStatus, label: 'Uçak Bileti Durumu' },
+      { value: airport, label: 'Varış Havalimanı' },
+      { value: hotelNeed, label: 'Otel İhtiyacı' },
+      { value: vipTransfer, label: 'VIP Transfer' },
+      { value: vehicleChoice, label: 'Araç Tercihi' },
+      { value: operation, label: 'İşlem' },
+      { value: consultation, label: 'Danışma' },
+      { value: firstSurgery, label: 'İlk Ameliyat' }
+    ]
+
+    for (const field of selectFields) {
+      if (!field.value) {
+        setErrorMessage(`${field.label} alanı zorunludur`)
+        setShowError(true)
+        setTimeout(() => setShowError(false), 3000)
+        return false
+      }
+    }
+
+    if (chronicDisease === 'Evet' && !chronicDiseaseDetail) {
+      setErrorMessage('Kronik Hastalık Detayı zorunludur')
+      setShowError(true)
+      setTimeout(() => setShowError(false), 3000)
+      return false
+    }
+
+    if (travelTime === 'Net Tarih' && !travelDate) {
+      setErrorMessage('Seyahat Tarihi zorunludur')
+      setShowError(true)
+      setTimeout(() => setShowError(false), 3000)
+      return false
+    }
+
+    if (airport === 'Diğer' && !otherAirport) {
+      setErrorMessage('Havalimanı Adı zorunludur')
+      setShowError(true)
+      setTimeout(() => setShowError(false), 3000)
+      return false
+    }
+
+    if (operation === 'Diğer' && !otherOperation) {
+      setErrorMessage('İşlem Detayı zorunludur')
+      setShowError(true)
+      setTimeout(() => setShowError(false), 3000)
+      return false
+    }
+
+    return true
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const formData = {
+      fullName: (e.target as any).fullName?.value || '',
+      phone: (e.target as any).phone?.value || '',
+      email: (e.target as any).email?.value || '',
+      nationality: (e.target as any).nationality?.value || '',
+      birthDate: (e.target as any).birthDate?.value || ''
+    }
+
+    if (!validateForm(formData)) return
+
+    const payload: MedicalFormData = {
+      personal: {
+        gender,
+        phone: formData.phone,
+        email: formData.email,
+        nationality: formData.nationality,
+        birthDate: formData.birthDate,
+        fullName: formData.fullName
+      },
+      medical: {
+        chronicDisease,
+        chronicDiseaseDetail,
+        heartDisease,
+        diabetes,
+        hypertension,
+        cancer,
+        medication,
+        allergy,
+        surgery,
+        anesthesia,
+        pregnancy,
+        breastfeeding
+      },
+      habits: {
+        smoking,
+        alcohol,
+        drugs
+      },
+      travel: {
+        travelTime,
+        travelDate,
+        personCount,
+        ticketStatus,
+        airport,
+        otherAirport,
+        hotelNeed,
+        vipTransfer,
+        vehicleChoice
+      },
+      operation: {
+        operation,
+        otherOperation,
+        consultation,
+        firstSurgery
+      },
+      extraInfo,
+      createdAt: serverTimestamp()
+    }
+
+    try {
+      await addDoc(collection(db, 'medicalforms'), payload)
+      setShowSuccess(true)
+      setTimeout(() => setShowSuccess(false), 3000)
+      ;(e.target as HTMLFormElement).reset()
+      
+      // Tüm state'leri reset et
+      setTravelTime('')
+      setChronicDisease('')
+      setAirport('')
+      setOperation('')
+      setGender('')
+      setHeartDisease('')
+      setDiabetes('')
+      setHypertension('')
+      setCancer('')
+      setSmoking('')
+      setAlcohol('')
+      setDrugs('')
+      setMedication('')
+      setAllergy('')
+      setSurgery('')
+      setAnesthesia('')
+      setPregnancy('')
+      setBreastfeeding('')
+      setPersonCount('')
+      setTicketStatus('')
+      setHotelNeed('')
+      setVipTransfer('')
+      setVehicleChoice('')
+      setConsultation('')
+      setFirstSurgery('')
+      setTravelDate('')
+      setChronicDiseaseDetail('')
+      setOtherAirport('')
+      setOtherOperation('')
+      setExtraInfo('')
+    } catch (error) {
+      console.error('Form gönderirken hata oluştu:', error)
+      setErrorMessage('Form gönderilirken bir hata oluştu. Lütfen tekrar deneyin.')
+      setShowError(true)
+      setTimeout(() => setShowError(false), 3000)
+    }
+  }
 
   return (
     <>
-      <Header/>
+      {showSuccess && (
+        <div style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          background: '#10b981',
+          color: '#fff',
+          padding: '16px 24px',
+          borderRadius: '8px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          fontSize: '14px',
+          fontWeight: '500',
+          zIndex: 9999,
+          animation: 'slideIn 0.3s ease-out'
+        }}>
+          ✓ Formu başarıyla gönderdin!
+        </div>
+      )}
+
+      {showError && (
+        <div style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          background: '#ef4444',
+          color: '#fff',
+          padding: '16px 24px',
+          borderRadius: '8px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          fontSize: '14px',
+          fontWeight: '500',
+          zIndex: 9999,
+          animation: 'slideIn 0.3s ease-out'
+        }}>
+          ✗ {errorMessage}
+        </div>
+      )}
+      <style>{`
+        @keyframes slideIn {
+          from {
+            transform: translateX(400px);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
       <section className="cs_appointment_section_1 cs_bg_filed">
         <div className="container">
           <ol className="breadcrumb2">
@@ -73,10 +325,11 @@ export default function AppointmentSection() {
           
           <div className="cs_appointment_img">
             <Image 
-              src="/assets/img/home_2/appointment_img.png" 
+              src={appointmentImg}
               alt="Appointment" 
-              width={600} 
-              height={600} 
+              width={350} 
+              height={350}
+              priority
             />
           </div>
 
@@ -85,10 +338,10 @@ export default function AppointmentSection() {
             borderRadius: '16px',
             boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
             padding: '40px',
-            marginTop: '40px',
-            border: '1px solid #e8e8e8'
+            border: '1px solid #e8e8e8',
+            marginTop:'-50px'
           }}>
-            <form className="row">
+            <form className="row" onSubmit={handleSubmit}>
               
               {/* 1️⃣ Kişisel Bilgiler */}
               <div className="col-12">
@@ -103,13 +356,13 @@ export default function AppointmentSection() {
               
               <div className="col-lg-6">
                 <label className="cs_input_label cs_heading_color">Ad Soyad</label>
-                <input type="text" className="cs_form_field" />
+                <input type="text" name="fullName" className="cs_form_field" required />
                 <div className="cs_height_42"></div>
               </div>
               
               <div className="col-lg-6">
                 <label className="cs_input_label cs_heading_color">Doğum Tarihi</label>
-                <input type="date" className="cs_form_field" />
+                <input type="date" name="birthDate" className="cs_form_field" required />
                 <div className="cs_height_42"></div>
               </div>
               
@@ -123,19 +376,19 @@ export default function AppointmentSection() {
               
               <div className="col-lg-6">
                 <label className="cs_input_label cs_heading_color">Uyruk</label>
-                <input type="text" className="cs_form_field" />
+                <input type="text" name="nationality" className="cs_form_field" required />
                 <div className="cs_height_42"></div>
               </div>
               
               <div className="col-lg-6">
                 <label className="cs_input_label cs_heading_color">Telefon (WhatsApp)</label>
-                <input type="text" className="cs_form_field" />
+                <input type="text" name="phone" className="cs_form_field" required />
                 <div className="cs_height_42"></div>
               </div>
               
               <div className="col-lg-6">
                 <label className="cs_input_label cs_heading_color">E-posta</label>
-                <input type="email" className="cs_form_field" />
+                <input type="email" name="email" className="cs_form_field" required />
                 <div className="cs_height_42"></div>
               </div>
 
@@ -160,7 +413,13 @@ export default function AppointmentSection() {
               {chronicDisease === 'Evet' && (
                 <div className="col-lg-6">
                   <label className="cs_input_label cs_heading_color">Kronik Hastalık Detayı</label>
-                  <input type="text" className="cs_form_field" placeholder="Lütfen belirtiniz..." />
+                  <input
+                    type="text"
+                    className="cs_form_field"
+                    value={chronicDiseaseDetail}
+                    onChange={(e) => setChronicDiseaseDetail(e.target.value)}
+                    placeholder="Lütfen belirtiniz..."
+                  />
                   <div className="cs_height_42"></div>
                 </div>
               )}
@@ -316,7 +575,13 @@ export default function AppointmentSection() {
               
               <div className="col-lg-12">
                 <label className="cs_input_label cs_heading_color">Doktorun Bilmesi Gereken Ek Bilgi</label>
-                <textarea className="cs_form_field" rows={4}></textarea>
+                <textarea
+                  name="extraInfo"
+                  className="cs_form_field"
+                  rows={4}
+                  value={extraInfo}
+                  onChange={(e) => setExtraInfo(e.target.value)}
+                ></textarea>
                 <div className="cs_height_42"></div>
               </div>
 
@@ -341,7 +606,12 @@ export default function AppointmentSection() {
               {travelTime === 'Net Tarih' && (
                 <div className="col-lg-6">
                   <label className="cs_input_label cs_heading_color">Seyahat Tarihi</label>
-                  <input type="date" className="cs_form_field" />
+                  <input
+                    type="date"
+                    className="cs_form_field"
+                    value={travelDate}
+                    onChange={(e) => setTravelDate(e.target.value)}
+                  />
                   <div className="cs_height_42"></div>
                 </div>
               )}
@@ -373,7 +643,13 @@ export default function AppointmentSection() {
               {airport === 'Diğer' && (
                 <div className="col-lg-6">
                   <label className="cs_input_label cs_heading_color">Havalimanı Adı</label>
-                  <input type="text" className="cs_form_field" placeholder="Havalimanı adını giriniz..." />
+                  <input
+                    type="text"
+                    className="cs_form_field"
+                    value={otherAirport}
+                    onChange={(e) => setOtherAirport(e.target.value)}
+                    placeholder="Havalimanı adını giriniz..."
+                  />
                   <div className="cs_height_42"></div>
                 </div>
               )}
@@ -428,7 +704,9 @@ export default function AppointmentSection() {
                   className="cs_select cs_select_fix"
                   value={operation}
                   onChange={(e) => setOperation(e.target.value)}
+                  required
                 >
+                  <option value="">Lütfen Seçiniz</option>
                   <option>Saç Ekimi</option>
                   <option>Burun Estetiği</option>
                   <option>Meme Estetiği</option>
@@ -444,7 +722,13 @@ export default function AppointmentSection() {
               {operation === 'Diğer' && (
                 <div className="col-lg-6">
                   <label className="cs_input_label cs_heading_color">İşlem Detayı</label>
-                  <input type="text" className="cs_form_field" placeholder="İşlemi belirtiniz..." />
+                  <input
+                    type="text"
+                    className="cs_form_field"
+                    value={otherOperation}
+                    onChange={(e) => setOtherOperation(e.target.value)}
+                    placeholder="İşlemi belirtiniz..."
+                  />
                   <div className="cs_height_42"></div>
                 </div>
               )}
@@ -474,8 +758,6 @@ export default function AppointmentSection() {
         </div>
         <div className="cs_height_120"></div>
       </section>
-      <Footer/>
-      <div className="cs_height_200 cs_height_xl_150 cs_height_lg_110"></div>
     </>
   )
 }

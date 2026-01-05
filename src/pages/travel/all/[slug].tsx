@@ -1,6 +1,8 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import heroImg from '@/assets/images/hero/h1.webp'
 import breadcrumbShape from '@/assets/images/illustration/breadcrunb__shape.png'
@@ -21,13 +23,23 @@ import g9 from '@/assets/images/gallary/g9.webp'
 import Header from '@/src/components/TravelComponents/Header'
 import Footer from '@/src/components/TravelComponents/Footer'
 
+const packagesList = [
+  { slug: 'cusco-machu-picchu', title: 'Cusco & Salkantay – Machu Picchu' },
+  { slug: 'casablanca-sarap-turu', title: 'Casablanca Vadisi Şarap Turu' },
+  { slug: 'maldivler-macera-turu', title: 'Maldivler Macera Turu' },
+]
+
 export default function TravelDetailPage() {
+  const router = useRouter()
+  const { slug } = router.query
   const [activeTab, setActiveTab] = useState<'booking' | 'enquiry'>('booking')
 const [openFaq, setOpenFaq] = useState<number | null>(null)
 
+const currentPackage = packagesList.find(p => p.slug === slug)
+const pageTitle = currentPackage?.title || 'Paket Detayı'
+
   return (
     <>
-      <Header />
 
       {/* BREADCRUMB */}
       <div className="paralax-container lg:py-36 py-20 relative overflow-hidden">
@@ -43,16 +55,16 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
 
         <div className="container relative z-2">
           <nav aria-label="breadcrumb">
-            <ol className="breadcrumb flex gap-2 text-white">
-              <li>
-                <Link href="/">Anasayfa</Link>
-              </li>
-              <li className="active_page">Paket Detayı</li>
-            </ol>
+                    <ol className="breadcrumb2" style={{color:'white'}}>
+            <li className="breadcrumb-item2">
+              <Link href="/travel">Anasayfa</Link>
+            </li>
+            <li className="breadcrumb-item2">/ Seyahat Detayı</li>
+          </ol>
           </nav>
 
           <h2 className="xl:text-[54px] mt-2 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
-            Cusco & Salkantay – Machu Picchu Turu
+            {pageTitle}
           </h2>
         </div>
       </div>
@@ -75,7 +87,7 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
       <div className="shrink-0 mr-2">
         <i className="bi bi-info-circle text-lg"></i>
       </div>
-      <span className="whitespace-nowrap">Information</span>
+      <span className="whitespace-nowrap">Bilgiler</span>
     </a>
   </li>
 
@@ -85,7 +97,7 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
       <div className="shrink-0 mr-2">
         <i className="bi bi-calendar-check text-lg"></i>
       </div>
-      <span className="whitespace-nowrap">Tour Plan</span>
+      <span className="whitespace-nowrap">Tur Planı</span>
     </a>
   </li>
 
@@ -95,7 +107,7 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
       <div className="shrink-0 mr-2">
         <i className="bi bi-question-circle text-lg"></i>
       </div>
-      <span className="whitespace-nowrap">FAQ</span>
+      <span className="whitespace-nowrap">SSS</span>
     </a>
   </li>
 
@@ -105,7 +117,7 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
       <div className="shrink-0 mr-2">
         <i className="bi bi-images text-lg"></i>
       </div>
-      <span className="whitespace-nowrap">Gallery</span>
+      <span className="whitespace-nowrap">Galeri</span>
     </a>
   </li>
 
@@ -116,38 +128,37 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
               <div className="pack__disc" id="Information">
   <div className="flex justify-between items-center gap-2 flex-wrap lg:pt-12 pt-8 lg:pb-4">
     <h2 className="font-sans lg:text-[45px] md:text-xl text-lg font-semibold">
-      $175/<span className="lg:text-lg text-md font-normal">Per Person</span>
+      $175/<span className="lg:text-lg text-md font-normal">Kişi Başına</span>
     </h2>
 
   </div>
 
   <h5 className="lg:text-lg text-base text-dark-1 font-semibold leading-[1.5] mb-6">
-    Lorem omnes impedit ius, vel et hinc agam fabulas. Ut audiam invenire iracundia vim.
+    Bu inanılmaz tur paketinde muhteşem doğa manzaraları ve tarihi yerler keşfetme fırsatı bulacaksınız.
   </h5>
 
   <p>
-    Al elit omnes impedit ius, vel et hinc agam fabulas. Ut audiam invenire iracundia vim.
-    En eam dico similique, ut sint posse sit, eum sumo diam ea.
+    Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir. Tur sırasında rehberimiz tarafından detaylı bilgiler verilerek ziyaretler gerçekleştirilecektir.
   </p>
 
   <ul className="pack__list mt-4">
-    <li><i className="bi bi-clock"></i> 4 Days / 5 Night</li>
-    <li><i className="bi bi-person"></i> Max People : 10</li>
-    <li><i className="bi bi-map"></i> North Transylvania</li>
+    <li><i className="bi bi-clock"></i> 4 Gün / 5 Gece</li>
+    <li><i className="bi bi-person"></i> Maksimum Kişi: 10</li>
+    <li><i className="bi bi-map"></i> Kuzey Transilvanya</li>
   </ul>
 
   {/* PRICE INCLUDES */}
   <ul className="mt-base">
     <li className="lg:flex lg:pt-6 pt-5 pb-5 border-t border-stock-1">
-      <div className="lg:w-1/3 font-medium">Price Includes</div>
+      <div className="lg:w-1/3 font-medium">Fiyata Dahil Olanlar</div>
       <div className="lg:w-2/3 mt-4 lg:mt-0">
         <ul className="grid grid-cols-2 gap-3">
           {[
-            '3 Nights Accommodation',
-            'Airport Transfers',
-            '2 Meals / day',
-            'Box Lunch, Dinner & Snacks.',
-            'On Trip Transport',
+            '3 Gece Konaklama',
+            'Havalimanı Transferi',
+            'Günde 2 Öğün',
+            'Kutu Öğle Yemeği, Akşam Yemeği ve Atıştırmalıklar.',
+            'Tur Sırasında Ulaşım',
           ].map(item => (
             <li key={item} className="flex items-center text-sm">
               <i className="bi bi-check2 text-primary-1 mr-2"></i>
@@ -160,14 +171,14 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
 
     {/* PRICE EXCLUDES */}
     <li className="lg:flex lg:pt-6 pt-5 pb-5 border-t border-stock-1">
-      <div className="lg:w-1/3 font-medium">Price Excludes</div>
+      <div className="lg:w-1/3 font-medium">Fiyata Dahil Olmayan Şeyler</div>
       <div className="lg:w-2/3 mt-4 lg:mt-0">
         <ul className="grid grid-cols-2 gap-3">
           {[
-            'Departure Taxes',
-            'Airport Transfers',
-            'Entry Fees',
-            'Box Lunch, Dinner & Snacks.',
+            'Kalkış Vergileri',
+            'Havalimanı Transferi',
+            'Giriş Ücretleri',
+            'Kutu Öğle Yemeği, Akşam Yemeği ve Atıştırmalıklar.',
           ].map(item => (
             <li key={item} className="flex items-center text-sm">
               <i className="bi bi-check2 text-primary-1 mr-2"></i>
@@ -181,13 +192,13 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   {/* TOUR PLAN */}
   <div className="lg:pt-10 pt-8 pb-8" id="plan">
-    <h3 className="text-dark-1 font-semibold text-2xl mb-4">Tour Plan</h3>
+    <h3 className="text-dark-1 font-semibold text-2xl mb-4">Tur Planı</h3>
 
     {[
-      { day: '01', title: 'Welcome to Edinburgh' },
-      { day: '02', title: 'Adventure Begins' },
-      { day: '03', title: 'Historical Tour' },
-      { day: '04', title: 'Return' },
+      { day: '01', title: 'Edinburgh\'a Hoş Geldiniz' },
+      { day: '02', title: 'Macera Başlıyor' },
+      { day: '03', title: 'Tarihi Tur' },
+      { day: '04', title: 'Dönüş' },
     ].map(d => (
       <div key={d.day} className="flex single__count mt-6">
         <div className="day__count shrink-0 relative z-10" style={{ paddingTop: '20px' }}>
@@ -203,7 +214,7 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
         <div className="ml-4 pb-8">
           <h5 className="font-semibold text-dark-1 text-lg">{d.title}</h5>
           <p>
-            Qui ad idque soluta deterruisset, nec sale pertinax mandamus et.
+            Bu gün boyunca rehberimiz eşliğinde özel olarak hazırlanmış bir rota izleyerek bölgenin en güzel yerlerini keşfedeceksiniz.
           </p>
         </div>
       </div>
@@ -212,25 +223,24 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
 </div>
 {/* FAQ */}
 <div className="pt-2 pb-5" id="faq">
-  <h3 className="text-dark-1 font-semibold text-2xl mb-2">Some FAQ This Place</h3>
+  <h3 className="text-dark-1 font-semibold text-2xl mb-2">Sıkça Sorulan Sorular</h3>
   <p className="text-dark-1 font-medium mb-4">
-    Duis id interdum ex, eu accumsan massa. Fusce vel nibh diam. Nulla ultrices ex
-    at erat pharetra, vitae viverra mauris condimentum.
+    Bu turun detayları, ücretlendirmesi, zaman dilimi ve diğer önemli bilgiler aşağıda bulunmaktadır. Sorularınız varsa lütfen bizimle iletişime geçiniz.
   </p>
 
   <div className="accordion lg:space-y-6 space-y-5">
     {[
       {
-        q: 'What are the best locations for wedding tours?',
-        a: 'Some of the strangest places on earth are also the most sublime: from the UFO-like dragon’s blood trees in Yemen to a rainbow-colored hot spring in Yellowstone.',
+        q: 'En iyi düğün turları yapılan yerler nerelerdir?',
+        a: 'Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir: Yemen\'deki UFO benzeri ejderha kanı ağaçlarından Yellowstone\'daki gökkuşağı renkli sıcak kaynağına kadar.',
       },
       {
-        q: 'What are the most surreal places to visit?',
-        a: 'Some of the strangest places on earth are also the most sublime: from the UFO-like dragon’s blood trees in Yemen to a rainbow-colored hot spring in Yellowstone.',
+        q: 'Ziyaret etmek için en sürreal yerler nelerdir?',
+        a: 'Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir: Yemen\'deki UFO benzeri ejderha kanı ağaçlarından Yellowstone\'daki gökkuşağı renkli sıcak kaynağına kadar.',
       },
       {
-        q: 'What are the most surreal places to visit in Bangladash?',
-        a: 'Some of the strangest places on earth are also the most sublime: from the UFO-like dragon’s blood trees in Yemen to a rainbow-colored hot spring in Yellowstone.',
+        q: 'Bangladeş\'te ziyaret etmek için en sürreal yerler nelerdir?',
+        a: 'Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir: Yemen\'deki UFO benzeri ejderha kanı ağaçlarından Yellowstone\'daki gökkuşağı renkli sıcak kaynağına kadar.',
       },
     ].map((item, i) => (
       <div key={i} className="single__accordion border border-stock-1">
@@ -258,10 +268,9 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
 
 {/* GALLERY */}
 <div className="lg:pt-10 pt-8" id="gallery">
-  <h3 className="text-dark-1 font-semibold text-2xl mb-2">Gallery</h3>
+  <h3 className="text-dark-1 font-semibold text-2xl mb-2">Galeri</h3>
   <p className="text-dark-1 font-medium mb-4">
-    Duis id interdum ex, eu accumsan massa. Fusce vel nibh diam. Nulla ultrices ex
-    at erat pharetra, vitae viverra mauris condimentum.
+    Bu turun muhteşem anılarını içeren fotoğraflar aşağıda bulunmaktadır. Her resmi büyütmek için tıklayabilirsiniz.
   </p>
 
   <div className="masonry-container">
@@ -301,13 +310,13 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
       className={`tab-link basis-1/2 ${activeTab === 'booking' ? 'active' : ''}`}
       onClick={() => setActiveTab('booking')}
     >
-      Booking
+      Rezervasyon
     </li>
     <li
       className={`tab-link basis-1/2 ${activeTab === 'enquiry' ? 'active' : ''}`}
       onClick={() => setActiveTab('enquiry')}
     >
-      Enquiry
+      Bilgi Talep
     </li>
   </ul>
 
@@ -317,65 +326,12 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
         autoComplete="off"
         className="lg:px-base px-5 lg:pt-6 lg:pb-base pt-4 pb-5 bg-white border-primary-1 border"
       >
-        <h4 className="lg:text-xl text-lg text-dark-1 font-semibold">
-          <span className="text-md font-sans font-normal text-dark-3">
-            Start from
-          </span>{' '}
-          $175
-        </h4>
-
-        <div className="mt-5 lg:mt-6">
-          <label htmlFor="tourTime" className="mb-2 text-dark-3 capitalize block">
-            Date
-          </label>
-          <input id="tourTime" className="input_style__primary" />
-        </div>
-
-        <div className="js-form-counters lg:mt-6 mt-5 relative">
-          <label className="mb-2 text-dark-3 capitalize block">
-            Number of travelers
-          </label>
-
-          <button
-            type="button"
-            className="w-full bg-transparent border border-stock-1 lg:h-[54px] h-12 px-5 py-2 text-dark-2 focus:border-primary-1 flex items-center common_dropdown__btn"
-          >
-            <div>
-              <span className="js-count-adult">1</span> adults -{' '}
-              <span className="js-count-child">0</span> childeren -{' '}
-              <span className="js-count-room">1</span> room
-            </div>
-          </button>
-        </div>
-
-        <div className="pt-4">
-          <div className="custom-checkbox mt-4">
-            <input type="checkbox" id="add-one" />
-            <label htmlFor="add-one">
-              Add Service per booking -{' '}
-              <span className="font-semibold">$30</span>
-            </label>
-          </div>
-
-          <div className="custom-checkbox mt-4">
-            <input type="checkbox" id="add-two" />
-            <label htmlFor="add-two">
-              Add Service per day -{' '}
-              <span className="font-semibold">$10</span>
-            </label>
-          </div>
-        </div>
-
-        <div className="pt-5 border-t border-stock-1 mt-6">
-          <div className="font-sans text-dark-1 text-2md font-semibold flex justify-between">
-            Total : <span>$450</span>
-          </div>
-        </div>
+   
 
 
 
-        <a href="#" className="btn_primary__v1 !w-full justify-center mt-5">
-          Book Now
+        <a href="/travel/form" className="btn_primary__v1 !w-full justify-center mt-5 hover:text-white">
+          Şimdi Rezervasyon Yap
         </a>
       </form>
     </div>
@@ -385,15 +341,15 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
     <div className="tab-content active">
       <form className="lg:px-base px-5 lg:py-base py-5 bg-white border-primary-1 border">
         <h4 className="lg:text-lg text-2md text-dark-1 font-semibold">
-          Enquiry Now
+          Şimdi Bilgi Talep Et
         </h4>
 
         <p className="regular-text-v1 mt-2">
-          Qui ad idque soluta deterruisset, nec sale pertinax mandamus et.
+          Aşağıdaki formu doldurarak turumuzla ilgili detaylı bilgi talep edebilirsiniz. Ekibimiz kısa sürede sizinle iletişime geçecektir.
         </p>
 
         <div className="lg:mt-base mt-5">
-          <input className="input_style__primary" placeholder="Your Name" />
+          <input className="input_style__primary" placeholder="Adınız" />
         </div>
 
         <div className="lg:mt-base mt-5">
@@ -401,19 +357,19 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
         </div>
 
         <div className="lg:mt-base mt-5">
-          <input className="input_style__primary" placeholder="Mobile Number" />
+          <input className="input_style__primary" placeholder="Telefon Numarası" />
         </div>
 
         <div className="lg:mt-base mt-5">
           <textarea
             rows={6}
             className="input_style__primary"
-            placeholder="Additional Description..."
+            placeholder="Ek Açıklama..."
           />
         </div>
 
         <button className="btn_primary__v1 !w-full justify-center mt-5">
-          Enquiry
+          Bilgi Talep Et
         </button>
       </form>
     </div>
@@ -421,7 +377,7 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   <aside className="widget widget_social lg:mt-[50px] mt-10">
     <h4 className="text-dark-1 lg:text-[25px] text-2md font-semibold mb-1">
-      Social Links
+      Sosyal Bağlantılar
     </h4>
              <div className="cs_social_links cs_social_desktop">
   <a href="#">
@@ -442,7 +398,6 @@ const [openFaq, setOpenFaq] = useState<number | null>(null)
         </div>
       </div>
 
-      <Footer />
     </>
   )
 }

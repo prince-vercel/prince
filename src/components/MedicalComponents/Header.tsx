@@ -50,13 +50,13 @@ export default function Header() {
 
                 <nav className="cs_nav">
                   <ul className="cs_nav_list">
-                    <li><Link href="/medical">Anasayfa</Link></li>
-                    <li><Link href="/medical/organisation">Kurumlar</Link></li>
-                   <li><Link href="/medical/results">Mutlu Sonuçlar</Link></li>
-                    <li><Link href="/medical/form">Başvuru</Link></li>
-                    <li><Link href="/medical/blog">Blog</Link></li>
-                    <li><Link href="/medical/about">Hakkımızda</Link></li>
-                    <li><Link href="/medical/contact">İletişim</Link></li>
+                    <li><Link href="/medical" className="font-semibold">Anasayfa</Link></li>
+                    <li><Link href="/medical/organisation" className="font-semibold">Kurumlar</Link></li>
+                   <li><Link href="/medical/results" className="font-semibold">Mutlu Sonuçlar</Link></li>
+                    <li><Link href="/medical/form" className="font-semibold">Başvuru</Link></li>
+                    <li><Link href="/medical/blog" className="font-semibold">Blog</Link></li>
+                    <li><Link href="/medical/about" className="font-semibold">Hakkımızda</Link></li>
+                    <li><Link href="/medical/contact" className="font-semibold">İletişim</Link></li>
                   </ul>
                 </nav>
               </div>
@@ -100,13 +100,13 @@ export default function Header() {
 
           {/* MOBILE MENU */}
           <ul className="cs_mobile_menu">
-            <li><Link href="/medical" onClick={() => setIsSidebarOpen(false)}>Anasayfa</Link></li>
-            <li><Link href="/medical/organisation" onClick={() => setIsSidebarOpen(false)}>Kurumlar</Link></li>
-            <li><Link href="/medical/results" onClick={() => setIsSidebarOpen(false)}>Mutlu Sonuçlar</Link></li>
-            <li><Link href="/medical/form" onClick={() => setIsSidebarOpen(false)}>Başvuru</Link></li>
-            <li><Link href="/medical/blog" onClick={() => setIsSidebarOpen(false)}>Blog</Link></li>
-            <li><Link href="/medical/about" onClick={() => setIsSidebarOpen(false)}>Hakkımızda</Link></li>
-            <li><Link href="/medical/contact" onClick={() => setIsSidebarOpen(false)}>İletişim</Link></li>
+            <li><Link href="/medical" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Anasayfa</Link></li>
+            <li><Link href="/medical/organisation" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Kurumlar</Link></li>
+            <li><Link href="/medical/results" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Mutlu Sonuçlar</Link></li>
+            <li><Link href="/medical/form" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Başvuru</Link></li>
+            <li><Link href="/medical/blog" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Blog</Link></li>
+            <li><Link href="/medical/about" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Hakkımızda</Link></li>
+            <li><Link href="/medical/contact" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>İletişim</Link></li>
           </ul>
 
           {/* SOCIALS – MOBILE (EN ALTTA) */}
@@ -124,7 +124,7 @@ export default function Header() {
           <div className="container">
             <div className="cs_header_search_box">
               <form onSubmit={(e) => e.preventDefault()}>
-                <input type="text" placeholder="Search Doctors" />
+                <input type="text" placeholder="Doktor Ara" />
                 <button type="submit" />
               </form>
               <button className="cs_close" onClick={() => setIsSearchOpen(false)}>

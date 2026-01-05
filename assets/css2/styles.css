@@ -45,7 +45,7 @@ html {
   -o-tab-size: 4;
      tab-size: 4;
   /* 3 */
-  font-family: Jost, sans-serif;
+  font-family: Playfair Display, serif;
   /* 4 */
   font-feature-settings: normal;
   /* 5 */
@@ -428,12 +428,12 @@ h1,h2,h3,h4,h5{
 }
 
 p{
-  font-family: Jost, sans-serif;
+  font-family: Playfair Display, serif;
   font-size: 16px;
 }
 
 body{
-  font-family: Jost, sans-serif;
+  font-family: Playfair Display, serif;
   font-size: 16px;
 }
 
@@ -2146,7 +2146,7 @@ html{
 }
 
 .font-sans{
-  font-family: Jost, sans-serif;
+  font-family: Playfair Display, serif;
 }
 
 .font-serif{
@@ -2584,7 +2584,7 @@ Common Text Classes
 }
 
 .regular-text-v1{
-  font-family: Jost, sans-serif;
+  font-family: Playfair Display, serif;
   font-size: 14px;
   line-height: 1.9;
   --tw-text-opacity: 1;
@@ -2859,7 +2859,7 @@ Custom Components
   padding-bottom: 0.75rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  font-family: Jost, sans-serif;
+  font-family: Playfair Display, serif;
   font-weight: 500;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -4149,7 +4149,7 @@ Customiz Third-Party Plugins
 .custom_order__list li .list__content h5{
   margin-top: 3px;
   margin-bottom: 10px;
-  font-family: Jost, sans-serif;
+  font-family: Playfair Display, serif;
   font-size: 14px;
   font-weight: 500;
   --tw-text-opacity: 1;
@@ -4575,7 +4575,7 @@ Customiz Third-Party Plugins
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   text-align: center;
-  font-family: Jost, sans-serif;
+  font-family: Playfair Display, serif;
   font-weight: 500;
   --tw-text-opacity: 1;
   color: rgb(232 96 76 / var(--tw-text-opacity));

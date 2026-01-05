@@ -50,12 +50,12 @@ export default function Header() {
 
                 <nav className="cs_nav">
                   <ul className="cs_nav_list">
-                    <li><Link href="/travel">Anasayfa</Link></li>
-                    <li><Link href="/travel/all">Seyahatler</Link></li>
-                    <li><Link href="/travel/form">Başvuru</Link></li>
-                    <li><Link href="/travel/blog">Blog</Link></li>
-                    <li><Link href="/travel/about">Hakkımızda</Link></li>
-                    <li><Link href="/travel/contact">İletişim</Link></li>
+                    <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200">Anasayfa</Link></li>
+                    <li><Link href="/travel/all" className="font-semibold hover:text-primary-1 transition-colors duration-200">Seyahatler</Link></li>
+                    <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200">Başvuru</Link></li>
+                    <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200">Blog</Link></li>
+                    <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200">Hakkımızda</Link></li>
+                    <li><Link href="/travel/contact" className="font-semibold hover:text-primary-1 transition-colors duration-200">İletişim</Link></li>
                   </ul>
                 </nav>
               </div>
@@ -104,12 +104,12 @@ export default function Header() {
 
           {/* MOBILE MENU */}
           <ul className="cs_mobile_menu">
-            <li><Link href="/travel" onClick={() => setIsSidebarOpen(false)}>Anasayfa</Link></li>
-            <li><Link href="/travel/all" onClick={() => setIsSidebarOpen(false)}>Kurumlar</Link></li>
-            <li><Link href="/travel/form" onClick={() => setIsSidebarOpen(false)}>Başvuru</Link></li>
-            <li><Link href="/travel/blog" onClick={() => setIsSidebarOpen(false)}>Blog</Link></li>
-            <li><Link href="/travel/about" onClick={() => setIsSidebarOpen(false)}>Hakkımızda</Link></li>
-            <li><Link href="/travel/contact" onClick={() => setIsSidebarOpen(false)}>İletişim</Link></li>
+            <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Anasayfa</Link></li>
+            <li><Link href="/travel/all" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Seyahatler</Link></li>
+            <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Başvuru</Link></li>
+            <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Blog</Link></li>
+            <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Hakkımızda</Link></li>
+            <li><Link href="/travel/contact" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>İletişim</Link></li>
           </ul>
 
           {/* SOCIALS – MOBILE (EN ALTTA) */}
@@ -127,7 +127,7 @@ export default function Header() {
           <div className="container">
             <div className="cs_header_search_box">
               <form onSubmit={(e) => e.preventDefault()}>
-                <input type="text" placeholder="Search Doctors" />
+                <input type="text" placeholder="Doktor Ara" />
                 <button type="submit" />
               </form>
               <button className="cs_close" onClick={() => setIsSearchOpen(false)}>

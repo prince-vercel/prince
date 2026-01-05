@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { db } from '@/src/lib/firebase'
+import { getDocs, collection } from 'firebase/firestore'
 
-import Header from '@/src/components/MedicalComponents/Header'
-import Footer from '@/src/components/MedicalComponents/Footer'
+
 
 import avatar1 from '@/assets/img/home_4/avatar_1.png'
 import avatar2 from '@/assets/img/home_4/avatar_2.png'
@@ -13,23 +14,31 @@ import avatar3 from '@/assets/img/home_4/avatar_3.png'
 import avatar4 from '@/assets/img/home_4/avatar_4.png'
 import avatar5 from '@/assets/img/home_4/avatar_5.png'
 
-import g1 from '@/assets/img/doctors/doctor_1.png'
-import g2 from '@/assets/img/doctors/doctor_2.png'
-import g3 from '@/assets/img/doctors/doctor_1.png'
-import g4 from '@/assets/img/doctors/doctor_2.png'
-import g5 from '@/assets/img/doctors/doctor_1.png'
-import g6 from '@/assets/img/doctors/doctor_2.png'
-import g7 from '@/assets/img/doctors/doctor_1.png'
-import g8 from '@/assets/img/doctors/doctor_2.png'
-import g9 from '@/assets/img/doctors/doctor_1.png'
-import g10 from '@/assets/img/doctors/doctor_2.png'
-import g11 from '@/assets/img/doctors/doctor_1.png'
-import g12 from '@/assets/img/doctors/doctor_2.png'
-
 import leftArrow from '@/assets/img/icons/left_arrow_blue.svg'
 import rightArrow from '@/assets/img/icons/right_arrow_blue.svg'
 
 const GALLERY_PER_PAGE = 9
+
+interface Result {
+  id: string
+  title: string
+  description: string
+  image: string
+  category: string
+}
+
+const medicalSpecialties = {
+  dis: 'Diş',
+  genital: 'Genital',
+  gogus: 'Göğüs',
+  goz: 'Göz',
+  kalca: 'Kalça',
+  kulak: 'Kulak',
+  'boyun-ve-yuz': 'Boyun ve Yüz',
+  burun: 'Burun',
+  'sac-ekimi': 'Saç Ekimi',
+  'vucut-sekillendirme-liposuction': 'Vücut Şekillendirme ve Liposuction',
+}
 
 export default function ResultsPage() {
   const testimonials = [
@@ -42,36 +51,46 @@ export default function ResultsPage() {
 
   const categoryMap: Record<string, string> = {
     all: 'Tümü',
-    dis: 'Diş',
-    genital: 'Genital',
-    gogus: 'Göğüs',
-    goz: 'Göz',
-    kalca: 'Kalça',
-    kulak: 'Kulak',
-    'boyun-ve-yuz': 'Boyun ve Yüz',
-    burun: 'Burun',
-    'sac-ekimi': 'Saç Ekimi',
-    'vucut-sekillendirme-liposuction': 'Vücut Şekillendirme ve Liposuction',
+    ...medicalSpecialties,
   }
 
-  const galleryItems = [
-    { img: g1, category: 'dis' },
-    { img: g2, category: 'burun' },
-    { img: g3, category: 'sac-ekimi' },
-    { img: g4, category: 'goz' },
-    { img: g5, category: 'kalca' },
-    { img: g6, category: 'vucut-sekillendirme-liposuction' },
-    { img: g7, category: 'dis' },
-    { img: g8, category: 'burun' },
-    { img: g9, category: 'sac-ekimi' },
-    { img: g10, category: 'goz' },
-    { img: g11, category: 'kalca' },
-    { img: g12, category: 'vucut-sekillendirme-liposuction' },
-  ]
-
+  const [results, setResults] = useState<Result[]>([])
   const [startIndex, setStartIndex] = useState(0)
   const [activeFilter, setActiveFilter] = useState('all')
   const [galleryPage, setGalleryPage] = useState(1)
+  const [loading, setLoading] = useState(true)
+
+  // Fetch results from Firestore on component mount
+  useEffect(() => {
+    fetchAllResults()
+  }, [])
+
+  const fetchAllResults = async () => {
+    try {
+      setLoading(true)
+      const allResults: Result[] = []
+
+      // Fetch from all medical specialty categories in parallel
+      const fetchPromises = Object.keys(medicalSpecialties).map(async (categoryKey) => {
+        const resultsRef = collection(db, `medicalcontents/results/${categoryKey}`)
+        const snapshot = await getDocs(resultsRef)
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          category: categoryKey,
+          ...doc.data(),
+        })) as Result[]
+      })
+
+      const allCategoryResults = await Promise.all(fetchPromises)
+      allCategoryResults.forEach(categoryResults => allResults.push(...categoryResults))
+
+      setResults(allResults)
+    } catch (error) {
+      console.error('Sonuçlar çekilirken hata:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const next = () => {
     if (startIndex < testimonials.length - 2) setStartIndex(startIndex + 1)
@@ -83,10 +102,11 @@ export default function ResultsPage() {
 
   const visibleTestimonials = testimonials.slice(startIndex, startIndex + 2)
 
+  // Filter results by category
   const filteredGallery =
     activeFilter === 'all'
-      ? galleryItems
-      : galleryItems.filter(item => item.category === activeFilter)
+      ? results
+      : results.filter(item => item.category === activeFilter)
 
   const totalGalleryPages = Math.ceil(filteredGallery.length / GALLERY_PER_PAGE)
 
@@ -97,7 +117,6 @@ export default function ResultsPage() {
 
   return (
     <>
-      <Header />
 
       <div className="cs_height_190 cs_height_xl_150 cs_height_lg_105" />
 
@@ -145,41 +164,67 @@ export default function ResultsPage() {
             </div>
 
             <div className="cs_view_box">
-              <span>Showing {filteredGallery.length} items</span>
+              <span> {filteredGallery.length} Öğe </span>
             </div>
           </div>
 
           <div className="cs_height_40" />
 
-          <div className="row cs_gap_y_40 cs_filter_wrapper">
-            {paginatedGallery.map((item, i) => (
-              <div key={i} className="col-xl-4 col-lg-4 col-md-6 cs_filter_item">
-                <div className="cs_radius_20 overflow-hidden">
-                  <Image
-                    src={item.img}
-                    alt="Gallery"
-                    width={600}
-                    height={500}
-                    style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                  />
-                </div>
+          {loading ? (
+            <div style={{ textAlign: 'center', padding: '40px' }}>
+              <p>Yükleniyor...</p>
+            </div>
+          ) : filteredGallery.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '40px' }}>
+              <p>Bu kategoride henüz sonuç bulunamadı</p>
+            </div>
+          ) : (
+            <>
+              <div className="row cs_gap_y_40 cs_filter_wrapper">
+                {paginatedGallery.map((item) => (
+                  <div key={item.id} className="col-xl-4 col-lg-4 col-md-6 cs_filter_item">
+                    <div style={{ background: '#fff', borderRadius: '20px', overflow: 'hidden', padding: '16px' }}>
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        width={400}
+                        height={250}
+                        quality={75}
+                        loading="lazy"
+                        style={{
+                          width: '100%',
+                          height: '250px',
+                          objectFit: 'cover',
+                          borderRadius: '12px',
+                          marginBottom: '12px'
+                        }}
+                      />
+                      <h4 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0 8px 0' }}>
+                        {item.title}
+                      </h4>
+                      <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5' }}>
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
 
-          {totalGalleryPages > 1 && (
-            <ul className="cs_pagination_box mt-5">
-              {Array.from({ length: totalGalleryPages }).map((_, i) => (
-                <li key={i}>
-                  <button
-                    className={`cs_pagination_item ${galleryPage === i + 1 ? 'active' : ''}`}
-                    onClick={() => setGalleryPage(i + 1)}
-                  >
-                    {i + 1}
-                  </button>
-                </li>
-              ))}
-            </ul>
+              {totalGalleryPages > 1 && (
+                <ul className="cs_pagination_box mt-5">
+                  {Array.from({ length: totalGalleryPages }).map((_, i) => (
+                    <li key={i}>
+                      <button
+                        className={`cs_pagination_item ${galleryPage === i + 1 ? 'active' : ''}`}
+                        onClick={() => setGalleryPage(i + 1)}
+                      >
+                        {i + 1}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
           )}
         </div>
 
@@ -250,7 +295,7 @@ export default function ResultsPage() {
         </div>
       </div>
 
-      <Footer />
+   
     </>
   )
 }

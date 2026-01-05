@@ -3173,6 +3173,10 @@ input::-ms-input-placeholder,
 }
 .cs_feature_title {
   margin-bottom: 18px !important;
+   min-height: 90px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .cs_feature.cs_style_1 {
@@ -5788,7 +5792,7 @@ a.ui-button:active,
   transition: 0.2s;
 }
 .cs_section_heading {
-  margin-bottom: 60px;
+  margin-bottom: 20px;
 }
 .cs_section_spacing {
   padding-top: 80px;
@@ -11625,6 +11629,7 @@ a.ui-button:active,
 }
 .cs_faq_section {
   margin-top: 80px;
+  margin-bottom: 0;
 }
 @media (max-width: 768px) {
   .cs_accordian {
@@ -11633,6 +11638,7 @@ a.ui-button:active,
 
   .cs_faq_section {
     margin-top: 90px;
+    margin-bottom: 0;
   }
 }
 

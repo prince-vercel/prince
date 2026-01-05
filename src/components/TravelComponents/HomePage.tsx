@@ -23,14 +23,18 @@ import bird from '@/assets/images/illustration/bird-illustration.png'
 import blog1 from '@/assets/images/blog/b1-2.webp'
 import blog2 from '@/assets/images/blog/b1-2.webp'
 import blog3 from '@/assets/images/blog/b1-2.webp'
+import { useRef, useState } from 'react'
 
-const packages = [
-  { id: 1, img: p1, title: 'Cusco & Salkantay – Machu Picchu' },
-  { id: 2, img: p2, title: 'Casablanca Vadisi Şarap Turu' },
-  { id: 3, img: p3, title: 'Maldivler Macera Turu' },
-]
+const generateRandomId = () => Math.random().toString(36).substring(2, 11)
 
 export default function TravelHomePage() {
+const [date, setDate] = useState('')
+const dateRef = useRef<HTMLInputElement>(null)
+const [packages] = useState(() => [
+  { slug: 'cusco-machu-picchu', img: p1, title: 'Cusco & Salkantay – Machu Picchu' },
+  { slug: 'casablanca-sarap-turu', img: p2, title: 'Casablanca Vadisi Şarap Turu' },
+  { slug: 'maldivler-macera-turu', img: p3, title: 'Maldivler Macera Turu' },
+])
 
   return (
     <>
@@ -46,9 +50,7 @@ export default function TravelHomePage() {
             className="lg:h-full w-full object-cover group-hover:scale-110 duration-500"
           />
           <div className="text-white absolute w-full lg:bottom-10 bottom-6 text-center">
-            <h3 className="font-extrabold 2xl:text-xl md:text-lg text-2md leading-1.6">
-              Fransa’nın Güzelliği
-            </h3>
+
             <div className="h-[3px] w-9 bg-white rounded-md mx-auto"></div>
           </div>
         </a>
@@ -62,9 +64,7 @@ export default function TravelHomePage() {
             className="lg:h-full w-full object-cover group-hover:scale-110 duration-500"
           />
           <div className="text-white absolute w-full lg:bottom-10 bottom-6 text-center">
-            <h3 className="font-extrabold 2xl:text-xl md:text-lg text-2md leading-1.6">
-              Muhteşem İsviçre
-            </h3>
+
             <div className="h-[3px] w-9 bg-white rounded-md mx-auto"></div>
           </div>
         </a>
@@ -89,7 +89,7 @@ export default function TravelHomePage() {
 
      {/* DESTINATION */}
 <div className="relative lg:mt-12 mt-base">
-  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-primary-1 text-lg pointer-events-none z-10">
+  <span className="absolute left-5 lg:left-4 top-1/2 -translate-y-1/2 text-primary-1 text-lg pointer-events-none z-10">
     <i className="bi bi-geo-alt"></i>
   </span>
 
@@ -99,28 +99,42 @@ export default function TravelHomePage() {
     className="
       relative z-0 w-full bg-white outline-0
       h-14 lg:h-17
-      pl-[52px] lg:pl-[60px]
+      pl-12 lg:pl-[60px] pr-3
     "
   />
 </div>
 
 {/* DATE */}
 <div className="relative lg:mt-10 mt-6">
-  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-primary-1 text-lg pointer-events-none z-10">
+  <span className="absolute left-5 lg:left-4 top-1/2 -translate-y-1/2 text-primary-1 text-lg pointer-events-none z-10">
     <i className="bi bi-calendar-date"></i>
   </span>
 
   <input
     type="text"
-    value="Tarih Seç"
+    value={date ? date : 'Tarih Seç'}
     readOnly
     className="
-      relative z-0 w-full bg-white outline-0
+      relative z-0 w-full bg-white outline-0 cursor-pointer
       h-14 lg:h-17
-      pl-[52px] lg:pl-[60px]
+      pl-12 lg:pl-[60px] pr-3
+    "
+  />
+
+  <input
+    ref={dateRef}
+    type="date"
+    value={date}
+    onChange={(e) => setDate(e.target.value)}
+    onClick={(e) => e.currentTarget.showPicker?.()}
+    className="
+      absolute top-0 left-0 z-20 w-full h-full
+      opacity-0 cursor-pointer
+      pl-12 lg:pl-[60px]
     "
   />
 </div>
+
 
 
 
@@ -145,9 +159,7 @@ export default function TravelHomePage() {
             className="lg:h-full w-full object-cover group-hover:scale-110 duration-500"
           />
           <div className="text-white absolute w-full lg:bottom-10 bottom-6 text-center">
-            <h3 className="font-extrabold 2xl:text-xl md:text-lg text-2md leading-1.6">
-              Katmandu, Nepal
-            </h3>
+
             <div className="h-[3px] w-9 bg-white rounded-md mx-auto"></div>
           </div>
         </a>
@@ -161,9 +173,7 @@ export default function TravelHomePage() {
             className="lg:h-full w-full object-cover group-hover:scale-110 duration-500"
           />
           <div className="text-white absolute w-full lg:bottom-10 bottom-6 text-center">
-            <h3 className="font-extrabold 2xl:text-xl md:text-lg text-2md leading-1.6">
-              Kolezyum, Roma
-            </h3>
+
             <div className="h-[3px] w-9 bg-white rounded-md mx-auto"></div>
           </div>
         </a>
@@ -173,38 +183,7 @@ export default function TravelHomePage() {
   </div>
 </div>
 
-<div className="swiper destination-slider-one lg:hidden px-3 mt-base">
-  <div className="swiper-wrapper">
 
-    <div className="swiper-slide">
-      <div className="group hero-card-sm">
-        <img src={hd1.src} alt="Fransa" />
-        <div className="text-white absolute bottom-6 w-full text-center">
-          <h3>Fransa’nın Güzelliği</h3>
-        </div>
-      </div>
-    </div>
-
-    <div className="swiper-slide">
-      <div className="group hero-card-sm">
-        <img src={hd2.src} alt="İsviçre" />
-        <div className="text-white absolute bottom-6 w-full text-center">
-          <h3>Muhteşem İsviçre</h3>
-        </div>
-      </div>
-    </div>
-
-    <div className="swiper-slide">
-      <div className="group hero-card-sm">
-        <img src={hd3.src} alt="Nepal" />
-        <div className="text-white absolute bottom-6 w-full text-center">
-          <h3>Katmandu, Nepal</h3>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
 
 
 {/*========== TOUR CATEGORY START ==========*/}
@@ -219,25 +198,25 @@ export default function TravelHomePage() {
 
       <div className="text-center">
         <img src={t1.src} alt="Macera" className="mx-auto" />
-        <h4 className="mt-4">Macera Turları</h4>
+        <h4 className="mt-4">Historical</h4>
         <p>Adrenalin dolu keşif rotaları</p>
       </div>
 
       <div className="text-center">
         <img src={t2.src} alt="Gemi" className="mx-auto" />
-        <h4 className="mt-4">Gemi Turları</h4>
+        <h4 className="mt-4">Shopping</h4>
         <p>Konforlu ve keyifli deniz yolculukları</p>
       </div>
 
       <div className="text-center">
         <img src={t3.src} alt="Doğa" className="mx-auto" />
-        <h4 className="mt-4">Doğa Yürüyüşleri</h4>
+        <h4 className="mt-4">Cultural</h4>
         <p>Doğa ile iç içe rotalar</p>
       </div>
 
       <div className="text-center">
         <img src={t4.src} alt="Balayı" className="mx-auto" />
-        <h4 className="mt-4">Balayı Turları</h4>
+        <h4 className="mt-4">Private tour</h4>
         <p>Romantik ve özel tatiller</p>
       </div>
 
@@ -267,7 +246,7 @@ export default function TravelHomePage() {
     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-base">
 
       {packages.map((item, index) => (
-        <div key={item.id} className="group/card package-card-style-one wow fadeInUp" data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}>
+        <div key={item.slug} className="group/card package-card-style-one wow fadeInUp" data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}>
           <div className="overflow-hidden relative">
             <a href="#">
               <img src={item.img.src} alt={item.title} className="w-full group-hover/card:scale-105 duration-300" />
@@ -295,7 +274,7 @@ export default function TravelHomePage() {
             </li>
           </ul>
 
-          <a href={`/travel/all/${item.id}`} className="package-explore-btn group/btn">
+          <a href={`/travel/all/${item.slug}`} className="package-explore-btn group/btn">
             <span className="mr-2">Hemen İncele</span>
             <svg className="group-hover/btn:translate-x-2 duration-200" width="27" height="14" viewBox="0 0 27 14" fill="none">
               <path d="M0.217443 6.25H18.4827V7.75H0.217443Z" fill="currentColor" />
