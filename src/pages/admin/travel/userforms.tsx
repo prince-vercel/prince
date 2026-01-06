@@ -16,18 +16,27 @@ import {
   doc
 } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
-import { AdminMedicalLayout } from '@/src/components/AdminComponents/medical/AdminMedicalLayout'
-import { MedicalFormData } from '@/src/types/medical'
 import styles from '@/src/styles/admin.module.css'
 import SendEmail from '@/src/components/SendEmail'
+import { AdminTravelLayout } from '@/src/components/AdminComponents/travel/AdminTravelLayout'
 
-interface FormWithId extends MedicalFormData {
+interface TravelFormData {
+  name: string
+  nationality: string
+  phone: string
+  email: string
+  destination: string
+  date: string
+  duration: string
+  guests: string
+  transfer: string
+  requests: string
+  contact: string
+  createdAt?: any
+}
+
+interface FormWithId extends TravelFormData {
   id: string
-  admin?: {
-    answered: boolean
-    answerText: string
-    answeredAt: Date
-  }
 }
 
 const PAGE_SIZE = 10
@@ -45,7 +54,7 @@ const GetForms = () => {
   const [selectedEmail, setSelectedEmail] = useState<{email: string, name: string} | null>(null)
 
   const deleteMedicalForm = async (id: string) => {
-    await deleteDoc(doc(db, 'medicalforms', id))
+    await deleteDoc(doc(db, 'travelforms', id))
     setForms(prev => prev.filter(f => f.id !== id))
     setShowDeleteModal(false)
     setDeleteId(null)
@@ -59,13 +68,13 @@ const GetForms = () => {
   }
 
   const fetchCount = async () => {
-    const snap = await getCountFromServer(collection(db, 'medicalforms'))
+    const snap = await getCountFromServer(collection(db, 'travelforms'))
     setTotal(snap.data().count)
   }
 
   const fetchForms = useCallback(async (loadMore = false) => {
     const q = query(
-      collection(db, 'medicalforms'),
+      collection(db, 'travelforms'),
       orderBy('createdAt', 'desc'),
       ...(loadMore && lastDoc ? [startAfter(lastDoc)] : []),
       limit(PAGE_SIZE)
@@ -90,7 +99,7 @@ useEffect(() => {
 
 
   return (
-    <AdminMedicalLayout>
+    <AdminTravelLayout>
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
         <>
@@ -143,7 +152,7 @@ useEffect(() => {
             />
           </div>
           <div className={styles.gfStatBox}>
-            <p className={styles.gfStatLabel}>Toplam Kayıt: <span className={styles.gfStatValue}>{total}</span></p>
+            <p className={styles.gfStatLabel}>Toplam Kayıt: <span className={styles.gfStatValue} style={{ color: '#E8604C' }}>{total}</span></p>
           </div>
         </div>
 
@@ -152,26 +161,26 @@ useEffect(() => {
         ) : (
           forms
             .filter(item =>
-              item.personal.fullName.toLowerCase().includes(filterName.toLowerCase())
+              item.name.toLowerCase().includes(filterName.toLowerCase())
             )
             .map((item, index) => (
               <div key={item.id} className={styles.gfCard}>
                 {/* KAPALI HAL SATIR */}
                 <div className={styles.gfCardRow}>
-                  <div className={styles.gfRowNumber}>{index + 1}</div>
+                  <div className={styles.gfRowNumber} style={{ color: '#E8604C', background: '#FBE9E3' }}>{index + 1}</div>
                   <div className={styles.gfRowDate}>
                     {item.createdAt?.toDate
                       ? item.createdAt.toDate().toLocaleDateString('tr-TR')
                       : '-'}
                   </div>
-                  <div className={styles.gfRowName}>{item.personal.fullName}</div>
+                  <div className={styles.gfRowName}>{item.name}</div>
 
                   <div className={styles.gfRowActions}>
                     <button
                       className={styles.gfIconBtn}
                       title="Sil"
                       onClick={() =>
-                        openDeleteModal(item.id, item.personal.fullName)
+                        openDeleteModal(item.id, item.name)
                       }
                     >
                       <i className="fas fa-trash"></i>
@@ -181,7 +190,7 @@ useEffect(() => {
                       className={styles.gfIconBtn}
                       title="Cevapla"
                       onClick={() => {
-                        setSelectedEmail({email: item.personal.email, name: item.personal.fullName})
+                        setSelectedEmail({email: item.email, name: item.name})
                         setShowEmailModal(true)
                       }}
                     >
@@ -211,141 +220,71 @@ useEffect(() => {
                       <h3>Kişisel Bilgiler</h3>
                       <div className={styles.gfFields}>
                         <div className={styles.gfField}>
-                          <label>Email</label>
-                          <div>{item.personal.email}</div>
+                          <label>Ad Soyad</label>
+                          <div>{item.name}</div>
+                        </div>
+                        <div className={styles.gfField}>
+                          <label>E-posta</label>
+                          <div>{item.email}</div>
                         </div>
                         <div className={styles.gfField}>
                           <label>Telefon</label>
-                          <div>{item.personal.phone}</div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>Cinsiyet</label>
-                          <div>{item.personal.gender}</div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>Doğum Tarihi</label>
-                          <div>{item.personal.birthDate}</div>
+                          <div>{item.phone}</div>
                         </div>
                         <div className={styles.gfField}>
                           <label>Uyruk</label>
-                          <div>{item.personal.nationality}</div>
+                          <div>{item.nationality}</div>
                         </div>
                       </div>
                     </div>
 
                     <div className={styles.gfSection}>
-                      <h4>Medikal Geçmiş</h4>
+                      <h3>Seyahat Bilgileri</h3>
                       <div className={styles.gfFields}>
                         <div className={styles.gfField}>
-                          <label>Kronik Hastalık</label>
-                          <div>{item.medical.chronicDisease}</div>
-                        </div>
-                        {item.medical.chronicDisease === 'Evet' &&
-                          item.medical.chronicDiseaseDetail && (
-                            <div className={styles.gfField}>
-                              <label>Kronik Hastalık Detayı</label>
-                              <div>{item.medical.chronicDiseaseDetail}</div>
-                            </div>
-                          )}
-                        <div className={styles.gfField}>
-                          <label>Kalp Rahatsızlığı</label>
-                          <div>{item.medical.heartDisease}</div>
+                          <label>Hedef Yer</label>
+                          <div>{item.destination}</div>
                         </div>
                         <div className={styles.gfField}>
-                          <label>Diyabet</label>
-                          <div>{item.medical.diabetes}</div>
+                          <label>Seyahat Tarihi</label>
+                          <div>{item.date || '-'}</div>
                         </div>
                         <div className={styles.gfField}>
-                          <label>Yüksek Tansiyon</label>
-                          <div>{item.medical.hypertension}</div>
+                          <label>Konaklama Süresi</label>
+                          <div>{item.duration || '-'}</div>
                         </div>
-                        <div className={styles.gfField}>
-                          <label>Kanser Geçmişi</label>
-                          <div>{item.medical.cancer}</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className={styles.gfSection}>
-                      <h4>İşlem Detayları</h4>
-                      <div className={styles.gfFields}>
-                        <div className={styles.gfField}>
-                          <label>İşlem</label>
-                          <div>
-                            {item.operation.operation}
-                            {item.operation.otherOperation &&
-                              ` (${item.operation.otherOperation})`}
-                          </div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>Danışma Alındı mı</label>
-                          <div>{item.operation.consultation}</div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>İlk Ameliyat mı</label>
-                          <div>{item.operation.firstSurgery}</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className={styles.gfSection}>
-                      <h4>Seyahat Bilgileri</h4>
-                      <div className={styles.gfFields}>
-                        <div className={styles.gfField}>
-                          <label>Seyahat Zamanı</label>
-                          <div>{item.travel.travelTime}</div>
-                        </div>
-                        {item.travel.travelDate && (
-                          <div className={styles.gfField}>
-                            <label>Seyahat Tarihi</label>
-                            <div>{item.travel.travelDate}</div>
-                          </div>
-                        )}
                         <div className={styles.gfField}>
                           <label>Kişi Sayısı</label>
-                          <div>{item.travel.personCount}</div>
+                          <div>{item.guests || '-'}</div>
                         </div>
                         <div className={styles.gfField}>
-                          <label>Uçak Bileti</label>
-                          <div>{item.travel.ticketStatus}</div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>Varış Havalimanı</label>
-                          <div>
-                            {item.travel.airport}
-                            {item.travel.otherAirport &&
-                              ` (${item.travel.otherAirport})`}
-                          </div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>Otel İhtiyacı</label>
-                          <div>{item.travel.hotelNeed}</div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>VIP Transfer</label>
-                          <div>{item.travel.vipTransfer}</div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>Araç Tercihi</label>
-                          <div>{item.travel.vehicleChoice}</div>
+                          <label>Havalimanı Transferi</label>
+                          <div>{item.transfer || '-'}</div>
                         </div>
                       </div>
                     </div>
 
-                    {item.admin?.answered && (
-                      <div className={styles.gfAnswerBox}>
-                        <p className={styles.gfAnswerLabel}>Admin Cevabı</p>
-                        <p>{item.admin.answerText}</p>
+                    {item.requests && (
+                      <div className={styles.gfSection}>
+                        <h3>Özel Talepler</h3>
+                        <div className={styles.gfFields}>
+                          <div className={styles.gfField}>
+                            <label>Talep</label>
+                            <div style={{ whiteSpace: 'pre-line' }}>
+                              {item.requests}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     )}
 
-                    {item.extraInfo && (
+                    {item.contact && (
                       <div className={styles.gfSection}>
-                        <h4>Ek Bilgiler</h4>
-                        <div className={styles.gfField}>
-                          <label>Doktor Notu</label>
-                          <div style={{ whiteSpace: 'pre-line' }}>
-                            {item.extraInfo}
+                        <h3>İletişim Tercihi</h3>
+                        <div className={styles.gfFields}>
+                          <div className={styles.gfField}>
+                            <label>Tercih</label>
+                            <div>{item.contact}</div>
                           </div>
                         </div>
                       </div>
@@ -372,7 +311,7 @@ useEffect(() => {
         recipientEmail={selectedEmail?.email || ''}
         recipientName={selectedEmail?.name || ''}
       />
-    </AdminMedicalLayout>
+    </AdminTravelLayout>
   )
 }
 

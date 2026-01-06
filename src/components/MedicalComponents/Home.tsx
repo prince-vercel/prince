@@ -144,8 +144,7 @@ useEffect(() => {
 </h1>
 
             <p className="cs_hero_subtitle cs_fs_20 cs_heading_color">
-              We are committed to providing you with the best medical and
-              healthcare services.
+              Size en iyi tıbbi ve sağlık hizmetlerini sunmaya kardeşiz.
             </p>
 <Link href="/medical/form" className="cs_btn cs_style_1" style={{marginTop:'20px'}}>
   <span>Başvuru Yap</span>
@@ -234,8 +233,8 @@ useEffect(() => {
         <div className="cs_section_heading cs_style_1 text-center">
           <h2 className="cs_section_title cs_fs_72 m-0">Süreçler</h2>
           <div className="cs_height_5"></div>
-          <h3 className="cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_fs_32">
-            Of our clients
+          <h3 className="cs_section_subtitle cs_accent_color cs_semibold m-0 cs_fs_32">
+            Tedavi Sürecimiz
           </h3>
         </div>
 
@@ -279,7 +278,7 @@ useEffect(() => {
       <section className="cs_shape_wrap" style={{ marginTop: '15vh' }}>
         <div className="container">
           <div className="cs_section_heading text-center "style={{ marginBottom: '5vh' }}>
-            <h2 className="cs_section_title cs_fs_72">Our Values</h2>
+            <h2 className="cs_section_title cs_fs_72">Değerlerimiz</h2>
           </div>
 
           <div className="cs_random_features" style={{
@@ -289,28 +288,28 @@ useEffect(() => {
           }}>
            {[
         {
-          title: 'Compassion',
-          desc: 'We treat every patient with empathy, care, and genuine understanding.',
+          title: 'Anlayış',
+          desc: 'Her hastayı empati, bakım ve gerçek anlayışla tedavi ederiz.',
           icon: compassion,
         },
         {
-          title: 'Excellence',
-          desc: 'We strive for the highest standards in medical quality and service.',
+          title: 'Mükemmellik',
+          desc: 'Tıbbi kalite ve hizmette en yüksek standartları hedefleriz.',
           icon: excellence,
         },
         {
-          title: 'Integrity',
-          desc: 'We act with honesty, transparency, and strong moral principles.',
+          title: 'Dürüstlük',
+          desc: 'Dürüstlük, şeffaflık ve güçlü ahlaki ilkelerle hareket ederiz.',
           icon: integrity,
         },
         {
-          title: 'Respect',
-          desc: 'We value every individual and respect their needs and choices.',
+          title: 'Saygı',
+          desc: 'Her bireyi değer veririz ve tercihlerine saygı duyarız.',
           icon: respect,
         },
         {
-          title: 'Teamwork',
-          desc: 'We work together across disciplines to deliver the best outcomes.',
+          title: 'Takım Çalışması',
+          desc: 'En iyi sonuçları sağlamak için disiplinler arası çalışırız.',
           icon: teamwork,
         },
        
@@ -357,15 +356,15 @@ useEffect(() => {
       {[
         {
           img: post1,
-          title: 'The Benefits of Mindfulness Meditation for Stress and Anxiety',
+          title: 'Meditasyonun Stres ve Kaygı Üzerindeki Faydaları',
         },
         {
           img: post2,
-          title: 'Healthy Eating on a Budget: Tips and Strategies',
+          title: 'Sınırlı Bütçeyle Sağlıklı Beslenme: İpuçları ve Stratejiler',
         },
         {
           img: post3,
-          title: 'The Importance of Regular Cancer Screenings and Early Detection',
+          title: 'Düzenli Kanser Taramasının Önemi ve Erken Tanı',
         },
       ].map((post, i) => (
         <div key={i} className="col-lg-4">
@@ -400,14 +399,14 @@ useEffect(() => {
                   </div>
                 </div>
 
-                <h2 className="cs_post_title cs_semibold cs_fs_32">
+                <h2 className="cs_post_title cs_semibold cs_fs_24">
                   <Link href="/blog">{post.title}</Link>
                 </h2>
               </div>
 
               <div className="cs_heading_color cs_medium">
                 <Link href="/blog" className="cs_post_btn">
-                  Learn More
+                  Devamını Oku
                 </Link>
               </div>
             </div>

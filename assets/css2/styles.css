@@ -36,7 +36,6 @@
 */
 
 html {
-  line-height: 1.5;
   /* 1 */
   -webkit-text-size-adjust: 100%;
   /* 2 */
@@ -45,7 +44,7 @@ html {
   -o-tab-size: 4;
      tab-size: 4;
   /* 3 */
-  font-family: Playfair Display, serif;
+  font-family: 'Montserrat', sans-serif;
   /* 4 */
   font-feature-settings: normal;
   /* 5 */
@@ -130,7 +129,7 @@ code,
 kbd,
 samp,
 pre {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: 'Montserrat', sans-serif;
   /* 1 */
   font-size: 1em;
   /* 2 */
@@ -424,16 +423,16 @@ video {
 }
 
 h1,h2,h3,h4,h5{
-  font-family: Playfair Display, serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 p{
-  font-family: Playfair Display, serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 16px;
 }
 
 body{
-  font-family: Playfair Display, serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 16px;
 }
 
@@ -2142,15 +2141,15 @@ html{
 }
 
 .font-cursive{
-  font-family: Satisfy, cursive;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .font-sans{
-  font-family: Playfair Display, serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .font-serif{
-  font-family: Playfair Display, serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .\!text-\[17px\]{
@@ -2584,7 +2583,7 @@ Common Text Classes
 }
 
 .regular-text-v1{
-  font-family: Playfair Display, serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   line-height: 1.9;
   --tw-text-opacity: 1;
@@ -2859,7 +2858,7 @@ Custom Components
   padding-bottom: 0.75rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  font-family: Playfair Display, serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -3262,7 +3261,7 @@ Custom Components
   --tw-gradient-from: #ffffff59 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(255 255 255 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-  font-family: Satisfy, cursive;
+  font-family: 'Montserrat', sans-serif;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
@@ -3877,7 +3876,7 @@ Styling for long TW class
 }
 
 .hero-glow-text{
-  font-family: Poppins;
+  font-family: 'Montserrat', sans-serif;
   color: transparent;
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: white;
@@ -4149,7 +4148,7 @@ Customiz Third-Party Plugins
 .custom_order__list li .list__content h5{
   margin-top: 3px;
   margin-bottom: 10px;
-  font-family: Playfair Display, serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   font-weight: 500;
   --tw-text-opacity: 1;
@@ -4575,7 +4574,7 @@ Customiz Third-Party Plugins
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   text-align: center;
-  font-family: Playfair Display, serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   --tw-text-opacity: 1;
   color: rgb(232 96 76 / var(--tw-text-opacity));
@@ -4717,7 +4716,7 @@ Customiz Third-Party Plugins
 /* DatePicker Style */
 
 .daterangepicker{
-  font-family: unset;
+  font-family: 'Montserrat', sans-serif;
   border-radius: 0;
   border: 1px solid #E8604C;
 }

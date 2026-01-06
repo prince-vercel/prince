@@ -1,10 +1,11 @@
-import TravelSidebar from '@/src/components/AdminComponents/travel/TravelSidebar'
+import { AdminTravelLayout } from '@/src/components/AdminComponents/travel/AdminTravelLayout'
+import Dashboard from '@/src/components/AdminComponents/travel/Dashboard'
 
 const AdminTravel = () => {
   return (
-    <div>
-      <TravelSidebar />
-    </div>
+    <AdminTravelLayout>
+      <Dashboard />
+    </AdminTravelLayout>
   )
 }
 

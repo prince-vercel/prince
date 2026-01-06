@@ -1,25 +1,77 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '@/src/lib/firebase'
 
-import blogDetailsImg from '@/assets/img/blog/blog_details_1.jpeg'
-
-import Header from '@/src/components/MedicalComponents/Header'
-import Footer from '@/src/components/MedicalComponents/Footer'
+interface Blog {
+  id: string
+  title: string
+  description: string
+  imageUrl: string
+  isFavorite: boolean
+  createdAt: any
+}
 
 export default function BlogDetailPage() {
   const router = useRouter()
   const { slug } = router.query
+  const [blog, setBlog] = useState<Blog | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
-  if (!slug) return null
+  useEffect(() => {
+    if (!slug) return
+
+    const fetchBlog = async () => {
+      try {
+        setLoading(true)
+        const docRef = doc(db, 'medicalblogs', String(slug))
+        const docSnap = await getDoc(docRef)
+
+        if (docSnap.exists()) {
+          const blogData = {
+            id: docSnap.id,
+            ...docSnap.data(),
+            createdAt: docSnap.data().createdAt?.toDate(),
+          } as Blog
+          setBlog(blogData)
+        } else {
+          setError('Blog bulunamadı')
+        }
+      } catch (err) {
+        console.error('Blog yükleme hatası:', err)
+        setError('Blog yüklenirken hata oluştu')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchBlog()
+  }, [slug])
+
+  if (!slug || loading) {
+    return (
+      <div style={{ textAlign: 'center', padding: '40px' }}>
+        {loading ? 'Blog yükleniyor...' : 'Yükleniyor...'}
+      </div>
+    )
+  }
+
+  if (error || !blog) {
+    return (
+      <div style={{ textAlign: 'center', padding: '40px', color: 'red' }}>
+        {error || 'Blog bulunamadı'}
+      </div>
+    )
+  }
 
   return (
     <>
-
-      <div className="cs_height_170" />
-
       <div className="container">
         <ol className="breadcrumb2">
           <li className="breadcrumb-item2">
@@ -29,29 +81,22 @@ export default function BlogDetailPage() {
             <Link href="/medical/blog">Blog</Link>
           </li>
           <li className="breadcrumb-item2 active">
-            Ruh Sağlığının Önemi: Anksiyete Bozukluğunu Anlamak ve Yönetmek
+            {blog.title}
           </li>
         </ol>
 
         <div className="cs_height_18" />
 
         <h1 className="cs_fs_72 mb-0">
-          Ruh Sağlığının Önemi: Anksiyete Bozukluğunu Anlamak ve Yönetmek
+          {blog.title}
         </h1>
 
         <div className="cs_height_54" />
 
         <div className="cs_blog_details_info" style={{margin:'15px'}}>
           <div className="cs_blog_details_info_left">
-            <div className="cs_blog_details_tags">
-              <Link href="/medical/blog">Acil Tıp</Link>
-              <Link href="/medical/blog">Pediatri</Link>
-              <Link href="/medical/blog">Kardiyoloji</Link>
-              <Link href="/medical/blog">Psikiyatri</Link>
-              <Link href="/medical/blog">Diğerleri</Link>
-            </div>
             <div className="cs_blog_details_date">
-              12 Mart 2023 | Debri Bianca
+              {blog.createdAt?.toLocaleDateString('tr-TR')} | Blog Yöneticisi
             </div>
           </div>
 
@@ -67,53 +112,31 @@ export default function BlogDetailPage() {
 
         <div className="cs_height_55" />
 
-        <Image
-          src={blogDetailsImg}
-          alt="Blog Details"
-          width={1200}
-          height={700}
-          className="w-100 cs_radius_20"
-        />
+        <div style={{ position: 'relative', width: '100%', height: '400px', overflow: 'hidden', borderRadius: '12px' }}>
+          <img
+            src={blog.imageUrl}
+            alt={blog.title}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </div>
 
         <div className="cs_height_90 cs_height_lg_50" />
 
         <div className="row" style={{marginTop:'50px'}}>
           <div className="col-lg-8">
             <div className="cs_blog_details">
-              <h2>Anksiyete Bozukluğu Nedir</h2>
+              <h2>Blog İçeriği</h2>
 
               <p>
-                Anksiyete bozuklukları, günlük aktiviteleri etkileyecek kadar güçlü bir endişe, kaygı veya korku hissiyle karakterize edilen bir zihinsel sağlık bozukluğudur.
+                {blog.description}
               </p>
 
-              <ol>
-                <li>
-                  <b>Genelleştirilmiş Anksiyete Bozukluğu (GAD)</b>
-                </li>
-                <li>
-                  <b>Panik Bozukluğu</b>
-                </li>
-                <li>
-                  <b>Sosyal Anksiyete Bozukluğu</b>
-                </li>
-                <li>
-                  <b>Obsesif-Kompulsif Bozukluğu (OKB)</b>
-                </li>
-                <li>
-                  <b>Travma Sonrası Stres Bozukluğu (TSSB)</b>
-                </li>
-              </ol>
-
-              
-
               <h2>Yorumlar</h2>
-
             </div>
 
             <div className="cs_height_85" />
 
             <div className="cs_height_110" />
-
 
             <div className="cs_height_12" />
 
@@ -139,18 +162,7 @@ export default function BlogDetailPage() {
             </form>
           </div>
 
-          <div className="col-lg-4">
-            <div className="cs_sidebar">
-              <div className="cs_sidebar_item">
-                <h2 className="cs_sidebar_widget_title">Popüler Kategoriler</h2>
-                <ul>
-                  <li><a href="#">Sağlık İpuçları</a></li>
-                  <li><a href="#">Trendler</a></li>
-                  <li><a href="#">Zaman Yönetimi</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
+
         </div>
 
         <div className="cs_height_135" />

@@ -1,40 +1,63 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from "@/src/lib/firebase";
 
 import breadcrumbBg from "../../../assets/images/backgrounds/breadcrumb-bg.webp";
 import breadcrumbShape from "../../../assets/images/illustration/breadcrunb__shape.png";
 import birdWhite from "../../../assets/images/illustration/bird-illustration-w.png";
 
-import p1 from "../../../assets/images/packages/p1-1.webp";
-import p2 from "../../../assets/images/packages/p1-2.webp";
-import p3 from "../../../assets/images/packages/p1-3.webp";
-import p4 from "../../../assets/images/packages/p1-4.webp";
-import p5 from "../../../assets/images/packages/p1-5.webp";
-import p6 from "../../../assets/images/packages/p1-6.webp";
-import p7 from "../../../assets/images/packages/p1-7.webp";
-import p8 from "../../../assets/images/packages/p1-8.webp";
-
-import Header from "@/src/components/TravelComponents/Header";
-import Footer from "@/src/components/TravelComponents/Footer";
-
-/* ---------------- DATA ---------------- */
-const packages = [
-  { slug: "cusco-machu-picchu", title: "Cusco & Salkantay – Machu Picchu", image: p1, category: "Adventure", destination: "Italy", duration: "3 - 5 Days", price: 250 },
-  { slug: "casablanca-sarap-turu", title: "Casablanca Vadisi Şarap Turu", image: p2, category: "Honeymoon", destination: "Maldives", duration: "5 - 7 Days", price: 420 },
-  { slug: "maldivler-macera-turu", title: "Maldivler Macera Turu", image: p3, category: "Cruise Tours", destination: "Singapore", duration: "2 - 4 Days", price: 180 },
-  { slug: "thailand-city-tours", title: "Tayland Şehir Turu", image: p4, category: "City Tours", destination: "Thailand", duration: "Fullday (+8 hours)", price: 90 },
-  { slug: "italy-museum-tours", title: "İtalya Müze Turu", image: p5, category: "Museum Tours", destination: "Italy", duration: "2 - 8 hours", price: 60 },
-  { slug: "hong-kong-adventure", title: "Hong Kong Macerası", image: p6, category: "Adventure", destination: "Hong Kong", duration: "More Than 7 Days", price: 520 },
-  { slug: "singapore-city-tours", title: "Singapur Şehir Turu", image: p7, category: "City Tours", destination: "Singapore", duration: "3 - 5 Days", price: 210 },
-  { slug: "maldives-honeymoon", title: "Maldivler Balayı Turu", image: p8, category: "Honeymoon", destination: "Maldives", duration: "5 - 7 Days", price: 480 },
-];
-
 export default function PackageList() {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedDestinations, setSelectedDestinations] = useState<string[]>([]);
-  const [selectedDurations, setSelectedDurations] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 600]);
+  const router = useRouter()
+  const { destination } = router.query
+  const [tours, setTours] = useState<any[]>([])
+  const [loadingTours, setLoadingTours] = useState(true)
+  const [selectedDestinations, setSelectedDestinations] = useState<string[]>([])
+  const [selectedDurations, setSelectedDurations] = useState<string[]>([])
+  const [selectedMaxPeople, setSelectedMaxPeople] = useState<string[]>([])
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000])
+
+  useEffect(() => {
+    const fetchTours = async () => {
+      try {
+        const q = query(collection(db, 'traveltours'), orderBy('createdAt', 'desc'))
+        const snap = await getDocs(q)
+        const toursData = snap.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setTours(toursData)
+      } catch (error) {
+        console.error('Tur yükleme hatası:', error)
+      } finally {
+        setLoadingTours(false)
+      }
+    }
+
+    fetchTours()
+  }, [])
+
+  useEffect(() => {
+    if (destination && typeof destination === 'string') {
+      setSelectedDestinations([destination])
+    }
+  }, [destination])
+
+  const normalizeText = (text: string) => {
+    return text
+      .toLowerCase()
+      .replace(/ç/g, 'c')
+      .replace(/ğ/g, 'g')
+      .replace(/ı/g, 'i')
+      .replace(/ö/g, 'o')
+      .replace(/ş/g, 's')
+      .replace(/ü/g, 'u')
+      .replace(/İ/g, 'i')
+      .trim()
+  }
 
   const toggleValue = (
     value: string,
@@ -47,31 +70,54 @@ export default function PackageList() {
   };
 
   const filteredPackages = useMemo(() => {
-    return packages.filter((pkg) => {
-      const categoryOk =
-        selectedCategories.length === 0 ||
-        selectedCategories.includes(pkg.category);
-
+    return tours.filter((tour) => {
       const destinationOk =
         selectedDestinations.length === 0 ||
-        selectedDestinations.includes(pkg.destination);
+        selectedDestinations.some(dest => 
+          normalizeText(dest) === normalizeText(tour.location || '')
+        )
 
       const durationOk =
         selectedDurations.length === 0 ||
-        selectedDurations.includes(pkg.duration);
+        selectedDurations.includes(tour.duration || '')
+
+      const maxPeopleOk = (() => {
+        if (selectedMaxPeople.length === 0) return true
+        const maxPeople = tour.maxPeople || 10
+        return selectedMaxPeople.some(range => {
+          if (range === '5-10') return maxPeople >= 5 && maxPeople <= 10
+          if (range === '10-20') return maxPeople >= 10 && maxPeople <= 20
+          if (range === '20+') return maxPeople >= 20
+          return false
+        })
+      })()
 
       const priceOk =
-        pkg.price >= priceRange[0] && pkg.price <= priceRange[1];
+        (tour.price || 0) >= priceRange[0] && (tour.price || 0) <= priceRange[1]
 
-      return categoryOk && destinationOk && durationOk && priceOk;
-    });
-  }, [selectedCategories, selectedDestinations, selectedDurations, priceRange]);
+      return destinationOk && durationOk && maxPeopleOk && priceOk
+    })
+  }, [tours, selectedDestinations, selectedDurations, selectedMaxPeople, priceRange])
+
+  const uniqueDestinations = useMemo(() => {
+    const defaultDestinations = ["İstanbul","Ankara","İzmir","Antalya","Bursa"]
+    const dbDestinations = new Set(tours.map(tour => tour.location).filter(Boolean))
+    const combined = new Set([...defaultDestinations, ...Array.from(dbDestinations)])
+    return Array.from(combined).sort()
+  }, [tours])
+
+  const uniqueDurations = useMemo(() => {
+    const defaultDurations = ["2 Gün 2 Gece","3 Gün 3 Gece","4 Gün 5 Gece","5 Gün 6 Gece"]
+    const dbDurations = new Set(tours.map(tour => tour.duration).filter(Boolean))
+    const combined = new Set([...defaultDurations, ...Array.from(dbDurations)])
+    return Array.from(combined)
+  }, [tours])
 
   return (
     <>
 
       {/* ===== HERO / BREADCRUMB (AYNI) ===== */}
-      <div className="paralax-container lg:py-36 py-20 relative overflow-hidden">
+      <div className="paralax-container lg:py-20 py-12 relative overflow-hidden">
         <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
           <img src={breadcrumbBg.src} alt="breadcrumb" className="w-full h-full object-cover" />
         </div>
@@ -100,41 +146,58 @@ export default function PackageList() {
 
             {/* LIST (AYNI STİL) */}
             <div className="lg:col-span-8 col-span-12 grid md:grid-cols-2 grid-cols-1 gap-base">
-              {filteredPackages.map((pkg) => (
-                <div key={pkg.slug} className="group/card package-card-style-one">
-                  <div className="overflow-hidden relative">
-                    <a href="/package-details">
-                      <img
-                        src={pkg.image.src}
-                        alt={pkg.title}
-                        className="w-full group-hover/card:scale-105 duration-300"
-                      />
+              {loadingTours ? (
+                <div className="col-span-2 text-center py-20">
+                  <p className="text-lg text-gray-500">Turlar yükleniyor...</p>
+                </div>
+              ) : filteredPackages.length === 0 ? (
+                <div className="col-span-2 text-center py-20">
+                  <p className="text-lg text-gray-500">Tur bulunamadı</p>
+                </div>
+              ) : (
+                filteredPackages.map((tour) => (
+                  <div key={tour.id} className="group/card package-card-style-one">
+                    <div className="overflow-hidden relative" style={{height: '280px', maxHeight: '280px'}}>
+                      <a href={`/travel/all/${tour.id}`} className="block w-full h-full">
+                        {tour.mainImageUrl || tour.imageUrl ? (
+                          <img
+                            src={tour.mainImageUrl || tour.imageUrl}
+                            alt={tour.title}
+                            style={{width: '100%', height: '100%', objectFit: 'cover'}}
+                            className="group-hover/card:scale-105 duration-300"
+                          />
+                        ) : (
+                          <div style={{width: '100%', height: '100%'}} className="bg-gray-200 flex items-center justify-center">
+                            <span className="text-gray-400">Görsel Yok</span>
+                          </div>
+                        )}
+                      </a>
+                    </div>
+
+                    <h3 className="card-title-alpha group-hover/card:text-primary-1 lg:mt-6 mt-5">
+                      <a href={`/travel/all/${tour.id}`}>{tour.title}</a>
+                    </h3>
+
+                    <ul className="flex flex-wrap text-sm font-medium text-dark-2 mt-4 package-feature">
+                      <li className="mr-4 ">
+                        <i className="bi bi-people text-primary-1 ml-1 mr-2"></i>{tour.maxPeople || 10} Kişi
+                      </li>
+                      <li className="mr-4">
+                        <i className="bi bi-clock text-primary-1 mr-2"></i>
+                        {tour.duration || '4 Gün 5 Gece'}
+                      </li>
+                      <li>
+                        <i className="bi bi-geo-alt text-primary-1 mr-2"></i>
+                        {tour.location || 'Destination'}
+                      </li>
+                    </ul>
+
+                    <a href={`/travel/all/${tour.id}`} className="package-explore-btn">
+                      Şimdi Keşfet
                     </a>
                   </div>
-
-                  <h3 className="card-title-alpha group-hover/card:text-primary-1 lg:mt-6 mt-5">
-                    <a href="/package-details">{pkg.title}</a>
-                  </h3>
-
-                  <ul className="flex flex-wrap text-sm font-medium text-dark-2 mt-4 package-feature">
-                    <li className="mr-4 ">
-                      <i className="bi bi-people text-primary-1 ml-1 mr-2"></i>05 Kişi
-                    </li>
-                    <li className="mr-4">
-                      <i className="bi bi-clock text-primary-1 mr-2"></i>
-                      {pkg.duration}
-                    </li>
-                    <li>
-                      <i className="bi bi-coin text-primary-1 mr-2"></i>
-                      <span>Başlayan Fiyat </span><span className="text-primary-1 font-bold"> ${pkg.price}</span>
-                    </li>
-                  </ul>
-
-                  <a href={`/travel/all/${pkg.slug}`} className="package-explore-btn">
-                    Şimdi Keşfet
-                  </a>
-                </div>
-              ))}
+                ))
+              )}
             </div>
 
             {/* ===== FILTER SIDEBAR (AYNI STİL, SADECE BAĞLI) ===== */}
@@ -146,7 +209,7 @@ export default function PackageList() {
             {/* PRICE FILTER */}
             <aside>
               <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">
-                Fiyata Göre Filtrele:
+                Fiyat Aralığı (₺):
               </h5>
 
               <div className="pt-4 flex gap-3 items-center">
@@ -174,40 +237,13 @@ export default function PackageList() {
               </div>
             </aside>
 
-
-
-
-              <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
-
-              {/* CATEGORIES */}
-              <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Categories</h5>
-                <ul className="pt-4">
-                  {["Adventure","Day Long Tours","Cruise Tours","Honeymoon","City Tours","Museum Tours"].map((item, i) => (
-                    <li key={i} className="pt-3 first:pt-0">
-                      <div className="custom-checkbox">
-                        <input
-                          type="checkbox"
-                          id={`cat-${i}`}
-                          checked={selectedCategories.includes(item)}
-                          onChange={() =>
-                            toggleValue(item, selectedCategories, setSelectedCategories)
-                          }
-                        />
-                        <label htmlFor={`cat-${i}`}>{item}</label>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </aside>
-
               <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
 
               {/* DESTINATIONS */}
               <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Destinations</h5>
+                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Şehir</h5>
                 <ul className="pt-4">
-                  {["Singapore","Italy","Thailand","Hong Kong","City Tours","Maldives"].map((item, i) => (
+                  {uniqueDestinations.map((item, i) => (
                     <li key={i} className="pt-3 first:pt-0">
                       <div className="custom-checkbox">
                         <input
@@ -229,9 +265,9 @@ export default function PackageList() {
 
               {/* DURATION */}
               <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Duration</h5>
+                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Gün Sayısı</h5>
                 <ul className="pt-4">
-                  {["2 - 8 hours","Fullday (+8 hours)","2 - 4 Days","3 - 5 Days","5 - 7 Days","More Than 7 Days"].map((item, i) => (
+                  {uniqueDurations.map((item, i) => (
                     <li key={i} className="pt-3 first:pt-0">
                       <div className="custom-checkbox">
                         <input
@@ -243,6 +279,30 @@ export default function PackageList() {
                           }
                         />
                         <label htmlFor={`dur-${i}`}>{item}</label>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </aside>
+
+              <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
+
+              {/* MAX PEOPLE */}
+              <aside>
+                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Maks Kişi Sayısı</h5>
+                <ul className="pt-4">
+                  {[{label: "5-10 kişi", value: "5-10"}, {label: "10-20 kişi", value: "10-20"}, {label: "20+ kişi", value: "20+"}].map((item, i) => (
+                    <li key={i} className="pt-3 first:pt-0">
+                      <div className="custom-checkbox">
+                        <input
+                          type="checkbox"
+                          id={`people-${i}`}
+                          checked={selectedMaxPeople.includes(item.value)}
+                          onChange={() =>
+                            toggleValue(item.value, selectedMaxPeople, setSelectedMaxPeople)
+                          }
+                        />
+                        <label htmlFor={`people-${i}`}>{item.label}</label>
                       </div>
                     </li>
                   ))}

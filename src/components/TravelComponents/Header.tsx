@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import logo from '@/assets/img/logo.png'
+import logo from '@/assets/logo/logo-black.png'
 import closeIcon from '@/assets/img/icons/close.svg'
 import { usePathname } from 'next/navigation'
 
@@ -50,12 +50,12 @@ export default function Header() {
 
                 <nav className="cs_nav">
                   <ul className="cs_nav_list">
-                    <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200">Anasayfa</Link></li>
-                    <li><Link href="/travel/all" className="font-semibold hover:text-primary-1 transition-colors duration-200">Seyahatler</Link></li>
-                    <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200">Başvuru</Link></li>
-                    <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200">Blog</Link></li>
-                    <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200">Hakkımızda</Link></li>
-                    <li><Link href="/travel/contact" className="font-semibold hover:text-primary-1 transition-colors duration-200">İletişim</Link></li>
+                    <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel' ? '#E8604C' : 'inherit' }}>Anasayfa</Link></li>
+                    <li><Link href="/travel/all" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/all' ? '#E8604C' : 'inherit' }}>Seyahatler</Link></li>
+                    <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/form' ? '#E8604C' : 'inherit' }}>Başvuru</Link></li>
+                    <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/blog' ? '#E8604C' : 'inherit' }}>Blog</Link></li>
+                    <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/about' ? '#E8604C' : 'inherit' }}>Hakkımızda</Link></li>
+                    <li><Link href="/travel/contact" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/contact' ? '#E8604C' : 'inherit' }}>İletişim</Link></li>
                   </ul>
                 </nav>
               </div>

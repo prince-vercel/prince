@@ -106,31 +106,21 @@ export default function AboutPage() {
   }, [counters]);
   return (
     <>
-         <ol className="breadcrumb2" style={{ marginLeft: "7%" }}>
-        <li className="breadcrumb-item2">
-          <Link href="/medical">Anasayfa</Link>
-        </li>
-        <li className="breadcrumb-item2">Hakkımızda</li>
-      </ol>
-      <section className="cs_banner cs_style_3">
-        <div className="cs_banner_img">
-          <Image
-            src={bannerImg}
-            alt="About Banner"
-            width={600}
-            height={600}
-            priority
-            className="cs_main_banner_img"
-          />
-        </div>
+      <section style={{ background: '#4f8edc', padding: '20px 0 20px 0' }}>
+        <div className="container" style={{ marginBottom: '20px', marginTop: '-45px' }}>
+          <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
+            <li className="breadcrumb-item2" style={{ color: '#fff' }}>
+              <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
+            </li>
+            <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>Hakkımızda</li>
+          </ol>
 
-        <div className="container">
           <div className="cs_banner_text">
-            <h2 className="cs_banner_title cs_fs_72">
-              ProHealth Tıbbi & Sağlık <br /> Merkezine Hoş Geldiniz
+            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }}>
+              Hakkımızda
             </h2>
-            <p className="cs_banner_subtitle cs_fs_20 cs_heading_color">
-              Sağlık ve Wellness&apos;ta Sizin Ortağınız
+            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
+              Sağlığınız ve güzelliğiniz bizim önceliğimiz.
             </p>
           </div>
         </div>
@@ -140,7 +130,7 @@ export default function AboutPage() {
            <div className="row">
            <div className="col-md-6 col-xl-4">
              <div className="cs_section_heading cs_style_1">
-               <h3 className="cs_section_subtitle text-uppercase cs_accent_color cs_fs_32">
+               <h3 className="cs_section_subtitle text-uppercase cs_accent_color cs_fs_32" style={{ fontWeight: '600' }}>
                  HİZMETLER
                </h3>
                <div className="cs_height_5"></div>
@@ -180,7 +170,7 @@ export default function AboutPage() {
               <div key={i} className="col-lg-3 col-6">
                  <h2
                    className="cs_counter_number"
-                   style={{ fontSize: "30px", fontWeight: "bold" }}
+                   style={{ fontSize: "30px", fontWeight: "500" }}
                 >
                   {item.end >= 1000
                     ? `${Math.floor(values[i] / 1000)}K${item.suffix}`
@@ -241,8 +231,8 @@ export default function AboutPage() {
                    </h2>
                     <p className="cs_iconbox_subtitle m-0">
                      Ekibimiz hastalarımıza mümkün olan en iyi bakımı <br />
-                    sağlamaya adanmış deneyimli doktorlar, hemşireler <br />
-                   ve diğer sağlık profesyonellerini içermektedir.
+                    sağlamaya adanmış deneyimli doktorlar ve hemşireler <br />
+                 içermektedir.
                    </p>
                  </div>
                   <div className="cs_height_85 cs_height_xl_60 cs_height_lg_35"></div>

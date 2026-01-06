@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
@@ -23,18 +24,62 @@ import bird from '@/assets/images/illustration/bird-illustration.png'
 import blog1 from '@/assets/images/blog/b1-2.webp'
 import blog2 from '@/assets/images/blog/b1-2.webp'
 import blog3 from '@/assets/images/blog/b1-2.webp'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore'
+import { db } from '@/src/lib/firebase'
 
 const generateRandomId = () => Math.random().toString(36).substring(2, 11)
 
+const normalizeText = (text: string) => {
+  return text
+    .toLowerCase()
+    .replace(/ç/g, 'c')
+    .replace(/ğ/g, 'g')
+    .replace(/ı/g, 'i')
+    .replace(/ö/g, 'o')
+    .replace(/ş/g, 's')
+    .replace(/ü/g, 'u')
+    .replace(/İ/g, 'i')
+    .trim()
+}
+
 export default function TravelHomePage() {
+const router = useRouter()
 const [date, setDate] = useState('')
+const [destination, setDestination] = useState('')
 const dateRef = useRef<HTMLInputElement>(null)
-const [packages] = useState(() => [
-  { slug: 'cusco-machu-picchu', img: p1, title: 'Cusco & Salkantay – Machu Picchu' },
-  { slug: 'casablanca-sarap-turu', img: p2, title: 'Casablanca Vadisi Şarap Turu' },
-  { slug: 'maldivler-macera-turu', img: p3, title: 'Maldivler Macera Turu' },
-])
+const [packages, setPackages] = useState<any[]>([])
+
+useEffect(() => {
+  const fetchTours = async () => {
+    try {
+      const q = query(collection(db, 'traveltours'), orderBy('createdAt', 'desc'), limit(3))
+      const snap = await getDocs(q)
+      const tours = snap.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      setPackages(tours)
+    } catch (error) {
+      console.error('Tur yükleme hatası:', error)
+    }
+  }
+  
+  fetchTours()
+}, [])
+
+const handleSearchSubmit = (e: React.FormEvent) => {
+  e.preventDefault()
+  const params = new URLSearchParams()
+  if (destination.trim()) {
+    params.append('destination', normalizeText(destination))
+  }
+  if (date) {
+    params.append('date', date)
+  }
+  router.push(`/travel/all?${params.toString()}`)
+}
 
   return (
     <>
@@ -75,7 +120,7 @@ const [packages] = useState(() => [
       className="lg:col-span-6 md:col-span-12 xl:min-h-screen lg:py-30 py-20 bg-cover bg-center bg-no-repeat flex justify-center items-center"
       style={{ backgroundImage: `url(${heroBg.src})` }}
     >
-      <form className="w-full max-w-[570px]">
+      <form className="w-full max-w-[570px]" onSubmit={handleSearchSubmit}>
         <div
           className="lg:py-[50px] py-base lg:px-14 md:px-10 px-base mx-3 text-center backdrop-blur-[21px]"
           style={{
@@ -96,6 +141,8 @@ const [packages] = useState(() => [
   <input
     type="text"
     placeholder="Nereye gitmek istiyorsunuz?"
+    value={destination}
+    onChange={(e) => setDestination(e.target.value)}
     className="
       relative z-0 w-full bg-white outline-0
       h-14 lg:h-17
@@ -245,45 +292,61 @@ const [packages] = useState(() => [
 
     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-base">
 
-      {packages.map((item, index) => (
-        <div key={item.slug} className="group/card package-card-style-one wow fadeInUp" data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}>
-          <div className="overflow-hidden relative">
-            <a href="#">
-              <img src={item.img.src} alt={item.title} className="w-full group-hover/card:scale-105 duration-300" />
-            </a>
-            {index === 0 && <span className="absolute top-5 right-5 text-sm text-white rounded-full bg-[#219FFF] py-1 px-3">%20 İndirim</span>}
-            {index === 2 && <span className="absolute top-5 right-5 text-sm text-white rounded-full bg-status-success py-1 px-3">Macera</span>}
-          </div>
-
-          <h3 className="card-title-alpha group-hover/card:text-primary-1 lg:mt-6 mt-5">
-            <a href="#">{item.title}</a>
-          </h3>
-
-          <ul className="flex flex-wrap lg:text-[15px] text-[13px] font-medium text-dark-2 mt-4 package-feature">
-            <li>
-              <span className="text-primary-1"><i className="bi bi-people"></i></span>
-              <span>05 Kişi</span>
-            </li>
-            <li>
-              <span className="text-primary-1"><i className="bi bi-clock"></i></span>
-              <span>03 Gün</span>
-            </li>
-            <li>
-              <span className="text-primary-1"><i className="bi bi-coin"></i></span>
-              <span>Başlangıç <span className="text-primary-1 font-bold">$250</span></span>
-            </li>
-          </ul>
-
-          <a href={`/travel/all/${item.slug}`} className="package-explore-btn group/btn">
-            <span className="mr-2">Hemen İncele</span>
-            <svg className="group-hover/btn:translate-x-2 duration-200" width="27" height="14" viewBox="0 0 27 14" fill="none">
-              <path d="M0.217443 6.25H18.4827V7.75H0.217443Z" fill="currentColor" />
-              <path d="M20.7 12.28L25.05 7.93C25.56 7.42 25.56 6.58 25.05 6.07L20.7 1.72"
-                stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </a>
+      {packages.length === 0 ? (
+        <div className="col-span-full text-center py-10 text-gray-500">
+          Tur bulunamadı
         </div>
-      ))}
+      ) : (
+        packages.map((item, index) => (
+          <div key={item.id} className="group/card package-card-style-one wow fadeInUp" data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}>
+            <div className="overflow-hidden relative" style={{height: '280px', maxHeight: '280px'}}>
+              <a href={`/travel/all/${item.id}`} className="block w-full h-full">
+                {item.mainImageUrl || item.imageUrl ? (
+                  <img
+                    src={item.mainImageUrl || item.imageUrl}
+                    alt={item.title}
+                    style={{width: '100%', height: '100%', objectFit: 'cover'}}
+                    className="group-hover/card:scale-105 duration-300"
+                  />
+                ) : (
+                  <div style={{width: '100%', height: '100%'}} className="bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-400">Görsel Yok</span>
+                  </div>
+                )}
+              </a>
+              {index === 0 && <span className="absolute top-5 right-5 text-sm text-white rounded-full bg-[#219FFF] py-1 px-3">Yeni</span>}
+            </div>
+
+            <h3 className="card-title-alpha group-hover/card:text-primary-1 lg:mt-6 mt-5">
+              <a href={`/travel/all/${item.id}`}>{item.title}</a>
+            </h3>
+
+            <ul className="flex flex-wrap lg:text-[15px] text-[13px] font-medium text-dark-2 mt-4 package-feature">
+              <li>
+                <span className="text-primary-1"><i className="bi bi-people"></i></span>
+                <span>0{(index % 4) + 1} Kişi</span>
+              </li>
+              <li>
+                <span className="text-primary-1"><i className="bi bi-clock"></i></span>
+                <span>{item.duration || '3 Gün'}</span>
+              </li>
+              <li>
+                <span className="text-primary-1"><i className="bi bi-coin"></i></span>
+                <span> <span className="text-primary-1 font-bold">${item.price || '250'}</span></span>
+              </li>
+            </ul>
+
+            <a href={`/travel/all/${item.id}`} className="package-explore-btn group/btn">
+              <span className="mr-2">Hemen İncele</span>
+              <svg className="group-hover/btn:translate-x-2 duration-200" width="27" height="14" viewBox="0 0 27 14" fill="none">
+                <path d="M0.217443 6.25H18.4827V7.75H0.217443Z" fill="currentColor" />
+                <path d="M20.7 12.28L25.05 7.93C25.56 7.42 25.56 6.58 25.05 6.07L20.7 1.72"
+                  stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+          </div>
+        ))
+      )}
 
     </div>
   </div>

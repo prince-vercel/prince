@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6, p {
 body,
 html {
   color: rgba(39, 71, 96, 0.52);
-  font-family: "Poppins", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.625em;
@@ -79,16 +79,16 @@ h6 {
   margin: 0 0 20px 0;
   font-weight: 700;
   line-height: 1.2em;
-  font-family: "Figtree", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .cs_primary_font,
 .cs_btn {
-  font-family: "Figtree", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .cs_secondary_font {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 h1 {
@@ -2526,27 +2526,27 @@ textarea {
 }
 
 .cs_fs_72 {
-  font-size: 72px;
+  font-size: 50px;
   line-height: 1.14em;
 }
 @media (max-width: 1700px) {
   .cs_fs_72 {
-    font-size: 56px;
+    font-size: 45px;
   }
 }
 @media (max-width: 991px) {
   .cs_fs_72 {
-    font-size: 50px;
+    font-size: 45px;
   }
 }
 @media (max-width: 575px) {
   .cs_fs_72 {
-    font-size: 48px;
+    font-size: 40px;
   }
 }
 @media (max-width: 350px) {
   .cs_fs_72 {
-    font-size: 42px;
+    font-size: 40px;
   }
 }
 
@@ -2581,7 +2581,7 @@ textarea {
 }
 
 .cs_fs_32 {
-  font-size: 32px;
+  font-size: 28px;
   line-height: 1.31em;
 }
 @media (max-width: 1700px) {
@@ -2823,7 +2823,7 @@ hr {
 }
 
 .cs_btn.cs_style_1 {
-  border-radius: 24px;
+  border-radius: 16px;
   -webkit-box-shadow: 0px 4px 20px 0px rgba(39, 71, 96, 0.17);
           box-shadow: 0px 4px 20px 0px rgba(39, 71, 96, 0.17);
   font-weight: 500;
@@ -3006,7 +3006,7 @@ hr {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
   border: 1px solid rgba(48, 123, 196, 0.5);
-  padding: 26px 30px;
+  padding: 14px 18px;
   background-color: transparent;
 }
 .cs_form_field:focus {
@@ -3014,7 +3014,7 @@ hr {
 }
 @media (max-width: 1700px) {
   .cs_form_field {
-    padding: 16px 20px;
+    padding: 12px 16px;
     border-radius: 15px;
   }
 }
@@ -3167,7 +3167,7 @@ input::-ms-input-placeholder,
   }
 }
 .cs_feature_desc {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.6;
   max-width: 280px;
 }
@@ -3238,8 +3238,8 @@ input::-ms-input-placeholder,
 .cs_feature.cs_style_1 .cs_feature_title::before {
   content: "";
   position: absolute;
-  height: calc(100% + 42px);
-  width: calc(100% + 160px);
+  height: calc(80% + 42px);
+  width: calc(80% + 160px);
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%) scale(0.5);
@@ -4030,7 +4030,7 @@ input::-ms-input-placeholder,
   align-items: center;
   gap: 10px;
   font-size: 20px;
-  margin-top: 150px;
+  margin-top: 130px;
   padding: 0;
   list-style: none;
 }
@@ -10404,14 +10404,13 @@ a.ui-button:active,
 .cs_post.cs_style_1 .cs_post_thumb {
   display: block;
   width: 100%;
-  margin-top: 20px;
 }
 .cs_post.cs_style_1 .cs_post_thumb img {
   width: 100%;
   border-radius: 20px;
 }
 .cs_post.cs_style_1 .cs_post_info {
-  padding: 30px 40px 40px;
+  padding: 20px 30px 30px;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -11695,7 +11694,7 @@ a.ui-button:active,
   }
 }
 .cs_accordians.cs_style1 .cs_accordian_head {
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.6em;
   font-weight: 500;
   cursor: pointer;
@@ -12213,7 +12212,7 @@ margin-top: -10%;
           box-shadow: 6px 4px 70px 8px rgba(48, 123, 196, 0.09);
 }
 .cs_team.cs_style_1 .cs_team_meta {
-  padding: 32px 40px;
+  padding: 32px 25px;
 }
 @media (max-width: 1400px) {
   .cs_team.cs_style_1 .cs_team_meta {
@@ -12524,7 +12523,7 @@ margin-top: -10%;
 }
 .cs_select_fix {
   width: 100%;
-  height: 56px;
+  height: 48px;
   padding: 0 48px 0 20px;
   border-radius: 12px;
   border: 1px solid #e4e6ea;

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { db } from '@/src/lib/firebase'
@@ -59,10 +59,24 @@ export default function ResultsPage() {
   const [activeFilter, setActiveFilter] = useState('all')
   const [galleryPage, setGalleryPage] = useState(1)
   const [loading, setLoading] = useState(true)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Fetch results from Firestore on component mount
   useEffect(() => {
     fetchAllResults()
+  }, [])
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
   const fetchAllResults = async () => {
@@ -118,49 +132,108 @@ export default function ResultsPage() {
   return (
     <>
 
-      <div className="cs_height_190 cs_height_xl_150 cs_height_lg_105" />
+      <section style={{ background: '#4f8edc', padding: '20px 0 20px 0' }}>
+        <div className="container" style={{ marginBottom: '20px', marginTop: '-45px' }}>
+          <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
+            <li className="breadcrumb-item2" style={{ color: '#fff' }}>
+              <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
+            </li>
+            <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>Mutlu Sonuçlar</li>
+          </ol>
+
+          <div className="cs_banner_text">
+            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }}>
+              Mutlu Sonuçlar
+            </h2>
+            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
+              Hastalarımızın başarılı tedavi sonuçları ve memnuniyetleri.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <div className="container">
-        <ol className="breadcrumb2">
-          <li className="breadcrumb-item2">
-            <Link href="/medical">Anasayfa</Link>
-          </li>
-          <li className="breadcrumb-item2 active">Mutlu Sonuçlar</li>
-        </ol>
 
         <div className="cs_height_200 cs_height_xl_150 cs_height_lg_110" />
 
         <div style={{ marginTop: 50 }}>
           <div className="cs_doctors_heading">
-            <div className="cs_isotop_filter cs_style1">
-              <select
-                value={activeFilter}
-                onChange={e => {
-                  setActiveFilter(e.target.value)
-                  setGalleryPage(1)
-                }}
-                style={{
-                  padding: '10px 44px 10px 16px',
-                  borderRadius: '30px',
-                  border: '1px solid #ddd',
-                  minWidth: '260px',
-                  cursor: 'pointer',
-                  appearance: 'none',
-                  WebkitAppearance: 'none',
-                  MozAppearance: 'none',
-                  backgroundImage:
-                    'url("data:image/svg+xml;utf8,<svg fill=\'%23666\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/></svg>")',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'right 16px center',
-                  backgroundSize: '20px',
-                }}
-              >
-                {Object.entries(categoryMap).map(([key, label]) => (
-                  <option key={key} value={key}>
-                    {label}
-                  </option>
-                ))}
-              </select>
+            <div className="cs_isotop_filter cs_style1" ref={dropdownRef}>
+              <div style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  style={{
+                    padding: '10px 44px 10px 16px',
+                    borderRadius: isDropdownOpen ? '30px 30px 0 0' : '30px',
+                    border: '1px solid #e8e8e8',
+                    minWidth: '260px',
+                    cursor: 'pointer',
+                    appearance: 'none',
+                    outline: 'none',
+                    fontSize: '16px',
+                    background: '#fff',
+                    textAlign: 'left',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    backgroundImage:
+                      'url("data:image/svg+xml;utf8,<svg fill=\'%23666\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/></svg>")',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'right 16px center',
+                    backgroundSize: '20px',
+                    paddingRight: '44px',
+                  }}
+                >
+                  {categoryMap[activeFilter as keyof typeof categoryMap]}
+                </button>
+
+                {isDropdownOpen && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: 0,
+                      right: 0,
+                      background: '#fff',
+                      border: '1px solid #e8e8e8',
+                      borderTop: 'none',
+                      borderRadius: '0 0 30px 30px',
+                      marginTop: '-1px',
+                      maxHeight: '300px',
+                      overflowY: 'auto',
+                      zIndex: 10,
+                      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                    }}
+                  >
+                    {Object.entries(categoryMap).map(([key, label]) => (
+                      <div
+                        key={key}
+                        onClick={() => {
+                          setActiveFilter(key)
+                          setGalleryPage(1)
+                          setIsDropdownOpen(false)
+                        }}
+                        style={{
+                          padding: '12px 16px',
+                          cursor: 'pointer',
+                          background: activeFilter === key ? '#f0f5ff' : '#fff',
+                          color: activeFilter === key ? '#4f8edc' : '#333',
+                          fontWeight: activeFilter === key ? '600' : '400',
+                          transition: 'all 0.2s ease',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = '#f0f5ff'
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = activeFilter === key ? '#f0f5ff' : '#fff'
+                        }}
+                      >
+                        {label}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="cs_view_box">
@@ -199,10 +272,10 @@ export default function ResultsPage() {
                           marginBottom: '12px'
                         }}
                       />
-                      <h4 style={{ fontSize: '16px', fontWeight: '600', margin: '12px 0 8px 0' }}>
+                      <h4 style={{ fontSize: '18px', fontWeight: '600', margin: '12px 0 8px 0' }}>
                         {item.title}
                       </h4>
-                      <p style={{ fontSize: '14px', color: '#666', margin: 0, lineHeight: '1.5' }}>
+                      <p style={{ fontSize: '16px', color: '#666', margin: 0, lineHeight: '1.5' }}>
                         {item.description}
                       </p>
                     </div>
@@ -210,7 +283,7 @@ export default function ResultsPage() {
                 ))}
               </div>
 
-              {totalGalleryPages > 1 && (
+              {totalGalleryPages > 0 && (
                 <ul className="cs_pagination_box mt-5">
                   {Array.from({ length: totalGalleryPages }).map((_, i) => (
                     <li key={i}>

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Footer from '@/src/components/MedicalComponents/Footer'
 import Header from '@/src/components/MedicalComponents/Header'
+import Toast from '@/src/components/Toast'
 import Image from 'next/image'
 import banner_img from '@/assets/img/contact/banner_img.png'
 import Link from 'next/link'
@@ -15,55 +16,67 @@ export default function ContactPage() {
   const [subject, setSubject] = useState('')
   const [message, setMessage] = useState('')
   const [success, setSuccess] = useState(false)
+  const [error, setError] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!name || !email || !subject || !message) return
+    if (!name || !email || !subject || !message) {
+      setError(true)
+      setTimeout(() => setError(false), 3000)
+      return
+    }
 
-    await addDoc(collection(db, 'medicalcontact'), {
-      name,
-      email,
-      subject,
-      message,
-      createdAt: serverTimestamp()
-    })
+    try {
+      await addDoc(collection(db, 'medicalcontact'), {
+        name,
+        email,
+        subject,
+        message,
+        createdAt: serverTimestamp()
+      })
 
-    setSuccess(true)
-    setName('')
-    setEmail('')
-    setSubject('')
-    setMessage('')
-    setTimeout(() => setSuccess(false), 3000)
+      setSuccess(true)
+      setName('')
+      setEmail('')
+      setSubject('')
+      setMessage('')
+      setTimeout(() => setSuccess(false), 3000)
+    } catch (err) {
+      console.error('Form gönderme hatası:', err)
+      setError(true)
+      setTimeout(() => setError(false), 3000)
+    }
   }
 
   return (
     <>
+      <section style={{ background: '#4f8edc', padding: '40px 0 40px 0', position: 'relative', overflow: 'hidden' }}>
+        <div className="container" style={{ marginBottom: '30px', marginTop: '10px', position: 'relative', zIndex: 2 }}>
+          <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
+            <li className="breadcrumb-item2" style={{ color: '#fff' }}>
+              <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
+            </li>
+            <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>İletişim</li>
+          </ol>
 
-      <ol className="breadcrumb2" style={{ marginLeft: '7%' }}>
-        <li className="breadcrumb-item2">
-          <Link href="/medical">Anasayfa</Link>
-        </li>
-        <li className="breadcrumb-item2">İletişim</li>
-      </ol>
-
-      <section
-        className="cs_banner cs_style_5 cs_bg_filed"
-        style={{ backgroundImage: 'url(/assets/img/contact/banner_bg.svg)' }}
-      >
-        <div className="cs_banner_img">
-          <Image src={banner_img} alt="Banner" width={600} height={500} />
+          <div className="cs_banner_text">
+            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }}>
+              Bize Ulaşın
+            </h2>
+            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
+              En hızlı yanıt için bize ulaşın.
+            </p>
+          </div>
         </div>
-        <div className="container">
-          <h2 className="cs_banner_title cs_fs_72">Bize Ulaşın</h2>
-          <p className="cs_banner_subtitle cs_fs_20 cs_heading_color">
-            En hızlı yanıt için bize ulaşın
-          </p>
+
+        <div style={{ position: 'absolute', right: '0', bottom: '0', width: '40%', height: '100%', display: 'flex', alignItems: 'flex-end' }}>
+          <Image src={banner_img} alt="Banner" width={400} height={400} style={{ objectFit: 'contain' }} />
         </div>
       </section>
 
       <section>
-        <div className="container cs_mt_minus_110 cs_contact_fix">
+        <div className="container cs_mt_minus_110 cs_contact_fix" style={{ marginTop: '-20px' }}>
           <form
             className="cs_contact_form cs_style_1 cs_white_bg cs_radius_30"
             onSubmit={handleSubmit}
@@ -114,11 +127,11 @@ export default function ContactPage() {
             </div>
           </form>
 
-          {success && (
-            <div style={{ marginTop: 20, color: 'green' }}>
-              Mesajınız başarıyla gönderildi.
-            </div>
-          )}
+          {/* SUCCESS TOAST NOTIFICATION */}
+          {success && <Toast type="success" message="Mesajınız başarıyla gönderildi!" top="80px" />}
+
+          {/* ERROR TOAST NOTIFICATION */}
+          {error && <Toast type="error" message="Lütfen tüm alanları doldurunuz!" top="80px" />}
         </div>
       </section>
 

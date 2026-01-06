@@ -114,22 +114,23 @@ export default function OrganisationPage() {
 
   return (
     <>
--
-      <section>
-        <div className="container" style={{ marginBottom: 20 }}>
-          <ol className="breadcrumb2">
-            <li className="breadcrumb-item2">
-              <Link href="/medical">Anasayfa</Link>
+
+
+      <section style={{ background: '#4f8edc', padding: '20px 0 20px 0' }}>
+        <div className="container" style={{ marginBottom: '20px', marginTop: '-45px' }}>
+          <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
+            <li className="breadcrumb-item2" style={{ color: '#fff' }}>
+              <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
             </li>
-            <li className="breadcrumb-item2 active">Kurumlar</li>
+            <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>Kurumlar</li>
           </ol>
 
           <div className="cs_banner_text">
-            <h2 className="cs_banner_title cs_fs_72">
+            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }}>
               Kurumlarımız
             </h2>
-            <p className="cs_banner_subtitle cs_fs_20 cs_heading_color">
-              Oteller ve hastaneler arasından ihtiyacınıza uygun olanı seçin
+            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
+              Oteller ve hastaneler arasından ihtiyacınıza uygun olanı seçin.
             </p>
           </div>
         </div>
@@ -139,7 +140,7 @@ export default function OrganisationPage() {
 
       <div className="container">
         <div className="cs_doctors_heading">
-          <div className="cs_isotop_filter cs_style1 mb-5">
+          <div className="cs_isotop_filter cs_style1 mb-5 mt-3">
             <ul className="cs_mp0">
               {(['Tümü', 'Oteller', 'Hastaneler'] as const).map(key => (
                 <li key={key} className={activeFilter === key ? 'active' : ''}>
@@ -151,11 +152,11 @@ export default function OrganisationPage() {
                     }}
                     style={{
                       padding: '8px 18px',
-                      borderRadius: '30px',
+                      borderRadius: '16px',
                       transition: 'all .3s ease',
                       background:
                         activeFilter === key
-                          ? 'linear-gradient(135deg,#86BBF1,#4f8edc)'
+                          ? '#4f8edc'
                           : 'transparent',
                       color: activeFilter === key ? '#fff' : 'inherit',
                     }}
@@ -188,6 +189,8 @@ export default function OrganisationPage() {
                     )
                     setCurrentPage(1)
                   }}
+      style={{ width: '16px', height: '16px', cursor: 'pointer' }}
+
                 />
                 <span style={{ marginLeft: 8 }}>{star} Yıldız</span>
               </label>
@@ -210,12 +213,13 @@ export default function OrganisationPage() {
             paginatedItems.map((item) => (
               <div key={item.id} className="col-xl-4 col-lg-4 col-md-6">
                 <div className="cs_team cs_style_1 cs_type_2 text-center cs_radius_20 overflow-hidden">
-                  <div className="cs_member_img">
+                  <div className="cs_member_img" style={{ height: '250px', overflow: 'hidden' }}>
                     <Image
                       src={item.image}
                       alt={item.name}
-                      width={500}
-                      height={500}
+                      width={250}
+                      height={300}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                     {item.type === 'Oteller' && item.stars && (
                       <div className="cs_label cs_white_color cs_accent_bg">
@@ -224,9 +228,9 @@ export default function OrganisationPage() {
                     )}
                   </div>
 
-                  <div className="cs_team_meta cs_white_bg">
-                    <h3 className="cs_member_name cs_fs_32">{item.name}</h3>
-                    <p className="cs_member_description">{item.desc}</p>
+                  <div className="cs_team_meta cs_white_bg" style={{ padding: '12px 15px' }}>
+                    <h3 className="cs_member_name cs_fs_32" style={{ fontSize: '18px', marginBottom: '6px', fontWeight: '500' }}>{item.name}</h3>
+                    <p className="cs_member_description" style={{ fontSize: '14px', marginBottom: 0 }}>{item.desc}</p>
                   </div>
                 </div>
               </div>
@@ -250,6 +254,29 @@ export default function OrganisationPage() {
         </ul>
       </div>
 
+      <section className="cs_footer_margin_0">
+        <div className="container">
+          <div className="cs_banner cs_style_9 cs_white_bg cs_radius_30">
+            <div className="cs_banner_img">
+              <Image
+                src="/assets/img/doctors/banner_img_3.png"
+                alt="Banner"
+                width={600}
+                height={400}
+              />
+            </div>
+
+            <h2 className="cs_banner_title cs_fs_72">
+              Sağlığınızı Geri <br /> Planda Bırakmayın!
+            </h2>
+
+            <p className="cs_banner_subtitle cs_fs_20 cs_medium m-0">
+              Bugün deneyimli tıbbi profesyonellerimizden <br />
+              biriyle randevu alın!
+            </p>
+          </div>
+        </div>
+      </section>
       <div className="cs_height_200" />
 
 -    </>

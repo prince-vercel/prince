@@ -16,8 +16,8 @@ import {
 } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
-import { AdminMedicalLayout } from '@/src/components/AdminComponents/medical/AdminMedicalLayout'
 import SendEmail from '@/src/components/SendEmail'
+import { AdminTravelLayout } from '@/src/components/AdminComponents/travel/AdminTravelLayout'
 
 interface ContactWithId {
   id: string
@@ -28,7 +28,7 @@ interface ContactWithId {
   createdAt: any
 }
 
-const PAGE_SIZE = 5
+const PAGE_SIZE = 10
 
 const ContactForms = () => {
   const [forms, setForms] = useState<ContactWithId[]>([])
@@ -40,13 +40,13 @@ const ContactForms = () => {
   const [filterName, setFilterName] = useState('')
 
   const fetchCount = async () => {
-    const snap = await getCountFromServer(collection(db, 'medicalcontact'))
+    const snap = await getCountFromServer(collection(db, 'travelcontact'))
     setTotal(snap.data().count)
   }
 
  const fetchForms = useCallback(async (loadMore = false) => {
   const q = query(
-    collection(db, 'medicalcontact'),
+    collection(db, 'travelcontact'),
     orderBy('createdAt', 'desc'),
     ...(loadMore && lastDoc ? [startAfter(lastDoc)] : []),
     limit(PAGE_SIZE)
@@ -72,7 +72,7 @@ useEffect(() => {
 
 
   return (
-    <AdminMedicalLayout>
+    <AdminTravelLayout>
       <div className={styles.gfContainer}>
         <h1 className={styles.gfTitle}>İletişim Mesajları</h1>
   <div className={styles.filterWrapper}>
@@ -92,7 +92,7 @@ useEffect(() => {
             />
           </div>
           <div className={styles.gfStatBox}>
-            <p className={styles.gfStatLabel} style={{fontSize:'16px'}}>Toplam Kayıt: <span className={styles.gfStatValue}>{total}</span></p>
+            <p className={styles.gfStatLabel} style={{fontSize:'16px',}}>Toplam Kayıt: <span className={styles.gfStatValue} style={{ color: '#E8604C' }}>{total}</span></p>
           </div>
         </div>
 
@@ -103,7 +103,7 @@ useEffect(() => {
           .map((item, index) => (
           <div key={item.id} className={styles.gfCard}>
             <div className={styles.gfCardRow}>
-              <div className={styles.gfRowNumber} style={{fontSize:'16px'}}>{index + 1}</div>
+              <div className={styles.gfRowNumber} style={{fontSize:'16px',color: '#E8604C', background: '#FBE9E3'}}>{index + 1}</div>
               <div className={styles.gfRowDate} style={{fontSize:'15px'}}>
                 {item.createdAt?.toDate?.().toLocaleDateString('tr-TR')}
               </div>
@@ -133,7 +133,7 @@ useEffect(() => {
 
                 <button
                   className={styles.gfIconBtn}
-                  onClick={() => deleteDoc(doc(db, 'medicalcontact', item.id))}
+                  onClick={() => deleteDoc(doc(db, 'travelcontact', item.id))}
                   title="Sil"
                 >
                   <i className="fas fa-trash"></i>
@@ -144,7 +144,7 @@ useEffect(() => {
             {expandedId === item.id && (
               <div className={styles.gfCardContent}>
                 <div className={styles.gfField}>
-                  <label style={{fontSize:'15px'}}>Email</label>
+                  <label style={{fontSize:'15px'}}>E-posta</label>
                   <div style={{fontSize:'16px'}}>{item.email}</div>
                 </div>
                 <div className={styles.gfField}>
@@ -175,7 +175,7 @@ useEffect(() => {
         recipientEmail={selectedEmail?.email || ''}
         recipientName={selectedEmail?.name || ''}
       />
-    </AdminMedicalLayout>
+    </AdminTravelLayout>
   )
 }
 

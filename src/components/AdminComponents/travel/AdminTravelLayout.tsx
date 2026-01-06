@@ -5,7 +5,7 @@ interface AdminLayoutProps {
   children: ReactNode
 }
 
-export const AdminMedicalLayout = ({ children }: AdminLayoutProps) => {
+export const AdminTravelLayout = ({ children }: AdminLayoutProps) => {
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
       <TravelSidebar />

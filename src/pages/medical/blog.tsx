@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
@@ -60,21 +61,28 @@ export default function BlogPage() {
   return (
     <>
 
-      <div className="cs_height_170" />
+
+      <section style={{ background: '#4f8edc', padding: '20px 0 20px 0' }}>
+        <div className="container" style={{ marginBottom: '20px', marginTop: '-45px' }}>
+          <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
+            <li className="breadcrumb-item2" style={{ color: '#fff' }}>
+              <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
+            </li>
+            <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>Blog</li>
+          </ol>
+
+          <div className="cs_banner_text">
+            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }}>
+              Blog
+            </h2>
+            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
+              Sağlık ve güzellik hakkında güncel bilgiler ve ipuçları.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <div className="container">
-        <ol className="breadcrumb2">
-          <li className="breadcrumb-item2">
-            <Link href="/medical">Anasayfa</Link>
-          </li>
-          <li className="breadcrumb-item2 active">Blog</li>
-        </ol>
-
-        <div className="cs_height_18" />
-
-        <h1 className="cs_fs_72 mb-0">Psikoloji ve Yaşam Tarzı</h1>
-
-        <div className="cs_height_96 cs_height_lg_70" />
 
         <div className="row cs_row_gap_50">
           {loading ? (
@@ -87,14 +95,14 @@ export default function BlogPage() {
             </div>
           ) : (
             paginatedPosts.map((post) => (
-              <div key={post.id} className="col-xl-4 col-md-6">
+              <div key={post.id} className="col-xl-4 col-md-6 mt-5">
                 <div className="cs_post cs_style_1">
                   <div
                     className="cs_post_thumb cs_view_mouse"
                     style={{
                       position: 'relative',
                       width: '100%',
-                      height: '300px',
+                      height: '200px',
                       overflow: 'hidden',
                       borderRadius: '8px',
                       cursor: 'pointer',
@@ -125,13 +133,20 @@ export default function BlogPage() {
                         </div>
                       </div>
 
-                      <h2 className="cs_post_title cs_semibold cs_fs_32">
+                      <h2 className="cs_post_title cs_semibold cs_fs_32" style={{ fontSize: '20px', lineHeight: '1.4', }}>
                         <span>{post.title}</span>
                       </h2>
                     </div>
 
-                    <div className="cs_heading_color cs_medium">
-                      <a href="#" className="cs_post_btn">
+                    <div className="cs_heading_color">
+                      <a 
+                        href="#" 
+                        onClick={(e) => {
+                          e.preventDefault()
+                          router.push(`/medical/blog/${post.id}`)
+                        }}
+                        className="cs_post_btn"
+                      >
                         Devamını Oku
                       </a>
                     </div>
@@ -162,29 +177,6 @@ export default function BlogPage() {
 
       <div className="cs_height_200 cs_height_xl_150 cs_height_lg_110" />
 
-      <section className="cs_footer_margin_0">
-        <div className="container">
-          <div className="cs_banner cs_style_9 cs_white_bg cs_radius_30">
-            <div className="cs_banner_img">
-              <Image
-                src="/assets/img/doctors/banner_img_3.png"
-                alt="Banner"
-                width={600}
-                height={400}
-              />
-            </div>
-
-            <h2 className="cs_banner_title cs_fs_72">
-              Sağlığınızı Geri <br /> Planda Bırakmayın!
-            </h2>
-
-            <p className="cs_banner_subtitle cs_fs_20 cs_medium m-0">
-              Bugün deneyimli tıbbi profesyonellerimizden <br />
-              biriyle randevu alın!
-            </p>
-          </div>
-        </div>
-      </section>
 
 
       <span className="cs_scrollup">

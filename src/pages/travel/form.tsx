@@ -1,12 +1,15 @@
 'use client'
 
-import Header from '@/src/components/TravelComponents/Header'
-import Footer from '@/src/components/TravelComponents/Footer'
 import { useState } from 'react'
 import Link from 'next/link'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { db } from '@/src/lib/firebase'
+import Toast from '@/src/components/Toast'
 
 const Form = () => {
   const [step, setStep] = useState(0)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     nationality: '',
@@ -21,11 +24,59 @@ const Form = () => {
     contact: '',
   })
 
-  const progressPercent = Math.round(((step + 1) / 3) * 100)
+  const totalFields = 11 // Toplam form alanları
+  const filledFields = Object.values(formData).filter(val => val !== '').length
+  const progressPercent = Math.round((filledFields / totalFields) * 100)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.email || !formData.destination) {
+      setError(true)
+      setTimeout(() => setError(false), 3000)
+      return
+    }
+
+    try {
+      await addDoc(collection(db, 'travelforms'), {
+        name: formData.name,
+        nationality: formData.nationality,
+        phone: formData.phone,
+        email: formData.email,
+        destination: formData.destination,
+        date: formData.date,
+        duration: formData.duration,
+        guests: formData.guests,
+        transfer: formData.transfer,
+        requests: formData.requests,
+        contact: formData.contact,
+        createdAt: serverTimestamp(),
+      })
+
+      setSuccess(true)
+      setFormData({
+        name: '',
+        nationality: '',
+        phone: '',
+        email: '',
+        destination: '',
+        date: '',
+        duration: '',
+        guests: '',
+        transfer: '',
+        requests: '',
+        contact: '',
+      })
+      setStep(0)
+
+      setTimeout(() => setSuccess(false), 3000)
+    } catch (error) {
+      console.error('Form gönderme hatası:', error)
+      alert('Form gönderilirken bir hata oluştu!')
+    }
   }
 
   return (
@@ -42,7 +93,7 @@ const Form = () => {
         <div className="container">
 
           {/* TITLE */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 mt-5">
             <h1 className="text-3xl lg:text-5xl font-extrabold text-dark-1 tracking-tight">
               Mükemmel <span className="text-primary-1">Tatili</span> Planla
             </h1>
@@ -229,11 +280,17 @@ const Form = () => {
                     Devam Et
                   </button>
                 ) : (
-                  <button className="btn_primary__v1">
+                  <button onClick={handleSubmit} className="btn_primary__v1">
                     Formu Gönder
                   </button>
                 )}
               </div>
+
+              {/* SUCCESS TOAST NOTIFICATION */}
+              {success && <Toast type="success" message="Başarıyla gönderildi!" />}
+
+              {/* ERROR TOAST NOTIFICATION */}
+              {error && <Toast type="error" message="Lütfen gerekli alanları doldurunuz!" />}
 
               {/* TRUST */}
               <div className="mt-4 flex items-center gap-2 text-sm text-dark-3">

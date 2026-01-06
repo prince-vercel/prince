@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import logo from '@/assets/img/logo.png'
+import logo from '@/assets/logo/logo-black.png'
 import closeIcon from '@/assets/img/icons/close.svg'
 import { usePathname } from 'next/navigation'
 
@@ -50,13 +50,13 @@ export default function Header() {
 
                 <nav className="cs_nav">
                   <ul className="cs_nav_list">
-                    <li><Link href="/medical" className="font-semibold">Anasayfa</Link></li>
-                    <li><Link href="/medical/organisation" className="font-semibold">Kurumlar</Link></li>
-                   <li><Link href="/medical/results" className="font-semibold">Mutlu Sonuçlar</Link></li>
-                    <li><Link href="/medical/form" className="font-semibold">Başvuru</Link></li>
-                    <li><Link href="/medical/blog" className="font-semibold">Blog</Link></li>
-                    <li><Link href="/medical/about" className="font-semibold">Hakkımızda</Link></li>
-                    <li><Link href="/medical/contact" className="font-semibold">İletişim</Link></li>
+                    <li><Link href="/medical" className="font-semibold" style={{ color: pathname === '/medical' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>Anasayfa</Link></li>
+                    <li><Link href="/medical/organisation" className="font-semibold" style={{ color: pathname === '/medical/organisation' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>Kurumlar</Link></li>
+                    <li><Link href="/medical/results" className="font-semibold" style={{ color: pathname === '/medical/results' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>Mutlu Sonuçlar</Link></li>
+                    <li><Link href="/medical/form" className="font-semibold" style={{ color: pathname === '/medical/form' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>Başvuru</Link></li>
+                    <li><Link href="/medical/blog" className="font-semibold" style={{ color: pathname === '/medical/blog' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>Blog</Link></li>
+                    <li><Link href="/medical/about" className="font-semibold" style={{ color: pathname === '/medical/about' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>Hakkımızda</Link></li>
+                    <li><Link href="/medical/contact" className="font-semibold" style={{ color: pathname === '/medical/contact' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>İletişim</Link></li>
                   </ul>
                 </nav>
               </div>

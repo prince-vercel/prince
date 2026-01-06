@@ -1,8 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
+import { useState } from 'react'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { db } from '@/src/lib/firebase'
 import Footer from "@/src/components/TravelComponents/Footer"
-import Header from "@/src/components/TravelComponents/Header"
+import Toast from '@/src/components/Toast'
 
 import breadcrumbBg from "@/assets/images/backgrounds/breadcrumb-bg.webp"
 import breadcrumbShape from "@/assets/images/illustration/breadcrunb__shape.png"
@@ -20,21 +23,55 @@ import Link from "next/link"
 const instaImages = [insta1, insta2, insta3, insta4, insta5]
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  })
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState(false)
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      setError(true)
+      setTimeout(() => setError(false), 3000)
+      return
+    }
+
+    try {
+      await addDoc(collection(db, 'travelcontact'), {
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        createdAt: serverTimestamp(),
+      })
+
+      setSuccess(true)
+      setFormData({ name: '', email: '', subject: '', message: '' })
+      setTimeout(() => setSuccess(false), 3000)
+    } catch (error) {
+      console.error('Form gönderme hatası:', error)
+      setError(true)
+      setTimeout(() => setError(false), 3000)
+    }
+  }
+
   return (
     <>
       {/*========== BREADCRUMB STYLE START ==========*/}
-      <div className="paralax-container lg:py-36 py-20 relative overflow-hidden">
-        <div
-          className="jarallax absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50 before:z-minus"
-          data-jarallax=""
-        >
-          <img
-            className="jarallax-img"
-            src={breadcrumbBg.src}
-            alt="placeholder"
-          />
+     <div className="paralax-container lg:py-20 py-16 relative overflow-hidden">
+        <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
+          <img src={breadcrumbBg.src} alt="breadcrumb" className="w-full h-full object-cover" />
         </div>
-
         <img
           src={breadcrumbShape.src}
           alt="placeholder"
@@ -56,8 +93,8 @@ export default function ContactPage() {
           </ol>
           </nav>
 
-          <h2 className="xl:text-[54px] mt-2 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
-            Bize İletişim Kurmaktan Çekinmeyin
+          <h2 className="xl:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
+            Bizimle İletişime Geçin
           </h2>
         </div>
       </div>
@@ -176,44 +213,62 @@ export default function ContactPage() {
             </div>
 
             <div className="max-w-[870px] mx-auto">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 gap-base">
                   <div className="lg:col-span-1 col-span-2">
                     <input
                       type="text"
+                      name="name"
                       placeholder="Adınız"
+                      value={formData.name}
+                      onChange={handleInputChange}
                       className="input_style__primary"
                     />
                   </div>
                   <div className="lg:col-span-1 col-span-2">
                     <input
-                      type="text"
-                      placeholder="Telefon Numaranız"
+                      type="email"
+                      name="email"
+                      placeholder="E-postanız"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       className="input_style__primary"
                     />
                   </div>
                   <div className="col-span-2">
                     <input
-                      type="email"
+                      type="text"
+                      name="subject"
                       placeholder="Konunuz"
+                      value={formData.subject}
+                      onChange={handleInputChange}
                       className="input_style__primary"
                     />
                   </div>
                   <div className="col-span-2">
                     <textarea
                       rows={6}
+                      name="message"
                       className="input_style__primary"
-                      placeholder="Konunuz..."
+                      placeholder="Mesajınız..."
+                      value={formData.message}
+                      onChange={handleInputChange}
                     ></textarea>
                   </div>
                   <div className="col-span-2">
                     <button type="submit" className="btn_primary__v1">
-                      Daha Fazla Bilgi
+                      Gönder
                       <i className="bi bi-chevron-right ml-2"></i>
                     </button>
                   </div>
                 </div>
               </form>
+
+              {/* SUCCESS TOAST NOTIFICATION */}
+              {success && <Toast type="success" message="Mesajınız başarıyla gönderildi!" top="120px" />}
+
+              {/* ERROR TOAST NOTIFICATION */}
+              {error && <Toast type="error" message="Lütfen tüm alanları doldurunuz!" top="120px" />}
             </div>
           </div>
         </div>
@@ -233,6 +288,7 @@ export default function ContactPage() {
       
       {/*========== CONTACT US STYLE END ==========*/}
 
+      <Footer />
     </>
   )
 }

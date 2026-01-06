@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 'use client'
 import 'swiper/css'
@@ -22,6 +23,8 @@ import Image from 'next/image'
 import Swiper from "swiper"
 import { Autoplay, Navigation } from "swiper/modules"
 import Link from 'next/link'
+import { getDocs, collection } from 'firebase/firestore'
+import { db } from '@/src/lib/firebase'
 
 const testimonials = [
   {
@@ -75,7 +78,46 @@ const faqs = [
 
 export default function AboutPage() {
   const swiperRef = useRef<Swiper | null>(null)
- const [activeId, setActiveId] = useState<number | null>(null)
+  const [activeId, setActiveId] = useState<number | null>(null)
+  const [faqs, setFaqs] = useState<any[]>([])
+  const [testimonials, setTestimonials] = useState<any[]>([])
+
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, 'travelcontents/faq/list'))
+        const faqsData = snapshot.docs.map((doc, idx) => ({
+          id: idx + 1,
+          q: doc.data().question,
+          a: doc.data().answer,
+        }))
+        setFaqs(faqsData)
+      } catch (error) {
+        console.error('FAQ verileri çekilirken hata:', error)
+      }
+    }
+
+    fetchFaqs()
+  }, [])
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, 'travelcontents/testimonials/list'))
+        const testimonialsData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          text: doc.data().text,
+          name: doc.data().name,
+          avatar: { src: doc.data().imageUrl },
+        }))
+        setTestimonials(testimonialsData)
+      } catch (error) {
+        console.error('Yorum verileri çekilirken hata:', error)
+      }
+    }
+
+    fetchTestimonials()
+  }, [])
 
   const toggle = (id: number) => {
     setActiveId(prev => (prev === id ? null : id))
@@ -122,16 +164,9 @@ useEffect(() => {
   return (
     <>
       {/*========== BREADCRUMB STYLE START ==========*/}
-      <div className="paralax-container lg:py-36 py-20 relative overflow-hidden">
-        <div
-          className="jarallax absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#ffffff] before:bg-opacity-50 before:z-minus"
-          data-jarallax=""
-        >
-          <img
-            className="jarallax-img"
-            src={breadcrumbBg.src}
-            alt=""
-          />
+       <div className="paralax-container lg:py-20 py-16 relative overflow-hidden">
+        <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
+          <img src={breadcrumbBg.src} alt="breadcrumb" className="w-full h-full object-cover" />
         </div>
 
         <img
@@ -155,8 +190,8 @@ useEffect(() => {
           </ol>
           </nav>
 
-          <h2 className="xl:text-[54px] mt-2 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
-            Daha İyi Bir Seyahat Yolu
+          <h2 className="xl:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
+            En İyi Seyahat Yolu
           </h2>
         </div>
       </div>
@@ -379,7 +414,7 @@ useEffect(() => {
 
           {/* LEFT COLUMN */}
           <div className="col-span-1 space-y-base">
-            {faqs.slice(0, 4).map((item, i) => (
+            {faqs.slice(0, Math.ceil(faqs.length / 2)).map((item, i) => (
               <div key={item.id} className="single__accordion shadow-custom-1 bg-white">
                 <button
                   type="button"
@@ -400,14 +435,14 @@ useEffect(() => {
 
           {/* RIGHT COLUMN */}
           <div className="col-span-1 space-y-base">
-            {faqs.slice(4).map((item, i) => (
+            {faqs.slice(Math.ceil(faqs.length / 2)).map((item, i) => (
               <div key={item.id} className="single__accordion shadow-custom-1 bg-white">
                 <button
                   type="button"
                   onClick={() => toggle(item.id)}
                   className="toggle px-5 py-3 leading-1.5 text-2md text-start w-full text-dark-1 font-serif"
                 >
-                  {String(i + 5).padStart(2, '0')}. {item.q}
+                  {String(i + Math.ceil(faqs.length / 2) + 1).padStart(2, '0')}. {item.q}
                 </button>
 
                 <div className={`${activeId === item.id ? 'block' : 'hidden'} inner px-5 pb-5`}>

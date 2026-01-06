@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { doc, getDoc, collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { db } from '@/src/lib/firebase'
 
 import heroImg from '@/assets/images/hero/h1.webp'
 import breadcrumbShape from '@/assets/images/illustration/breadcrunb__shape.png'
@@ -10,33 +13,77 @@ import birdWhite from '@/assets/images/illustration/bird-illustration-w.png'
 import bird from '@/assets/images/illustration/bird-illustration.png'
 import tree from '@/assets/images/illustration/tree-illustration.png'
 
-import g1 from '@/assets/images/gallary/g1.webp'
-import g2 from '@/assets/images/gallary/g2.webp'
-import g3 from '@/assets/images/gallary/g3.webp'
-import g4 from '@/assets/images/gallary/g4.webp'
-import g5 from '@/assets/images/gallary/g5.webp'
-import g6 from '@/assets/images/gallary/g6.webp'
-import g7 from '@/assets/images/gallary/g7.webp'
-import g8 from '@/assets/images/gallary/g8.webp'
-import g9 from '@/assets/images/gallary/g9.webp'
-
-import Header from '@/src/components/TravelComponents/Header'
-import Footer from '@/src/components/TravelComponents/Footer'
-
-const packagesList = [
-  { slug: 'cusco-machu-picchu', title: 'Cusco & Salkantay – Machu Picchu' },
-  { slug: 'casablanca-sarap-turu', title: 'Casablanca Vadisi Şarap Turu' },
-  { slug: 'maldivler-macera-turu', title: 'Maldivler Macera Turu' },
-]
 
 export default function TravelDetailPage() {
   const router = useRouter()
   const { slug } = router.query
   const [activeTab, setActiveTab] = useState<'booking' | 'enquiry'>('booking')
-const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [tour, setTour] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+  const [imageLoading, setImageLoading] = useState(true)
+  const [enquiryForm, setEnquiryForm] = useState({ name: '', email: '', phone: '', message: '' })
+  const [submittingEnquiry, setSubmittingEnquiry] = useState(false)
+  const [enquirySuccess, setEnquirySuccess] = useState('')
 
-const currentPackage = packagesList.find(p => p.slug === slug)
-const pageTitle = currentPackage?.title || 'Paket Detayı'
+  useEffect(() => {
+    if (!slug) return
+
+    const fetchTour = async () => {
+      try {
+        const docRef = doc(db, 'traveltours', slug as string)
+        const docSnap = await getDoc(docRef)
+        if (docSnap.exists()) {
+          setTour(docSnap.data())
+          setImageLoading(false)
+        }
+      } catch (error) {
+        console.error('Tur detayı yükleme hatası:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTour()
+  }, [slug])
+
+  useEffect(() => {
+    // Görüntü değişirse loading'i sıfırla
+    if (tour?.mainImageUrl) {
+      setImageLoading(false)
+    }
+  }, [tour?.mainImageUrl])
+
+  const handleEnquirySubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSubmittingEnquiry(true)
+
+    try {
+      if (!slug || !enquiryForm.name || !enquiryForm.email || !enquiryForm.phone) {
+        alert('Lütfen tüm alanları doldurunuz')
+        setSubmittingEnquiry(false)
+        return
+      }
+
+      await addDoc(collection(db, 'traveltours', slug as string, 'enquiries'), {
+        name: enquiryForm.name,
+        email: enquiryForm.email,
+        phone: enquiryForm.phone,
+        message: enquiryForm.message,
+        createdAt: serverTimestamp()
+      })
+
+      setEnquirySuccess('Bilgi talebi başarıyla gönderildi! Kısa sürede sizinle iletişime geçeceğiz.')
+      setEnquiryForm({ name: '', email: '', phone: '', message: '' })
+      
+      setTimeout(() => setEnquirySuccess(''), 5000)
+    } catch (error) {
+      console.error('Bilgi talep gönderme hatası:', error)
+      alert('Gönderme işlemi başarısız oldu')
+    } finally {
+      setSubmittingEnquiry(false)
+    }
+  }
 
   return (
     <>
@@ -47,7 +94,21 @@ const pageTitle = currentPackage?.title || 'Paket Detayı'
           className="jarallax absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50 before:z-minus"
           data-jarallax
         >
-          <img className="jarallax-img" src={heroImg.src} alt="Kapak" />
+          {imageLoading && (
+            <div className="absolute inset-0 bg-gray-300 flex items-center justify-center z-10">
+              <div className="flex flex-col items-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-1"></div>
+                <span className="mt-2 text-gray-600">Yükleniyor...</span>
+              </div>
+            </div>
+          )}
+          <img 
+            className="jarallax-img" 
+            src={tour?.mainImageUrl} 
+            alt="Kapak"
+            onLoad={() => setImageLoading(false)}
+            style={{ opacity: imageLoading ? 0 : 1, transition: 'opacity 0.3s ease-in-out' }}
+          />
         </div>
 
         <img src={breadcrumbShape.src} className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" alt="" />
@@ -59,12 +120,12 @@ const pageTitle = currentPackage?.title || 'Paket Detayı'
             <li className="breadcrumb-item2">
               <Link href="/travel">Anasayfa</Link>
             </li>
-            <li className="breadcrumb-item2">/ Seyahat Detayı</li>
+            <li className="breadcrumb-item2"> Seyahat Detayı</li>
           </ol>
           </nav>
 
           <h2 className="xl:text-[54px] mt-2 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
-            {pageTitle}
+            {loading ? '' : tour?.title || 'Tur Detayı'}
           </h2>
         </div>
       </div>
@@ -79,6 +140,8 @@ const pageTitle = currentPackage?.title || 'Paket Detayı'
 
             {/* SOL TARAF */}
             <div className="lg:col-span-8 col-span-12">
+
+
 <ul className="bg-white lg:px-base lg:py-4 py-4 flex lg:overflow-hidden lg:mt-[-40px] mt-base border">
 
   {/* INFORMATION */}
@@ -128,23 +191,18 @@ const pageTitle = currentPackage?.title || 'Paket Detayı'
               <div className="pack__disc" id="Information">
   <div className="flex justify-between items-center gap-2 flex-wrap lg:pt-12 pt-8 lg:pb-4">
     <h2 className="font-sans lg:text-[45px] md:text-xl text-lg font-semibold">
-      $175/<span className="lg:text-lg text-md font-normal">Kişi Başına</span>
+      ₺{tour?.price || 0}/<span className="lg:text-lg text-md font-normal">Kişi Başına</span>
     </h2>
-
   </div>
 
   <h5 className="lg:text-lg text-base text-dark-1 font-semibold leading-[1.5] mb-6">
-    Bu inanılmaz tur paketinde muhteşem doğa manzaraları ve tarihi yerler keşfetme fırsatı bulacaksınız.
+    {tour?.description || 'Tur açıklaması yükleniyor...'}
   </h5>
 
-  <p>
-    Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir. Tur sırasında rehberimiz tarafından detaylı bilgiler verilerek ziyaretler gerçekleştirilecektir.
-  </p>
-
   <ul className="pack__list mt-4">
-    <li><i className="bi bi-clock"></i> 4 Gün / 5 Gece</li>
-    <li><i className="bi bi-person"></i> Maksimum Kişi: 10</li>
-    <li><i className="bi bi-map"></i> Kuzey Transilvanya</li>
+    <li><i className="bi bi-clock"></i> {tour?.duration || '4 Gün 5 Gece'}</li>
+    <li><i className="bi bi-person"></i> Maksimum Kişi: {tour?.maxPeople || 10}</li>
+    <li><i className="bi bi-map"></i> {tour?.location || 'Lokasyon'}</li>
   </ul>
 
   {/* PRICE INCLUDES */}
@@ -153,16 +211,10 @@ const pageTitle = currentPackage?.title || 'Paket Detayı'
       <div className="lg:w-1/3 font-medium">Fiyata Dahil Olanlar</div>
       <div className="lg:w-2/3 mt-4 lg:mt-0">
         <ul className="grid grid-cols-2 gap-3">
-          {[
-            '3 Gece Konaklama',
-            'Havalimanı Transferi',
-            'Günde 2 Öğün',
-            'Kutu Öğle Yemeği, Akşam Yemeği ve Atıştırmalıklar.',
-            'Tur Sırasında Ulaşım',
-          ].map(item => (
-            <li key={item} className="flex items-center text-sm">
+          {tour?.includedInPrice?.split('\n').filter((item: string) => item.trim()).map((item: string, i: number) => (
+            <li key={i} className="flex items-center text-sm">
               <i className="bi bi-check2 text-primary-1 mr-2"></i>
-              {item}
+              {item.replace('- ', '')}
             </li>
           ))}
         </ul>
@@ -174,15 +226,10 @@ const pageTitle = currentPackage?.title || 'Paket Detayı'
       <div className="lg:w-1/3 font-medium">Fiyata Dahil Olmayan Şeyler</div>
       <div className="lg:w-2/3 mt-4 lg:mt-0">
         <ul className="grid grid-cols-2 gap-3">
-          {[
-            'Kalkış Vergileri',
-            'Havalimanı Transferi',
-            'Giriş Ücretleri',
-            'Kutu Öğle Yemeği, Akşam Yemeği ve Atıştırmalıklar.',
-          ].map(item => (
-            <li key={item} className="flex items-center text-sm">
+          {tour?.notIncludedInPrice?.split('\n').filter((item: string) => item.trim()).map((item: string, i: number) => (
+            <li key={i} className="flex items-center text-sm">
               <i className="bi bi-check2 text-primary-1 mr-2"></i>
-              {item}
+              {item.replace('- ', '')}
             </li>
           ))}
         </ul>
@@ -194,31 +241,28 @@ const pageTitle = currentPackage?.title || 'Paket Detayı'
   <div className="lg:pt-10 pt-8 pb-8" id="plan">
     <h3 className="text-dark-1 font-semibold text-2xl mb-4">Tur Planı</h3>
 
-    {[
-      { day: '01', title: 'Edinburgh\'a Hoş Geldiniz' },
-      { day: '02', title: 'Macera Başlıyor' },
-      { day: '03', title: 'Tarihi Tur' },
-      { day: '04', title: 'Dönüş' },
-    ].map(d => (
-      <div key={d.day} className="flex single__count mt-6">
-        <div className="day__count shrink-0 relative z-10" style={{ paddingTop: '20px' }}>
-          <style>{`
-            .single__count .day__count::before {
-              top: 20px !important;
-            }
-          `}</style>
-          <div className="w-10 h-10 rounded-full border border-primary-1 flex items-center justify-center font-semibold text-primary-1 bg-white">
-            {d.day}
+    {tour?.tourPlan && tour.tourPlan.length > 0 ? (
+      tour.tourPlan.map((d: any) => (
+        <div key={d.day} className="flex single__count mt-6">
+          <div className="day__count shrink-0 relative z-10" style={{ paddingTop: '20px' }}>
+            <style>{`
+              .single__count .day__count::before {
+                top: 20px !important;
+              }
+            `}</style>
+            <div className="w-10 h-10 rounded-full border border-primary-1 flex items-center justify-center font-semibold text-primary-1 bg-white">
+              {String(d.day).padStart(2, '0')}
+            </div>
+          </div>
+          <div className="ml-4 pb-8">
+            <h5 className="font-semibold text-dark-1 text-lg mb-2">Gün {d.day}</h5>
+            <p className="whitespace-pre-line">{d.content}</p>
           </div>
         </div>
-        <div className="ml-4 pb-8">
-          <h5 className="font-semibold text-dark-1 text-lg">{d.title}</h5>
-          <p>
-            Bu gün boyunca rehberimiz eşliğinde özel olarak hazırlanmış bir rota izleyerek bölgenin en güzel yerlerini keşfedeceksiniz.
-          </p>
-        </div>
-      </div>
-    ))}
+      ))
+    ) : (
+      <div style={{ height: '100px' }}></div>
+    )}
   </div>
 </div>
 {/* FAQ */}
@@ -229,40 +273,31 @@ const pageTitle = currentPackage?.title || 'Paket Detayı'
   </p>
 
   <div className="accordion lg:space-y-6 space-y-5">
-    {[
-      {
-        q: 'En iyi düğün turları yapılan yerler nerelerdir?',
-        a: 'Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir: Yemen\'deki UFO benzeri ejderha kanı ağaçlarından Yellowstone\'daki gökkuşağı renkli sıcak kaynağına kadar.',
-      },
-      {
-        q: 'Ziyaret etmek için en sürreal yerler nelerdir?',
-        a: 'Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir: Yemen\'deki UFO benzeri ejderha kanı ağaçlarından Yellowstone\'daki gökkuşağı renkli sıcak kaynağına kadar.',
-      },
-      {
-        q: 'Bangladeş\'te ziyaret etmek için en sürreal yerler nelerdir?',
-        a: 'Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir: Yemen\'deki UFO benzeri ejderha kanı ağaçlarından Yellowstone\'daki gökkuşağı renkli sıcak kaynağına kadar.',
-      },
-    ].map((item, i) => (
-      <div key={i} className="single__accordion border border-stock-1">
-        <button
-          type="button"
-          onClick={() =>
-            setOpenFaq(openFaq === i ? null : i)
-          }
-          className="toggle px-5 py-3 leading-1.5 text-2md text-start w-full text-dark-1 font-serif font-semibold"
-        >
-          {String(i + 1).padStart(2, '0')}. {item.q}
-        </button>
+    {tour?.faq && tour.faq.length > 0 ? (
+      tour.faq.map((item: any, i: number) => (
+        <div key={i} className="single__accordion border border-stock-1">
+          <button
+            type="button"
+            onClick={() =>
+              setOpenFaq(openFaq === i ? null : i)
+            }
+            className="toggle px-5 py-3 leading-1.5 text-2md text-start w-full text-dark-1 font-serif font-semibold"
+          >
+            {String(i + 1).padStart(2, '0')}. {item.question}
+          </button>
 
-        {openFaq === i && (
-          <div className="inner px-5 pb-5">
-            <p className="text-base font-sans text-dark-3 leading-1.9 !pb-0">
-              {item.a}
-            </p>
-          </div>
-        )}
-      </div>
-    ))}
+          {openFaq === i && (
+            <div className="inner px-5 pb-5">
+              <p className="text-base font-sans text-dark-3 leading-1.9 !pb-0">
+                {item.answer}
+              </p>
+            </div>
+          )}
+        </div>
+      ))
+    ) : (
+      <div style={{ height: '200px' }}></div>
+    )}
   </div>
 </div>
 
@@ -273,29 +308,40 @@ const pageTitle = currentPackage?.title || 'Paket Detayı'
     Bu turun muhteşem anılarını içeren fotoğraflar aşağıda bulunmaktadır. Her resmi büyütmek için tıklayabilirsiniz.
   </p>
 
-  <div className="masonry-container">
-    {[g1, g2, g3, g4, g5, g6, g7, g8, g9].map((img, i) => (
-      <div
-        key={i}
-        className="masonry-item relative group overflow-hidden"
-      >
-        <img
-          src={img.src}
-          alt="details"
-          className="object-cover duration-200 group-hover:scale-[103%]"
-        />
-
-        <a
-          href={img.src}
-          data-fancybox="details"
-          className="inset-0 absolute bg-dark-1 bg-opacity-30 opacity-0 top-0 left-0 flex duration-200 hover:opacity-100 justify-center items-center"
-        >
-          <div className="lg:h-10 lg:w-10 w-9 h-9 bg-primary-1 text-white rounded-full inline-flex justify-center items-center text-2md">
-            <i className="bi bi-camera"></i>
-          </div>
-        </a>
-      </div>
-    ))}
+  <div style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+    gap: '20px',
+    marginTop: '20px'
+  }}>
+    {tour?.galleryImageUrls && tour.galleryImageUrls.length > 0 ? (
+      tour.galleryImageUrls.map((imageUrl: string, idx: number) => (
+        <div key={idx} className="masonry-item relative group overflow-hidden rounded-lg" style={{ height: '280px' }}>
+          <img
+            src={imageUrl}
+            alt={`${tour.title} ${idx + 1}`}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block'
+            }}
+            className="duration-200 group-hover:scale-[103%]"
+          />
+          <a
+            href={imageUrl}
+            data-fancybox="details"
+            className="inset-0 absolute bg-dark-1 bg-opacity-30 opacity-0 top-0 left-0 flex duration-200 hover:opacity-100 justify-center items-center"
+          >
+            <div className="lg:h-10 lg:w-10 w-9 h-9 bg-primary-1 text-white rounded-full inline-flex justify-center items-center text-2md">
+              <i className="bi bi-camera"></i>
+            </div>
+          </a>
+        </div>
+      ))
+    ) : (
+      <div style={{ height: '300px' }}></div>
+    )}
   </div>
 </div>
  
@@ -339,7 +385,7 @@ const pageTitle = currentPackage?.title || 'Paket Detayı'
 
   {activeTab === 'enquiry' && (
     <div className="tab-content active">
-      <form className="lg:px-base px-5 lg:py-base py-5 bg-white border-primary-1 border">
+      <form onSubmit={handleEnquirySubmit} className="lg:px-base px-5 lg:py-base py-5 bg-white border-primary-1 border">
         <h4 className="lg:text-lg text-2md text-dark-1 font-semibold">
           Şimdi Bilgi Talep Et
         </h4>
@@ -348,16 +394,41 @@ const pageTitle = currentPackage?.title || 'Paket Detayı'
           Aşağıdaki formu doldurarak turumuzla ilgili detaylı bilgi talep edebilirsiniz. Ekibimiz kısa sürede sizinle iletişime geçecektir.
         </p>
 
+        {enquirySuccess && (
+          <div style={{ background: '#d4edda', color: '#155724', padding: '12px', borderRadius: '4px', marginTop: '12px', marginBottom: '12px' }}>
+            {enquirySuccess}
+          </div>
+        )}
+
         <div className="lg:mt-base mt-5">
-          <input className="input_style__primary" placeholder="Adınız" />
+          <input 
+            className="input_style__primary" 
+            placeholder="Adınız" 
+            value={enquiryForm.name}
+            onChange={(e) => setEnquiryForm(prev => ({ ...prev, name: e.target.value }))}
+            required
+          />
         </div>
 
         <div className="lg:mt-base mt-5">
-          <input className="input_style__primary" placeholder="Email" />
+          <input 
+            className="input_style__primary" 
+            type="email"
+            placeholder="Email" 
+            value={enquiryForm.email}
+            onChange={(e) => setEnquiryForm(prev => ({ ...prev, email: e.target.value }))}
+            required
+          />
         </div>
 
         <div className="lg:mt-base mt-5">
-          <input className="input_style__primary" placeholder="Telefon Numarası" />
+          <input 
+            className="input_style__primary" 
+            placeholder="Telefon Numarası" 
+            value={enquiryForm.phone}
+            onChange={(e) => setEnquiryForm(prev => ({ ...prev, phone: e.target.value }))}
+            required
+          />
         </div>
 
         <div className="lg:mt-base mt-5">
@@ -365,11 +436,17 @@ const pageTitle = currentPackage?.title || 'Paket Detayı'
             rows={6}
             className="input_style__primary"
             placeholder="Ek Açıklama..."
+            value={enquiryForm.message}
+            onChange={(e) => setEnquiryForm(prev => ({ ...prev, message: e.target.value }))}
           />
         </div>
 
-        <button className="btn_primary__v1 !w-full justify-center mt-5">
-          Bilgi Talep Et
+        <button 
+          type="submit"
+          disabled={submittingEnquiry}
+          className="btn_primary__v1 !w-full justify-center mt-5"
+        >
+          {submittingEnquiry ? 'Gönderiliyor...' : 'Bilgi Talep Et'}
         </button>
       </form>
     </div>

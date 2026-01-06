@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -8,7 +7,6 @@ import Link from 'next/link'
 import { db } from '@/src/lib/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 
-import departmentImg from '@/assets/img/departments/department_img_1.png'
 import icon9 from '@/assets/img/departments/icon_9.svg'
 import icon10 from '@/assets/img/departments/icon_10.svg'
 import icon11 from '@/assets/img/departments/icon_11.svg'
@@ -88,19 +86,25 @@ export default function MedicalDetailPage() {
 
   return (
     <>
+      <section style={{ background: '#4f8edc', padding: '20px 0 20px 0' }}>
+        <div className="container" style={{ marginBottom: '20px', marginTop: '-45px' }}>
+          <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
+            <li className="breadcrumb-item2" style={{ color: '#fff' }}>
+              <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
+            </li>
+            <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>{slugToTurkishTitle(String(slug))}</li>
+          </ol>
 
-        <div className="container">
-              <ol className="breadcrumb2">
-          <li className="breadcrumb-item2">
-            <Link href="/medical">Anasayfa</Link>
-          </li>
-     
-              <li className="breadcrumb-item2 active">{slugToTurkishTitle(String(slug))}</li>
-            </ol>
+          <div className="cs_banner_text">
+
+            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
+              Detaylı bilgi ve tedavi seçenekleri.
+            </p>
+          </div>
         </div>
+      </section>
 
-
-      <section className="cs_shape_wrap" >
+      <section className="cs_shape_wrap">
         <div className="container">
           <div className="row align-items-center mt-5">
             <div className="col-lg-4">
@@ -170,11 +174,11 @@ export default function MedicalDetailPage() {
               <div className="cs_iconbox_info cs_radius_20">
                 <span className="cs_iconbox_circle cs_accent_bg"></span>
 
-                <h2 className="cs_iconbox_title cs_fs_32 cs_semibold">
+                <h2 className="cs_iconbox_title cs_fs_24 cs_semibold">
                   {item.title}
                 </h2>
 
-                <p className="cs_iconbox_subtitle mb-0 cs_heading_color">
+                <p className="cs_iconbox_subtitle mb-0 cs_heading_color" style={{ fontSize: '14px' }}>
                   {item.description}
                 </p>
               </div>
@@ -232,7 +236,7 @@ export default function MedicalDetailPage() {
             className="cs_iconbox_8_wrap cs_radius_30"
             style={{
               background: 'linear-gradient(154deg, #d2eaef 0%, #86bbf1 100%)',
-              padding: '10px 40px',
+              padding: '10px 30px',
               marginBottom: '20px',
             }}
           >
