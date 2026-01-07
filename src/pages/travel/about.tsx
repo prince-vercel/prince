@@ -164,9 +164,8 @@ useEffect(() => {
   return (
     <>
       {/*========== BREADCRUMB STYLE START ==========*/}
-       <div className="paralax-container lg:py-20 py-16 relative overflow-hidden">
+            <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#E8604C' }}>
         <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
-          <img src={breadcrumbBg.src} alt="breadcrumb" className="w-full h-full object-cover" />
         </div>
 
         <img
@@ -398,7 +397,7 @@ useEffect(() => {
   </div>
 </div>
 {/*========== TESTIMONIAL STYLE ONE END==========*/}
-  <div className="faq_style__one z-1 lg:pt-30 pt-24 mt-20 relative">
+  <div className="faq_style__one z-1 lg:pt-30 pt-24 mt-20 relative" id="faqs">
       
       <div className="absolute top-[5%] right-[1%] max-w-[9%] z-minus lg:inline-block hidden">
         <Image src={bird} alt="illustration" />

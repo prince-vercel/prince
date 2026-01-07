@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import logo from '@/assets/logo/logo-black.png'
+import logo from '@/assets/logo/logo-mavi.png'
 import closeIcon from '@/assets/img/icons/close.svg'
 import { usePathname } from 'next/navigation'
 
@@ -44,8 +44,8 @@ export default function Header() {
               
               {/* LEFT */}
               <div className="cs_main_header_left">
-                <Link href="/" className="cs_site_branding">
-                  <Image src={logo} alt="Pro Health Logo" width={120} height={50} />
+                <Link href="/" className="cs_site_branding" style={{paddingBottom:'8px'}}>
+                  <Image src={logo} alt="Pro Health Logo" width={110} height={40} />
                 </Link>
 
                 <nav className="cs_nav">

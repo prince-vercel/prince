@@ -8,17 +8,17 @@ export default function Footer() {
           <div className="container">
             <div className="row">
 
-              <div className="col-lg-4">
+             <div className="col-lg-4">
                 <div className="cs_footer_item">
                   <p>
-                    Prince <br />
+                    Prince Medical Aesthetics & Health Services <br />
                  
                   </p>
 
                   <ul className="cs_contact_widget">
                     <li>Kağıthane / İstanbul</li>
                     <li>+90 212 000 00 00</li>
-                    <li>info@prince.com</li>
+                    <li>medical@princetourismagency.com</li>
                   </ul>
                 </div>
               </div>
@@ -35,7 +35,7 @@ export default function Footer() {
 
               <div className="col-lg-2">
                 <ul className="cs_menu_widget cs_mp0">
-                  <li><Link href="#">Sık Sorulan Sorular</Link></li>
+                  <li><Link href="/travel/about#faqs">Sık Sorulan Sorular</Link></li>
                   <li><Link href="#">Gizlilik Politikası</Link></li>
                   <li><Link href="#">KVKK & Aydınlatma</Link></li>
                 </ul>

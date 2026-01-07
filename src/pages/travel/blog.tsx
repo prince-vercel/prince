@@ -56,9 +56,8 @@ const BlogList = () => {
 
   return (
     <>
-       <div className="paralax-container lg:py-20 py-16 relative overflow-hidden">
+          <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#E8604C' }}>
         <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
-          <img src={breadcrumbBg.src} alt="breadcrumb" className="w-full h-full object-cover" />
         </div>
 
         <img

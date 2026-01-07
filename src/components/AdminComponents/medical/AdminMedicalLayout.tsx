@@ -9,9 +9,20 @@ export const AdminMedicalLayout = ({ children }: AdminLayoutProps) => {
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
       <MedicalSidebar />
-      <main style={{ flex: 1, marginLeft: '260px', padding: '40px' }}>
+      <main style={{ 
+        flex: 1, 
+        marginLeft: '260px', 
+        padding: '40px'
+      }}>
         {children}
       </main>
+      <style>{`
+        @media (max-width: 1024px) {
+          main {
+            margin-left: 0 !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }

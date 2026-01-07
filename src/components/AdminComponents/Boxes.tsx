@@ -4,33 +4,32 @@ import Link from 'next/link'
 import Image from 'next/image'
 import logoBlack from '@/assets/logo/logo-black.png'
 import styles from '@/src/styles/admin.module.css'
-
-const hexToRgb = (hex: string) => {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-  return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '0, 0, 0'
-}
+import { MdLocalHospital, MdFlightTakeoff, MdVerifiedUser } from 'react-icons/md'
 
 const boxes = [
   {
     title: 'Medikal',
-    desc: 'Medikal İçerik ve Başvuru Yönetimi',
+    desc: 'Sağlık hizmetleri, kuruluşlar ve başvurular',
     href: '/admin/medical',
     color: '#307BC4',
     lightColor: '#5BA3D0',
+    icon: <MdLocalHospital size={48} />,
   },
   {
     title: 'Seyahat',
-    desc: 'Seyahat İçerik ve Başvuru Yönetimi',
+    desc: 'Tur paketleri, blog ve müşteri başvuruları',
     href: '/admin/travel',
     color: '#E8604C',
     lightColor: '#F19680',
+    icon: <MdFlightTakeoff size={48} />,
   },
   {
     title: 'Vize',
-    desc: 'Vize İçerik ve Başvuru Yönetimi',
+    desc: 'Vize başvuruları ve belge yönetimi',
     href: '/admin/visa',
     color: '#3A9D7A',
     lightColor: '#5DB896',
+    icon: <MdVerifiedUser size={48} />,
   },
 ]
 
@@ -43,6 +42,7 @@ export default function Boxes() {
           alt="Prince Logo"
           width={110}
           height={110}
+          className={styles.logo}
         />
         Prince Admin Paneli
       </h1>
@@ -55,9 +55,13 @@ export default function Boxes() {
             className={styles.adminBox}
             style={{ 
               borderColor: box.color,
-              background: `linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(${hexToRgb(box.lightColor)}, 0.15) 100%)`
-            }}
+              '--color-start': box.color,
+              '--color-end': box.lightColor,
+            } as React.CSSProperties & { '--color-start': string; '--color-end': string }}
           >
+            <div style={{ color: box.color, marginBottom: '12px' }}>
+              {box.icon}
+            </div>
 
             <h3
               className={styles.adminBoxTitle}
@@ -68,7 +72,7 @@ export default function Boxes() {
 
             <p
               className={styles.adminBoxDesc}
-              style={{ color: box.color }}
+              style={{ color: '#6b7280' }}
             >
               {box.desc}
             </p>
@@ -77,7 +81,7 @@ export default function Boxes() {
               className={styles.adminBoxLink}
               style={{ color: box.color }}
             >
-              Yönet  →
+              Yönet →
             </span>
           </Link>
         ))}

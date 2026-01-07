@@ -125,7 +125,134 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-           <section className="cs_section_spacing">
+      <section className="cs_shape_wrap">
+
+    <div className="container">
+        <div className="row flex-xl-row flex-column-reverse">
+           <div className="col-xl-5">
+             <div className="cs_pr_95 text-center cs_img_filed">
+                 <Image
+                  src={whyChooseUs}
+              alt="Why Choose Us"
+                  width={500}
+                  height={500}
+                   className="cs_radius_30"
+                />
+              </div>
+            </div>
+
+            <div className="col-xl-7">
+               <div className="cs_section_heading cs_style_1">
+                 <h2 className="cs_section_title cs_fs_72 m-0 " style={{ fontWeight: 'bold' }}>
+                  Neden Bizi Seçmelisiniz ?
+               </h2>
+              </div>
+
+             <div className="cs_height_85 cs_height_xl_70 cs_height_lg_50"></div>
+
+             <div className="row">
+            <div className="col-md-6">
+                 <div className="cs_iconbox cs_style_6">
+                  <div className="cs_iconbox_icon cs_center cs_accent_bg rounded-circle">
+                     <Image
+                      src={professionalIcon}
+                       alt=""
+                     width={32}
+                        height={32}
+                     />
+                 </div>
+
+                    <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }}>
+                   Prince Medical olarak, uluslararası hastalara Türkiye’nin dünya standartlarındaki
+                    sağlık hizmetlerini güvenli, şeffaf ve konforlu bir şekilde sunmak amacıyla kurulduk. 
+                    Alanında uzman doktorlar ve tam donanımlı sağlık kuruluşlarıyla iş birliği yaparak, 
+                    hastalarımıza en yüksek kalite standartlarında tedavi süreçleri sunuyoruz.
+
+                   </p>
+                 </div>
+                  <div className="cs_height_85 cs_height_xl_60 cs_height_lg_35"></div>
+               </div>
+
+            <div className="col-md-6">
+                  <div className="cs_iconbox cs_style_6">
+                     <div className="cs_iconbox_icon cs_center cs_accent_bg rounded-circle">
+                      <Image
+                        src={comprehensiveIcon}
+                       alt=""
+                      width={32}
+                        height={32}
+                      />
+                     </div>
+                   <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }}>
+                   Medical turizm alanındaki deneyimimizle; estetik cerrahi, saç ekimi, diş tedavileri ve birçok branşta kişiye özel çözümler geliştiriyoruz. Tedavi sürecinin her aşamasında, hastalarımızın ihtiyaçlarını önceliklendiriyor; danışmanlıktan tedavi sonrasına kadar uçtan uca hizmet sağlıyoruz.
+                    </p>
+                  </div>
+                  <div className="cs_height_85 cs_height_xl_60 cs_height_lg_35"></div>
+                </div>
+                 <div className="col-md-6">
+                  <div className="cs_iconbox cs_style_6">
+                     <div className="cs_iconbox_icon cs_center cs_accent_bg rounded-circle">
+                       <Image src={patientIcon} alt="" width={32} height={32} />
+                     </div>
+                     <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }}>
+                    Yurt dışından gelen misafirlerimiz için seyahat planlaması, konaklama, VIP transfer ve çok dilli hasta koordinasyonu hizmetleri sunarak, tedavi sürecini stressiz ve güvenli hale getiriyoruz.
+                     </p>
+                   </div>
+                   <div className="cs_height_85 cs_height_xl_60 cs_height_lg_35"></div>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="cs_iconbox cs_style_6">
+                    <div className="cs_iconbox_icon cs_center cs_accent_bg rounded-circle">
+                      <Image
+                         src={facilitiesIcon}
+                         alt=""
+                         width={32}
+                         height={32}
+                       />
+                     </div>
+                     <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }}>
+              Prince Medical olarak temel prensibimiz; etik değerlere bağlı, hasta memnuniyetini esas alan ve sürdürülebilir sağlık çözümleri üretmektir. Sağlığınız bizim için bir hizmet değil, bir sorumluluktur.
+                     </p>
+                   </div>
+                 </div>
+              </div>
+             </div>
+           </div>
+        </div>
+      </section>
+           
+     <section
+         className="cs_counter cs_style_1"
+         style={{ marginTop: "15vh", marginBottom: "15vh" }}
+      >
+        <div className="container">
+           <div className="row text-center">
+           {counters.map((item, i) => (
+              <div key={i} className="col-lg-3 col-6">
+                 <h2
+                   className="cs_counter_number"
+                   style={{ fontSize: "30px", fontWeight: "500" }}
+                >
+                  {item.end >= 1000
+                    ? `${Math.floor(values[i] / 1000)}K${item.suffix}`
+                    : `${values[i]}${item.suffix}`}
+                </h2>
+                <p
+                  className="cs_counter_title"
+                 style={{ fontSize: "18px", fontWeight: "600" }}
+              >
+                  {item.label}
+                </p>
+              </div>
+            ))}
+          </div>
+         </div>
+       </section>
+
+
+
+<section className="cs_section_spacing">
          <div className="container">
            <div className="row">
            <div className="col-md-6 col-xl-4">
@@ -160,151 +287,12 @@ export default function AboutPage() {
           </div>
         </div>
      </section>
-     <section
-         className="cs_counter cs_style_1"
-         style={{ marginTop: "15vh", marginBottom: "15vh" }}
-      >
-        <div className="container">
-           <div className="row text-center">
-           {counters.map((item, i) => (
-              <div key={i} className="col-lg-3 col-6">
-                 <h2
-                   className="cs_counter_number"
-                   style={{ fontSize: "30px", fontWeight: "500" }}
-                >
-                  {item.end >= 1000
-                    ? `${Math.floor(values[i] / 1000)}K${item.suffix}`
-                    : `${values[i]}${item.suffix}`}
-                </h2>
-                <p
-                  className="cs_counter_title"
-                 style={{ fontSize: "18px", fontWeight: "600" }}
-              >
-                  {item.label}
-                </p>
-              </div>
-            ))}
-          </div>
-         </div>
-       </section>
 
 
-
-<section className="cs_shape_wrap">
-
-    <div className="container">
-        <div className="row flex-xl-row flex-column-reverse">
-           <div className="col-xl-5">
-             <div className="cs_pr_95 text-center cs_img_filed">
-                 <Image
-                  src={whyChooseUs}
-              alt="Why Choose Us"
-                  width={500}
-                  height={500}
-                   className="cs_radius_30"
-                />
-              </div>
-            </div>
-
-            <div className="col-xl-7">
-               <div className="cs_section_heading cs_style_1">
-                 <h2 className="cs_section_title cs_fs_72 m-0">
-                  Neden Bizi Seçmelisiz
-               </h2>
-              </div>
-
-             <div className="cs_height_85 cs_height_xl_70 cs_height_lg_50"></div>
-
-             <div className="row">
-            <div className="col-md-6">
-                 <div className="cs_iconbox cs_style_6">
-                  <div className="cs_iconbox_icon cs_center cs_accent_bg rounded-circle">
-                     <Image
-                      src={professionalIcon}
-                       alt=""
-                     width={40}
-                        height={40}
-                     />
-                 </div>
-                <h2 className="cs_iconbox_title cs_fs_32 cs_semibold">
-                     Deneyimli Tıbbi Profesyoneller
-                   </h2>
-                    <p className="cs_iconbox_subtitle m-0">
-                     Ekibimiz hastalarımıza mümkün olan en iyi bakımı <br />
-                    sağlamaya adanmış deneyimli doktorlar ve hemşireler <br />
-                 içermektedir.
-                   </p>
-                 </div>
-                  <div className="cs_height_85 cs_height_xl_60 cs_height_lg_35"></div>
-               </div>
-
-            <div className="col-md-6">
-                  <div className="cs_iconbox cs_style_6">
-                     <div className="cs_iconbox_icon cs_center cs_accent_bg rounded-circle">
-                      <Image
-                        src={comprehensiveIcon}
-                       alt=""
-                      width={40}
-                        height={40}
-                      />
-                     </div>
-                    <h2 className="cs_iconbox_title cs_fs_32 cs_semibold">
-                      Kapsamlı <br /> Hizmetler
-                   </h2>
-                   <p className="cs_iconbox_subtitle m-0">
-                     Koruyucu bakımdan karmaşık durumlara <br />
-                      yönelik uzmanlaşmış tedavi için çok çeşitli <br />
-                      sağlık hizmetleri sunuyoruz.
-                    </p>
-                  </div>
-                  <div className="cs_height_85 cs_height_xl_60 cs_height_lg_35"></div>
-                </div>
-
-                 <div className="col-md-6">
-                  <div className="cs_iconbox cs_style_6">
-                     <div className="cs_iconbox_icon cs_center cs_accent_bg rounded-circle">
-                       <Image src={patientIcon} alt="" width={40} height={40} />
-                     </div>
-                     <h2 className="cs_iconbox_title cs_fs_32 cs_semibold">
-                       Hasta Odaklı <br /> Yaklaşım
-                     </h2>
-                     <p className="cs_iconbox_subtitle m-0">
-                      Her hastayı bir birey olarak tedavi etmeye <br />
-                       inanıyor ve sizin benzersiz sağlık ihtiyaçlarınızı <br />
-                       ve endişelerinizi anlamak için zaman ayırıyoruz.
-                     </p>
-                   </div>
-                   <div className="cs_height_85 cs_height_xl_60 cs_height_lg_35"></div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="cs_iconbox cs_style_6">
-                    <div className="cs_iconbox_icon cs_center cs_accent_bg rounded-circle">
-                      <Image
-                         src={facilitiesIcon}
-                         alt=""
-                         width={40}
-                         height={40}
-                       />
-                     </div>
-                     <h2 className="cs_iconbox_title cs_fs_32 cs_semibold">
-                       Son Teknoloji <br /> Tesisler
-                     </h2>
-                     <p className="cs_iconbox_subtitle m-0">
-                       Sağlık merkezimiz hastalarımıza mümkün olan <br />
-                       en ileri bakımı sağlamak için en son teknoloji <br />
-                       ve ekipman ile donatılmıştır.
-                     </p>
-                   </div>
-                 </div>
-              </div>
-             </div>
-           </div>
-        </div>
-      </section>
       <section
      className="cs_shape_wrap cs_faq_section"
      style={{ marginBottom: 0 }}
+     id="faqs"
    >
 
 

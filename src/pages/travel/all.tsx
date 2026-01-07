@@ -117,9 +117,8 @@ export default function PackageList() {
     <>
 
       {/* ===== HERO / BREADCRUMB (AYNI) ===== */}
-      <div className="paralax-container lg:py-20 py-12 relative overflow-hidden">
+      <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#E8604C' }}>
         <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
-          <img src={breadcrumbBg.src} alt="breadcrumb" className="w-full h-full object-cover" />
         </div>
 
         <img src={breadcrumbShape.src} alt="shape" className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" />
@@ -134,7 +133,7 @@ export default function PackageList() {
           </ol>
 
           <h2 className="xl:text-[54px] mt-2 lg:text-4xl md:text-2xl text-[30px] text-white font-medium max-w-[640px]">
-            Arid Most Popular Tours
+            Tüm Seyahatlerimiz
           </h2>
         </div>
       </div>

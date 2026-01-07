@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { db } from '@/src/lib/firebase'
 import { getDocs, collection } from 'firebase/firestore'
+import bannerImg from '@/assets/img/doctors/banner_img_3.png'
 
 const ITEMS_PER_PAGE = 3
 
@@ -259,10 +260,10 @@ export default function OrganisationPage() {
           <div className="cs_banner cs_style_9 cs_white_bg cs_radius_30">
             <div className="cs_banner_img">
               <Image
-                src="/assets/img/doctors/banner_img_3.png"
+                src={bannerImg}
                 alt="Banner"
-                width={600}
-                height={400}
+                width={300}
+                height={200}
               />
             </div>
 

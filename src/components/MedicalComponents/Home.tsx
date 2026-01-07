@@ -5,7 +5,6 @@ import Link from 'next/link'
 
 import heroImg from '@/assets/img/home_1/hero_img.png'
 import heroBg from '@/assets/img/home_1/hero_bg.jpeg'
-import aboutImg from '@/assets/img/home_1/about.png'
 
 import compassion from '@/assets/img/home_1/compassion.svg'
 import excellence from '@/assets/img/home_1/excellence.svg'
@@ -25,21 +24,24 @@ import brand5 from '@/assets/img/brand_5.png'
 import brand6 from '@/assets/img/brand_6.png'
 import brand7 from '@/assets/img/brand_7.png'
 import brand8 from '@/assets/img/brand_8.png'
-import dep1 from '@/assets/img/home_1/department_icon_1.svg'
-import dep2 from '@/assets/img/home_1/department_icon_2.svg'
-import dep3 from '@/assets/img/home_1/department_icon_3.svg'
-import dep4 from '@/assets/img/home_1/department_icon_4.svg'
-import dep5 from '@/assets/img/home_1/department_icon_5.svg'
-import dep6 from '@/assets/img/home_1/department_icon_6.svg'
-import dep7 from '@/assets/img/home_1/department_icon_1.svg'
-import dep8 from '@/assets/img/home_1/department_icon_2.svg'
-import dep9 from '@/assets/img/home_1/department_icon_3.svg'
-import dep10 from '@/assets/img/home_1/department_icon_4.svg'
-import avatar1 from '@/assets/img/home_1/avatar_1.png'
-import avatar2 from '@/assets/img/home_1/avatar_2.png'
-import avatar3 from '@/assets/img/home_1/avatar_3.png'
+import dep1 from '@/assets/img/home_1/tooth.png'
+import dep2 from '@/assets/img/home_1/department_icon_3.svg'
+import dep3 from '@/assets/img/home_1/breast (1).png'
+import dep4 from '@/assets/img/home_1/visibility.png'
+import dep5 from '@/assets/img/home_1/hip.png'
+import dep6 from '@/assets/img/home_1/ear.png'
+import dep7 from '@/assets/img/home_1/face.png'
+import dep8 from '@/assets/img/home_1/healthcare.png'
+import dep9 from '@/assets/img/home_1/hair.png'
+import dep10 from '@/assets/img/home_1/stretch-marks.png'
+import step1 from '@/assets/img/home_1/airplane-mode.png'
+import step2 from '@/assets/img/home_1/health-screening.png'
+import step3 from '@/assets/img/home_1/slumber.png'
+import herok from '@/assets/img/home_1/hero150k.png'
+
 import quoteIcon from '@/assets/img/icons/quote.svg'
 import { useEffect, useState } from 'react'
+import { MdAssignment, MdMedicalServices, MdCheckCircle } from 'react-icons/md'
 
 export default function HomePage() {
     const [activeTab, setActiveTab] = useState(2)
@@ -59,38 +61,41 @@ const scrollSlider = (dir: string) => {
 }
 const reviews = [
   {
-    name: 'Danışmanlık & Analiz',
+    name: 'Varışınız ve VIP Transfer',
     location: '1. Adım',
-    avatar: avatar1,
-    text: 'İlk başvurunuzdan itibaren süreciniz uzman ekibimiz tarafından titizlikle değerlendirilir. İhtiyaçlarınız analiz edilir, beklentileriniz dinlenir ve size özel en uygun tedavi planı oluşturulur.'
+    icon: <MdAssignment size={80} color="#307BC4" />,
+    image: step1,
+    text: 'Dönüşümünüz havaalanına indiğiniz an başlıyor! Yurt dışından geliyorsanız özel VIP transferimiz sizi karşılayarak otelinize veya kliniğimize güvenli ve konforlu bir şekilde ulaştırır.'
   },
   {
-    name: 'Kişiye Özel Uygulama',
+    name: 'Kişiye Özel Muayene ve Hazırlık',
     location: '2. Adım',
-    avatar: avatar2,
-    text: 'Tedavi süreciniz boyunca kendinizi güvende ve konforlu hissedersiniz. Uygulamalar, alanında uzman ekip tarafından hijyenik koşullarda gerçekleştirilir ve tüm aşamalar size detaylı şekilde aktarılır.'
+    icon: <MdMedicalServices size={80} color="#307BC4" />,
+    image: step2,
+    text: 'İşlem öncesinde uzmanlarımızla birebir muayene yaparak beklentilerinizi dinliyoruz. Gerekli testleri gerçekleştirip size en uygun tedavi planını oluşturuyoruz.'
   },
   {
-    name: 'Doğal ve Kalıcı Sonuçlar',
+    name: 'İşlem Sonrası Bakım ve İyileşme',
     location: '3. Adım',
-    avatar: avatar3,
-    text: 'Uygulama sonrasında cildinizdeki yenilenmeyi ve elde edilen doğal sonuçları net şekilde gözlemleyebilirsiniz. Profesyonel yaklaşımımız sayesinde hem görünümünüzde hem de özgüveninizde fark yaratan bir deneyim yaşarsınız.'
+    icon: <MdCheckCircle size={80} color="#307BC4" />,
+    image: step3,
+    text: 'İşlem tamamlandıktan sonra iyileşme sürecinizde yanınızdayız. Tedavinize bağlı olarak, konforlu dinlenme odalarımızda vakit geçirebilir veya otelinize dönerek detaylı bakım talimatlarını alabilirsiniz.'
   }
 ]
 
 const departments = [
   { icon: dep1, title: 'Diş', slug: 'dis' },
+  { icon: dep4, title: 'Göz', slug: 'goz' },
+  { icon: dep8, title: 'Burun', slug: 'burun-estetigi' },
+  { icon: dep7, title: 'Boyun ve Yüz', slug: 'boyun-ve-yuz' },
+  { icon: dep6, title: 'Kulak', slug: 'kulak' },
+  { icon: dep9, title: 'Saç Ekimi', slug: 'sac-ekimi' },
+  { icon: dep5, title: 'Kalça', slug: 'kalca' },
   { icon: dep2, title: 'Genital', slug: 'genital' },
   { icon: dep3, title: 'Göğüs', slug: 'gogus' },
-  { icon: dep4, title: 'Göz', slug: 'goz' },
-  { icon: dep5, title: 'Kalça', slug: 'kalca' },
-  { icon: dep6, title: 'Kulak', slug: 'kulak' },
-  { icon: dep7, title: 'Boyun ve Yüz', slug: 'boyun-ve-yuz' },
-  { icon: dep8, title: 'Burun', slug: 'burun-estetigi' },
-  { icon: dep9, title: 'Saç Ekimi', slug: 'sac-ekimi' },
   { icon: dep10, title: 'Vücut', slug: 'vucut-sekillendirme-liposuction' },
 ]
-const words = ['Dişçi', 'Koltuk Değnekleri', 'Laboratuvar', 'Kardiyoloji', 'Nöroloji']
+const words = ['Estetik', 'Yenilenme', 'Güzellik', 'Sağlık']
 const [activeIndex, setActiveIndex] = useState(0)
 
 useEffect(() => {
@@ -104,6 +109,19 @@ useEffect(() => {
 
   return (
     <>
+    <style>{`
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+      .float-animation {
+        animation: float 3s ease-in-out infinite;
+      }
+    `}</style>
 
 
     {/* HERO */}
@@ -144,7 +162,7 @@ useEffect(() => {
 </h1>
 
             <p className="cs_hero_subtitle cs_fs_20 cs_heading_color">
-              Size en iyi tıbbi ve sağlık hizmetlerini sunmaya kardeşiz.
+              Size en iyi tıbbi ve sağlık hizmetlerini sunuyoruz.
             </p>
 <Link href="/medical/form" className="cs_btn cs_style_1" style={{marginTop:'20px'}}>
   <span>Başvuru Yap</span>
@@ -155,15 +173,25 @@ useEffect(() => {
         </div>
 
         {/* RIGHT IMAGE */}
-        <div className="col-lg-6 text-end">
+        <div className="col-lg-6 text-end" style={{ position: 'relative' }}>
           <Image
             src={heroImg}
             alt="Hero"
             width={800}
-            height={800}
+            height={700}
             priority
-            style={{ maxWidth: '100%', height: 'auto' }}
+            style={{ maxWidth: '85%', height: 'auto',marginRight:'20px' }}
           />
+          <div className="float-animation" style={{ position: 'absolute', top: '45%', right: '20px' }}>
+            <Image
+              src={herok}
+              alt="Hero Accent"
+              width={200}
+              height={200}
+              priority
+              style={{ maxWidth: '100%', height: 'auto' }}
+            />
+          </div>
         </div>
 
       </div>
@@ -192,9 +220,47 @@ useEffect(() => {
       <Link
         href={`/medical/${item.slug}`}
         className="cs_department cs_shadow_1 cs_radius_20 cs_white_bg"
+        style={{
+          transition: 'all 0.3s ease',
+        }}
+        onMouseEnter={(e) => {
+          const img = e.currentTarget.querySelector('img')
+          const p = e.currentTarget.querySelector('p')
+          if (img) {
+            img.style.filter = 'brightness(0) saturate(100%) invert(100%)'
+          }
+          if (p) {
+            p.style.color = 'white'
+          }
+        }}
+        onMouseLeave={(e) => {
+          const img = e.currentTarget.querySelector('img')
+          const p = e.currentTarget.querySelector('p')
+          if (img) {
+            img.style.filter = 'brightness(0) saturate(100%) invert(0%)'
+          }
+          if (p) {
+            p.style.color = '#000000'
+          }
+        }}
       >
-        <Image src={item.icon} alt={item.title} width={48} height={48} />
-        <p className="cs_department_title cs_medium cs_heading_color cs_fs_20 mb-0">
+        <Image 
+          src={item.icon} 
+          alt={item.title} 
+          width={48} 
+          height={48}
+          style={{
+            filter: 'brightness(0) saturate(100%) invert(0%)',
+            transition: 'filter 0.3s ease'
+          }}
+        />
+        <p 
+          className="cs_department_title cs_medium cs_fs_20 mb-0"
+          style={{
+            color: '#000000',
+            transition: 'color 0.3s ease'
+          }}
+        >
           {item.title}
         </p>
       </Link>
@@ -250,7 +316,23 @@ useEffect(() => {
               >
                 <div className="cs_tab_link_in">
                   <div className="cs_testimonial_1_avatar">
-                    <Image src={item.avatar} alt={item.name} width={80} height={80} />
+                    <div style={{ 
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '35px',
+                      height: '35px'
+                    }}>
+                      {reviews[index].image && (
+                        <Image 
+                          src={reviews[index].image} 
+                          alt={reviews[index].name} 
+                          width={40} 
+                          height={40}
+                          style={{ objectFit: 'contain' }}
+                        />
+                      )}
+                    </div>
                     <div className="cs_testimonial_1_avatar_right">
                       <h3 className="cs_fs_24 cs_semibold mb-0">{item.name}</h3>
                       <p className="cs_heading_color mb-0">{item.location}</p>

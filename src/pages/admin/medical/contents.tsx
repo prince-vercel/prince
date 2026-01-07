@@ -76,15 +76,7 @@ const ContentsPage = () => {
 
 
       {/* BOXES */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '20px',
-          marginBottom: '40px',
-          marginTop: '20px'
-        }}
-      >
+      <div className={styles.contentsPageGrid}>
         {contentBoxes.map((box) => {
           const isActive = activeTab === box.id
 
@@ -92,38 +84,15 @@ const ContentsPage = () => {
             <button
               key={box.id}
               onClick={() => setActiveTab(box.id as any)}
-              style={{
-                padding: '48px 60px',
-                borderRadius: '14px',
-                cursor: 'pointer',
-                transition: 'all 0.25s ease',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '18px',
-                textAlign: 'center',
-                border: isActive
-                  ? '2px solid #307BC4'
-                  : '2px solid #e5e7eb',
-                background: isActive ? '#307BC4' : '#fff',
-                color: isActive ? '#fff' : '#1f2937',
-                boxShadow: isActive
-                  ? '0 8px 20px rgba(48,123,196,0.35)'
-                  : '0 1px 3px rgba(0,0,0,0.05)'
-              }}
+              className={`${styles.contentsPageButton} ${
+                isActive ? styles.contentsPageButtonActive : ''
+              }`}
             >
-              <div style={{ color: isActive ? '#fff' : '#307BC4' }}>
+              <div className={styles.contentsPageButtonIcon}>
                 {React.cloneElement(box.icon, { size: 52 })}
               </div>
 
-              <h3
-                style={{
-                  fontSize: '20px',
-                  fontWeight: '600',
-                  margin: 0,
-                  color: isActive ? '#fff' : '#1f2937',
-                }}
-              >
+              <h3 className={styles.contentsPageButtonTitle}>
                 {box.title}
               </h3>
             </button>
@@ -136,7 +105,7 @@ const ContentsPage = () => {
         {activeTab ? (
           renderContent()
         ) : (
-          <div style={{ color: '#999', fontSize: '16px' }}>
+          <div className={styles.contentsPageEmpty}>
             Yukarıdan bir içerik seçin
           </div>
         )}

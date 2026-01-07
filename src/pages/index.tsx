@@ -1,10 +1,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import medicalImg from '@/assets/images/medikal.jpeg'
+import visaImg from '@/assets/images/vize.jpeg'
+import travelImg from '@/assets/images/seyahat.jpeg'
 
 const images = {
-  medical: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
-  visa: 'https://images.unsplash.com/photo-1502920514313-52581002a659?auto=format&fit=crop&w=1200&q=80',
-  travel: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80',
+  medical: medicalImg.src,
+  visa: visaImg.src,
+  travel: travelImg.src,
 }
 
 export default function HomePage() {

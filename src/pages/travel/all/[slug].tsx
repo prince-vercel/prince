@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { doc, getDoc, collection, addDoc, serverTimestamp } from 'firebase/firestore'
@@ -35,7 +36,6 @@ export default function TravelDetailPage() {
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
           setTour(docSnap.data())
-          setImageLoading(false)
         }
       } catch (error) {
         console.error('Tur detayı yükleme hatası:', error)
@@ -46,13 +46,6 @@ export default function TravelDetailPage() {
 
     fetchTour()
   }, [slug])
-
-  useEffect(() => {
-    // Görüntü değişirse loading'i sıfırla
-    if (tour?.mainImageUrl) {
-      setImageLoading(false)
-    }
-  }, [tour?.mainImageUrl])
 
   const handleEnquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -89,26 +82,31 @@ export default function TravelDetailPage() {
     <>
 
       {/* BREADCRUMB */}
-      <div className="paralax-container lg:py-36 py-20 relative overflow-hidden">
+      <div className="paralax-container lg:py-26 py-20 relative overflow-hidden">
         <div
           className="jarallax absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50 before:z-minus"
           data-jarallax
+          style={{ overflow: 'hidden' }}
         >
           {imageLoading && (
             <div className="absolute inset-0 bg-gray-300 flex items-center justify-center z-10">
               <div className="flex flex-col items-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-1"></div>
-                <span className="mt-2 text-gray-600">Yükleniyor...</span>
               </div>
             </div>
           )}
-          <img 
-            className="jarallax-img" 
-            src={tour?.mainImageUrl} 
-            alt="Kapak"
-            onLoad={() => setImageLoading(false)}
-            style={{ opacity: imageLoading ? 0 : 1, transition: 'opacity 0.3s ease-in-out' }}
-          />
+          {tour?.mainImageUrl && (
+            <Image
+              src={tour.mainImageUrl}
+              alt="Kapak"
+              fill
+              priority
+              sizes="100vw"
+              className="jarallax-img object-cover"
+              onLoadingComplete={() => setImageLoading(false)}
+              quality={85}
+            />
+          )}
         </div>
 
         <img src={breadcrumbShape.src} className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" alt="" />

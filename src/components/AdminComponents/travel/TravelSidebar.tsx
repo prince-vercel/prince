@@ -16,7 +16,7 @@ const TravelSidebar = () => {
 
   return (
     <>
-      <button className={styles.hamburger} onClick={() => setOpen(true)}>
+      <button className={styles.hamburger} style={{ color: '#E8604C' }} onClick={() => setOpen(true)}>
         ☰
       </button>
 

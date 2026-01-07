@@ -9361,11 +9361,12 @@ a.ui-button:active,
   }
 }
 .cs_iconbox_icon {
-  width: 110px !important;
-  height: 110px !important;
+  width: 60px !important;
+  height: 60px !important;
   border-radius: 50%;
   position: relative;
   overflow: hidden;
+  margin-top: '2px';
 }
 
 .cs_iconbox_icon::before,
@@ -10032,7 +10033,7 @@ a.ui-button:active,
 
 .cs_iconbox.cs_style_9 {
   background: linear-gradient(154deg, #d2eaef 0%, #86bbf1 100%);
-  padding: 40px 25px;
+  padding: 30px 25px;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
   margin-bottom: 24px;
@@ -10660,7 +10661,7 @@ a.ui-button:active,
 ----------------------------------------------------------------*/
 .cs_banner.cs_style_1 {
   position: relative;
-  padding: 100px 90px;
+  padding: 80px 90px;
   border-radius: 25px;
   margin-top: 165px;
 }
@@ -11135,7 +11136,7 @@ a.ui-button:active,
 }
 @media (max-width: 1700px) {
   .cs_banner.cs_style_9 {
-    padding: 140px 0 350px 110px;
+    padding: 140px 0 100px 110px;
     margin-top: 80px;
   }
 }
