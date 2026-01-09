@@ -131,7 +131,7 @@ useEffect(() => {
   fetchQuestions()
   fetchForms()
   fetchCount()
-}, [])
+}, [fetchForms])
 
 
   return (
@@ -248,7 +248,102 @@ useEffect(() => {
                             <div style={{ flex: '0 0 100px', fontSize: '13px', color: '#666' }}>
                               {item.createdAt?.toDate
                                 ? item.createdAt.toDate().toLocaleDateString('tr-TR')
-                                : '-'}\n                            </div>\n                            <div style={{ flex: '1', fontSize: '14px', color: '#000', fontWeight: '500' }}>{fullName || 'İsim Bilinmiyor'}</div>\n\n                            <div style={{ flex: '1.2', fontSize: '14px', color: '#000', maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>\n                              {(() => {\n                                const targetQuestionId = 'LGeWQVtcDgYkPGISWD0e'\n                                const answer = item.answers?.[targetQuestionId]\n                                if (!answer) return 'Cevap yok'\n                                const answerText = Array.isArray(answer) ? answer.join(', ') : String(answer)\n                                return `${answerText.substring(0, 50)}${answerText.length > 50 ? '...' : ''}`\n                              })()}\n                            </div>\n\n                            <div className={styles.gfRowActions}>\n                              <button\n                                className={styles.gfIconBtn}\n                                title=\"Sil\"\n                                onClick={() =>\n                                  openDeleteModal(item.id, String(fullName) || 'Başvuru')\n                                }\n                              >\n                                <i className=\"fas fa-trash\"></i>\n                              </button>\n\n                              <button\n                                className={styles.gfIconBtn}\n                                title=\"Cevapla\"\n                                onClick={() => {\n                                  setSelectedEmail({email: String(email) || '', name: String(fullName) || 'Başvurucu'})\n                                  setShowEmailModal(true)\n                                }}\n                              >\n                                <i className=\"fas fa-envelope\"></i>\n                              </button>\n\n                              <button\n                                className={styles.gfIconBtn}\n                                title=\"Detay\"\n                                onClick={() =>\n                                  setExpandedId(expandedId === item.id ? null : item.id)\n                                }\n                              >\n                                <i\n                                  className={`fas fa-chevron-${\n                                    expandedId === item.id ? 'up' : 'down'\n                                  }`}\n                                ></i>\n                              </button>\n                            </div>\n                          </div>\n\n                          {/* AÇIK HAL DETAY */}\n                          {expandedId === item.id && (\n                            <div className={styles.gfCardContent}>\n                              <div className={styles.gfSection}>\n                                <h3>Başvuru Detayları</h3>\n                                <div className={styles.gfFields}>\n                                  {questions.map(question => {\n                                    const answer = item.answers[question.id]\n                                    const additionalAnswer = item.answers[`${question.id}_additional`]\n                                    \n                                    if (!answer) return null\n\n                                    return (\n                                      <div key={question.id} className={styles.gfField}>\n                                        <label>{question.questionText}</label>\n                                        <div>\n                                          {Array.isArray(answer) ? answer.join(', ') : String(answer)}\n                                          {additionalAnswer && (\n                                            <div style={{ marginTop: '8px', fontSize: '12px', color: '#666', fontStyle: 'italic' }}>\n                                              ({question.additionalInputLabel}: {additionalAnswer})\n                                            </div>\n                                          )}\n                                        </div>\n                                      </div>\n                                    )\n                                  })}\n                                </div>\n                              </div>\n\n                              {item.admin?.answered && (\n                                <div className={styles.gfAnswerBox}>\n                                  <p className={styles.gfAnswerLabel}>Admin Cevabı</p>\n                                  <p>{item.admin.answerText}</p>\n                                </div>\n                              )}\n                            </div>\n                          )}\n                        </div>\n                      </>\n                    )\n                  })\n                )}\n\n                {totalPages > 1 && (\n                  <div className={styles.gfPagination} style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '24px', flexWrap: 'wrap' }}>\n                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (\n                      <button\n                        key={page}\n                        onClick={() => {\n                          setCurrentPage(page)\n                          window.scrollTo({ top: 0, behavior: 'smooth' })\n                        }}\n                        style={{\n                          padding: '8px 12px',\n                          border: page === currentPage ? '2px solid #d7b76e' : '1px solid #ddd',\n                          backgroundColor: page === currentPage ? '#fef3e2' : 'white',\n                          color: page === currentPage ? '#d7b76e' : '#000',\n                          borderRadius: '4px',\n                          cursor: 'pointer',\n                          fontWeight: page === currentPage ? 'bold' : 'normal',\n                          fontSize: '14px',\n                          transition: 'all 0.3s ease',\n                        }}\n                      >\n                        {page}\n                      </button>\n                    ))}\n                  </div>\n                )}\n              </>\n            )\n          })()\n        )}
+                                : '-'}
+                            </div>
+                            <div style={{ flex: '1', fontSize: '14px', color: '#000', fontWeight: '500' }}>{fullName || 'İsim Bilinmiyor'}</div>
+
+                            <div style={{ flex: '1.2', fontSize: '14px', color: '#000', maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                              {(() => {
+                                const targetQuestionId = 'LGeWQVtcDgYkPGISWD0e'
+                                const answer = item.answers?.[targetQuestionId]
+                                if (!answer) return 'Cevap yok'
+                                const answerText = Array.isArray(answer) ? answer.join(', ') : String(answer)
+                                return `${answerText.substring(0, 50)}${answerText.length > 50 ? '...' : ''}`
+                              })()}
+                            </div>
+
+                            <div className={styles.gfRowActions}>
+                              <button
+                                className={styles.gfIconBtn}
+                                title="Sil"
+                                onClick={() =>
+                                  openDeleteModal(item.id, String(fullName) || 'Başvuru')
+                                }
+                              >
+                                <i className="fas fa-trash"></i>
+                              </button>
+
+                              <button
+                                className={styles.gfIconBtn}
+                                title="Cevapla"
+                                onClick={() => {
+                                  setSelectedEmail({email: String(email) || '', name: String(fullName) || 'Başvurucu'})
+                                  setShowEmailModal(true)
+                                }}
+                              >
+                                <i className="fas fa-envelope"></i>
+                              </button>
+
+                              <button
+                                className={styles.gfIconBtn}
+                                title="Detay"
+                                onClick={() =>
+                                  setExpandedId(expandedId === item.id ? null : item.id)
+                                }
+                              >
+                                <i
+                                  className={`fas fa-chevron-${
+                                    expandedId === item.id ? 'up' : 'down'
+                                  }`}
+                                ></i>
+                              </button>
+                            </div>
+                          </div>
+                          {expandedId === item.id && (
+                            <div className={styles.gfCardContent}>
+                              <div className={styles.gfSection}>
+                                <h3>Başvuru Detayları</h3>
+                                <div className={styles.gfFields}>
+                                  {questions.map(question => {
+                                    const answer = item.answers[question.id]
+                                    const additionalAnswer = item.answers[`${question.id}_additional`]
+                                    if (!answer) return null
+                                    return (
+                                      <div key={question.id} className={styles.gfField}>
+                                        <label>{question.questionText}</label>
+                                        <div>
+                                          {Array.isArray(answer) ? answer.join(', ') : String(answer)}
+                                          {additionalAnswer && <div style={{ marginTop: '8px', fontSize: '12px', color: '#666', fontStyle: 'italic' }}>({question.additionalInputLabel}: {additionalAnswer})</div>}
+                                        </div>
+                                      </div>
+                                    )
+                                  })}
+                                </div>
+                              </div>
+                              {item.admin?.answered && (
+                                <div className={styles.gfAnswerBox}>
+                                  <p className={styles.gfAnswerLabel}>Admin Cevabı</p>
+                                  <p>{item.admin.answerText}</p>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )
+                  })}
+                {totalPages > 1 && (
+                  <div className={styles.gfPagination} style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '24px', flexWrap: 'wrap' }}>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                      <button key={page} onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }) }} style={{ padding: '8px 12px', border: page === currentPage ? '2px solid #d7b76e' : '1px solid #ddd', backgroundColor: page === currentPage ? '#fef3e2' : 'white', color: page === currentPage ? '#d7b76e' : '#000', borderRadius: '4px', cursor: 'pointer', fontWeight: page === currentPage ? 'bold' : 'normal', fontSize: '14px', transition: 'all 0.3s ease' }}>
+                        {page}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            )
+          })()        )}
       </div>
 
       {/* EMAIL MODAL */}
