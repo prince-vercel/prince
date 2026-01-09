@@ -7,11 +7,8 @@ import Image from 'next/image'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 
-import breadcrumbBg from '@/assets/images/backgrounds/breadcrumb-bg.webp'
 import breadcrumbShape from '@/assets/images/illustration/breadcrunb__shape.png'
-import birdWhite from '@/assets/images/illustration/bird-illustration-w.png'
 import treeIllustration from '@/assets/images/illustration/tree-illustration.png'
-import birdIllustration from '@/assets/images/illustration/bird-illustration.png'
 
 interface Blog {
   id: string
@@ -56,7 +53,7 @@ const BlogList = () => {
 
   return (
     <>
-          <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#E8604C' }}>
+          <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#d7b76e' }}>
         <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
         </div>
 
@@ -65,11 +62,7 @@ const BlogList = () => {
           alt="placeholder"
           className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]"
         />
-        <img
-          src={birdWhite.src}
-          alt="placeholder"
-          className="absolute top-[10%] right-[4%] z-1 w-[7.5%]"
-        />
+    
 
         <div className="container relative z-2">
           <nav>
@@ -81,7 +74,7 @@ const BlogList = () => {
           </ol>
           </nav>
 
-          <h2 className="xl:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
+          <h2 className="l:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
             Blog Yazıları 
           </h2>
         </div>
@@ -89,7 +82,6 @@ const BlogList = () => {
 
       <div className="lg:pt-30 pt-24 relative z-1">
         <Image src={treeIllustration} alt="tree" className="absolute top-1/2 -translate-y-1/2 right-0 max-w-[14%] z-minus hidden lg:block" />
-        <Image src={birdIllustration} alt="bird" className="absolute top-[5%] left-[1%] max-w-[9%] z-minus hidden lg:block" />
 
         <div className="container">
           <div className="grid grid-cols-12">
@@ -104,7 +96,7 @@ const BlogList = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-24 md:gap-x-32 gap-y-16">
                     {blogs.slice((currentPage - 1) * BLOGS_PER_PAGE, currentPage * BLOGS_PER_PAGE).map(blog => (
                       <div key={blog.id} className="mt-0 px-4 md:px-6">
-                        <img src={blog.imageUrl} alt={blog.title} style={{ width: '100%', height: '280px', borderRadius: '8px', objectFit: 'cover' }} />
+                        <img src={blog.imageUrl} alt={blog.title} style={{ width: '100%', height: '280px',  objectFit: 'cover' }} />
 
                         <div className="lg:mt-[24px] mt-5">
                           <ul className="flex items-center text-[13px] font-medium text-dark-2">

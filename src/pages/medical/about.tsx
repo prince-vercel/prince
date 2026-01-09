@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import Image from "next/image";
@@ -9,42 +10,11 @@ import professionalIcon from "@/assets/img/icons/professional.svg";
 import comprehensiveIcon from "@/assets/img/icons/comprehensive.svg";
 import patientIcon from "@/assets/img/icons/patient.svg";
 import facilitiesIcon from "@/assets/img/icons/facilities.svg";
-import calendarIcon from "@/assets/img/icons/calendar_white.svg";
-import arrowIcon from "@/assets/img/icons/arrow_white.svg";
-import Footer from "./../../components/MedicalComponents/Footer";
 import React, { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { db } from "@/src/lib/firebase";
 import { getDocs, collection } from "firebase/firestore";
 
-interface FAQ {
-  id: string
-  question: string
-  answer: string
-}
-
-const services = [
-  {
-    title: "Tanı testleri",
-    desc: "Kan testleri, görüntüleme çalışmaları ve sağlık durumlarını tanılamak için diğer testler",
-  },
-  {
-    title: "Rehabilitasyon hizmetleri",
-    desc: "Fizyoterapia, meslek terapisi ve iyileşme hizmetleri",
-  },
-  {
-    title: "Koruyucu bakım",
-    desc: "Yıllık kontroller, bağışıklamalar ve sağlık taramaları",
-  },
-  {
-    title: "Kronik hastalık tedavisi",
-    desc: "Hastalık yönetimi ve uzun vadeli tedavi planları",
-  },
-  {
-    title: "Ruh sağlığı hizmetleri",
-    desc: "Danışmanlık, terapi ve psikolojik destek",
-  },
-];
 
 export default function AboutPage() {
   const counters = useMemo(
@@ -56,34 +26,35 @@ export default function AboutPage() {
     ],
     []
   );
-  const [activeFaq, setActiveFaq] = useState<number | null>(2);
-  const [faqs, setFaqs] = useState<FAQ[]>([]);
-  const [faqLoading, setFaqLoading] = useState(true);
 
+    const [partners, setPartners] = useState<any[]>([])
+    const [loadingPartners, setLoadingPartners] = useState(true)
   const [values, setValues] = useState(counters.map(() => 0));
 
-  // Fetch FAQs from Firestore
-  useEffect(() => {
-    const fetchFaqs = async () => {
-      try {
-        setFaqLoading(true)
-        const faqsRef = collection(db, 'medicalcontents/faq/list')
-        const snapshot = await getDocs(faqsRef)
-        const faqsData = snapshot.docs.map((doc) => ({
+
+// Firebase'den partners'ları çek
+useEffect(() => {
+  const fetchPartners = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'medicalcontents/partner/partners'))
+      const partnersData: any[] = []
+      querySnapshot.forEach((doc) => {
+        partnersData.push({
           id: doc.id,
           ...doc.data(),
-        })) as FAQ[]
-        setFaqs(faqsData)
-      } catch (error) {
-        console.error('FAQ verileri çekilirken hata:', error)
-      } finally {
-        setFaqLoading(false)
-      }
+        })
+      })
+      // Düzenlemeye göre sırala
+      setPartners(partnersData.sort((a, b) => (a.order || 0) - (b.order || 0)))
+    } catch (error) {
+      console.error('Partners yükleme hatası:', error)
+    } finally {
+      setLoadingPartners(false)
     }
+  }
 
-    fetchFaqs()
-  }, [])
-
+  fetchPartners()
+}, [])
   useEffect(() => {
     const duration = 2000;
     const steps = 60;
@@ -252,127 +223,45 @@ export default function AboutPage() {
 
 
 
-<section className="cs_section_spacing">
-         <div className="container">
-           <div className="row">
-           <div className="col-md-6 col-xl-4">
-             <div className="cs_section_heading cs_style_1">
-               <h3 className="cs_section_subtitle text-uppercase cs_accent_color cs_fs_32" style={{ fontWeight: '600' }}>
-                 HİZMETLER
-               </h3>
-               <div className="cs_height_5"></div>
-               <h4 className="cs_section_title cs_fs_48">
-                 En İyi Hizmetlerimizi Sunuyoruz
-               </h4>
-             </div>
-             <div className="cs_height_70 cs_height_lg_50"></div>
-           </div>
-            {services.map((item, i) => (
-              <div key={i} className="col-md-6 col-xl-4">
-              <div className="cs_iconbox cs_style_4">
-                  <div className="cs_iconbox_icon cs_accent_bg rounded-circle cs_center">
-                     <Image src={calendarIcon} alt="" width={20} height={20} />
-                  </div>
-                  <h2 className="cs_iconbox_title cs_fs_32">{item.title}</h2>
 
-                  <p className="cs_iconbox_subtitle m-0">{item.desc}</p>
-
-                  <a href="#" className="cs_iconbox_btn cs_center">
-                    <Image src={arrowIcon} alt="" />
-                    <Image src={arrowIcon} alt="" />
-                  </a>
-                </div>
-              </div>
-            ))}
+{/* PARTNERS */}
+<section>
+  <div className="container" style={{ marginTop: '20vh' }}>
+    <div className="cs_brands cs_style_1 cs_brand_marquee">
+      <div className="cs_brands_track">
+        {loadingPartners ? (
+          <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
+            <p>İş ortakları yükleniyor...</p>
           </div>
-        </div>
-     </section>
+        ) : partners.length === 0 ? (
+          <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
+            <p>Henüz iş ortağı yok.</p>
+          </div>
+        ) : (
+          partners.concat(partners).map((partner, i) => (
+            <div key={i} className="cs_brand cs_center" style={{ marginRight: '40px' }}>
+              <Image 
+                src={partner.imageUrl} 
+                alt={partner.title || 'Partner'} 
+                width={90} 
+                height={45}
+                style={{ 
+                  objectFit: 'contain',
+                  filter: 'grayscale(100%)',
+                  opacity: 0.8
+                }}
+              />
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  </div>
+</section>
 
 
-      <section
-     className="cs_shape_wrap cs_faq_section"
-     style={{ marginBottom: 0 }}
-     id="faqs"
-   >
 
 
-     <div className="container">
-       <div className="row">
-         <div className="col-xxl-4">
-           <div className="cs_section_heading cs_style_1">
-             <h3 className="cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_fs_32">
-               İnsanlar Genellikle
-             </h3>
-             <div className="cs_height_5"></div>
-             <h2 className="cs_section_title cs_fs_72 m-0">Soruyorlar</h2>
-           </div>
-           <div className="cs_height_70 cs_height_lg_50"></div>
-         </div>
-       </div>
-
-       <div className="row">
-         <div className="col-xxl-8 offset-xxl-4">
-           <div className="cs_accordians cs_style1 cs_type_1 cs_heading_color">
-             {faqLoading ? (
-               <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
-                 <p>Sorular yükleniyor...</p>
-               </div>
-             ) : faqs.length === 0 ? (
-               <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
-                 <p>Henüz soru eklenmemiş</p>
-               </div>
-             ) : (
-               faqs.map((item, i) => {
-                 const isActive = activeFaq === i;
-
-                 return (
-                   <div
-                     key={item.id}
-                     className={`cs_accordian ${isActive ? "active" : ""}`}
-                   >
-                     <h2
-                       className="cs_accordian_head cs_heading_color"
-                       onClick={() => setActiveFaq(isActive ? null : i)}
-                       style={{ cursor: "pointer" }}
-                     >
-                       {item.question}
-
-                       <span className="cs_accordian_arrow">
-                         <svg
-                           width="23"
-                           height="13"
-                           viewBox="0 0 23 13"
-                           fill="none"
-                           xmlns="http://www.w3.org/2000/svg"
-                           style={{
-                             transform: isActive
-                               ? "rotate(180deg)"
-                               : "rotate(0deg)",
-                             transition: "transform 0.3s ease",
-                           }}
-                         >
-                           <path
-                             d="M22.9996 1.52904L11.5264 12.4967L0.00121875 1.37918"
-                             fill="#307BC4"
-                           />
-                         </svg>
-                       </span>
-                     </h2>
-
-                     {isActive && (
-                       <div className="cs_accordian_body">
-                         {React.createElement("p", null, item.answer)}
-                       </div>
-                     )}
-                   </div>
-                 );
-               })
-             )}
-           </div>
-         </div>
-       </div>
-     </div>
-   </section>
     </>
   );
 }

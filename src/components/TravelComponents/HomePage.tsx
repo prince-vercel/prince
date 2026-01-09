@@ -2,34 +2,21 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import hd1 from '@/assets/images/destination/hd-1.webp'
-import hd2 from '@/assets/images/destination/hd-2.webp'
-import hd3 from '@/assets/images/destination/hd-3.webp'
-import hd4 from '@/assets/images/destination/hd-4.webp'
 import heroBg from '@/assets/images/hero/hero.webp'
 import t1 from '@/assets/images/icons/t1-1.svg'
 import t2 from '@/assets/images/icons/t1-2.svg'
 import t3 from '@/assets/images/icons/t1-3.svg'
 import t4 from '@/assets/images/icons/t1-4.svg'
-import p1 from '@/assets/images/packages/p1-1.webp'
-import p2 from '@/assets/images/packages/p1-2.webp'
-import p3 from '@/assets/images/packages/p1-3.webp'
+
 
 
 import leaf2 from '@/assets/images/illustration/leaf-illustration-2.png'
 import tree from '@/assets/images/illustration/tree-illustration.png'
-import bird from '@/assets/images/illustration/bird-illustration.png'
 
-
-import blog1 from '@/assets/images/blog/b1-2.webp'
-import blog2 from '@/assets/images/blog/b1-2.webp'
-import blog3 from '@/assets/images/blog/b1-2.webp'
 import { useRef, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
-
-const generateRandomId = () => Math.random().toString(36).substring(2, 11)
 
 const normalizeText = (text: string) => {
   return text
@@ -44,29 +31,119 @@ const normalizeText = (text: string) => {
     .trim()
 }
 
+interface Blog {
+  id: string
+  title: string
+  desc: string
+  imageUrl: string
+  createdAt?: Date
+}
+
+interface Tour {
+  id: string
+  isFavorite?: boolean
+  mainImageUrl?: string
+  imageUrl?: string
+  title: string
+  duration?: string
+  price?: string
+  [key: string]: any
+}
+
 export default function TravelHomePage() {
 const router = useRouter()
 const [date, setDate] = useState('')
 const [destination, setDestination] = useState('')
 const dateRef = useRef<HTMLInputElement>(null)
 const [packages, setPackages] = useState<any[]>([])
+const [blogs, setBlogs] = useState<Blog[]>([])
+const [banners, setBanners] = useState<any[]>([])
+const [partners, setPartners] = useState<any[]>([])
+const [loadingPartners, setLoadingPartners] = useState(true)
+
+
+// Firebase'den partners'ları çek
+useEffect(() => {
+  const fetchPartners = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'travelcontents/partner/partners'))
+      const partnersData: any[] = []
+      querySnapshot.forEach((doc) => {
+        partnersData.push({
+          id: doc.id,
+          ...doc.data(),
+        })
+      })
+      // Düzenlemeye göre sırala
+      setPartners(partnersData.sort((a, b) => (a.order || 0) - (b.order || 0)))
+    } catch (error) {
+      console.error('Partners yükleme hatası:', error)
+    } finally {
+      setLoadingPartners(false)
+    }
+  }
+
+  fetchPartners()
+}, [])
+
+useEffect(() => {
+  const fetchBanners = async () => {
+    try {
+      const q = query(collection(db, 'travelcontents', 'images', 'banners'), orderBy('createdAt', 'desc'))
+      const snap = await getDocs(q)
+      const bannersList = snap.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      setBanners(bannersList)
+    } catch (error) {
+      console.error('Banner yükleme hatası:', error)
+    }
+  }
+  
+  fetchBanners()
+}, [])
 
 useEffect(() => {
   const fetchTours = async () => {
     try {
-      const q = query(collection(db, 'traveltours'), orderBy('createdAt', 'desc'), limit(3))
+      const q = query(collection(db, 'traveltours'), orderBy('createdAt', 'desc'))
       const snap = await getDocs(q)
-      const tours = snap.docs.map(doc => ({
+      const tours: Tour[] = snap.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
-      }))
-      setPackages(tours)
+      } as Tour))
+      // Sadece favorilere eklediğim turları göster
+      const favoriteTours = tours.filter(tour => tour.isFavorite === true).slice(0, 3)
+      setPackages(favoriteTours)
     } catch (error) {
       console.error('Tur yükleme hatası:', error)
     }
   }
   
   fetchTours()
+}, [])
+
+useEffect(() => {
+  const fetchBlogs = async () => {
+    try {
+      const q = query(collection(db, 'travelblogs'), orderBy('createdAt', 'desc'), limit(3))
+      const snap = await getDocs(q)
+      const blogsData: Blog[] = []
+      snap.forEach((doc) => {
+        blogsData.push({
+          id: doc.id,
+          ...doc.data(),
+          createdAt: doc.data().createdAt?.toDate(),
+        } as Blog)
+      })
+      setBlogs(blogsData)
+    } catch (error) {
+      console.error('Blog yükleme hatası:', error)
+    }
+  }
+
+  fetchBlogs()
 }, [])
 
 const handleSearchSubmit = (e: React.FormEvent) => {
@@ -83,41 +160,39 @@ const handleSearchSubmit = (e: React.FormEvent) => {
 
   return (
     <>
-     <div className="hero_style__start">
+     <div className="hero_style__start" style={{marginTop:'60px'}}>
   <div className="lg:grid grid-cols-12 xl:gap-base gap-3 mx-auto xl:px-base px-3 overflow-hidden">
 
-    <div className="lg:col-span-3 md:col-span-6 hidden lg:flex flex-col">
-      <div className="group hero-card-sm">
-        <a href="#">
-          <img
-            src={hd1.src}
-            alt="Fransa"
-            className="lg:h-full w-full object-cover group-hover:scale-110 duration-500"
-          />
-          <div className="text-white absolute w-full lg:bottom-10 bottom-6 text-center">
-
-            <div className="h-[3px] w-9 bg-white rounded-md mx-auto"></div>
+    <div className="lg:col-span-3 md:col-span-6 hidden lg:flex flex-col ">
+      {banners.length > 0 ? (
+        banners.slice(0, 3).map((banner, index) => (
+          <div key={banner.id} className="group hero-card-sm" style={{ height: '260px', marginTop: index > 0 ? '15px' : '0' }}>
+            <a href="#">
+              <img
+                src={banner.imageUrl}
+                alt={banner.title}
+                className="lg:h-full w-full object-cover group-hover:scale-110 duration-500"
+              />
+              <div className="text-white absolute w-full lg:bottom-10 bottom-6 text-center">
+                <h4 className="font-bold text-lg text-white">{banner.title}</h4>
+                <div className="h-[3px] w-9 bg-white rounded-md mx-auto mt-2"></div>
+              </div>
+            </a>
           </div>
-        </a>
-      </div>
+        ))
+      ) : (
+        <>
+  
 
-      <div className="group hero-card-sm">
-        <a href="#">
-          <img
-            src={hd2.src}
-            alt="İsviçre"
-            className="lg:h-full w-full object-cover group-hover:scale-110 duration-500"
-          />
-          <div className="text-white absolute w-full lg:bottom-10 bottom-6 text-center">
 
-            <div className="h-[3px] w-9 bg-white rounded-md mx-auto"></div>
-          </div>
-        </a>
-      </div>
+        </>
+      )}
     </div>
 
+
+
     <div
-      className="lg:col-span-6 md:col-span-12 xl:min-h-screen lg:py-30 py-20 bg-cover bg-center bg-no-repeat flex justify-center items-center"
+      className="lg:col-span-6 md:col-span-12 xl:min-h-[370px] lg:min-h-[350px] lg:py-16 py-12 bg-cover bg-center bg-no-repeat flex justify-center items-center"
       style={{ backgroundImage: `url(${heroBg.src})` }}
     >
       <form className="w-full max-w-[570px]" onSubmit={handleSearchSubmit}>
@@ -197,34 +272,29 @@ const handleSearchSubmit = (e: React.FormEvent) => {
       </form>
     </div>
 
-    <div className="lg:col-span-3 md:col-span-6 hidden lg:flex flex-col">
-      <div className="group hero-card-sm">
-        <a href="#">
-          <img
-            src={hd3.src}
-            alt="Nepal"
-            className="lg:h-full w-full object-cover group-hover:scale-110 duration-500"
-          />
-          <div className="text-white absolute w-full lg:bottom-10 bottom-6 text-center">
-
-            <div className="h-[3px] w-9 bg-white rounded-md mx-auto"></div>
+    <div className="lg:col-span-3 md:col-span-6 hidden lg:flex flex-col gap-1">
+      {banners.length > 0 ? (
+        banners.slice(3, 6).map((banner, index) => (
+          <div key={banner.id} className="group hero-card-sm" style={{ height: '260px', marginTop: index > 0 ? '15px' : '0' }}>
+            <a href="#">
+              <img
+                src={banner.imageUrl}
+                alt={banner.title}
+                className="lg:h-full w-full object-cover group-hover:scale-110 duration-500"
+              />
+              <div className="text-white absolute w-full lg:bottom-10 bottom-6 text-center">
+                <h4 className="font-bold text-lg text-white">{banner.title}</h4>
+                <div className="h-[3px] w-9 bg-white rounded-md mx-auto mt-2"></div>
+              </div>
+            </a>
           </div>
-        </a>
-      </div>
-
-      <div className="group hero-card-sm">
-        <a href="#">
-          <img
-            src={hd4.src}
-            alt="Roma"
-            className="lg:h-full w-full object-cover group-hover:scale-110 duration-500"
-          />
-          <div className="text-white absolute w-full lg:bottom-10 bottom-6 text-center">
-
-            <div className="h-[3px] w-9 bg-white rounded-md mx-auto"></div>
-          </div>
-        </a>
-      </div>
+        ))
+      ) : (
+        <>
+          
+         
+        </>
+      )}
     </div>
 
   </div>
@@ -244,27 +314,27 @@ const handleSearchSubmit = (e: React.FormEvent) => {
     <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-base">
 
       <div className="text-center">
-        <img src={t1.src} alt="Macera" className="mx-auto" />
-        <h4 className="mt-4">Historical</h4>
-        <p>Adrenalin dolu keşif rotaları</p>
+        <img src={t3.src} alt="Macera" className="mx-auto" />
+        <h4 className="mt-4">Şehir İçi Günü Birlik</h4>
+        <p>Şehirde heyecan dolu günü birlik keşif rotaları</p>
       </div>
 
       <div className="text-center">
         <img src={t2.src} alt="Gemi" className="mx-auto" />
-        <h4 className="mt-4">Shopping</h4>
-        <p>Konforlu ve keyifli deniz yolculukları</p>
+        <h4 className="mt-4">Şehir Dışı Günü Birlik</h4>
+        <p>Doğada rahat ve keyifli günü birlik turlar</p>
       </div>
 
       <div className="text-center">
-        <img src={t3.src} alt="Doğa" className="mx-auto" />
-        <h4 className="mt-4">Cultural</h4>
-        <p>Doğa ile iç içe rotalar</p>
+        <img src={t1.src} alt="Doğa" className="mx-auto" />
+        <h4 className="mt-4">Konaklama Paketleri</h4>
+        <p>Konaklama dahil tam paket tur hizmetleri</p>
       </div>
 
       <div className="text-center">
         <img src={t4.src} alt="Balayı" className="mx-auto" />
-        <h4 className="mt-4">Private tour</h4>
-        <p>Romantik ve özel tatiller</p>
+        <h4 className="mt-4">Yurt Dışı Turlar</h4>
+        <p>Uluslararası destinasyonlarda özel ve romantik tatiller</p>
       </div>
 
     </div>
@@ -314,28 +384,42 @@ const handleSearchSubmit = (e: React.FormEvent) => {
                   </div>
                 )}
               </a>
-              {index === 0 && <span className="absolute top-5 right-5 text-sm text-white rounded-full bg-[#219FFF] py-1 px-3">Yeni</span>}
+              {<span className="absolute top-5 right-5 text-sm text-white rounded-full bg-[#219FFF] py-1 px-3">Popüler</span>}
             </div>
 
             <h3 className="card-title-alpha group-hover/card:text-primary-1 lg:mt-6 mt-5">
               <a href={`/travel/all/${item.id}`}>{item.title}</a>
             </h3>
 
-            <ul className="flex flex-wrap lg:text-[15px] text-[13px] font-medium text-dark-2 mt-4 package-feature">
-              <li>
-                <span className="text-primary-1"><i className="bi bi-people"></i></span>
-                <span>0{(index % 4) + 1} Kişi</span>
-              </li>
-              <li>
-                <span className="text-primary-1"><i className="bi bi-clock"></i></span>
-                <span>{item.duration || '3 Gün'}</span>
-              </li>
-              <li>
-                <span className="text-primary-1"><i className="bi bi-coin"></i></span>
-                <span> <span className="text-primary-1 font-bold">${item.price || '250'}</span></span>
+            <ul className="flex flex-wrap text-sm font-medium text-dark-2 mt-4 package-feature">
+              {item.days ? (
+                <li className="mr-4">
+                  <i className="bi bi-calendar-event text-primary-1 mr-2"></i>
+                  {Array.isArray(item.days) ? item.days.slice(0, 2).join(', ') : item.days}
+                </li>
+              ) : null}
+              
+              {item.location ? (
+                <li className="mr-4">
+                  <i className="bi bi-geo-alt text-primary-1 mr-2"></i>
+                  {item.location}
+                </li>
+              ) : null}
+              
+              <li className="mr-4">
+                {item.price ? (
+                  <>
+                    <i className="bi bi-currency-euro text-primary-1 mr-2"></i>
+                    {item.price}€
+                  </>
+                ) : (
+                  <>
+                    <i className="bi bi-currency-euro text-primary-1 mr-2"></i>
+                    Fiyat Al
+                  </>
+                )}
               </li>
             </ul>
-
             <a href={`/travel/all/${item.id}`} className="package-explore-btn group/btn">
               <span className="mr-2">Hemen İncele</span>
               <svg className="group-hover/btn:translate-x-2 duration-200" width="27" height="14" viewBox="0 0 27 14" fill="none">
@@ -353,12 +437,44 @@ const handleSearchSubmit = (e: React.FormEvent) => {
 </div>
 {/*========== PACKAGE STYLE ONE END ==========*/}
 
+
+
+{/* PARTNERS */}
+  <div className="container" style={{ marginBottom: '20vh' }}>
+    <div className="cs_brands cs_style_1 cs_brand_marquee">
+      <div className="cs_brands_track">
+        {loadingPartners ? (
+          <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
+            <p>İş ortakları yükleniyor...</p>
+          </div>
+        ) : partners.length === 0 ? (
+          <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
+            <p>Henüz iş ortağı yok.</p>
+          </div>
+        ) : (
+          partners.concat(partners).map((partner: any, i: number) => (
+            <div key={i} className="cs_brand cs_center" style={{ marginRight: '40px' }}>
+              <img 
+                src={partner.imageUrl} 
+                alt={partner.title || 'Partner'} 
+                style={{ 
+                  width: '100px',
+                  height: '100px',
+                  objectFit: 'contain',
+                  filter: 'grayscale(100%)',
+                  opacity: 0.8
+                }}
+              />
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  </div>
+
 {/*========== BLOG STYLE ONE START ==========*/}
 <div className="blog_style_one relative z-1 ">
 
-  <div className="absolute top-[5%] left-[1%] max-w-[9%] z-minus lg:inline-block hidden">
-    <img src={bird.src} alt="illustration" />
-  </div>
 
   <div className="container">
 
@@ -369,165 +485,67 @@ const handleSearchSubmit = (e: React.FormEvent) => {
 
     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-base">
 
-      {/* BLOG CARD 1 */}
-      <div className="blog_card__one group wow fadeInUp">
-        <div className="overflow-hidden">
-          <a href="#">
-            <img
-              src={blog1.src}
-              alt="blog"
-              className="w-full hover:scale-105 duration-300"
-            />
-          </a>
+      {blogs.length === 0 ? (
+        <div className="col-span-full text-center py-10 text-gray-500">
+          Blog bulunamadı
         </div>
+      ) : (
+        blogs.map((blog, index) => (
+          <div key={blog.id} className="blog_card__one group wow fadeInUp" data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}>
+            <div className="overflow-hidden" style={{ height: '280px' }}>
+              <a href={`/travel/blog/${blog.id}`} className="block w-full h-full">
+                <img
+                  src={blog.imageUrl}
+                  alt={blog.title}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  className="hover:scale-105 duration-300"
+                />
+              </a>
+            </div>
 
-        <div className="mt-6">
-          <ul className="flex items-center text-[13px] font-medium text-dark-2">
-            <li className="flex items-center relative first:pl-0 pl-2 pr-2 before:content-[''] before:absolute before:h-2/3 before:w-[1px] before:bg-dark-2 before:-translate-y-1/2 before:top-1/2 before:left-0 first:before:hidden">
-              <i className="bi bi-calendar-date text-[15px]"></i>
-              <span className="ml-2">24 Eyl 2022 · 18:30</span>
-            </li>
-     
-          </ul>
+            <div className="mt-6">
+              <ul className="flex items-center text-[13px] font-medium text-dark-2">
+                <li className="flex items-center relative first:pl-0 pl-2 pr-2 before:content-[''] before:absolute before:h-2/3 before:w-[1px] before:bg-dark-2 before:-translate-y-1/2 before:top-1/2 before:left-0 first:before:hidden">
+                  <i className="bi bi-calendar-date text-[15px]"></i>
+                  <span className="ml-2">{blog.createdAt?.toLocaleDateString('tr-TR')}</span>
+                </li>
+              </ul>
 
-          <h3 className="card-title-alpha mt-4">
-            <a href="#">
-              Doğal bakımın en saf haliyle tanışın.
-            </a>
-          </h3>
+              <h3 className="card-title-alpha mt-4">
+                <a href={`/travel/blog/${blog.id}`}>
+                  {blog.title}
+                </a>
+              </h3>
 
-          <a
-            href="#"
-            className="group inline-flex items-center mt-4 lg:text-md text-base text-dark-1 font-medium hover:text-primary-1 duration-200"
-          >
-            <span className="mr-2">Devamını Oku</span>
-            <svg
-              className="group-hover:translate-x-2 duration-200"
-              width="27"
-              height="14"
-              viewBox="0 0 27 14"
-              fill="none"
-            >
-              <path
-                d="M0.217443 6.25H18.4827V7.75H0.217443Z"
-                fill="currentColor"
-              />
-              <path
-                d="M20.7001 12.2802L25.0467 7.93355C25.5601 7.42021 25.5601 6.58021 25.0467 6.06688L20.7001 1.72021"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      {/* BLOG CARD 2 */}
-      <div className="blog_card__one group wow fadeInUp" data-wow-delay="0.2s">
-        <div className="overflow-hidden">
-          <a href="#">
-            <img
-              src={blog2.src}
-              alt="blog"
-              className="w-full hover:scale-105 duration-300"
-            />
-          </a>
-        </div>
-
-        <div className="mt-6">
-          <ul className="flex items-center text-[13px] font-medium text-dark-2">
-            <li className="flex items-center relative first:pl-0 pl-2 pr-2 before:content-[''] before:absolute before:h-2/3 before:w-[1px] before:bg-dark-2 before:-translate-y-1/2 before:top-1/2 before:left-0 first:before:hidden">
-              <i className="bi bi-calendar-date text-[15px]"></i>
-              <span className="ml-2">24 Eyl 2022 · 18:30</span>
-            </li>
-        
-          </ul>
-
-          <h3 className="card-title-alpha mt-4">
-            <a href="#">
-              Dalhousie’de Mutlaka Görülmesi Gereken Yerler
-            </a>
-          </h3>
-
-          <a
-            href="#"
-            className="group inline-flex items-center mt-4 lg:text-md text-base text-dark-1 font-medium hover:text-primary-1 duration-200"
-          >
-            <span className="mr-2">Devamını Oku</span>
-            <svg
-              className="group-hover:translate-x-2 duration-200"
-              width="27"
-              height="14"
-              viewBox="0 0 27 14"
-              fill="none"
-            >
-              <path d="M0.217443 6.25H18.4827V7.75H0.217443Z" fill="currentColor" />
-              <path
-                d="M20.7001 12.2802L25.0467 7.93355C25.5601 7.42021 25.5601 6.58021 25.0467 6.06688L20.7001 1.72021"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      {/* BLOG CARD 3 */}
-      <div className="blog_card__one group wow fadeInUp" data-wow-delay="0.4s">
-        <div className="overflow-hidden">
-          <a href="#">
-            <img
-              src={blog3.src}
-              alt="blog"
-              className="w-full hover:scale-105 duration-300"
-            />
-          </a>
-        </div>
-
-        <div className="mt-6">
-          <ul className="flex items-center text-[13px] font-medium text-dark-2">
-            <li className="flex items-center relative first:pl-0 pl-2 pr-2 before:content-[''] before:absolute before:h-2/3 before:w-[1px] before:bg-dark-2 before:-translate-y-1/2 before:top-1/2 before:left-0 first:before:hidden">
-              <i className="bi bi-calendar-date text-[15px]"></i>
-              <span className="ml-2">24 Eyl 2022 · 18:30</span>
-            </li>
-          
-          </ul>
-
-          <h3 className="card-title-alpha mt-4">
-            <a href="#">
-              %15 İndirimden Yararlanarak Rezervasyonunuzu Yapın
-            </a>
-          </h3>
-
-          <a
-            href="#"
-            className="group inline-flex items-center mt-4 lg:text-md text-base text-dark-1 font-medium hover:text-primary-1 duration-200"
-          >
-            <span className="mr-2">Devamını Oku</span>
-            <svg
-              className="group-hover:translate-x-2 duration-200"
-              width="27"
-              height="14"
-              viewBox="0 0 27 14"
-              fill="none"
-            >
-              <path d="M0.217443 6.25H18.4827V7.75H0.217443Z" fill="currentColor" />
-              <path
-                d="M20.7001 12.2802L25.0467 7.93355C25.5601 7.42021 25.5601 6.58021 25.0467 6.06688L20.7001 1.72021"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
-        </div>
-      </div>
-
+              <a
+                href={`/travel/blog/${blog.id}`}
+                className="group inline-flex items-center mt-4 lg:text-md text-base text-dark-1 font-medium hover:text-primary-1 duration-200"
+              >
+                <span className="mr-2">Devamını Oku</span>
+                <svg
+                  className="group-hover:translate-x-2 duration-200"
+                  width="27"
+                  height="14"
+                  viewBox="0 0 27 14"
+                  fill="none"
+                >
+                  <path
+                    d="M0.217443 6.25H18.4827V7.75H0.217443Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M20.7001 12.2802L25.0467 7.93355C25.5601 7.42021 25.5601 6.58021 25.0467 6.06688L20.7001 1.72021"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        ))
+      )}
     </div>
   </div>
 </div>

@@ -35,7 +35,7 @@ const ContentTestimonials = () => {
 
   const fetchTestimonials = async () => {
     try {
-      const testimonialsRef = collection(db, 'travelcontents/testimonials/list')
+      const testimonialsRef = collection(db, 'medicalcontents/testimonials/list')
       const snapshot = await getDocs(testimonialsRef)
       const testimonialsData = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -78,7 +78,7 @@ const ContentTestimonials = () => {
       const testimonialId = editingTestimonialId || Date.now().toString()
 
       await setDoc(
-        doc(db, 'travelcontents/testimonials/list', testimonialId),
+        doc(db, 'medicalcontents/testimonials/list', testimonialId),
         {
           id: testimonialId,
           name,
@@ -116,7 +116,7 @@ const ContentTestimonials = () => {
         }
 
         // Veri sil
-        await deleteDoc(doc(db, 'travelcontents/testimonials/list', id))
+        await deleteDoc(doc(db, 'medicalcontents/testimonials/list', id))
         await fetchTestimonials()
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -231,7 +231,7 @@ const ContentTestimonials = () => {
           onClick={handleSave}
           disabled={loading || !name || !text || !imageUrl || uploadingImage}
           className={styles.contentServicesSaveBtn}
-          style={{ backgroundColor: '#d7b76e', color: 'white', border: 'none' }}
+          style={{ backgroundColor: '#307bc4', color: 'white', border: 'none' }}
         >
           <MdSave size={18} />
           {loading ? 'Kaydediliyor...' : isEditMode ? 'Güncelle' : 'Kaydet'}
@@ -312,8 +312,8 @@ const ContentTestimonials = () => {
                       justifyContent: 'center',
                       gap: '4px',
                       padding: '6px 12px',
-                      background: '#d7b76e',
-                      color: 'white',
+                      color: '#307bc4',
+                      background: '#dbeafe',
                       border: 'none',
                       borderRadius: '4px',
                       cursor: 'pointer',

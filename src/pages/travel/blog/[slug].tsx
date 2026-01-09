@@ -10,9 +10,7 @@ import { db } from '@/src/lib/firebase'
 
 import breadcrumbBg from '@/assets/images/backgrounds/breadcrumb-bg.webp'
 import breadcrumbShape from '@/assets/images/illustration/breadcrunb__shape.png'
-import birdWhite from '@/assets/images/illustration/bird-illustration-w.png'
 import treeIllustration from '@/assets/images/illustration/tree-illustration.png'
-import birdIllustration from '@/assets/images/illustration/bird-illustration.png'
 
 interface Blog {
   id: string
@@ -71,7 +69,6 @@ export default function BlogDetail() {
         </div>
 
         <Image src={breadcrumbShape} alt="shape" className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" />
-        <Image src={birdWhite} alt="bird" className="absolute top-[10%] right-[4%] z-1 w-[7.5%]" />
 
         <div className="container relative z-2">
           <nav>
@@ -81,7 +78,7 @@ export default function BlogDetail() {
             </ol>
           </nav>
 
-          <h2 className="xl:text-[54px] mt-2 pb-2 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
+          <h2 className="l:text-[54px] mt-2 pb-2 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
             {blog.title}
           </h2>
         </div>
@@ -90,7 +87,6 @@ export default function BlogDetail() {
       {/* CONTENT */}
       <div className=" lg:pt-[110px] pt-[86px] relative z-1">
         <Image src={treeIllustration} alt="tree" className="absolute top-1/2 -translate-y-1/2 right-0 max-w-[14%] z-minus hidden lg:block" />
-        <Image src={birdIllustration} alt="bird" className="absolute top-[5%] left-[1%] max-w-[9%] z-minus hidden lg:block" />
 
         <div className="container">
           <div className="grid grid-cols-12 gap-base">

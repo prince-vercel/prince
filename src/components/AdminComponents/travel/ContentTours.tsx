@@ -17,7 +17,7 @@ import { db } from '@/src/lib/firebase'
 import { storage } from '@/src/lib/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import styles from '@/src/styles/admin.module.css'
-import { MdEdit, MdDelete, MdLocationOn, MdDateRange, MdImage } from 'react-icons/md'
+import { MdEdit, MdDelete, MdLocationOn, MdDateRange, MdImage, MdStar, MdStarOutline } from 'react-icons/md'
 import SendEmail from '../../SendEmail'
 
 interface Tour {
@@ -30,11 +30,13 @@ interface Tour {
   price: number
   includedInPrice: string
   notIncludedInPrice: string
+  days?: string[]
   tourPlan: Array<{ day: number; content: string }>
   faq: Array<{ question: string; answer: string }>
   mainImageUrl?: string
   galleryImageUrls?: string[]
   imageUrl?: string
+  isFavorite?: boolean
   createdAt: any
 }
 
@@ -47,6 +49,7 @@ interface FormData {
   price: number
   includedInPrice: string
   notIncludedInPrice: string
+  days: string[]
   tourPlan: Array<{ day: number; content: string }>
   faq: Array<{ question: string; answer: string }>
   mainImageUrl: string
@@ -74,6 +77,7 @@ const ContentTours = () => {
     price: 0,
     includedInPrice: '',
     notIncludedInPrice: '',
+    days: ['Her Gün'],
     tourPlan: [{ day: 1, content: '' }],
     faq: [{ question: '', answer: '' }],
     mainImageUrl: '',
@@ -244,6 +248,7 @@ const ContentTours = () => {
         price: 0,
         includedInPrice: '',
         notIncludedInPrice: '',
+        days: ['Her Gün'],
         tourPlan: [{ day: 1, content: '' }],
         faq: [{ question: '', answer: '' }],
         mainImageUrl: '',
@@ -272,6 +277,7 @@ const ContentTours = () => {
       price: tour.price,
       includedInPrice: tour.includedInPrice,
       notIncludedInPrice: tour.notIncludedInPrice,
+      days: tour.days || ['Her Gün'],
       tourPlan: tour.tourPlan,
       faq: tour.faq,
       mainImageUrl: tour.mainImageUrl || tour.imageUrl || '',
@@ -292,6 +298,19 @@ const ContentTours = () => {
         console.error('Silme hatası:', error)
         alert('Silme işlemi başarısız oldu')
       }
+    }
+  }
+
+  const toggleFavorite = async (id: string, currentFavorite: boolean) => {
+    try {
+      await updateDoc(doc(db, 'traveltours', id), {
+        isFavorite: !currentFavorite
+      })
+      fetchTours()
+      setTimeout(() => setSuccess(''), 3000)
+    } catch (error) {
+      console.error('Favori güncelleme hatası:', error)
+      alert('İşlem başarısız oldu')
     }
   }
 
@@ -316,13 +335,14 @@ const ContentTours = () => {
                   price: 0,
                   includedInPrice: '',
                   notIncludedInPrice: '',
+                  days: ['Her Gün'],
                   tourPlan: [{ day: 1, content: '' }],
                   faq: [{ question: '', answer: '' }],
                   mainImageUrl: '',
                   galleryImageUrls: []
                 })
               }}
-              className={styles.tourAddBtn}
+              className={styles.tourAddBtn} 
             >
               + Yeni Tur Ekle
             </button>
@@ -341,12 +361,19 @@ const ContentTours = () => {
                         <MdLocationOn style={{ display: 'inline', marginRight: '4px', verticalAlign: 'middle' }} />
                         {tour.location}
                       </p>
-                      <p className={styles.tourCardDuration}>
-                        <MdDateRange style={{ display: 'inline', marginRight: '4px', verticalAlign: 'middle' }} />
-                        {tour.duration}
-                      </p>
+                 
+                
+                   
                     </div>
                     <div className={styles.tourCardActions}>
+                      <button
+                        onClick={() => toggleFavorite(tour.id, tour.isFavorite || false)}
+                        className={styles.tourEditBtn}
+                        title={tour.isFavorite ? 'Favorilerden Çıkar' : 'Favorilere Ekle'}
+                        style={{ color: tour.isFavorite ? '#fbbf24' : '#ccc', transition: 'color 0.2s', background: 'white' }}
+                      >
+                        {tour.isFavorite ? <MdStar size={25} /> : <MdStarOutline size={25} />}
+                      </button>
                       <button
                         onClick={() => handleEdit(tour)}
                         className={styles.tourEditBtn}
@@ -440,7 +467,7 @@ const ContentTours = () => {
                                           }}
                                           style={{
                                             padding: '6px 12px',
-                                            backgroundColor: '#E8604C',
+                                            backgroundColor: '#d7b76e',
                                             color: 'white',
                                             border: 'none',
                                             borderRadius: '4px',
@@ -480,10 +507,10 @@ const ContentTours = () => {
                                     onClick={() => setEnquiryPage(page)}
                                     style={{
                                       padding: '6px 10px',
-                                      border: enquiryPage === page ? '2px solid #E8604C' : '1px solid #ddd',
+                                      border: enquiryPage === page ? '2px solid #d7b76e' : '1px solid #ddd',
                                       borderRadius: '4px',
                                       backgroundColor: enquiryPage === page ? '#ffe8e8' : 'white',
-                                      color: enquiryPage === page ? '#E8604C' : '#555',
+                                      color: enquiryPage === page ? '#d7b76e' : '#555',
                                       cursor: 'pointer',
                                       fontSize: '12px',
                                       fontWeight: enquiryPage === page ? 'bold' : 'normal'
@@ -605,10 +632,9 @@ const ContentTours = () => {
 
             {/* Başlık */}
             <div className={styles.tourFormGroup}>
-              <label>Tur Başlığı *</label>
+              <label>Tur Başlığı</label>
               <input
                 type="text"
-                required
                 value={formData.title}
                 onChange={e => handleInputChange('title', e.target.value)}
                 placeholder="Tur başlığını girin"
@@ -617,9 +643,8 @@ const ContentTours = () => {
 
             {/* Açıklama */}
             <div className={styles.tourFormGroup}>
-              <label>Açıklama *</label>
+              <label>Açıklama</label>
               <textarea
-                required
                 value={formData.description}
                 onChange={e => handleInputChange('description', e.target.value)}
                 placeholder="Tur açıklamasını girin"
@@ -630,55 +655,74 @@ const ContentTours = () => {
             {/* 2 Kolon */}
             <div className={styles.tourFormRow}>
               <div className={styles.tourFormGroup}>
-                <label>Konum/Şehir *</label>
+                <label>Konum/Şehir</label>
                 <input
                   type="text"
-                  required
                   value={formData.location}
-                  onChange={e => handleInputChange('location', e.target.value)}
+                  onChange={e => {
+                    const capitalized = e.target.value
+                      .split(' ')
+                      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                      .join(' ')
+                    handleInputChange('location', capitalized)
+                  }}
                   placeholder="Şehir/Destinasyon"
                 />
               </div>
               <div className={styles.tourFormGroup}>
-                <label>Fiyat (₺) *</label>
+                <label>Fiyat (€)</label>
                 <input
                   type="number"
-                  required
                   value={formData.price}
                   onChange={e => handleInputChange('price', parseInt(e.target.value))}
-                  placeholder="1500"
+                  placeholder="500"
                 />
               </div>
             </div>
 
             {/* Fiyata Dahil Olanlar */}
             <div className={styles.tourFormGroup}>
-              <label>Fiyata Dahil Olanlar *</label>
+              <label>Fiyata Dahil Olanlar</label>
               <textarea
-                required
                 value={formData.includedInPrice}
                 onChange={e => handleInputChange('includedInPrice', e.target.value)}
-                placeholder="- Otel konaklama&#10;- Rehber hizmeti&#10;..."
+                placeholder={" Otel konaklama\n Rehber hizmeti\n..."}
                 rows={4}
               />
             </div>
 
             {/* Fiyata Dahil Olmayanlar */}
             <div className={styles.tourFormGroup}>
-              <label>Fiyata Dahil Olmayanlar *</label>
+              <label>Fiyata Dahil Olmayanlar</label>
               <textarea
-                required
                 value={formData.notIncludedInPrice}
                 onChange={e => handleInputChange('notIncludedInPrice', e.target.value)}
-                placeholder="- Kişisel harcamalar&#10;- Sigorta&#10;..."
+                placeholder={"Kişisel harcamalar\nSigorta\n..."}
                 rows={4}
               />
+            </div>
+
+            {/* Gün Seçimi */}
+            <div className={styles.tourFormGroup}>
+              <label>Gün</label>
+              <select
+                value={formData.days[0] || 'Her Gün'}
+                onChange={e => handleInputChange('days', [e.target.value])}
+                className="w-full h-12 border border-gray-300 px-3 outline-0"
+                style={{ borderRadius: '4px', borderColor: '#ccc' }}
+              >
+                {['Her Gün', 'Sabah', 'Akşam','Öğleden Sonra','Öğleden Önce',  'Tam Gün','Hafta Sonu','Hafta İçi','Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'].map((day, i) => (
+                  <option key={i} value={day}>
+                    {day}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Tur Planı */}
             <div className={styles.tourFormGroup}>
               <div className={styles.tourPlanHeader}>
-                <label>Tur Planı *</label>
+                <label>Tur Planı</label>
                 <button
                   type="button"
                   onClick={addTourPlanDay}

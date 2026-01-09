@@ -3,6 +3,12 @@ import Link from "next/link"
 export default function Footer() {
   return (
     <>
+      <style>{`
+        .cs_footer_item a:hover,
+        .cs_menu_widget a:hover {
+          color: #d7b76e !important;
+        }
+      `}</style>
       <footer className="cs_footer cs_style_1 cs_heading_color">
         <div className="cs_footer_main">
           <div className="container">
@@ -35,9 +41,9 @@ export default function Footer() {
 
               <div className="col-lg-2">
                 <ul className="cs_menu_widget cs_mp0">
-                  <li><Link href="/travel/about#faqs">Sık Sorulan Sorular</Link></li>
-                  <li><Link href="#">Gizlilik Politikası</Link></li>
-                  <li><Link href="#">KVKK & Aydınlatma</Link></li>
+                  <li><Link href="/travel/faqs">Sık Sorulan Sorular</Link></li>
+                  <li><Link href="/travel/privacy">Gizlilik Politikası</Link></li>
+                  <li><Link href="/travel/kvkk">KVKK & Aydınlatma</Link></li>
                 </ul>
               </div>
 
@@ -64,7 +70,7 @@ export default function Footer() {
       placeholder="E-posta adresiniz"
       style={{
         width: '100%',
-        border: '2px solid #E8604C',
+        border: '2px solid #d7b76e',
         borderRadius: '32px',
         padding: '12px 140px 12px 20px',
         outline: 'none'
@@ -78,7 +84,7 @@ export default function Footer() {
         top: '50%',
         right: '6px',
         transform: 'translateY(-50%)',
-        background: '#E8604C',
+        background: '#d7b76e',
         color: '#fff',
         borderRadius: '24px',
         padding: '10px 28px',
@@ -100,14 +106,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="cs_footer_bottom cs_accent_bg"style={{ backgroundColor: '#E8604C' }}
+        <div className="cs_footer_bottom cs_accent_bg"style={{ backgroundColor: '#d7b76e' }}
 >
           <div className="container">
             <div className="cs_footer_bottom_in">
               <div className="cs_social_links">
                 <Link href="#"><i className="fa-brands fa-facebook-f" style={{ color: 'white' }}></i></Link>
-                <Link href="#"><i className="fa-brands fa-youtube" style={{ color: 'white' }}></i></Link>
                 <Link href="#"><i className="fa-brands fa-instagram" style={{ color: 'white' }}></i></Link>
+                <Link href="#"><i className="fa-brands fa-whatsapp" style={{ color: 'white' }}></i></Link>
               </div>
 
               <div className="cs_copyright">

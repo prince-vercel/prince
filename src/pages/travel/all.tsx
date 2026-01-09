@@ -8,7 +8,6 @@ import { db } from "@/src/lib/firebase";
 
 import breadcrumbBg from "../../../assets/images/backgrounds/breadcrumb-bg.webp";
 import breadcrumbShape from "../../../assets/images/illustration/breadcrunb__shape.png";
-import birdWhite from "../../../assets/images/illustration/bird-illustration-w.png";
 
 export default function PackageList() {
   const router = useRouter()
@@ -19,6 +18,10 @@ export default function PackageList() {
   const [selectedDurations, setSelectedDurations] = useState<string[]>([])
   const [selectedMaxPeople, setSelectedMaxPeople] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000])
+  const [hoveredCardId, setHoveredCardId] = useState<string | null>(null)
+  const [selectedDays, setSelectedDays] = useState<string[]>([])
+  const [selectedInclusions, setSelectedInclusions] = useState<string[]>([])
+  const [showPricedOnly, setShowPricedOnly] = useState(false)
 
   useEffect(() => {
     const fetchTours = async () => {
@@ -95,9 +98,24 @@ export default function PackageList() {
       const priceOk =
         (tour.price || 0) >= priceRange[0] && (tour.price || 0) <= priceRange[1]
 
-      return destinationOk && durationOk && maxPeopleOk && priceOk
+      const daysOk =
+        selectedDays.length === 0 ||
+        selectedDays.some(day => (tour.days || []).includes(day))
+
+      const inclusionsOk =
+        selectedInclusions.length === 0 ||
+        selectedInclusions.some(inc => {
+          if (tour.includedInPrice && typeof tour.includedInPrice === 'string') {
+            return tour.includedInPrice.includes(inc)
+          }
+          return false
+        })
+
+      const pricedOk = !showPricedOnly || !tour.price || tour.price === 0
+
+      return destinationOk && durationOk && maxPeopleOk && priceOk && daysOk && inclusionsOk && pricedOk
     })
-  }, [tours, selectedDestinations, selectedDurations, selectedMaxPeople, priceRange])
+  }, [tours, selectedDestinations, selectedDurations, selectedMaxPeople, priceRange, selectedDays, selectedInclusions, showPricedOnly])
 
   const uniqueDestinations = useMemo(() => {
     const defaultDestinations = ["İstanbul","Ankara","İzmir","Antalya","Bursa"]
@@ -113,16 +131,30 @@ export default function PackageList() {
     return Array.from(combined)
   }, [tours])
 
+  const uniqueInclusions = useMemo(() => {
+    const defaultInclusions = ['Yemek Dahil', 'Alkollü', 'Alkolsüz', 'Teleferik', 'Feribot', 'Müze Girişi']
+    const dbInclusions = new Set<string>()
+    tours.forEach(tour => {
+      if (tour.includedInPrice && typeof tour.includedInPrice === 'string') {
+        const items = tour.includedInPrice.split(',').map((item: string) => item.trim())
+        items.forEach((inc: string) => {
+          if (inc) dbInclusions.add(inc)
+        })
+      }
+    })
+    const combined = new Set([...defaultInclusions, ...Array.from(dbInclusions)])
+    return Array.from(combined).sort()
+  }, [tours])
+
   return (
     <>
 
       {/* ===== HERO / BREADCRUMB (AYNI) ===== */}
-      <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#E8604C' }}>
+      <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#d7b76e' }}>
         <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
         </div>
 
         <img src={breadcrumbShape.src} alt="shape" className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" />
-        <img src={birdWhite.src} alt="bird" className="absolute top-[10%] right-[4%] z-1 w-[7.5%]" />
 
         <div className="container relative z-2 pb-10">
           <ol className="breadcrumb2" style={{color:'white'}}>
@@ -132,7 +164,7 @@ export default function PackageList() {
             <li className="breadcrumb-item2"> Seyahatler</li>
           </ol>
 
-          <h2 className="xl:text-[54px] mt-2 lg:text-4xl md:text-2xl text-[30px] text-white font-medium max-w-[640px]">
+          <h2 className="l:text-[54px] mt-2 lg:text-4xl md:text-2xl text-[30px] text-white font-medium max-w-[640px]">
             Tüm Seyahatlerimiz
           </h2>
         </div>
@@ -141,7 +173,7 @@ export default function PackageList() {
       {/* ===== CONTENT ===== */}
       <div className="relative">
         <div className="container mt-10">
-          <div className="grid grid-cols-12 lg:gap-12 gap-base">
+          <div className="grid grid-cols-12 lg:gap-12 ">
 
             {/* LIST (AYNI STİL) */}
             <div className="lg:col-span-8 col-span-12 grid md:grid-cols-2 grid-cols-1 gap-base">
@@ -155,7 +187,12 @@ export default function PackageList() {
                 </div>
               ) : (
                 filteredPackages.map((tour) => (
-                  <div key={tour.id} className="group/card package-card-style-one">
+                  <div 
+                    key={tour.id} 
+                    className="group/card package-card-style-one"
+                    onMouseEnter={() => setHoveredCardId(tour.id)}
+                    onMouseLeave={() => setHoveredCardId(null)}
+                  >
                     <div className="overflow-hidden relative" style={{height: '280px', maxHeight: '280px'}}>
                       <a href={`/travel/all/${tour.id}`} className="block w-full h-full">
                         {tour.mainImageUrl || tour.imageUrl ? (
@@ -173,25 +210,41 @@ export default function PackageList() {
                       </a>
                     </div>
 
-                    <h3 className="card-title-alpha group-hover/card:text-primary-1 lg:mt-6 mt-5">
+                    <h4 className="card-title-alpha lg:mt-6 mt-5" style={{ color: hoveredCardId === tour.id ? '#d7b76e' : 'black' }}>
                       <a href={`/travel/all/${tour.id}`}>{tour.title}</a>
-                    </h3>
+                    </h4>
 
                     <ul className="flex flex-wrap text-sm font-medium text-dark-2 mt-4 package-feature">
-                      <li className="mr-4 ">
-                        <i className="bi bi-people text-primary-1 ml-1 mr-2"></i>{tour.maxPeople || 10} Kişi
-                      </li>
+                      {tour.days ? (
+                        <li className="mr-4">
+                          <i className="bi bi-calendar-event text-primary-1 mr-2"></i>
+                          {tour.days.slice(0, 2).join(', ')}
+                        </li>
+                      ) : null}
+                      
+                      {tour.location ? (
+                        <li className="mr-4">
+                          <i className="bi bi-geo-alt text-primary-1 mr-2"></i>
+                          {tour.location}
+                        </li>
+                      ) : null}
+                      
                       <li className="mr-4">
-                        <i className="bi bi-clock text-primary-1 mr-2"></i>
-                        {tour.duration || '4 Gün 5 Gece'}
-                      </li>
-                      <li>
-                        <i className="bi bi-geo-alt text-primary-1 mr-2"></i>
-                        {tour.location || 'Destination'}
+                        {tour.price ? (
+                          <>
+                            <i className="bi bi-currency-euro text-primary-1 mr-2"></i>
+                            {tour.price}€
+                          </>
+                        ) : (
+                          <>
+                            <i className="bi bi-currency-euro text-primary-1 mr-2"></i>
+                            Fiyat Al
+                          </>
+                        )}
                       </li>
                     </ul>
 
-                    <a href={`/travel/all/${tour.id}`} className="package-explore-btn">
+                    <a href={`/travel/all/${tour.id}`} className="package-explore-btn" style={{ color: hoveredCardId === tour.id ? '#d7b76e' : 'black' }}>
                       Şimdi Keşfet
                     </a>
                   </div>
@@ -208,7 +261,7 @@ export default function PackageList() {
             {/* PRICE FILTER */}
             <aside>
               <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">
-                Fiyat Aralığı (₺):
+                Fiyat Aralığı (€):
               </h5>
 
               <div className="pt-4 flex gap-3 items-center">
@@ -234,6 +287,16 @@ export default function PackageList() {
                   className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
                 />
               </div>
+              
+              <div className="custom-checkbox mt-3">
+                <input
+                  type="checkbox"
+                  id="priced-only"
+                  checked={showPricedOnly}
+                  onChange={() => setShowPricedOnly(!showPricedOnly)}
+                />
+                <label htmlFor="priced-only">Fiyat Al</label>
+              </div>
             </aside>
 
               <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
@@ -241,67 +304,67 @@ export default function PackageList() {
               {/* DESTINATIONS */}
               <aside>
                 <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Şehir</h5>
-                <ul className="pt-4">
+                <select 
+                  value={selectedDestinations[0] || ''}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      setSelectedDestinations([e.target.value])
+                    } else {
+                      setSelectedDestinations([])
+                    }
+                  }}
+                  className="w-full  h-12 border border-dark-1 border-opacity-20  outline-0"
+                  style={{ backgroundColor: '#fff', color: '#333' }}
+                >
+                  <option value="">Tüm Şehirler</option>
                   {uniqueDestinations.map((item, i) => (
-                    <li key={i} className="pt-3 first:pt-0">
-                      <div className="custom-checkbox">
-                        <input
-                          type="checkbox"
-                          id={`des-${i}`}
-                          checked={selectedDestinations.includes(item)}
-                          onChange={() =>
-                            toggleValue(item, selectedDestinations, setSelectedDestinations)
-                          }
-                        />
-                        <label htmlFor={`des-${i}`}>{item}</label>
-                      </div>
-                    </li>
+                    <option key={i} value={item}>{item}</option>
                   ))}
-                </ul>
+                </select>
               </aside>
 
               <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
 
               {/* DURATION */}
               <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Gün Sayısı</h5>
-                <ul className="pt-4">
-                  {uniqueDurations.map((item, i) => (
-                    <li key={i} className="pt-3 first:pt-0">
-                      <div className="custom-checkbox">
-                        <input
-                          type="checkbox"
-                          id={`dur-${i}`}
-                          checked={selectedDurations.includes(item)}
-                          onChange={() =>
-                            toggleValue(item, selectedDurations, setSelectedDurations)
-                          }
-                        />
-                        <label htmlFor={`dur-${i}`}>{item}</label>
-                      </div>
-                    </li>
+                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Gün</h5>
+                <select 
+                  value={selectedDays[0] || ''}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      setSelectedDays([e.target.value])
+                    } else {
+                      setSelectedDays([])
+                    }
+                  }}
+                  className="w-full h-12 border border-dark-1 border-opacity-20 outline-0"
+                  style={{ backgroundColor: '#fff', color: '#333' }}
+                >
+                  <option value="">Tüm Günler</option>
+                  {['Her Gün', 'Sabah', 'Akşam', 'Öğleden Sonra', 'Öğleden Önce', 'Tam Gün', 'Hafta Sonu', 'Hafta İçi', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'].map((item, i) => (
+                    <option key={i} value={item}>{item}</option>
                   ))}
-                </ul>
+                </select>
               </aside>
 
               <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
 
-              {/* MAX PEOPLE */}
+              {/* INCLUSIONS */}
               <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Maks Kişi Sayısı</h5>
+                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Dahil Olanlar</h5>
                 <ul className="pt-4">
-                  {[{label: "5-10 kişi", value: "5-10"}, {label: "10-20 kişi", value: "10-20"}, {label: "20+ kişi", value: "20+"}].map((item, i) => (
+                  {uniqueInclusions.map((item, i) => (
                     <li key={i} className="pt-3 first:pt-0">
                       <div className="custom-checkbox">
                         <input
                           type="checkbox"
-                          id={`people-${i}`}
-                          checked={selectedMaxPeople.includes(item.value)}
+                          id={`inc-${i}`}
+                          checked={selectedInclusions.includes(item)}
                           onChange={() =>
-                            toggleValue(item.value, selectedMaxPeople, setSelectedMaxPeople)
+                            toggleValue(item, selectedInclusions, setSelectedInclusions)
                           }
                         />
-                        <label htmlFor={`people-${i}`}>{item.label}</label>
+                        <label htmlFor={`inc-${i}`}>{item}</label>
                       </div>
                     </li>
                   ))}

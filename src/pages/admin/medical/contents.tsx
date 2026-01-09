@@ -11,14 +11,20 @@ import {
   MdAdd,
   MdApartment,
   MdStar,
+  MdCheckCircle,
   MdArticle,
-  MdHelpOutline
+  MdHelpOutline,
+  MdPeople,
+  MdQuestionAnswer
 } from 'react-icons/md'
 import ContentBlog from '@/src/components/AdminComponents/medical/ContentBlog'
+import ContentTestimonials from '@/src/components/AdminComponents/medical/ContentTestimonial'
+import ContentPartner from '@/src/components/AdminComponents/medical/ContentPartner'
+import FormAsks from '@/src/components/AdminComponents/medical/FormAsks'
 
 const ContentsPage = () => {
   const [activeTab, setActiveTab] = useState<
-    'services' | 'organizations' | 'results' | 'blog' | 'faq' | null
+    'services' | 'organizations' | 'results' | 'blog' | 'faq' | 'testimonials' | 'ortaklar' | 'questions' | null
   >(null)
 
   const contentBoxes = [
@@ -26,6 +32,11 @@ const ContentsPage = () => {
       id: 'services',
       title: 'Hizmetler',
       icon: <MdAdd size={40} />
+    },
+     {
+      id: 'questions',
+      title: 'Başvuru Soruları',
+      icon: <MdQuestionAnswer size={40} />
     },
     {
       id: 'organizations',
@@ -35,6 +46,11 @@ const ContentsPage = () => {
     {
       id: 'results',
       title: 'Mutlu Sonuçlar',
+      icon: <MdCheckCircle   size={40} />
+    },
+     {
+      id: 'testimonials',
+      title: 'Yorumlar',
       icon: <MdStar size={40} />
     },
     {
@@ -46,6 +62,11 @@ const ContentsPage = () => {
       id: 'faq',
       title: 'SSS',
       icon: <MdHelpOutline size={40} />
+    },
+    {
+      id: 'ortaklar',
+      title: 'Ortaklar',
+      icon: <MdPeople size={40} />
     }
   ] as const
 
@@ -53,6 +74,8 @@ const ContentsPage = () => {
     switch (activeTab) {
       case 'services':
         return <ContentServices />
+      case 'questions':
+        return <FormAsks/>
       case 'organizations':
         return <ContentOrganizations />
       case 'results':
@@ -61,6 +84,10 @@ const ContentsPage = () => {
         return <ContentBlog />
       case 'faq':
         return <ContentFaq />
+      case 'testimonials':
+        return <ContentTestimonials />
+      case 'ortaklar':
+        return <ContentPartner />
       default:
         return null
     }

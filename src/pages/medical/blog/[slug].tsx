@@ -7,15 +7,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
+import { Blog } from '@/src/types/medical'
 
-interface Blog {
-  id: string
-  title: string
-  description: string
-  imageUrl: string
-  isFavorite: boolean
-  createdAt: any
-}
 
 export default function BlogDetailPage() {
   const router = useRouter()
@@ -131,7 +124,6 @@ export default function BlogDetailPage() {
                 {blog.description}
               </p>
 
-              <h2>Yorumlar</h2>
             </div>
 
             <div className="cs_height_85" />
@@ -140,26 +132,7 @@ export default function BlogDetailPage() {
 
             <div className="cs_height_12" />
 
-            <form>
-              <label className="cs_input_label">Yorum*</label>
-              <textarea rows={6} className="cs_form_field_2" />
-
-              <div className="cs_height_20" />
-
-              <label className="cs_input_label">Adınız*</label>
-              <input type="text" className="cs_form_field_2" />
-
-              <div className="cs_height_20" />
-
-              <label className="cs_input_label">E-Posta*</label>
-              <input type="email" className="cs_form_field_2" />
-
-              <div className="cs_height_40" />
-
-              <button className="cs_btn cs_style_1" style={{marginTop:'20px'}}>
-                <span>Gönder</span>
-              </button>
-            </form>
+        
           </div>
 
 

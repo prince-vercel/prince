@@ -156,7 +156,7 @@ const ContentFaq = () => {
           onClick={handleSave}
           disabled={loading || !question || !answer}
           className={styles.contentServicesSaveBtn}
-          style={{ backgroundColor: '#E8604C', color: 'white', border: 'none' }}
+          style={{ backgroundColor: '#d7b76e', color: 'white', border: 'none' }}
         >
           <MdSave size={18} />
           {loading ? 'Kaydediliyor...' : isEditMode ? 'Güncelle' : 'Kaydet'}
@@ -206,7 +206,7 @@ const ContentFaq = () => {
                   boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
                 }}
               >
-                <h3 style={{ fontSize: '18px', fontWeight: '600', margin: '0 0 12px 0', color: '#E8604C' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', margin: '0 0 12px 0', color: '#d7b76e' }}>
                   S: {faq.question}
                 </h3>
                 <p style={{ fontSize: '15px', color: '#666', margin: '0 0 16px 0', lineHeight: '1.6', paddingLeft: '16px' }}>
@@ -222,7 +222,7 @@ const ContentFaq = () => {
                       justifyContent: 'center',
                       gap: '4px',
                       padding: '6px 12px',
-                      background: '#E8604C',
+                      background: '#d7b76e',
                       color: 'white',
                       border: 'none',
                       borderRadius: '4px',

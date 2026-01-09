@@ -1,32 +1,94 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { addDoc, collection, serverTimestamp, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import Toast from '@/src/components/Toast'
+
+interface Question {
+  id: string
+  questionText: string
+  type: 'select' | 'checkbox' | 'text' | 'date' | 'radio'
+  options: string[]
+  step: number
+  required: boolean
+  order: number
+  createdAt?: Date
+  triggerValue?: string
+  additionalInputLabel?: string
+  additionalInputType?: 'text' | 'date'
+}
+
+interface StepName {
+  id: string
+  number: number
+  name: string
+}
 
 const Form = () => {
   const [step, setStep] = useState(0)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
-  const [formData, setFormData] = useState({
-    name: '',
-    nationality: '',
-    phone: '',
-    email: '',
-    destination: '',
-    date: '',
-    duration: '',
-    guests: '',
-    transfer: '',
-    requests: '',
-    contact: '',
-  })
+  const [questions, setQuestions] = useState<Question[]>([])
+  const [steps, setSteps] = useState<StepName[]>([])
+  const [loading, setLoading] = useState(true)
+  const [formData, setFormData] = useState<Record<string, string>>({})
 
-  const totalFields = 11 // Toplam form alanları
+  // Fetch questions from Firestore
+  useEffect(() => {
+    const loadQuestionsAndSteps = async () => {
+      try {
+        setLoading(true)
+        // Fetch steps
+        const stepsRef = collection(db, 'travelsteps')
+        const stepsSnapshot = await getDocs(stepsRef)
+        const stepsData = stepsSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as StepName[]
+        setSteps(stepsData.sort((a, b) => a.number - b.number))
+
+        // Fetch questions
+        const questionsRef = collection(db, 'travelquestions')
+        const questionsSnapshot = await getDocs(questionsRef)
+        const questionsData = questionsSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Question[]
+        questionsData.sort((a, b) => (a.step === b.step ? a.order - b.order : a.step - b.step))
+        setQuestions(questionsData)
+
+        // Initialize formData with empty strings for all questions
+        const initialData: Record<string, string> = {}
+        questionsData.forEach(q => {
+          initialData[q.id] = ''
+        })
+        setFormData(initialData)
+
+        // Fetch unique cities from traveltours for future use if needed
+        // const toursRef = collection(db, 'traveltours')
+        // const toursSnapshot = await getDocs(toursRef)
+        // const uniqueCities = new Set<string>()
+        // toursSnapshot.docs.forEach((doc) => {
+        //   const data = doc.data()
+        //   if (data.location) {
+        //     uniqueCities.add(data.location)
+        //   }
+        // })
+
+        setLoading(false)
+      } catch (error) {
+        console.error('Sorular yüklenirken hata:', error)
+        setLoading(false)
+      }
+    }
+    loadQuestionsAndSteps()
+  }, [])
+
+  const requiredQuestions = questions.filter(q => q.required)
   const filledFields = Object.values(formData).filter(val => val !== '').length
-  const progressPercent = Math.round((filledFields / totalFields) * 100)
+  const progressPercent = requiredQuestions.length > 0 ? Math.round((filledFields / requiredQuestions.length) * 100) : 0
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -34,42 +96,29 @@ const Form = () => {
   }
 
   const handleSubmit = async () => {
-    if (!formData.name || !formData.email || !formData.destination) {
+    // Check all required fields
+    const missingRequired = requiredQuestions.some(q => !formData[q.id] || formData[q.id].trim() === '')
+    if (missingRequired) {
       setError(true)
       setTimeout(() => setError(false), 3000)
       return
     }
 
     try {
-      await addDoc(collection(db, 'travelforms'), {
-        name: formData.name,
-        nationality: formData.nationality,
-        phone: formData.phone,
-        email: formData.email,
-        destination: formData.destination,
-        date: formData.date,
-        duration: formData.duration,
-        guests: formData.guests,
-        transfer: formData.transfer,
-        requests: formData.requests,
-        contact: formData.contact,
+      const submitData = {
+        answers: { ...formData },
         createdAt: serverTimestamp(),
-      })
+      }
+
+      await addDoc(collection(db, 'travelforms'), submitData)
 
       setSuccess(true)
-      setFormData({
-        name: '',
-        nationality: '',
-        phone: '',
-        email: '',
-        destination: '',
-        date: '',
-        duration: '',
-        guests: '',
-        transfer: '',
-        requests: '',
-        contact: '',
+      // Reset form data
+      const initialData: Record<string, string> = {}
+      questions.forEach(q => {
+        initialData[q.id] = ''
       })
+      setFormData(initialData)
       setStep(0)
 
       setTimeout(() => setSuccess(false), 3000)
@@ -77,6 +126,14 @@ const Form = () => {
       console.error('Form gönderme hatası:', error)
       alert('Form gönderilirken bir hata oluştu!')
     }
+  }
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+        <p>Sorular yükleniyor...</p>
+      </div>
+    )
   }
 
   return (
@@ -103,34 +160,21 @@ const Form = () => {
           </div>
 
         
-          <div className="flex items-center justify-between pb-10 pt-10">
-            <div className="flex items-center gap-3">
-              <span className={`inline-flex justify-center items-center lg:h-10 lg:w-10 w-9 h-9 rounded-full transition-all
-                ${step >= 0 ? 'bg-primary-1 text-white scale-105' : 'bg-stock-1 text-dark-3'}`}>
-                01
-              </span>
-              <p className="text-sm lg:text-base">Misafir Bilgileri</p>
-            </div>
-
-            <div className={`flex-1 h-1 mx-6 ${step >= 1 ? 'bg-primary-1' : 'bg-gray-300'} transition-colors`} />
-
-            <div className="flex items-center gap-3">
-              <span className={`inline-flex justify-center items-center lg:h-10 lg:w-10 w-9 h-9 rounded-full transition-all
-                ${step >= 1 ? 'bg-primary-1 text-white scale-105' : 'bg-stock-1 text-dark-3'}`}>
-                02
-              </span>
-              <p className="text-sm lg:text-base">Seyahat Detayları</p>
-            </div>
-
-            <div className={`flex-1 h-1 mx-6 ${step >= 2 ? 'bg-primary-1' : 'bg-gray-300'} transition-colors`} />
-
-            <div className="flex items-center gap-3">
-              <span className={`inline-flex justify-center items-center lg:h-10 lg:w-10 w-9 h-9 rounded-full transition-all
-                ${step >= 2 ? 'bg-primary-1 text-white scale-105' : 'bg-stock-1 text-dark-3'}`}>
-                03
-              </span>
-              <p className="text-sm lg:text-base">İletişim & Notlar</p>
-            </div>
+          <div className="flex items-center justify-between pb-10 pt-10 overflow-x-auto">
+            {steps.map((s, index) => (
+              <div key={s.id}>
+                <div className="flex items-center gap-3">
+                  <span className={`inline-flex justify-center items-center lg:h-10 lg:w-10 w-9 h-9 rounded-full transition-all whitespace-nowrap
+                    ${step >= s.number - 1 ? 'bg-primary-1 text-white scale-105' : 'bg-stock-1 text-dark-3'}`}>
+                    {String(s.number).padStart(2, '0')}
+                  </span>
+                  <p className="text-sm lg:text-base whitespace-nowrap">{s.name}</p>
+                </div>
+                {index < steps.length - 1 && (
+                  <div className={`flex-1 h-1 mx-6 w-16 ${step >= s.number ? 'bg-primary-1' : 'bg-gray-300'} transition-colors`} />
+                )}
+              </div>
+            ))}
           </div>
 
         <div className="grid grid-cols-12 gap-8 lg:gap-12">
@@ -143,122 +187,119 @@ const Form = () => {
                 key={step}
                 className="grid grid-cols-2 lg:gap-7 gap-5 form-step-animate"
               >
+                {questions
+                  .filter(q => q.step === step + 1)
+                  .map((question) => {
+                    const isRequired = question.required
+                    return (
+                      <div
+                        key={question.id}
+                        className={(question.type === 'text' && question.questionText.toLowerCase().includes('özel')) ? 'col-span-2' : 'col-span-2 lg:col-span-1'}
+                      >
+                        <label className="flex items-center gap-2 text-dark-2 font-medium mb-2">
+                          {isRequired && <span className="text-red-500">*</span>}
+                          {question.questionText}
+                        </label>
 
-                {step === 0 && (
-                  <>
-                    <div className="col-span-2">
-                      <label className="flex items-center gap-2 text-dark-2 font-medium mb-2">
-                        <i className="bi bi-person text-primary-1"></i>
-                        Ad Soyad
-                      </label>
-                      <input name="name" value={formData.name} onChange={handleInputChange} className="input_style__primary col-span-2 w-full" placeholder="Adınız ve soyadınız" />
-                    </div>
-                    <div className="lg:col-span-1 col-span-2">
-                      <label className="flex items-center gap-2 text-dark-2 font-medium mb-2">
-                        <i className="bi bi-globe text-primary-1"></i>
-                        Uyruk
-                      </label>
-                      <input name="nationality" value={formData.nationality} onChange={handleInputChange} className="input_style__primary w-full" placeholder="Örn: Türk" />
-                    </div>
-                    <div className="lg:col-span-1 col-span-2">
-                      <label className="flex items-center gap-2 text-dark-2 font-medium mb-2">
-                        <i className="bi bi-telephone text-primary-1"></i>
-                        Telefon
-                      </label>
-                      <input name="phone" value={formData.phone} onChange={handleInputChange} className="input_style__primary w-full" placeholder="+90 5XX XXX XXXX" />
-                    </div>
-                    <div className="col-span-2">
-                      <label className="flex items-center gap-2 text-dark-2 font-medium mb-2">
-                        <i className="bi bi-envelope text-primary-1"></i>
-                        E-posta
-                      </label>
-                      <input name="email" value={formData.email} onChange={handleInputChange} className="input_style__primary w-full" placeholder="example@email.com" />
-                    </div>
-                  </>
-                )}
+                        {question.type === 'text' && (
+                          <input
+                            type="text"
+                            name={question.id}
+                            value={formData[question.id] || ''}
+                            onChange={handleInputChange}
+                            className="input_style__primary w-full"
+                            placeholder={question.questionText}
+                          />
+                        )}
 
-                {step === 1 && (
-                  <>
-                    <div className="col-span-2">
-                      <label className="flex items-center gap-2 text-dark-2 font-medium mb-2">
-                        <i className="bi bi-geo-alt text-primary-1"></i>
-                        Yer
-                      </label>
-                      <select name="destination" value={formData.destination} onChange={handleInputChange} className="input_style__primary w-full">
-                        <option value="">Seçiniz</option>
-                        <option value="İstanbul">İstanbul</option>
-                        <option value="Kapadokya">Kapadokya</option>
-                        <option value="Antalya">Antalya</option>
-                      </select>
-                    </div>
-                    <div className="col-span-2">
-                      <label className="flex items-center gap-2 text-dark-2 font-medium mb-2">
-                        <i className="bi bi-calendar3 text-primary-1"></i>
-                        Seyahat Tarihi
-                      </label>
-                      <input type="date" name="date" value={formData.date} onChange={handleInputChange} className="input_style__primary w-full" />
-                    </div>
-                    <div className="col-span-2">
-                      <label className="flex items-center gap-2 text-dark-2 font-medium mb-2">
-                        <i className="bi bi-moon-stars text-primary-1"></i>
-                        Konaklama Süresi
-                      </label>
-                      <select name="duration" value={formData.duration} onChange={handleInputChange} className="input_style__primary w-full">
-                        <option value="">Seçiniz</option>
-                        <option value="1–3 Gün">1–3 Gün</option>
-                        <option value="4–7 Gün">4–7 Gün</option>
-                        <option value="7+ Gün">7+ Gün</option>
-                      </select>
-                    </div>
-                    <div className="col-span-2">
-                      <label className="flex items-center gap-2 text-dark-2 font-medium mb-2">
-                        <i className="bi bi-people text-primary-1"></i>
-                        Kişi Sayısı
-                      </label>
-                      <select name="guests" value={formData.guests} onChange={handleInputChange} className="input_style__primary w-full">
-                        <option value="">Seçiniz</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3+">3+</option>
-                      </select>
-                    </div>
-                    <div className="col-span-2">
-                      <label className="flex items-center gap-2 text-dark-2 font-medium mb-2">
-                        <i className="bi bi-airplane text-primary-1"></i>
-                        Havalimanı Transferi
-                      </label>
-                      <select name="transfer" value={formData.transfer} onChange={handleInputChange} className="input_style__primary w-full">
-                        <option value="">Seçiniz</option>
-                        <option value="Evet">Evet</option>
-                        <option value="Hayır">Hayır</option>
-                      </select>
-                    </div>
-                  </>
-                )}
+                        {question.type === 'date' && (
+                          <input
+                            type="date"
+                            name={question.id}
+                            value={formData[question.id] || ''}
+                            onChange={handleInputChange}
+                            className="input_style__primary w-full"
+                          />
+                        )}
 
-                {step === 2 && (
-                  <>
-                    <div className="col-span-2">
-                      <label className="flex items-center gap-2 text-dark-2 font-medium mb-2">
-                        <i className="bi bi-pencil-square text-primary-1"></i>
-                        Özel Talepler
-                      </label>
-                      <textarea name="requests" value={formData.requests} onChange={handleInputChange} rows={4} className="input_style__primary w-full" placeholder="Özel talepleriniz..." />
-                    </div>
-                    <div className="col-span-2">
-                      <label className="flex items-center gap-2 text-dark-2 font-medium mb-2">
-                        <i className="bi bi-chat-dots text-primary-1"></i>
-                        İletişim Tercihi
-                      </label>
-                      <select name="contact" value={formData.contact} onChange={handleInputChange} className="input_style__primary w-full">
-                        <option value="">Seçiniz</option>
-                        <option value="WhatsApp">WhatsApp</option>
-                        <option value="Telefon">Telefon</option>
-                        <option value="E-posta">E-posta</option>
-                      </select>
-                    </div>
-                  </>
-                )}
+                        {question.type === 'select' && (
+                          <select
+                            name={question.id}
+                            value={formData[question.id] || ''}
+                            onChange={handleInputChange}
+                            className="input_style__primary w-full"
+                          >
+                            <option value="">Seçiniz</option>
+                            {question.options.map((option) => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+
+                        {question.type === 'radio' && (
+                          <div className="flex flex-col gap-2 mt-2">
+                            {question.options.map((option) => (
+                              <label key={option} className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                  type="radio"
+                                  name={question.id}
+                                  value={option}
+                                  checked={formData[question.id] === option}
+                                  onChange={handleInputChange}
+                                  className="cursor-pointer"
+                                />
+                                <span className="text-dark-2">{option}</span>
+                              </label>
+                            ))}
+                          </div>
+                        )}
+
+                        {question.type === 'checkbox' && (
+                          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-start', marginTop: '8px' }}>
+                            {question.options.map((opt) => {
+                              const selectedValues = formData[question.id]?.split(',').filter(v => v) || []
+                              const isSelected = selectedValues.includes(opt)
+                              return (
+                                <label 
+                                  key={opt} 
+                                  style={{ 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    gap: '8px', 
+                                    cursor: 'pointer',
+                                    padding: '8px 12px',
+                                    border: `2px solid ${isSelected ? '#d7b76e' : '#ddd'}`,
+                                    borderRadius: '6px',
+                                    backgroundColor: isSelected ? '#fef3e2' : 'transparent',
+                                    transition: 'all 0.2s ease',
+                                  }}
+                                >
+                                  <input
+                                    type="checkbox"
+                                    value={opt}
+                                    checked={isSelected}
+                                    onChange={() => {
+                                      const newValues = isSelected
+                                        ? selectedValues.filter(v => v !== opt)
+                                        : [...selectedValues, opt]
+                                      setFormData(prev => ({
+                                        ...prev,
+                                        [question.id]: newValues.join(',')
+                                      }))
+                                    }}
+                                    style={{ display: 'none' }}
+                                  />
+                                  <span>{opt}</span>
+                                </label>
+                              )
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
               </div>
 
               {/* BUTTONS */}
@@ -272,7 +313,7 @@ const Form = () => {
                   </button>
                 )}
 
-                {step < 2 ? (
+                {step < steps.length - 1 ? (
                   <button
                     onClick={() => setStep(step + 1)}
                     className="btn_primary__v1"
@@ -332,8 +373,8 @@ const Form = () => {
             />
             <defs>
               <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FF6B35" />
-                <stop offset="100%" stopColor="#FF6B35" />
+                <stop offset="0%" stopColor="#f2e2bdff" />
+                <stop offset="100%" stopColor="#d7b76e" />
               </linearGradient>
             </defs>
           </svg>
@@ -348,67 +389,67 @@ const Form = () => {
     <ul className="text-sm text-dark-2 space-y-3 border-l-4 border-primary-1 pl-4">
                   {formData.name && (
                     <li className="flex items-center gap-2">
-                      <i className="bi bi-person-check text-primary-1 text-base"></i>
+                      <i className="bi bi-person-check text-gray-400 text-base"></i>
                       <span><strong>Ad:</strong> {formData.name}</span>
                     </li>
                   )}
                   {formData.nationality && (
                     <li className="flex items-center gap-2">
-                      <i className="bi bi-globe text-primary-1 text-base"></i>
+                      <i className="bi bi-globe text-gray-400 text-base"></i>
                       <span><strong>Uyruk:</strong> {formData.nationality}</span>
                     </li>
                   )}
                   {formData.phone && (
                     <li className="flex items-center gap-2">
-                      <i className="bi bi-telephone text-primary-1 text-base"></i>
+                      <i className="bi bi-telephone text-gray-400 text-base"></i>
                       <span><strong>Telefon:</strong> {formData.phone}</span>
                     </li>
                   )}
                   {formData.email && (
                     <li className="flex items-center gap-2">
-                      <i className="bi bi-envelope text-primary-1 text-base"></i>
+                      <i className="bi bi-envelope text-gray-400 text-base"></i>
                       <span><strong>E-posta:</strong> {formData.email}</span>
                     </li>
                   )}
                   {formData.destination && (
                     <li className="flex items-center gap-2">
-                      <i className="bi bi-geo-alt text-primary-1 text-base"></i>
+                      <i className="bi bi-geo-alt text-gray-400 text-base"></i>
                       <span><strong>Yer:</strong> {formData.destination}</span>
                     </li>
                   )}
                   {formData.date && (
                     <li className="flex items-center gap-2">
-                      <i className="bi bi-calendar3 text-primary-1 text-base"></i>
+                      <i className="bi bi-calendar3 text-gray-400 text-base"></i>
                       <span><strong>Tarih:</strong> {formData.date}</span>
                     </li>
                   )}
                   {formData.duration && (
                     <li className="flex items-center gap-2">
-                      <i className="bi bi-moon-stars text-primary-1 text-base"></i>
+                      <i className="bi bi-moon-stars text-gray-400 text-base"></i>
                       <span><strong>Süre:</strong> {formData.duration}</span>
                     </li>
                   )}
                   {formData.guests && (
                     <li className="flex items-center gap-2">
-                      <i className="bi bi-people text-primary-1 text-base"></i>
+                      <i className="bi bi-people text-gray-400 text-base"></i>
                       <span><strong>Kişi:</strong> {formData.guests}</span>
                     </li>
                   )}
                   {formData.transfer && (
                     <li className="flex items-center gap-2">
-                      <i className="bi bi-airplane text-primary-1 text-base"></i>
+                      <i className="bi bi-airplane text-gray-400 text-base"></i>
                       <span><strong>Transfer:</strong> {formData.transfer}</span>
                     </li>
                   )}
                   {formData.requests && (
                     <li className="flex items-center gap-2">
-                      <i className="bi bi-pencil-square text-primary-1 text-base"></i>
+                      <i className="bi bi-pencil-square text-gray-400 text-base"></i>
                       <span><strong>Talep:</strong> {formData.requests.substring(0, 30)}...</span>
                     </li>
                   )}
                   {formData.contact && (
                     <li className="flex items-center gap-2">
-                      <i className="bi bi-chat-dots text-primary-1 text-base"></i>
+                      <i className="bi bi-chat-dots text-gray-400 text-base"></i>
                       <span><strong>İletişim:</strong> {formData.contact}</span>
                     </li>
                   )}

@@ -13,7 +13,7 @@ export interface MedicalFormData {
     chronicDisease: string
     chronicDiseaseDetail: string
     heartDisease: string
-    diabetes: string
+    bloodClotting: string
     hypertension: string
     cancer: string
     medication: string
@@ -89,4 +89,84 @@ export interface DashboardStats {
 export interface FilterPeriod {
   label: string
   value: 'daily' | 'monthly' | 'yearly'
+}
+
+export interface Blog {
+  id: string
+  title: string
+  description: string
+  imageUrl: string
+  isFavorite: boolean
+  createdAt: any
+}
+
+export interface TreatmentItem {
+  title: string
+  description: string
+  image: string
+}
+
+export interface FAQ {
+  id: string
+  question: string
+  answer: string
+}
+
+export interface Blog {
+  id: string
+  title: string
+  description: string
+  imageUrl: string
+  isFavorite: boolean
+  createdAt: any
+}
+
+export interface Hotel {
+  id: string
+  name: string
+  location: string
+  stars: number
+  image: string
+}
+
+export interface Hospital {
+  id: string
+  name: string
+  location: string
+  image: string
+}
+
+export interface OrganisationItem {
+  id: string
+  name: string
+  location: string
+  type: 'Oteller' | 'Hastaneler'
+  desc: string
+  image: string
+  stars?: number
+}
+
+
+export interface Result {
+  id: string
+  title: string
+  description: string
+  image: string
+  category: string
+}
+
+export interface Blog {
+  id: string
+  title: string
+  description: string
+  imageUrl: string
+  createdAt: any
+}
+
+export interface Result {
+  id: string
+  title: string
+  description: string
+  image: string
+  category: string
 }

@@ -11,6 +11,7 @@ import icon9 from '@/assets/img/departments/icon_9.svg'
 import icon10 from '@/assets/img/departments/icon_10.svg'
 import icon11 from '@/assets/img/departments/icon_11.svg'
 import icon12 from '@/assets/img/departments/icon_12.svg'
+import { TreatmentItem } from '@/src/types/medical'
 
 
 const slugToTurkishTitle = (slug: string) => {
@@ -31,11 +32,6 @@ const slugToTurkishTitle = (slug: string) => {
   return map[slug] ?? slug
 }
 
-interface TreatmentItem {
-  title: string
-  description: string
-  image: string
-}
 
 export default function MedicalDetailPage() {
   const router = useRouter()

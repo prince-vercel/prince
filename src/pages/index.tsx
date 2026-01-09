@@ -25,17 +25,17 @@ export default function HomePage() {
 
         <Link href="/medical" className="image-card" style={{ backgroundImage: `url(${images.medical})` }}>
           <div className="overlay-dark" />
-          <div className="title">Medikal</div>
+          <div className="title">Prince <br /> Medikal Estetik &<br /> Sağlık Hizmetleri</div>
         </Link>
 
         <Link href="/visa" className="image-card" style={{ backgroundImage: `url(${images.visa})` }}>
           <div className="overlay-dark" />
-          <div className="title">Vize</div>
+          <div className="title">Prince <br /> Vize Danışmanlığı</div>
         </Link>
 
         <Link href="/travel" className="image-card" style={{ backgroundImage: `url(${images.travel})` }}>
           <div className="overlay-dark" />
-          <div className="title">Seyahat</div>
+          <div className="title">Prince <br /> Turizm & Travel</div>
         </Link>
 
       </div>

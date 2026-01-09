@@ -311,7 +311,7 @@ const ContentBlog = () => {
           onClick={handleSave}
           disabled={loading || !title || !desc || !imageUrl || uploadingImage}
           className={styles.contentServicesSaveBtn}
-          style={{ backgroundColor: '#E8604C', color: 'white', border: 'none' }}
+          style={{ backgroundColor: '#d7b76e', color: 'white', border: 'none' }}
         >
           <MdSave size={18} />
           {loading ? 'Kaydediliyor...' : isEditMode ? 'Güncelle' : 'Kaydet'}
@@ -407,7 +407,7 @@ const ContentBlog = () => {
                         justifyContent: 'center',
                         gap: '4px',
                         padding: '6px 12px',
-                        background: '#E8604C',
+                        background: '#d7b76e',
                         color: 'white',
                         border: 'none',
                         borderRadius: '4px',

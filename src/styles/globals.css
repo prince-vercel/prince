@@ -1,5 +1,5 @@
-/* Montserrat Font */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+/* Gilroy Font */
+@import url('https://fonts.googleapis.com/css2?family=Gilroy:wght@400;500;600;700&display=swap');
 
 /* Tüm CSS dosyalarını buraya import edin */
 @import url('../../assets/css/plugins/bootstrap.min.css');
@@ -29,11 +29,11 @@
 
 /* Global Font Family */
 * {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
 }
 
 /* Hide Scrollbar */
@@ -50,3 +50,4 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+

@@ -1,0 +1,114 @@
+{
+  "steps": [
+    {
+      "number": 1,
+      "name": "Kişisel Bilgiler"
+    },
+    {
+      "number": 2,
+      "name": "Tur Tercihleri"
+    },
+    {
+      "number": 3,
+      "name": "Ek İstekler"
+    }
+  ],
+  "questions": [
+    {
+      "questionText": "Ad Soyad",
+      "type": "text",
+      "options": [],
+      "step": 1,
+      "required": true,
+      "order": 1
+    },
+    {
+      "questionText": "Doğum Tarihi",
+      "type": "date",
+      "options": [],
+      "step": 1,
+      "required": true,
+      "order": 2
+    },
+    {
+      "questionText": "Cinsiyet",
+      "type": "radio",
+      "options": ["Kadın", "Erkek", "Belirtmek İstemiyorum"],
+      "step": 1,
+      "required": true,
+      "order": 3
+    },
+    {
+      "questionText": "Uyruk",
+      "type": "text",
+      "options": [],
+      "step": 1,
+      "required": true,
+      "order": 4
+    },
+    {
+      "questionText": "Telefon (WhatsApp)",
+      "type": "text",
+      "options": [],
+      "step": 1,
+      "required": true,
+      "order": 5
+    },
+    {
+      "questionText": "E-posta",
+      "type": "text",
+      "options": [],
+      "step": 1,
+      "required": true,
+      "order": 6
+    },
+    {
+      "questionText": "Hedef Destinasyon",
+      "type": "select",
+      "options": ["Maldivler", "Dubai", "Tayland", "Endonezya", "Filipinler", "Diğer"],
+      "step": 2,
+      "required": true,
+      "order": 1
+    },
+    {
+      "questionText": "Seyahat Tarihi",
+      "type": "date",
+      "options": [],
+      "step": 2,
+      "required": true,
+      "order": 2
+    },
+    {
+      "questionText": "Kaç Gün?",
+      "type": "select",
+      "options": ["3-5 Gün", "5-7 Gün", "7-10 Gün", "10+ Gün"],
+      "step": 2,
+      "required": true,
+      "order": 3
+    },
+    {
+      "questionText": "Kaç Kişi?",
+      "type": "radio",
+      "options": ["1 Kişi", "2 Kişi", "3-5 Kişi", "6+ Kişi"],
+      "step": 2,
+      "required": true,
+      "order": 4
+    },
+    {
+      "questionText": "Transfer İhtiyacı",
+      "type": "radio",
+      "options": ["Evet", "Hayır"],
+      "step": 3,
+      "required": false,
+      "order": 1
+    },
+    {
+      "questionText": "Özel İstekler / Notlar",
+      "type": "text",
+      "options": [],
+      "step": 3,
+      "required": false,
+      "order": 2
+    }
+  ]
+}

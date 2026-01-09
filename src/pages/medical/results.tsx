@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
@@ -16,16 +17,10 @@ import avatar5 from '@/assets/img/home_4/avatar_5.png'
 
 import leftArrow from '@/assets/img/icons/left_arrow_blue.svg'
 import rightArrow from '@/assets/img/icons/right_arrow_blue.svg'
+import { Result } from '@/src/types/medical'
 
 const GALLERY_PER_PAGE = 9
 
-interface Result {
-  id: string
-  title: string
-  description: string
-  image: string
-  category: string
-}
 
 const medicalSpecialties = {
   dis: 'Diş',
@@ -41,31 +36,44 @@ const medicalSpecialties = {
 }
 
 export default function ResultsPage() {
-  const testimonials = [
-    { name: 'Allen Duarte', city: 'California, USA', avatar: avatar1, text: 'I had a great experience with ProHealth. The staff were friendly and professional.' },
-    { name: 'Sophia Torres', city: 'New York, USA', avatar: avatar2, text: 'I recently had to bring my child to ProHealth and was impressed with the care.' },
-    { name: 'John Dupont', city: 'Manhattan, USA', avatar: avatar3, text: 'ProHealth has been a game-changer for me. Doctors are caring and skilled.' },
-    { name: 'Emily Carter', city: 'Boston, USA', avatar: avatar4, text: 'Amazing service and very professional staff. Highly recommended.' },
-    { name: 'Michael Brown', city: 'Chicago, USA', avatar: avatar5, text: 'From start to finish, everything was smooth and reassuring.' },
-  ]
-
   const categoryMap: Record<string, string> = {
     all: 'Tümü',
     ...medicalSpecialties,
   }
 
   const [results, setResults] = useState<Result[]>([])
+  const [testimonials, setTestimonials] = useState<any[]>([])
   const [startIndex, setStartIndex] = useState(0)
   const [activeFilter, setActiveFilter] = useState('all')
   const [galleryPage, setGalleryPage] = useState(1)
   const [loading, setLoading] = useState(true)
+  const [loadingTestimonials, setLoadingTestimonials] = useState(true)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Fetch results from Firestore on component mount
   useEffect(() => {
     fetchAllResults()
+    fetchTestimonials()
   }, [])
+
+  // Fetch testimonials from Firebase
+  const fetchTestimonials = async () => {
+    try {
+      setLoadingTestimonials(true)
+      const testimonialsRef = collection(db, 'medicalcontents/testimonials/list')
+      const snapshot = await getDocs(testimonialsRef)
+      const testimonialsData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as any[]
+      setTestimonials(testimonialsData)
+    } catch (error) {
+      console.error('Yorum verileri çekilirken hata:', error)
+    } finally {
+      setLoadingTestimonials(false)
+    }
+  }
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -304,9 +312,9 @@ export default function ResultsPage() {
         <div className="row" style={{ marginTop: 80 }}>
           <div className="col-lg-5">
             <div className="cs_section_heading cs_style_1">
-              <h3 className="cs_section_subtitle cs_accent_color cs_fs_32">WHAT OUR PATIENTS SAY</h3>
+              <h3 className="cs_section_subtitle cs_accent_color cs_fs_32">HASTALARIMIZ NE DIYOR</h3>
               <h2 className="cs_section_title cs_fs_72">
-                Discover the Stories of Health and Healing
+                Sağlık ve İyileşme Hikayelerini Keşfedin
               </h2>
             </div>
           </div>
@@ -336,17 +344,34 @@ export default function ResultsPage() {
               <div className="cs_height_60" />
 
               <div className="row" style={{ marginTop: 30 }}>
-                {visibleTestimonials.map((item, i) => (
+                {loadingTestimonials ? (
+                  <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
+                    <p>Yorum verileri yükleniyor...</p>
+                  </div>
+                ) : testimonials.length === 0 ? (
+                  <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
+                    <p>Henüz yorum eklenmemiş</p>
+                  </div>
+                ) : (
+                  visibleTestimonials.map((item, i) => (
                   <div key={i} className="col-md-6">
-                    <div className="cs_testimonial cs_style_4 cs_radius_20" style={{ minHeight: 340, padding: 40 }}>
+                    <div className="cs_testimonial cs_style_4 cs_radius_20" style={{ minHeight: 280, padding: 30 }}>
                       <div className="cs_testimonial_meta">
                         <div className="cs_testimonial_avatar">
-                          <Image src={item.avatar} alt={item.name} />
-                        </div>
-                        <div>
-                          <h3 className="cs_fs_24 cs_semibold m-0">{item.name}</h3>
-                          <p className="cs_heading_color m-0">{item.city}</p>
-                        </div>
+                            <img 
+                              src={item.imageUrl} 
+                              alt={item.name}
+                              style={{
+                                width: '64px',
+                                height: '64px',
+                                borderRadius: '50%',
+                                objectFit: 'cover'
+                              }}
+                            />
+                          </div>
+                          <div>
+                            <h3 className="cs_fs_24 cs_semibold m-0">{item.name}</h3>
+                          </div>
                       </div>
 
                       <div className="cs_testimonial_text cs_heading_color cs_fs_20" style={{ minHeight: 120 }}>
@@ -360,7 +385,8 @@ export default function ResultsPage() {
                       </div>
                     </div>
                   </div>
-                ))}
+                  ))
+                )}
               </div>
 
             </div>

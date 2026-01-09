@@ -44,7 +44,7 @@ html {
   -o-tab-size: 4;
      tab-size: 4;
   /* 3 */
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   /* 4 */
   font-feature-settings: normal;
   /* 5 */
@@ -129,7 +129,7 @@ code,
 kbd,
 samp,
 pre {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   /* 1 */
   font-size: 1em;
   /* 2 */
@@ -423,16 +423,16 @@ video {
 }
 
 h1,h2,h3,h4,h5{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
 }
 
 p{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   font-size: 16px;
 }
 
 body{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   font-size: 16px;
 }
 
@@ -1685,7 +1685,7 @@ html{
 
 .border-primary-1{
   --tw-border-opacity: 1;
-  border-color: rgb(232 96 76 / var(--tw-border-opacity));
+  border-color: #d7b76e;
 }
 
 .border-secondary-1{
@@ -1758,7 +1758,7 @@ html{
 
 .bg-primary-1{
   --tw-bg-opacity: 1;
-  background-color: rgb(232 96 76 / var(--tw-bg-opacity));
+  background-color: #d7b76e;
 }
 
 .bg-primary-2{
@@ -2141,15 +2141,15 @@ html{
 }
 
 .font-cursive{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
 }
 
 .font-sans{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
 }
 
 .font-serif{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
 }
 
 .\!text-\[17px\]{
@@ -2386,7 +2386,7 @@ html{
 
 .text-primary-1{
   --tw-text-opacity: 1;
-  color: rgb(232 96 76 / var(--tw-text-opacity));
+  color: #d7b76e;
 }
 
 .text-secondary-1{
@@ -2426,6 +2426,7 @@ html{
   --tw-shadow: 8px 5px 45px rgba(0, 0, 0, 0.08);
   --tw-shadow-colored: 8px 5px 45px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  border-radius: 2%;
 }
 
 .shadow-custom-2{
@@ -2568,7 +2569,7 @@ Common Text Classes
   font-size: 20px;
   line-height: 1.2;
   --tw-text-opacity: 1;
-  color: rgb(232 96 76 / var(--tw-text-opacity));
+  color: #d7b76e;
 }
 
 @media (min-width: 992px){
@@ -2579,15 +2580,15 @@ Common Text Classes
 
 .variant-2.section-sub-title-v1{
   --tw-text-opacity: 1;
-  color: rgb(255 124 91 / var(--tw-text-opacity));
+  color: #d7b76e;
 }
 
 .regular-text-v1{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   font-size: 14px;
   line-height: 1.9;
   --tw-text-opacity: 1;
-  color: rgb(91 91 91 / var(--tw-text-opacity));
+ color: #d7b76e;
 }
 
 @media (min-width: 992px){
@@ -2623,7 +2624,7 @@ Common Text Classes
 
 .card-title-alpha:hover{
   --tw-text-opacity: 1;
-  color: rgb(232 96 76 / var(--tw-text-opacity));
+  color: #d7b76e !important;
 }
 
 @media (min-width: 992px){
@@ -2824,7 +2825,7 @@ Custom Components
 .group:hover .social_icon_varient__one{
   --tw-bg-opacity: 1;
   background-color: rgb(232 96 76 / var(--tw-bg-opacity));
-  --tw-shadow: 0 0 0 4px #E8604C4d;
+  --tw-shadow: 0 0 0 4px #d7b76e4d;
   --tw-shadow-colored: 0 0 0 4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
@@ -2840,7 +2841,7 @@ Custom Components
   }
 
   .group:hover .social_icon_varient__one{
-    --tw-shadow: 0 0 0 7px #E8604C4d;
+    --tw-shadow: 0 0 0 7px #d7b76e4d;
     --tw-shadow-colored: 0 0 0 7px var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
@@ -2853,12 +2854,12 @@ Custom Components
   align-items: center;
   gap: 0.5rem;
   --tw-bg-opacity: 1;
-  background-color: rgb(232 96 76 / var(--tw-bg-opacity));
+  background-color:#d7b76e;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   font-weight: 500;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -2899,10 +2900,10 @@ Custom Components
 .btn_primary__v1.outlined{
   border-width: 1px;
   --tw-border-opacity: 1;
-  border-color: rgb(232 96 76 / var(--tw-border-opacity));
+  border-color: #d7b76e;
   background-color: transparent;
   --tw-text-opacity: 1;
-  color: rgb(232 96 76 / var(--tw-text-opacity));
+  color: #d7b76e;
 }
 
 .btn_primary__v1.outlined:hover{
@@ -3094,7 +3095,7 @@ Custom Components
 
 .package-explore-btn:hover{
   --tw-text-opacity: 1;
-  color: rgb(232 96 76 / var(--tw-text-opacity));
+  color: #d7b76e;
 }
 
 @media (min-width: 992px){
@@ -3261,7 +3262,7 @@ Custom Components
   --tw-gradient-from: #ffffff59 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(255 255 255 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
@@ -3431,7 +3432,7 @@ Custom Components
 
 .input_style__primary:focus{
   --tw-border-opacity: 1;
-  border-color: rgb(232 96 76 / var(--tw-border-opacity));
+  border-color: #d7b76e;
 }
 
 @media (min-width: 992px){
@@ -3484,22 +3485,22 @@ textarea.input_style__primary{
 }
 
 .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable{
-  background-color: #E8604C !important;
+  background-color: #d7b76e !important;
 }
 
 .select2-dropdown{
   border-radius: 0 !important;
-  border: 1px solid #E8604C !important;
+  border: 1px solid #d7b76e !important;
 }
 
 .select2-search__field{
-  border: 1px solid #ff7c5b9a !important;
+  border: 1px solid #d7b76e !important;
   outline: none;
 }
 
 .select2-search__field:focus{
   outline: none;
-  border: 1px solid #E8604C !important;
+  border: 1px solid #d7b76e !important;
 }
 
 /* 
@@ -3515,20 +3516,6 @@ Styling for long TW class
   height: calc(50% - 6px);
   flex-shrink: 0;
   overflow: hidden;
-}
-
-.hero-card-sm:first-child{
-  margin-bottom: 0.75rem;
-}
-
-@media (min-width: 1200px){
-  .hero-card-sm{
-    height: calc(50% - 15px);
-  }
-
-  .hero-card-sm:first-child{
-    margin-bottom: 30px;
-  }
 }
 
 /* menubar CSS */
@@ -3876,7 +3863,7 @@ Styling for long TW class
 }
 
 .hero-glow-text{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   color: transparent;
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: white;
@@ -4148,7 +4135,7 @@ Customiz Third-Party Plugins
 .custom_order__list li .list__content h5{
   margin-top: 3px;
   margin-bottom: 10px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   font-size: 14px;
   font-weight: 500;
   --tw-text-opacity: 1;
@@ -4567,23 +4554,23 @@ Customiz Third-Party Plugins
   gap: 0.5rem;
   border-width: 1px;
   --tw-border-opacity: 1;
-  border-color: rgb(232 96 76 / var(--tw-border-opacity));
+  border-color:#d7b76e;
   background-color: transparent;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   text-align: center;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   font-weight: 500;
   --tw-text-opacity: 1;
-  color: rgb(232 96 76 / var(--tw-text-opacity));
+  color: #d7b76e;
   transition-duration: 300ms;
 }
 
 .booking-tabs .tab-link:hover, .login-tabs .tab-link:hover{
   --tw-bg-opacity: 1;
-  background-color: rgb(232 96 76 / var(--tw-bg-opacity));
+  background-color: #d7b76e;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
@@ -4599,7 +4586,7 @@ Customiz Third-Party Plugins
 
 .booking-tabs .tab-link.active, .login-tabs .tab-link.active{
   --tw-bg-opacity: 1;
-  background-color: rgb(232 96 76 / var(--tw-bg-opacity));
+  background-color:#d7b76e;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
@@ -4681,8 +4668,8 @@ Customiz Third-Party Plugins
 .custom-checkbox label:before {
   content:'';
   -webkit-appearance: none;
-  border: 1px solid #E8604C;
-  background: #e8614c18;
+  border: 1px solid #d7b76e;
+  background: #ffffff;
   padding: 8px;
   display: inline-block;
   position: relative;
@@ -4693,7 +4680,8 @@ Customiz Third-Party Plugins
 }
 
 .custom-checkbox input:checked + label::before{
-  background: #E8604C;
+  background: #ffffff;
+  border: 2px solid #d7b76e;
 }
 
 .custom-checkbox input:checked + label{
@@ -4708,7 +4696,7 @@ Customiz Third-Party Plugins
   left: 6.5px;
   width: 5px;
   height: 12px;
-  border: solid #ffffff;
+  border: solid #d7b76e;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
@@ -4716,9 +4704,9 @@ Customiz Third-Party Plugins
 /* DatePicker Style */
 
 .daterangepicker{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   border-radius: 0;
-  border: 1px solid #E8604C;
+  border: 1px solid #d7b76e;
 }
 
 .daterangepicker td{
@@ -4727,16 +4715,16 @@ Customiz Third-Party Plugins
 
 .daterangepicker td.active{
   border-radius: 0;
-  background: #E8604C;
+  background: #d7b76e;
 }
 
 .daterangepicker td.active:hover{
   border-radius: 0;
-  background: #E8604C;
+  background: #d7b76e;
 }
 
 .drp-buttons .btn-primary{
-  background: #E8604C;
+  background: #d7b76e;
   color: #fff;
   padding: 6px 10px !important;
   font-size: 14px !important;
@@ -4810,22 +4798,22 @@ Customiz Third-Party Plugins
 
 .placeholder\:text-primary-1::-moz-placeholder{
   --tw-text-opacity: 1;
-  color: rgb(232 96 76 / var(--tw-text-opacity));
+  color: #d7b76e;
 }
 
 .placeholder\:text-primary-1::placeholder{
   --tw-text-opacity: 1;
-  color: rgb(232 96 76 / var(--tw-text-opacity));
+  color: #d7b76e;
 }
 
 .placeholder\:text-secondary-1::-moz-placeholder{
   --tw-text-opacity: 1;
-  color: rgb(255 124 91 / var(--tw-text-opacity));
+  color: #d7b76e;
 }
 
 .placeholder\:text-secondary-1::placeholder{
   --tw-text-opacity: 1;
-  color: rgb(255 124 91 / var(--tw-text-opacity));
+  color: #d7b76e;
 }
 
 .before\:absolute::before{
@@ -5030,7 +5018,7 @@ Customiz Third-Party Plugins
 
 .hover\:bg-primary-1:hover{
   --tw-bg-opacity: 1;
-  background-color: rgb(232 96 76 / var(--tw-bg-opacity));
+  background-color: #d7b76e;
 }
 
 .hover\:bg-primary-2:hover{
@@ -5050,7 +5038,7 @@ Customiz Third-Party Plugins
 
 .hover\:text-primary-1:hover{
   --tw-text-opacity: 1;
-  color: rgb(232 96 76 / var(--tw-text-opacity));
+  color: #d7b76e;
 }
 
 .hover\:text-secondary-1:hover{
@@ -5150,7 +5138,7 @@ Customiz Third-Party Plugins
 
 .group\/card:hover .group-hover\/card\:text-primary-1{
   --tw-text-opacity: 1;
-  color: rgb(232 96 76 / var(--tw-text-opacity));
+  color: #d7b76e;
 }
 
 .group:hover .group-hover\:text-primary-1{

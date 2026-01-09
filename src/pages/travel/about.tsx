@@ -4,101 +4,50 @@
 import 'swiper/css'
 import 'swiper/css/navigation'
 
-import Header from "@/src/components/TravelComponents/Header"
-import Footer from "@/src/components/TravelComponents/Footer"
-
-import breadcrumbBg from "@/assets/images/backgrounds/breadcrumb-bg.webp"
 import breadcrumbShape from "@/assets/images/illustration/breadcrunb__shape.png"
-import birdWhite from "@/assets/images/illustration/bird-illustration-w.png"
 import tree from "@/assets/images/illustration/tree-illustration.png"
-import bird from "@/assets/images/illustration/bird-illustration.png"
 import leafIllustration from "@/assets/images/illustration/leaf-illustration.png"
 import about1 from "@/assets/images/about/about1-1.webp"
 import fp1 from "@/assets/images/packages/fp1-1.webp"
-
-import testi1 from "@/assets/images/packages/fp1-1.webp"
-import testi2 from "@/assets/images/packages/fp1-1.webp"
-import { useEffect, useRef, useState } from "react"
-import Image from 'next/image'
 import Swiper from "swiper"
 import { Autoplay, Navigation } from "swiper/modules"
 import Link from 'next/link'
 import { getDocs, collection } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
+import { useEffect, useRef, useState } from "react"
 
-const testimonials = [
-  {
-    text: `Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir: Yemen'deki UFO benzeri ejderha kanı ağaçlarından Yellowstone'daki gökkuşağı renkli sıcak kaynağa, İngiliz mitolojisinden çıkışmış gibi görünen Almanya'daki bir köprüye.`,
-    name: 'Johan Martin Sr',
-    avatar: testi1,
-  },
-  {
-    text: `Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir. Bu ülkeleri gezmeyi çok seviyorum ve her zaman yeni şeyler keşfetmek için heyecan duyuyorum.`,
-    name: 'Johan Martin Sr',
-    avatar: testi2,
-  },
-]
-const faqs = [
-  {
-    id: 1,
-    q: 'En iyi düğün turları yapılan yerler nerelerdir?',
-    a: `Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir: Yemen'deki UFO benzeri ejderha kanı ağaçlarından Yellowstone'daki gökkuşağı renkli sıcak kaynağa, İngiliz mitolojisinden çıkışmış gibi görünen Almanya'daki bir köprüye.`,
-  },
-  {
-    id: 2,
-    q: 'Uluslararası paketler sunuyor musunuz?',
-    a: `Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir: Yemen'deki UFO benzeri ejderha kanı ağaçlarından Yellowstone'daki gökkuşağı renkli sıcak kaynağa.`,
-  },
-  {
-    id: 3,
-    q: 'Paketinizi bizimle özelleştirebilir misiniz?',
-    a: `Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir.`,
-  },
-  {
-    id: 4,
-    q: 'Paketinizi neden rezerve etsek?',
-    a: `Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir.`,
-  },
-  {
-    id: 5,
-    q: 'İşi ne gibi, bir sırt çantası almak?',
-    a: `Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir.`,
-  },
-  {
-    id: 6,
-    q: 'Uluslararası paketler sunuyor musunuz?',
-    a: `Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir.`,
-  },
-  {
-    id: 7,
-    q: 'Düğün turları için en iyi yerler nerelerdir?',
-    a: `Dünya üzerindeki en tuhaf yerler aynı zamanda en yüce yerlerdir.`,
-  },
-]
+
 
 export default function AboutPage() {
   const swiperRef = useRef<Swiper | null>(null)
-  const [activeId, setActiveId] = useState<number | null>(null)
-  const [faqs, setFaqs] = useState<any[]>([])
+  const [partners, setPartners] = useState<any[]>([])
+  const [loadingPartners, setLoadingPartners] = useState(true)
   const [testimonials, setTestimonials] = useState<any[]>([])
 
-  useEffect(() => {
-    const fetchFaqs = async () => {
-      try {
-        const snapshot = await getDocs(collection(db, 'travelcontents/faq/list'))
-        const faqsData = snapshot.docs.map((doc, idx) => ({
-          id: idx + 1,
-          q: doc.data().question,
-          a: doc.data().answer,
-        }))
-        setFaqs(faqsData)
-      } catch (error) {
-        console.error('FAQ verileri çekilirken hata:', error)
-      }
-    }
 
-    fetchFaqs()
-  }, [])
+  // Firebase'den partners'ları çek
+useEffect(() => {
+  const fetchPartners = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'travelcontents/partner/partners'))
+      const partnersData: any[] = []
+      querySnapshot.forEach((doc) => {
+        partnersData.push({
+          id: doc.id,
+          ...doc.data(),
+        })
+      })
+      // Düzenlemeye göre sırala
+      setPartners(partnersData.sort((a, b) => (a.order || 0) - (b.order || 0)))
+    } catch (error) {
+      console.error('Partners yükleme hatası:', error)
+    } finally {
+      setLoadingPartners(false)
+    }
+  }
+
+  fetchPartners()
+}, [])
 
   useEffect(() => {
     const fetchTestimonials = async () => {
@@ -119,9 +68,6 @@ export default function AboutPage() {
     fetchTestimonials()
   }, [])
 
-  const toggle = (id: number) => {
-    setActiveId(prev => (prev === id ? null : id))
-  }
 useEffect(() => {
   const swiper = new Swiper('.testimonial-slider-one', {
     modules: [Navigation, Autoplay],
@@ -164,7 +110,7 @@ useEffect(() => {
   return (
     <>
       {/*========== BREADCRUMB STYLE START ==========*/}
-            <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#E8604C' }}>
+            <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#d7b76e' }}>
         <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
         </div>
 
@@ -173,11 +119,7 @@ useEffect(() => {
           alt=""
           className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]"
         />
-        <img
-          src={birdWhite.src}
-          alt=""
-          className="absolute top-[10%] right-[4%] z-1 w-[7.5%]"
-        />
+       
 
         <div className="container relative z-2">
           <nav aria-label="breadcrumb">
@@ -189,7 +131,7 @@ useEffect(() => {
           </ol>
           </nav>
 
-          <h2 className="xl:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
+          <h2 className="l:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
             En İyi Seyahat Yolu
           </h2>
         </div>
@@ -201,10 +143,7 @@ useEffect(() => {
         <div className="absolute top-1/2 -translate-y-1/2 right-0 max-w-[14%] z-minus lg:inline-block hidden">
           <img src={tree.src} alt="leaf" />
         </div>
-        <div className="absolute top-[5%] left-[1%] max-w-[9%] z-minus lg:inline-block hidden">
-          <img src={bird.src} alt="leaf" />
-        </div>
-
+     
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-base items-center">
             <div className="relative wow fadeInLeft" data-wow-delay="0.2s">
@@ -351,6 +290,39 @@ useEffect(() => {
 </div>
 {/*========== FEATURED PACKAGE STYLE ONE END==========*/}
 
+
+{/* PARTNERS */}
+  <div className="container" style={{ marginTop: '15vh' }}>
+    <div className="cs_brands cs_style_1 cs_brand_marquee">
+      <div className="cs_brands_track">
+        {loadingPartners ? (
+          <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
+            <p>İş ortakları yükleniyor...</p>
+          </div>
+        ) : partners.length === 0 ? (
+          <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
+            <p>Henüz iş ortağı yok.</p>
+          </div>
+        ) : (
+          partners.concat(partners).map((partner: any, i: number) => (
+            <div key={i} className="cs_brand cs_center" style={{ marginRight: '40px' }}>
+              <img 
+                src={partner.imageUrl} 
+                alt={partner.title || 'Partner'} 
+                style={{ 
+                  width: '100px',
+                  height: '100px',
+                  objectFit: 'contain',
+                  filter: 'grayscale(100%)',
+                  opacity: 0.8
+                }}
+              />
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  </div>
 {/*========== TESTIMONIAL STYLE ONE START==========*/}
 <div className="testimonial_style__one lg:pt-30 pt-24 relative ">
   <div className="container relative " >
@@ -396,66 +368,7 @@ useEffect(() => {
 
   </div>
 </div>
-{/*========== TESTIMONIAL STYLE ONE END==========*/}
-  <div className="faq_style__one z-1 lg:pt-30 pt-24 mt-20 relative" id="faqs">
-      
-      <div className="absolute top-[5%] right-[1%] max-w-[9%] z-minus lg:inline-block hidden">
-        <Image src={bird} alt="illustration" />
-      </div>
 
-      <div className="container">
-        <div className="text-center lg:pb-[60px] pb-[40px]">
-          <h5 className="section-sub-title-v1">En Sık Sorulan Sorular</h5>
-          <h2 className="section-title-v1">Sıkça Sorulan Sorular</h2>
-        </div>
-
-        <div className="accordion gap-base grid lg:grid-cols-2 grid-cols-1">
-
-          {/* LEFT COLUMN */}
-          <div className="col-span-1 space-y-base">
-            {faqs.slice(0, Math.ceil(faqs.length / 2)).map((item, i) => (
-              <div key={item.id} className="single__accordion shadow-custom-1 bg-white">
-                <button
-                  type="button"
-                  onClick={() => toggle(item.id)}
-                  className="toggle px-5 py-3 leading-1.5 text-2md text-start w-full text-dark-1 font-serif"
-                >
-                  {String(i + 1).padStart(2, '0')}. {item.q}
-                </button>
-
-                <div className={`${activeId === item.id ? 'block' : 'hidden'} inner px-5 pb-5`}>
-                  <p className="text-base font-sans text-dark-3 leading-1.9">
-                    {item.a}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* RIGHT COLUMN */}
-          <div className="col-span-1 space-y-base">
-            {faqs.slice(Math.ceil(faqs.length / 2)).map((item, i) => (
-              <div key={item.id} className="single__accordion shadow-custom-1 bg-white">
-                <button
-                  type="button"
-                  onClick={() => toggle(item.id)}
-                  className="toggle px-5 py-3 leading-1.5 text-2md text-start w-full text-dark-1 font-serif"
-                >
-                  {String(i + Math.ceil(faqs.length / 2) + 1).padStart(2, '0')}. {item.q}
-                </button>
-
-                <div className={`${activeId === item.id ? 'block' : 'hidden'} inner px-5 pb-5`}>
-                  <p className="text-base font-sans text-dark-3 leading-1.9">
-                    {item.a}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </div>
-    </div>
 
     </>
   )

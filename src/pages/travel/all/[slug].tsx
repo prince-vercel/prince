@@ -10,8 +10,6 @@ import { db } from '@/src/lib/firebase'
 
 import heroImg from '@/assets/images/hero/h1.webp'
 import breadcrumbShape from '@/assets/images/illustration/breadcrunb__shape.png'
-import birdWhite from '@/assets/images/illustration/bird-illustration-w.png'
-import bird from '@/assets/images/illustration/bird-illustration.png'
 import tree from '@/assets/images/illustration/tree-illustration.png'
 
 
@@ -110,7 +108,6 @@ export default function TravelDetailPage() {
         </div>
 
         <img src={breadcrumbShape.src} className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" alt="" />
-        <img src={birdWhite.src} className="absolute top-[10%] right-[4%] z-1 w-[7.5%]" alt="" />
 
         <div className="container relative z-2">
           <nav aria-label="breadcrumb">
@@ -122,7 +119,7 @@ export default function TravelDetailPage() {
           </ol>
           </nav>
 
-          <h2 className="xl:text-[54px] mt-2 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
+          <h2 className="l:text-[54px] mt-2 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
             {loading ? '' : tour?.title || 'Tur Detayı'}
           </h2>
         </div>
@@ -131,7 +128,6 @@ export default function TravelDetailPage() {
       {/* CONTENT */}
       <div className=" relative z-1">
         <img src={tree.src} className="absolute top-1/2 -translate-y-1/2 right-0 max-w-[14%] z-minus hidden lg:block" alt="" />
-        <img src={bird.src} className="absolute top-[5%] left-[1%] max-w-[9%] z-minus hidden lg:block" alt="" />
 
         <div className="container">
           <div className="grid grid-cols-12 gap-base">
@@ -189,7 +185,7 @@ export default function TravelDetailPage() {
               <div className="pack__disc" id="Information">
   <div className="flex justify-between items-center gap-2 flex-wrap lg:pt-12 pt-8 lg:pb-4">
     <h2 className="font-sans lg:text-[45px] md:text-xl text-lg font-semibold">
-      ₺{tour?.price || 0}/<span className="lg:text-lg text-md font-normal">Kişi Başına</span>
+      {tour?.price ? `€${tour.price}` : 'Fiyat Al'}
     </h2>
   </div>
 
@@ -198,8 +194,7 @@ export default function TravelDetailPage() {
   </h5>
 
   <ul className="pack__list mt-4">
-    <li><i className="bi bi-clock"></i> {tour?.duration || '4 Gün 5 Gece'}</li>
-    <li><i className="bi bi-person"></i> Maksimum Kişi: {tour?.maxPeople || 10}</li>
+    <li><i className="bi bi-clock"></i> {tour?.days || ''}</li>
     <li><i className="bi bi-map"></i> {tour?.location || 'Lokasyon'}</li>
   </ul>
 
@@ -456,13 +451,13 @@ export default function TravelDetailPage() {
     </h4>
              <div className="cs_social_links cs_social_desktop">
   <a href="#">
-    <i className="fa-brands fa-facebook-f" style={{ color: '#E8604C'  }}></i>
+    <i className="fa-brands fa-facebook-f" style={{ color: '#d7b76e'  }}></i>
   </a>
   <a href="#">
-    <i className="fa-brands fa-youtube" style={{ color: '#E8604C'  }}></i>
+    <i className="fa-brands fa-youtube" style={{ color: '#d7b76e'  }}></i>
   </a>
   <a href="#">
-    <i className="fa-brands fa-instagram" style={{ color: '#E8604C'  }}></i>
+    <i className="fa-brands fa-instagram" style={{ color: '#d7b76e'  }}></i>
   </a>
 </div>
   </aside>

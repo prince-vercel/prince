@@ -100,7 +100,7 @@ const Dashboard = () => {
     try {
       setLoading(true)
 
-      // Başvuruları çek
+      // Başvuruları çek (dönem bazlı)
       const formsRange = getDateRange(formsPeriod)
       const formsQuery = query(
         collection(db, 'medicalforms'),
@@ -109,7 +109,7 @@ const Dashboard = () => {
       )
       const formsSnapshot = await getDocs(formsQuery)
 
-      // Mesajları çek
+      // Mesajları çek (dönem bazlı)
       const messagesRange = getDateRange(messagesPeriod)
       const messagesQuery = query(
         collection(db, 'medicalcontact'),
@@ -118,18 +118,27 @@ const Dashboard = () => {
       )
       const messagesSnapshot = await getDocs(messagesQuery)
 
-      // En sık istenen işlemleri bul
+      // En sık istenen işlemleri bul (tüm zamanlar)
+      const allFormsSnapshot = await getDocs(collection(db, 'medicalforms'))
       const operationMap: { [key: string]: number } = {}
-      formsSnapshot.docs.forEach((doc) => {
+      const targetQuestionId = 'LGeWQVtcDgYkPGISWD0e'
+      
+      allFormsSnapshot.docs.forEach((doc) => {
         const data = doc.data()
-        const operation = data.operation?.operation || 'Belirtilmemiş'
-        operationMap[operation] = (operationMap[operation] || 0) + 1
+        const operation = data.answers?.[targetQuestionId]
+        
+        // Belirtilmemiş olanları hariç tut
+        if (operation) {
+          const operationName = Array.isArray(operation) ? operation.join(', ') : String(operation)
+          if (operationName && operationName !== 'Belirtilmemiş') {
+            operationMap[operationName] = (operationMap[operationName] || 0) + 1
+          }
+        }
       })
 
       const topOperations = Object.entries(operationMap)
         .map(([name, count]) => ({ name, count }))
         .sort((a, b) => b.count - a.count)
-        .slice(0, 5)
 
       // Grafik verilerini hazırla
       const chartData = generateChartData(formsSnapshot.docs, messagesSnapshot.docs)
@@ -235,7 +244,7 @@ const Dashboard = () => {
                   className={styles.bar}
                   style={{
                     height: `${(data.messages / maxValue) * 150}px`,
-                    backgroundColor: '#E8604C'
+                    backgroundColor: '#d7b76e'
                   }}
                   title={`${data.messages} mesaj`}
                 />
@@ -246,7 +255,7 @@ const Dashboard = () => {
         </div>
         <div className={styles.chartLegend}>
           <span style={{ color: '#307BC4' }}>■ Başvurular</span>
-          <span style={{ color: '#E8604C' }}>■ Mesajlar</span>
+          <span style={{ color: '#d7b76e' }}>■ Mesajlar</span>
         </div>
       </div>
 

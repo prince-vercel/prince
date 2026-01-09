@@ -15,7 +15,7 @@ import {
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { db, storage } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
-import { MdEdit, MdDelete, MdStar, MdStarOutline } from 'react-icons/md'
+import { MdEdit, MdDelete,MdSave } from 'react-icons/md'
 
 interface Blog {
   id: string
@@ -215,7 +215,6 @@ const ContentBlog = () => {
             border: '1px solid #e5e7eb',
           }}
         >
-          <h3 style={{ marginTop: 0, marginBottom: '20px' }}>{editingId ? 'Blogu Düzenle' : 'Yeni Blog Ekle'}</h3>
           <form onSubmit={handleSubmit}>
         
             {/* Başlık */}
@@ -294,45 +293,17 @@ const ContentBlog = () => {
             </div>
 
             {/* Butonlar */}
-            <div style={{ display: 'flex', gap: '10px' }}>
+          <div className={styles.contentServicesSaveButtonContainer}>
               <button
                 type="submit"
                 disabled={loading}
-                style={{
-                  padding: '10px 20px',
-                  backgroundColor: '#10b981',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '6px',
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  fontWeight: 'bold',
-                  fontSize: '14px',
-                  opacity: loading ? 0.6 : 1,
-                }}
-              >
-                {loading ? 'Yükleniyor...' : editingId ? 'Güncelle' : 'Ekle'}
+              className={styles.contentServicesSaveBtn}
+
+              >              <MdSave size={18} />
+              
+                {loading ? 'Yükleniyor...' : editingId ? 'Güncelle' : 'Kaydet'}
               </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setFormData({ title: '', description: '' })
-                  setImageFile(null)
-                  setImagePreview('')
-                  setEditingId(null)
-                }}
-                style={{
-                  padding: '10px 20px',
-                  backgroundColor: '#ef4444',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  fontSize: '14px',
-                }}
-              >
-                Temizle
-              </button>
+           
             </div>
           </form>
         </div>
@@ -370,7 +341,6 @@ const ContentBlog = () => {
             <div
               onClick={() => setSelectedBlog(blog)}
               style={{
-                position: 'relative',
                 height: '200px',
                 overflow: 'hidden',
                 backgroundColor: '#f0f0f0',
@@ -386,114 +356,14 @@ const ContentBlog = () => {
                   transition: 'transform 0.3s',
                 }}
               />
-              {/* Favori Butonu */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  toggleFavorite(blog.id, blog.isFavorite)
-                }}
-                style={{
-                  position: 'absolute',
-                  top: '10px',
-                  right: '10px',
-                  backgroundColor: 'rgba(255,255,255,0.9)',
-                  border: 'none',
-                  borderRadius: '50%',
-                  width: '40px',
-                  height: '40px',
-                  fontSize: '20px',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'all 0.2s',
-                  color: '#f59e0b',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,1)'
-                  e.currentTarget.style.transform = 'scale(1.1)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.9)'
-                  e.currentTarget.style.transform = 'scale(1)'
-                }}
-              >
-                {blog.isFavorite ? <MdStar size={20} /> : <MdStarOutline size={20} />}
-              </button>
-            </div>
-
-            {/* Edit Butonu */}
-            <div
-              style={{
-                position: 'absolute',
-                bottom: '10px',
-                left: '10px',
-                right: '10px',
-                display: 'flex',
-                gap: '8px',
-              }}
-            >
-              {/* Düzenle Butonu */}
-              <button
-                onClick={() => {
-                  setEditingId(blog.id)
-                  setFormData({ title: blog.title, description: blog.description })
-                  setImagePreview(blog.imageUrl)
-                  setImageFile(null)
-                  setShowForm(true)
-                  window.scrollTo({ top: 0, behavior: 'smooth' })
-                }}
-                style={{
-                  flex: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '4px',
-                  padding: '6px 12px',
-                  background: '#e0f2fe',
-                  color: '#0369a1',
-                  border: 'none',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                }}
-              >
-                <MdEdit size={14} />
-                Düzenle
-              </button>
-
-              {/* Sil Butonu */}
-              <button
-                onClick={() => handleDelete(blog.id)}
-                style={{
-                  flex: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '4px',
-                  padding: '6px 12px',
-                  background: '#fee2e2',
-                  color: '#dc2626',
-                  border: 'none',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                }}
-              >
-                <MdDelete size={14} />
-                Sil
-              </button>
-
             </div>
 
             {/* İçerik */}
-            <div style={{ padding: '15px' }}>
+            <div style={{ padding: '15px', display: 'flex', flexDirection: 'column' }}>
               <h3
                 onClick={() => setSelectedBlog(blog)}
                 style={{
-                  margin: '0',
+                  margin: '0 0 15px 0',
                   fontSize: '16px',
                   fontWeight: 'bold',
                   cursor: 'pointer',
@@ -507,6 +377,67 @@ const ContentBlog = () => {
               >
                 {blog.title}
               </h3>
+
+              {/* Butonlar */}
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '8px',
+                }}
+              >
+                {/* Düzenle Butonu */}
+                <button
+                  onClick={() => {
+                    setEditingId(blog.id)
+                    setFormData({ title: blog.title, description: blog.description })
+                    setImagePreview(blog.imageUrl)
+                    setImageFile(null)
+                    setShowForm(true)
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                  }}
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px',
+                    padding: '6px 12px',
+                    background: '#e0f2fe',
+                    color: '#0369a1',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontSize: '13px',
+                    fontWeight: '500',
+                  }}
+                >
+                  <MdEdit size={14} />
+                  Düzenle
+                </button>
+
+                {/* Sil Butonu */}
+                <button
+                  onClick={() => handleDelete(blog.id)}
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px',
+                    padding: '6px 12px',
+                    background: '#fee2e2',
+                    color: '#dc2626',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontSize: '13px',
+                    fontWeight: '500',
+                  }}
+                >
+                  <MdDelete size={14} />
+                  Sil
+                </button>
+              </div>
             </div>
           </div>
         ))}
@@ -662,31 +593,7 @@ const ContentBlog = () => {
                   Sil
                 </button>
 
-                {/* Favori Butonu */}
-                <button
-                  onClick={() => {
-                    toggleFavorite(selectedBlog.id, selectedBlog.isFavorite)
-                    setSelectedBlog(null)
-                  }}
-                  style={{
-                    flex: 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '4px',
-                    padding: '6px 12px',
-                    background: selectedBlog.isFavorite ? '#fef08a' : '#fef3c7',
-                    color: '#b45309',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                  }}
-                >
-                  {selectedBlog.isFavorite ? <MdStar size={16} /> : <MdStarOutline size={16} />}
-                  {selectedBlog.isFavorite ? 'Kaldır' : 'Ekle'}
-                </button>
+            
               </div>
             </div>
           </div>

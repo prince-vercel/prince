@@ -52,6 +52,9 @@ export default function ContactPage() {
   return (
     <>
       <section style={{ background: '#4f8edc', padding: '40px 0 40px 0', position: 'relative', overflow: 'hidden' }}>
+        <div className="container">
+       
+
         <div className="container" style={{ marginBottom: '30px', marginTop: '10px', position: 'relative', zIndex: 2 }}>
           <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
             <li className="breadcrumb-item2" style={{ color: '#fff' }}>
@@ -73,49 +76,150 @@ export default function ContactPage() {
         <div style={{ position: 'absolute', right: '0', bottom: '0', width: '40%', height: '100%', display: 'flex', alignItems: 'flex-end' }}>
           <Image src={banner_img} alt="Banner" width={400} height={400} style={{ objectFit: 'contain' }} />
         </div>
+        </div>
       </section>
 
       <section>
-        <div className="container cs_mt_minus_110 cs_contact_fix" style={{ marginTop: '-20px' }}>
+        
+        <div className="container cs_mt_minus_110 cs_contact_fix" style={{ marginTop: '-30px' }}>
+             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-base">
+            <div className="shadow-custom-1 bg-white lg:py-8 py-7 px-base wow fadeInUp">
+              <div className="flex">
+                <div className="mr-[15px] shrink-0 lg:text-3xl text-2xl text-[#219FFF]">
+                  <i className="bi bi-envelope-at"></i>
+                </div>
+                <div>
+                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold">
+                    E-posta Gönder
+                  </h4>
+                  <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
+                    <li>
+                      <a
+                        href="mailto:info@princetourismagency.com"
+                        className="hover:text-primary-1 duration-200"
+                      >
+                        info@princetourismagency.com
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="mailto:medical@princetourismagency.com"
+                        className="hover:text-primary-1 duration-200"
+                      >
+                        medical@princetourismagency.com
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="shadow-custom-1 bg-white lg:py-8 py-7 px-base">
+              <div className="flex">
+                <div className="mr-[15px] shrink-0 lg:text-3xl text-2xl text-[#17BD8D]">
+                  <i className="bi bi-telephone-forward"></i>
+                </div>
+                <div>
+                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold">
+                    Bizi Arayın
+                  </h4>
+                  <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
+                    <li>
+                      <a
+                        href="tel:+770434501097"
+                        className="hover:text-primary-1 duration-200"
+                      >
+                        +7704345017
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="tel:+866-398-5917"
+                        className="hover:text-primary-1 duration-200"
+                      >
+                        +866-398-5917
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="shadow-custom-1 bg-white lg:py-8 py-7 px-base">
+              <div className="flex">
+                <div className="mr-[15px] shrink-0 lg:text-3xl text-2xl text-[#F53D6B]">
+                  <i className="bi bi-geo-alt"></i>
+                </div>
+                <div>
+                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold">
+                    Adres
+                  </h4>
+                  <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
+                    <li>
+                      DAP Yapı Z Ofis, Büyükdere Cad. No: 209, 4. Levent, İstanbul, Türkiye
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="cs_map" style={{ margin: '100px' }}>
+        <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.5597041697186!2d29.00434!3d41.05107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab6d6e5131909%3A0xfaa0f0510c542a88!2zREFQIFlhcMSxIFogT2Zpcw!5e0!3m2!1str!2str!4v1673000000000"
+    width="100%"
+    height="450"
+    style={{ border: 0 }}
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+    allowFullScreen
+  />
+      </div>
           <form
             className="cs_contact_form cs_style_1 cs_white_bg cs_radius_30"
             onSubmit={handleSubmit}
           >
             <div className="row">
-              <div className="col-lg-6">
-                <label className="cs_input_label">Ad</label>
+            <h2 className="section-title-v1">
+                Bize Ulaşın!
+              </h2>              <div className="col-lg-6">
+                <label className="cs_input_label">Ad <span style={{ color: 'red' }}>*</span></label>
                 <input
                   className="cs_form_field"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  required
                 />
               </div>
 
               <div className="col-lg-6">
-                <label className="cs_input_label">E-posta</label>
+                <label className="cs_input_label">E-posta <span style={{ color: 'red' }}>*</span></label>
                 <input
                   className="cs_form_field"
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
 
               <div className="col-lg-12">
-                <label className="cs_input_label">Konu</label>
+                <label className="cs_input_label">Konu <span style={{ color: 'red' }}>*</span></label>
                 <input
                   className="cs_form_field"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
+                  required
                 />
               </div>
 
               <div className="col-lg-12">
-                <label className="cs_input_label">Mesaj</label>
+                <label className="cs_input_label">Mesaj <span style={{ color: 'red' }}>*</span></label>
                 <textarea
                   className="cs_form_field"
                   rows={6}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
+                  required
                 />
               </div>
 
@@ -134,6 +238,8 @@ export default function ContactPage() {
           {error && <Toast type="error" message="Lütfen tüm alanları doldurunuz!" top="80px" />}
         </div>
       </section>
+
+ 
 
     </>
   )

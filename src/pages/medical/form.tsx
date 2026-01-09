@@ -1,32 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { collection, addDoc, serverTimestamp, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import { MedicalFormData } from '@/src/types/medical'
+import Toast from '@/src/components/Toast'
+
+interface Question {
+  id: string
+  questionText: string
+  type: 'select' | 'checkbox' | 'text' | 'date' | 'radio'
+  options: string[]
+  step: number
+  required: boolean
+  order: number
+  createdAt: Date
+  triggerValue?: string
+  additionalInputLabel?: string
+  additionalInputType?: 'text' | 'date'
+}
+
+interface StepName {
+  id: string
+  number: number
+  name: string
+}
 
 // CheckboxOption component'ini dışarıda tanımla
 const CheckboxOption = ({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) => (
   <div 
     onClick={onClick}
-    style={{
-      padding: '8px 10px',
-      border: selected ? '2px solid #0066cc' : '2px solid #e0e0e0',
-      borderRadius: '8px',
-      cursor: 'pointer',
-      transition: 'all 0.2s ease',
-      backgroundColor: selected ? '#e6f2ff' : '#fff',
-      marginBottom: '10px',
-      marginRight: '10px',
-      fontWeight: selected ? '500' : '400',
-      color: selected ? '#0066cc' : '#333',
-      fontSize: '14px',
-      display: 'inline-block',
-      textAlign: 'center',
-      marginLeft:'10px',
-      marginTop:'10px'
-    }}
+    className={`medical-checkbox-option ${selected ? 'selected' : ''}`}
   >
     {label}
   </div>
@@ -34,38 +39,14 @@ const CheckboxOption = ({ label, selected, onClick }: { label: string; selected:
 
 // Step Indicator Component
 const StepIndicator = ({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) => (
-  <div style={{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: '40px',
-    gap: '10px'
-  }}>
+  <div className="medical-step-indicator">
     {Array.from({ length: totalSteps }).map((_, index) => (
       <div key={index} style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-        <div style={{
-          width: '40px',
-          height: '40px',
-          borderRadius: '50%',
-          backgroundColor: index < currentStep ? '#4f8edc' : index === currentStep - 1 ? '#4f8edc' : '#e0e0e0',
-          color: '#fff',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontWeight: '600',
-          fontSize: '14px',
-          transition: 'all 0.3s ease'
-        }}>
+        <div className={`medical-step-circle ${index < currentStep - 1 ? 'completed' : index === currentStep - 1 ? 'active' : ''}`}>
           {index < currentStep - 1 ? '✓' : index + 1}
         </div>
         {index < totalSteps - 1 && (
-          <div style={{
-            flex: 1,
-            height: '3px',
-            backgroundColor: index < currentStep - 1 ? '#4f8edc' : '#e0e0e0',
-            margin: '0 10px',
-            transition: 'background-color 0.3s ease'
-          }}></div>
+          <div className={`medical-step-line ${index < currentStep - 1 ? 'active' : ''}`}></div>
         )}
       </div>
     ))}
@@ -74,9 +55,56 @@ const StepIndicator = ({ currentStep, totalSteps }: { currentStep: number; total
 
 export default function AppointmentSection() {
   const [currentStep, setCurrentStep] = useState(1)
-  const totalSteps = 6
+  const totalSteps = 7
+  const [questions, setQuestions] = useState<Question[]>([])
+  const [steps, setSteps] = useState<StepName[]>([])
+  const [formValues, setFormValues] = useState<Record<string, any>>({})
+  const [loadingQuestions, setLoadingQuestions] = useState(true)
 
-  // Form states
+  // Soruları ve adımları yükle
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [questionsSnapshot, stepsSnapshot] = await Promise.all([
+          getDocs(collection(db, 'questions')),
+          getDocs(collection(db, 'steps')),
+        ])
+
+        const questionsData: Question[] = []
+        questionsSnapshot.forEach((doc) => {
+          questionsData.push({
+            id: doc.id,
+            ...doc.data(),
+            createdAt: doc.data().createdAt?.toDate(),
+          } as Question)
+        })
+        setQuestions(questionsData.sort((a, b) => a.step - b.step || a.order - b.order))
+
+        const stepsData: StepName[] = []
+        stepsSnapshot.forEach((doc) => {
+          stepsData.push({
+            id: doc.id,
+            ...doc.data(),
+          } as StepName)
+        })
+        setSteps(stepsData.sort((a, b) => a.number - b.number))
+      } catch (error) {
+        console.error('Veriler yüklenirken hata:', error)
+      } finally {
+        setLoadingQuestions(false)
+      }
+    }
+    loadData()
+  }, [])
+
+  // Form states - Personal Information
+  const [fullName, setFullName] = useState('')
+  const [birthDate, setBirthDate] = useState('')
+  const [nationality, setNationality] = useState('')
+  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
+
+  // Form states - Other
   const [travelTime, setTravelTime] = useState('')
   const [chronicDisease, setChronicDisease] = useState('')
   const [airport, setAirport] = useState('')
@@ -84,6 +112,7 @@ export default function AppointmentSection() {
   const [gender, setGender] = useState('')
   const [heartDisease, setHeartDisease] = useState('')
   const [diabetes, setDiabetes] = useState('')
+  const [bloodClotting, setBloodClotting] = useState('')
   const [hypertension, setHypertension] = useState('')
   const [cancer, setCancer] = useState('')
   const [smoking, setSmoking] = useState('')
@@ -113,15 +142,15 @@ export default function AppointmentSection() {
 
   const validateForm = (formData: any) => {
     const required = [
-      { name: 'fullName', label: 'Ad Soyad' },
-      { name: 'birthDate', label: 'Doğum Tarihi' },
-      { name: 'phone', label: 'Telefon' },
-      { name: 'email', label: 'E-posta' },
-      { name: 'nationality', label: 'Uyruk' }
+      { name: 'fullName', label: 'Ad Soyad', value: fullName },
+      { name: 'birthDate', label: 'Doğum Tarihi', value: birthDate },
+      { name: 'phone', label: 'Telefon', value: phone },
+      { name: 'email', label: 'E-posta', value: email },
+      { name: 'nationality', label: 'Uyruk', value: nationality }
     ]
 
     for (const field of required) {
-      if (!formData[field.name]) {
+      if (!field.value) {
         return false
       }
     }
@@ -130,74 +159,13 @@ export default function AppointmentSection() {
   }
 
   const validateStep = (step: number): boolean => {
-    const fullNameInput = (document.querySelector('input[name="fullName"]') as HTMLInputElement)?.value || ''
-    const birthDateInput = (document.querySelector('input[name="birthDate"]') as HTMLInputElement)?.value || ''
-    const phoneInput = (document.querySelector('input[name="phone"]') as HTMLInputElement)?.value || ''
-    const emailInput = (document.querySelector('input[name="email"]') as HTMLInputElement)?.value || ''
-    const nationalityInput = (document.querySelector('input[name="nationality"]') as HTMLInputElement)?.value || ''
+    const stepQuestions = getQuestionsForStep(step)
+    const requiredQuestions = stepQuestions.filter((q) => q.required)
 
-    if (step === 1) {
-      if (!fullNameInput || !birthDateInput || !phoneInput || !emailInput || !nationalityInput || !gender) {
-        setErrorMessage('Lütfen tüm alanları doldurunuz')
-        setShowError(true)
-        setTimeout(() => setShowError(false), 3000)
-        return false
-      }
-    } else if (step === 2) {
-      if (!chronicDisease || !heartDisease || !diabetes || !hypertension || !cancer) {
-        setErrorMessage('Lütfen tüm alanları doldurunuz')
-        setShowError(true)
-        setTimeout(() => setShowError(false), 3000)
-        return false
-      }
-      if (chronicDisease === 'Evet' && !chronicDiseaseDetail) {
-        setErrorMessage('Kronik Hastalık Detayı zorunludur')
-        setShowError(true)
-        setTimeout(() => setShowError(false), 3000)
-        return false
-      }
-    } else if (step === 3) {
-      if (!smoking || !alcohol || !drugs) {
-        setErrorMessage('Lütfen tüm alanları doldurunuz')
-        setShowError(true)
-        setTimeout(() => setShowError(false), 3000)
-        return false
-      }
-    } else if (step === 4) {
-      if (!medication || !allergy || !surgery || !anesthesia || !pregnancy || !breastfeeding) {
-        setErrorMessage('Lütfen tüm alanları doldurunuz')
-        setShowError(true)
-        setTimeout(() => setShowError(false), 3000)
-        return false
-      }
-    } else if (step === 5) {
-      if (!travelTime || !personCount || !ticketStatus || !airport || !hotelNeed || !vipTransfer || !vehicleChoice) {
-        setErrorMessage('Lütfen tüm alanları doldurunuz')
-        setShowError(true)
-        setTimeout(() => setShowError(false), 3000)
-        return false
-      }
-      if (travelTime === 'Net Tarih' && !travelDate) {
-        setErrorMessage('Seyahat Tarihi zorunludur')
-        setShowError(true)
-        setTimeout(() => setShowError(false), 3000)
-        return false
-      }
-      if (airport === 'Diğer' && !otherAirport) {
-        setErrorMessage('Havalimanı Adı zorunludur')
-        setShowError(true)
-        setTimeout(() => setShowError(false), 3000)
-        return false
-      }
-    } else if (step === 6) {
-      if (!operation || !consultation || !firstSurgery) {
-        setErrorMessage('Lütfen tüm alanları doldurunuz')
-        setShowError(true)
-        setTimeout(() => setShowError(false), 3000)
-        return false
-      }
-      if (operation === 'Diğer' && !otherOperation) {
-        setErrorMessage('İşlem Detayı zorunludur')
+    for (const question of requiredQuestions) {
+      const value = formValues[question.id]
+      if (!value || (Array.isArray(value) && value.length === 0) || (typeof value === 'string' && !value.trim())) {
+        setErrorMessage(`"${question.questionText}" zorunludur`)
         setShowError(true)
         setTimeout(() => setShowError(false), 3000)
         return false
@@ -221,108 +189,37 @@ export default function AppointmentSection() {
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleSubmitButton = async () => {
+    // Tüm steps'i valide et
+    for (let step = 1; step <= totalSteps; step++) {
+      const stepQuestions = getQuestionsForStep(step)
+      const requiredQuestions = stepQuestions.filter((q) => q.required)
 
-    if (!validateStep(currentStep)) return
-
-    const formData = {
-      fullName: (e.target as any).fullName?.value || '',
-      phone: (e.target as any).phone?.value || '',
-      email: (e.target as any).email?.value || '',
-      nationality: (e.target as any).nationality?.value || '',
-      birthDate: (e.target as any).birthDate?.value || ''
+      for (const question of requiredQuestions) {
+        const value = formValues[question.id]
+        if (!value || (Array.isArray(value) && value.length === 0) || (typeof value === 'string' && !value.trim())) {
+          setCurrentStep(step)
+          setErrorMessage(`${getStepName(step)}: "${question.questionText}" zorunludur`)
+          setShowError(true)
+          setTimeout(() => setShowError(false), 3000)
+          return
+        }
+      }
     }
 
-    if (!validateForm(formData)) return
-
-    const payload: MedicalFormData = {
-      personal: {
-        gender,
-        phone: formData.phone,
-        email: formData.email,
-        nationality: formData.nationality,
-        birthDate: formData.birthDate,
-        fullName: formData.fullName
-      },
-      medical: {
-        chronicDisease,
-        chronicDiseaseDetail,
-        heartDisease,
-        diabetes,
-        hypertension,
-        cancer,
-        medication,
-        allergy,
-        surgery,
-        anesthesia,
-        pregnancy,
-        breastfeeding
-      },
-      habits: {
-        smoking,
-        alcohol,
-        drugs
-      },
-      travel: {
-        travelTime,
-        travelDate,
-        personCount,
-        ticketStatus,
-        airport,
-        otherAirport,
-        hotelNeed,
-        vipTransfer,
-        vehicleChoice
-      },
-      operation: {
-        operation,
-        otherOperation,
-        consultation,
-        firstSurgery
-      },
-      extraInfo,
-      createdAt: serverTimestamp()
+    const payload = {
+      answers: formValues,
+      createdAt: serverTimestamp(),
     }
 
     try {
       await addDoc(collection(db, 'medicalforms'), payload)
       setShowSuccess(true)
       setTimeout(() => setShowSuccess(false), 3000)
-      ;(e.target as HTMLFormElement).reset()
-      
+
       // Tüm state'leri reset et
       setCurrentStep(1)
-      setTravelTime('')
-      setChronicDisease('')
-      setAirport('')
-      setOperation('')
-      setGender('')
-      setHeartDisease('')
-      setDiabetes('')
-      setHypertension('')
-      setCancer('')
-      setSmoking('')
-      setAlcohol('')
-      setDrugs('')
-      setMedication('')
-      setAllergy('')
-      setSurgery('')
-      setAnesthesia('')
-      setPregnancy('')
-      setBreastfeeding('')
-      setPersonCount('')
-      setTicketStatus('')
-      setHotelNeed('')
-      setVipTransfer('')
-      setVehicleChoice('')
-      setConsultation('')
-      setFirstSurgery('')
-      setTravelDate('')
-      setChronicDiseaseDetail('')
-      setOtherAirport('')
-      setOtherOperation('')
-      setExtraInfo('')
+      setFormValues({})
     } catch (error) {
       console.error('Form gönderirken hata oluştu:', error)
       setErrorMessage('Form gönderilirken bir hata oluştu. Lütfen tekrar deneyin.')
@@ -331,57 +228,282 @@ export default function AppointmentSection() {
     }
   }
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+  }
+
+  const getQuestionsForStep = (step: number): Question[] => {
+    return questions.filter((q) => q.step === step).sort((a, b) => a.order - b.order)
+  }
+
+  const getStepName = (stepNumber: number): string => {
+    const step = steps.find((s) => s.number === stepNumber)
+    return step ? step.name : `Adım ${stepNumber}`
+  }
+
+  // Soru input render function
+  const renderQuestion = (question: Question) => {
+    const value = formValues[question.id] || ''
+    const isRequired = question.required
+
+    const handleChange = (newValue: any) => {
+      setFormValues((prev) => ({
+        ...prev,
+        [question.id]: newValue,
+      }))
+    }
+
+    switch (question.type) {
+      case 'select':
+        return (
+          <div key={question.id} className="col-lg-6">
+            <label style={{ marginBottom: '8px', display: 'block', fontSize: '16px', fontWeight: '500' }}>
+              {question.questionText}
+              {isRequired && ' *'}
+            </label>
+            <select
+              value={value}
+              onChange={(e) => handleChange(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '14px 12px',
+                border: '1px solid #ddd',
+                borderRadius: '6px',
+                fontSize: '14px',
+                boxSizing: 'border-box',
+              }}
+              className="cs_form_field"
+            >
+              <option value="">Seçiniz...</option>
+              {question.options.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+            
+            {/* Koşullu Ek Input */}
+            {question.triggerValue && value === question.triggerValue && question.additionalInputLabel && (
+              <div style={{ marginTop: '12px' }}>
+                <label style={{ marginBottom: '8px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
+                  {question.additionalInputLabel}
+                </label>
+                <input
+                  type={question.additionalInputType === 'date' ? 'date' : 'text'}
+                  value={formValues[`${question.id}_additional`] || ''}
+                  onChange={(e) => {
+                    setFormValues((prev) => ({
+                      ...prev,
+                      [`${question.id}_additional`]: e.target.value,
+                    }))
+                  }}
+                  placeholder={question.additionalInputLabel}
+                  className="cs_form_field"
+                  style={{
+                    width: '100%',
+                    padding: '10px 12px',
+                    border: '1px solid #ddd',
+                    borderRadius: '6px',
+                    fontSize: '14px',
+                    boxSizing: 'border-box',
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        )
+
+      case 'radio':
+        return (
+          <div key={question.id} className="col-12">
+            <label style={{ marginBottom: '12px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
+              {question.questionText}
+              {isRequired && ' *'}
+            </label>
+            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+              {question.options.map((opt) => (
+                <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                  <input
+                    type="radio"
+                    name={question.id}
+                    value={opt}
+                    checked={value === opt}
+                    onChange={(e) => handleChange(e.target.value)}
+                    style={{ cursor: 'pointer' }}
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </div>
+            
+            {/* Koşullu Ek Input */}
+            {question.triggerValue && value === question.triggerValue && question.additionalInputLabel && (
+              <div style={{ marginTop: '16px' }}>
+                <label style={{ marginBottom: '8px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
+                  {question.additionalInputLabel}
+                </label>
+                <input
+                  type={question.additionalInputType === 'date' ? 'date' : 'text'}
+                  value={formValues[`${question.id}_additional`] || ''}
+                  onChange={(e) => {
+                    setFormValues((prev) => ({
+                      ...prev,
+                      [`${question.id}_additional`]: e.target.value,
+                    }))
+                  }}
+                  placeholder={question.additionalInputLabel}
+                  className="cs_form_field"
+                  style={{
+                    width: '100%',
+                    padding: '10px 12px',
+                    border: '1px solid #ddd',
+                    borderRadius: '6px',
+                    fontSize: '14px',
+                    boxSizing: 'border-box',
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        )
+
+      case 'checkbox':
+        return (
+          <div key={question.id} className="col-12">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
+              <label style={{ marginBottom: 0, fontSize: '14px', fontWeight: '500' }}>
+                {question.questionText}
+                {isRequired && ' *'}
+              </label>
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
+                {question.options.map((opt) => (
+                  <label 
+                    key={opt} 
+                    style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: '8px', 
+                      cursor: 'pointer',
+                      padding: '8px 12px',
+                      border: `2px solid ${Array.isArray(value) && value.includes(opt) ? '#307BC4' : '#ddd'}`,
+                      borderRadius: '6px',
+                      backgroundColor: Array.isArray(value) && value.includes(opt) ? '#e0f2fe' : 'transparent',
+                      transition: 'all 0.2s ease',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      value={opt}
+                      checked={Array.isArray(value) ? value.includes(opt) : false}
+                      onChange={(e) => {
+                        const newValue = Array.isArray(value) ? value : []
+                        if (e.target.checked) {
+                          handleChange([...newValue, opt])
+                        } else {
+                          handleChange(newValue.filter((v: any) => v !== opt))
+                        }
+                      }}
+                      style={{ display: 'none' }}
+                    />
+                    <span>{opt}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div className="cs_height_42"></div>
+          </div>
+        )
+
+      case 'text':
+        return (
+          <div key={question.id} className="col-lg-6">
+            <label style={{ marginBottom: '8px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
+              {question.questionText}
+              {isRequired && ' *'}
+            </label>
+            <input
+              type="text"
+              value={value}
+              onChange={(e) => handleChange(e.target.value)}
+              placeholder={question.questionText}
+              className="cs_form_field"
+              style={{
+                width: '100%',
+                padding: '10px 12px',
+                border: '1px solid #ddd',
+                borderRadius: '6px',
+                fontSize: '14px',
+                boxSizing: 'border-box',
+              }}
+            />
+          </div>
+        )
+
+      case 'date':
+        return (
+          <div key={question.id} className="col-lg-6">
+            <label style={{ marginBottom: '8px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
+              {question.questionText}
+              {isRequired && ' *'}
+            </label>
+            <input
+              type="date"
+              value={value}
+              onChange={(e) => handleChange(e.target.value)}
+              className="cs_form_field"
+              style={{
+                width: '100%',
+                padding: '10px 12px',
+                border: '1px solid #ddd',
+                borderRadius: '6px',
+                fontSize: '14px',
+                boxSizing: 'border-box',
+              }}
+            />
+          </div>
+        )
+
+      default:
+        return null
+    }
+  }
+
+  // Özet için ilerlemey yüzdesini hesapla
+  const calculateProgressPercent = () => {
+    const filledCount = Object.values(formValues).filter((v) => {
+      if (Array.isArray(v)) return v.length > 0
+      return v && v !== ''
+    }).length
+
+    // Tüm soruları say (ek input'ları hariç)
+    const allQuestions = questions.filter(q => !q.id.includes('_additional'))
+    return allQuestions.length > 0 ? Math.round((filledCount / allQuestions.length) * 100) : 0
+  }
+
+  const progressPercent = calculateProgressPercent()
+
+  if (loadingQuestions) {
+    return (
+      <section className="cs_appointment_section_1 cs_bg_filed">
+        <div className="container">
+          <div style={{ padding: '60px 20px', textAlign: 'center' }}>
+            <p>Sorular yükleniyor...</p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <>
       {showSuccess && (
-        <div style={{
-          position: 'fixed',
-          top: '20px',
-          right: '20px',
-          background: '#4f8edc',
-          color: '#fff',
-          padding: '16px 24px',
-          borderRadius: '8px',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-          fontSize: '14px',
-          fontWeight: '500',
-          zIndex: 9999,
-          animation: 'slideIn 0.3s ease-out'
-        }}>
-          ✓ Formu başarıyla gönderdin!
-        </div>
+        <Toast type="success" message="✓ Formu başarıyla gönderdin!" />
       )}
 
       {showError && (
-        <div style={{
-          position: 'fixed',
-          top: '20px',
-          right: '20px',
-          background: '#ef4444',
-          color: '#fff',
-          padding: '16px 24px',
-          borderRadius: '8px',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-          fontSize: '14px',
-          fontWeight: '500',
-          zIndex: 9999,
-          animation: 'slideIn 0.3s ease-out'
-        }}>
-          ✗ {errorMessage}
-        </div>
+        <Toast type="error" message={errorMessage} />
       )}
-      <style>{`
-        @keyframes slideIn {
-          from {
-            transform: translateX(400px);
-            opacity: 0;
-          }
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-      `}</style>
       <section style={{ background: '#4f8edc', padding: '20px 0 20px 0' }}>
         <div className="container" style={{ marginBottom: '20px', marginTop: '-45px' }}>
           <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
@@ -401,50 +523,70 @@ export default function AppointmentSection() {
           </div>
         </div>
       </section>
-      <section className="cs_appointment_section_1 cs_bg_filed">
+      <section className="cs_appointment_section_1 cs_bg_filed" >
         <div className="container">
-          <div style={{
-            background: '#fff',
-            borderRadius: '16px',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
-            padding: '40px',
-            border: '1px solid #e8e8e8',
-            marginTop: '-15px'
-          }}>
-
+          <div className="medical-form-container ">
 
             {/* Step Indicator */}
             <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
 
-            <form className="row" onSubmit={handleSubmit}>
-            {/* Step 1: Kişisel Bilgiler */}
-            {currentStep === 1 && (
-              <>
-                <div className="col-12">
-                  <h3 style={{
-                    fontSize: '22px',
-                    fontWeight: '600',
-                    marginBottom: '28px',
-                    marginTop: '8px',
-                    color: '#1a1a1a'
-                  }}>Kişisel Bilgiler</h3>
-                </div>
-                
+            <div className="row g-4 justify-center">
+              {/* FORM CONTENT - Left Side */}
+              <div className="col-lg-8">
+                <form 
+                  onSubmit={handleSubmit}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault()
+                    }
+                  }}
+                >
+                {/* Dinamik Steps */}
+                {getQuestionsForStep(currentStep).length > 0 ? (
+                  <>
+                    <div className="col-12">
+                      <h3 className="medical-step-title">{getStepName(currentStep)}</h3>
+                    </div>
+                    <div className="row">
+                      {getQuestionsForStep(currentStep).map((question) => renderQuestion(question))}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Fallback - eski içerik */}
+                {/* Step 1: Kişisel Bilgiler */}
+                {currentStep === 1 && (
+                  <>
+                    <div className="col-12">
+                      <h3 className="medical-step-title">Kişisel Bilgiler</h3>
+                    </div>
                 <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color">Ad Soyad</label>
-                  <input type="text" name="fullName" className="cs_form_field" required />
+                  <label className="cs_input_label cs_heading_color">Ad Soyad <span style={{ color: '#ff0000' }}>*</span></label>
+                  <input 
+                    type="text" 
+                    className="cs_form_field" 
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required 
+                  />
                   <div className="cs_height_42"></div>
                 </div>
                 
                 <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color">Doğum Tarihi</label>
-                  <input type="date" name="birthDate" className="cs_form_field" required />
+                  <label className="cs_input_label cs_heading_color">Doğum Tarihi <span style={{ color: '#ff0000' }}>*</span></label>
+                  <input 
+                    type="date" 
+                    className="cs_form_field" 
+                    value={birthDate}
+                    onChange={(e) => setBirthDate(e.target.value)}
+                    required 
+                  />
                   <div className="cs_height_42"></div>
                 </div>
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Cinsiyet</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Cinsiyet <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Kadın" selected={gender === 'Kadın'} onClick={() => setGender('Kadın')} />
                       <CheckboxOption label="Erkek" selected={gender === 'Erkek'} onClick={() => setGender('Erkek')} />
@@ -455,40 +597,118 @@ export default function AppointmentSection() {
                 </div>
                 
                 <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color">Uyruk</label>
-                  <input type="text" name="nationality" className="cs_form_field" required />
+                  <label className="cs_input_label cs_heading_color">Uyruk <span style={{ color: '#ff0000' }}>*</span></label>
+                  <input 
+                    type="text" 
+                    className="cs_form_field" 
+                    value={nationality}
+                    onChange={(e) => setNationality(e.target.value)}
+                    required 
+                  />
                   <div className="cs_height_42"></div>
                 </div>
                 
                 <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color">Telefon (WhatsApp)</label>
-                  <input type="text" name="phone" className="cs_form_field" required />
+                  <label className="cs_input_label cs_heading_color">Telefon (WhatsApp) <span style={{ color: '#ff0000' }}>*</span></label>
+                  <input 
+                    type="text" 
+                    className="cs_form_field" 
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required 
+                  />
                   <div className="cs_height_42"></div>
                 </div>
                 
                 <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color">E-posta</label>
-                  <input type="email" name="email" className="cs_form_field" required />
+                  <label className="cs_input_label cs_heading_color">E-posta <span style={{ color: '#ff0000' }}>*</span></label>
+                  <input 
+                    type="email" 
+                    className="cs_form_field" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required 
+                  />
                   <div className="cs_height_42"></div>
                 </div>
               </>
             )}
 
-            {/* Step 2: Medikal Geçmiş */}
+            {/* Step 2: Operasyon Detayları */}
             {currentStep === 2 && (
               <>
                 <div className="col-12">
-                  <h3 style={{
-                    fontSize: '22px',
-                    fontWeight: '600',
-                    marginBottom: '28px',
-                    color: '#1a1a1a'
-                  }}>Medikal Geçmiş</h3>
+                  <h3 className="medical-step-title">Operasyon Detayları</h3>
+                </div>
+                <div className="col-lg-6">
+                  <label className="cs_input_label cs_heading_color">İlgilenilen İşlem <span style={{ color: '#ff0000' }}>*</span></label>
+                  <select 
+                    className="cs_select cs_select_fix"
+                    value={operation}
+                    onChange={(e) => setOperation(e.target.value)}
+                    required
+                  >
+                    <option value="">Lütfen Seçiniz</option>
+                    <option>Saç Ekimi</option>
+                    <option>Burun Estetiği</option>
+                    <option>Meme Estetiği</option>
+                    <option>Liposuction</option>
+                    <option>BBL</option>
+                    <option>Yüz Germe</option>
+                    <option>Diş Tedavisi</option>
+                    <option>Diğer</option>
+                  </select>
+                  <div className="cs_height_42"></div>
+                </div>
+                
+                {operation === 'Diğer' && (
+                  <div className="col-lg-6">
+                    <label className="cs_input_label cs_heading_color">İşlem Detayı <span style={{ color: '#ff0000' }}>*</span></label>
+                    <input
+                      type="text"
+                      className="cs_form_field"
+                      value={otherOperation}
+                      onChange={(e) => setOtherOperation(e.target.value)}
+                      placeholder="İşlemi belirtiniz..."
+                    />
+                    <div className="cs_height_42"></div>
+                  </div>
+                )}
+                
+                <div className="col-lg-6">
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Daha Önce Danışma Aldınız mı? <span style={{ color: '#ff0000' }}>*</span></label>
+                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
+                      <CheckboxOption label="Hayır" selected={consultation === 'Hayır'} onClick={() => setConsultation('Hayır')} />
+                      <CheckboxOption label="Evet" selected={consultation === 'Evet'} onClick={() => setConsultation('Evet')} />
+                    </div>
+                  </div>
+                  <div className="cs_height_42"></div>
                 </div>
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kronik Hastalığınız Var mı?</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>İlk Ameliyatınız mı? <span style={{ color: '#ff0000' }}>*</span></label>
+                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
+                      <CheckboxOption label="Evet" selected={firstSurgery === 'Evet'} onClick={() => setFirstSurgery('Evet')} />
+                      <CheckboxOption label="Hayır" selected={firstSurgery === 'Hayır'} onClick={() => setFirstSurgery('Hayır')} />
+                    </div>
+                  </div>
+                  <div className="cs_height_42"></div>
+                </div>
+              </>
+            )}
+
+            {/* Step 3: Medikal Geçmiş */}
+            {currentStep === 3 && (
+              <>
+                <div className="col-12">
+                  <h3 className="medical-step-title">Medikal Geçmiş</h3>
+                </div>
+                
+                <div className="col-lg-6">
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kronik Hastalığınız Var mı? <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Hayır" selected={chronicDisease === 'Hayır'} onClick={() => setChronicDisease('Hayır')} />
                       <CheckboxOption label="Evet" selected={chronicDisease === 'Evet'} onClick={() => setChronicDisease('Evet')} />
@@ -499,7 +719,7 @@ export default function AppointmentSection() {
                 
                 {chronicDisease === 'Evet' && (
                   <div className="col-lg-6">
-                    <label className="cs_input_label cs_heading_color">Kronik Hastalık Detayı</label>
+                    <label className="cs_input_label cs_heading_color">Kronik Hastalık Detayı <span style={{ color: '#ff0000' }}>*</span></label>
                     <input
                       type="text"
                       className="cs_form_field"
@@ -513,7 +733,7 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kalp Rahatsızlığı</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kalp Rahatsızlığı <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Hayır" selected={heartDisease === 'Hayır'} onClick={() => setHeartDisease('Hayır')} />
                       <CheckboxOption label="Evet" selected={heartDisease === 'Evet'} onClick={() => setHeartDisease('Evet')} />
@@ -524,11 +744,10 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Diyabet</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kan Pıhtılaşması Problemi <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={diabetes === 'Hayır'} onClick={() => setDiabetes('Hayır')} />
-                      <CheckboxOption label="Tip 1" selected={diabetes === 'Tip 1'} onClick={() => setDiabetes('Tip 1')} />
-                      <CheckboxOption label="Tip 2" selected={diabetes === 'Tip 2'} onClick={() => setDiabetes('Tip 2')} />
+                      <CheckboxOption label="Hayır" selected={bloodClotting === 'Hayır'} onClick={() => setBloodClotting('Hayır')} />
+                      <CheckboxOption label="Evet" selected={bloodClotting === 'Evet'} onClick={() => setBloodClotting('Evet')} />
                     </div>
                   </div>
                   <div className="cs_height_42"></div>
@@ -536,7 +755,7 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Yüksek Tansiyon</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Yüksek Tansiyon <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Hayır" selected={hypertension === 'Hayır'} onClick={() => setHypertension('Hayır')} />
                       <CheckboxOption label="Evet" selected={hypertension === 'Evet'} onClick={() => setHypertension('Evet')} />
@@ -547,7 +766,7 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kanser Geçmişi</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kanser Geçmişi <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Hayır" selected={cancer === 'Hayır'} onClick={() => setCancer('Hayır')} />
                       <CheckboxOption label="Evet" selected={cancer === 'Evet'} onClick={() => setCancer('Evet')} />
@@ -558,21 +777,16 @@ export default function AppointmentSection() {
               </>
             )}
 
-            {/* Step 3: Yaşam Alışkanlıkları */}
-            {currentStep === 3 && (
+            {/* Step 4: Yaşam Alışkanlıkları */}
+            {currentStep === 4 && (
               <>
                 <div className="col-12">
-                  <h3 style={{
-                    fontSize: '22px',
-                    fontWeight: '600',
-                    marginBottom: '28px',
-                    color: '#1a1a1a'
-                  }}>Yaşam Alışkanlıkları</h3>
+                  <h3 className="medical-step-title">Yaşam Alışkanlıkları</h3>
                 </div>
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Sigara Kullanımı</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Sigara Kullanımı <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Hayır" selected={smoking === 'Hayır'} onClick={() => setSmoking('Hayır')} />
                       <CheckboxOption label="Evet" selected={smoking === 'Evet'} onClick={() => setSmoking('Evet')} />
@@ -583,7 +797,7 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Alkol Kullanımı</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Alkol Kullanımı <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Hayır" selected={alcohol === 'Hayır'} onClick={() => setAlcohol('Hayır')} />
                       <CheckboxOption label="Ara Sıra" selected={alcohol === 'Ara Sıra'} onClick={() => setAlcohol('Ara Sıra')} />
@@ -595,7 +809,7 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Uyuşturucu Madde Kullanımı</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Uyuşturucu Madde Kullanımı <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Hayır" selected={drugs === 'Hayır'} onClick={() => setDrugs('Hayır')} />
                       <CheckboxOption label="Evet" selected={drugs === 'Evet'} onClick={() => setDrugs('Evet')} />
@@ -606,21 +820,16 @@ export default function AppointmentSection() {
               </>
             )}
 
-            {/* Step 4: İlaçlar & Alerjiler */}
-            {currentStep === 4 && (
+            {/* Step 5: İlaçlar & Alerjiler */}
+            {currentStep === 5 && (
               <>
                 <div className="col-12">
-                  <h3 style={{
-                    fontSize: '22px',
-                    fontWeight: '600',
-                    marginBottom: '28px',
-                    color: '#1a1a1a'
-                  }}>İlaçlar, Alerjiler & Cerrahi Geçmiş</h3>
+                  <h3 className="medical-step-title">İlaçlar, Alerjiler & Cerrahi Geçmiş</h3>
                 </div>
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Düzenli İlaç Kullanımı</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Düzenli İlaç Kullanımı <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Hayır" selected={medication === 'Hayır'} onClick={() => setMedication('Hayır')} />
                       <CheckboxOption label="Evet" selected={medication === 'Evet'} onClick={() => setMedication('Evet')} />
@@ -631,7 +840,7 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>İlaç / Anestezi Alerjisi</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>İlaç / Anestezi Alerjisi <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Hayır" selected={allergy === 'Hayır'} onClick={() => setAllergy('Hayır')} />
                       <CheckboxOption label="Evet" selected={allergy === 'Evet'} onClick={() => setAllergy('Evet')} />
@@ -641,18 +850,12 @@ export default function AppointmentSection() {
                 </div>
 
                 <div className="col-12">
-                  <h3 style={{
-                    fontSize: '22px',
-                    fontWeight: '600',
-                    marginBottom: '28px',
-                    marginTop: '40px',
-                    color: '#1a1a1a'
-                  }}>Cerrahi Geçmiş</h3>
+                  <h3 className="medical-step-title-secondary">Cerrahi Geçmiş</h3>
                 </div>
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Daha Önce Ameliyat Oldunuz mu?</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Daha Önce Ameliyat Oldunuz mu? <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Hayır" selected={surgery === 'Hayır'} onClick={() => setSurgery('Hayır')} />
                       <CheckboxOption label="Evet" selected={surgery === 'Evet'} onClick={() => setSurgery('Evet')} />
@@ -663,7 +866,7 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Anestezi Komplikasyonu</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Anestezi Komplikasyonu <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Hayır" selected={anesthesia === 'Hayır'} onClick={() => setAnesthesia('Hayır')} />
                       <CheckboxOption label="Evet" selected={anesthesia === 'Evet'} onClick={() => setAnesthesia('Evet')} />
@@ -673,13 +876,7 @@ export default function AppointmentSection() {
                 </div>
 
                 <div className="col-12">
-                  <h3 style={{
-                    fontSize: '22px',
-                    fontWeight: '600',
-                    marginBottom: '28px',
-                    marginTop: '40px',
-                    color: '#1a1a1a'
-                  }}>Kadın Hastalar İçin</h3>
+                  <h3 className="medical-step-title-secondary">Kadın Hastalar İçin</h3>
                 </div>
                 
                 <div className="col-lg-6">
@@ -707,21 +904,16 @@ export default function AppointmentSection() {
               </>
             )}
 
-            {/* Step 5: Seyahat & Konaklama */}
-            {currentStep === 5 && (
+            {/* Step 6: Seyahat & Konaklama */}
+            {currentStep === 6 && (
               <>
                 <div className="col-12">
-                  <h3 style={{
-                    fontSize: '22px',
-                    fontWeight: '600',
-                    marginBottom: '28px',
-                    color: '#1a1a1a'
-                  }}>Seyahat Bilgileri</h3>
+                  <h3 className="medical-step-title">Seyahat Bilgileri</h3>
                 </div>
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Türkiye Seyahat Zamanı</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Türkiye Seyahat Zamanı <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Net Tarih" selected={travelTime === 'Net Tarih'} onClick={() => setTravelTime('Net Tarih')} />
                       <CheckboxOption label="Esnek" selected={travelTime === 'Esnek'} onClick={() => setTravelTime('Esnek')} />
@@ -732,7 +924,7 @@ export default function AppointmentSection() {
                 
                 {travelTime === 'Net Tarih' && (
                   <div className="col-lg-6">
-                    <label className="cs_input_label cs_heading_color">Seyahat Tarihi</label>
+                    <label className="cs_input_label cs_heading_color">Seyahat Tarihi <span style={{ color: '#ff0000' }}>*</span></label>
                     <input
                       type="date"
                       className="cs_form_field"
@@ -745,7 +937,7 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kişi Sayısı</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kişi Sayısı <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Yalnız" selected={personCount === 'Yalnız'} onClick={() => setPersonCount('Yalnız')} />
                       <CheckboxOption label="1 Refakatçi" selected={personCount === '1 Refakatçi'} onClick={() => setPersonCount('1 Refakatçi')} />
@@ -757,7 +949,7 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Uçak Bileti Durumu</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Uçak Bileti Durumu <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Var" selected={ticketStatus === 'Var'} onClick={() => setTicketStatus('Var')} />
                       <CheckboxOption label="Yok" selected={ticketStatus === 'Yok'} onClick={() => setTicketStatus('Yok')} />
@@ -769,7 +961,7 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Varış Havalimanı</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Havalimanı <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="İstanbul Havalimanı" selected={airport === 'İstanbul Havalimanı'} onClick={() => setAirport('İstanbul Havalimanı')} />
                       <CheckboxOption label="Sabiha Gökçen" selected={airport === 'Sabiha Gökçen'} onClick={() => setAirport('Sabiha Gökçen')} />
@@ -781,7 +973,7 @@ export default function AppointmentSection() {
                 
                 {airport === 'Diğer' && (
                   <div className="col-lg-6">
-                    <label className="cs_input_label cs_heading_color">Havalimanı Adı</label>
+                    <label className="cs_input_label cs_heading_color">Havalimanı Adı <span style={{ color: '#ff0000' }}>*</span></label>
                     <input
                       type="text"
                       className="cs_form_field"
@@ -790,22 +982,17 @@ export default function AppointmentSection() {
                       placeholder="Havalimanı adını giriniz..."
                     />
                     <div className="cs_height_42"></div>
+                    <div className="cs_height_24"></div>
                   </div>
                 )}
 
                 <div className="col-12">
-                  <h3 style={{
-                    fontSize: '22px',
-                    fontWeight: '600',
-                    marginBottom: '28px',
-                    marginTop: '40px',
-                    color: '#1a1a1a'
-                  }}>Konaklama & Transfer</h3>
+                  <h3 className="medical-step-title-secondary">Konaklama & Transfer</h3>
                 </div>
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Otel İhtiyacı</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Otel İhtiyacı <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Evet" selected={hotelNeed === 'Evet'} onClick={() => setHotelNeed('Evet')} />
                       <CheckboxOption label="Hayır" selected={hotelNeed === 'Hayır'} onClick={() => setHotelNeed('Hayır')} />
@@ -816,7 +1003,7 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>VIP Transfer</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>VIP Transfer <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Evet" selected={vipTransfer === 'Evet'} onClick={() => setVipTransfer('Evet')} />
                       <CheckboxOption label="Hayır" selected={vipTransfer === 'Hayır'} onClick={() => setVipTransfer('Hayır')} />
@@ -827,7 +1014,7 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Araç Tercihi</label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Araç Tercihi <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
                       <CheckboxOption label="Vito" selected={vehicleChoice === 'Vito'} onClick={() => setVehicleChoice('Vito')} />
                       <CheckboxOption label="Sprinter" selected={vehicleChoice === 'Sprinter'} onClick={() => setVehicleChoice('Sprinter')} />
@@ -839,83 +1026,11 @@ export default function AppointmentSection() {
               </>
             )}
 
-            {/* Step 6: Operasyon & Açıklama */}
-            {currentStep === 6 && (
+            {/* Step 7: Ek Bilgiler */}
+            {currentStep === 7 && (
               <>
                 <div className="col-12">
-                  <h3 style={{
-                    fontSize: '22px',
-                    fontWeight: '600',
-                    marginBottom: '28px',
-                    color: '#1a1a1a'
-                  }}>Operasyon Detayları</h3>
-                </div>
-                
-                <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color">İlgilenilen İşlem</label>
-                  <select 
-                    className="cs_select cs_select_fix"
-                    value={operation}
-                    onChange={(e) => setOperation(e.target.value)}
-                    required
-                  >
-                    <option value="">Lütfen Seçiniz</option>
-                    <option>Saç Ekimi</option>
-                    <option>Burun Estetiği</option>
-                    <option>Meme Estetiği</option>
-                    <option>Liposuction</option>
-                    <option>BBL</option>
-                    <option>Yüz Germe</option>
-                    <option>Diş Tedavisi</option>
-                    <option>Diğer</option>
-                  </select>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                {operation === 'Diğer' && (
-                  <div className="col-lg-6">
-                    <label className="cs_input_label cs_heading_color">İşlem Detayı</label>
-                    <input
-                      type="text"
-                      className="cs_form_field"
-                      value={otherOperation}
-                      onChange={(e) => setOtherOperation(e.target.value)}
-                      placeholder="İşlemi belirtiniz..."
-                    />
-                    <div className="cs_height_42"></div>
-                  </div>
-                )}
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Daha Önce Danışma Aldınız mı?</label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={consultation === 'Hayır'} onClick={() => setConsultation('Hayır')} />
-                      <CheckboxOption label="Evet" selected={consultation === 'Evet'} onClick={() => setConsultation('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>İlk Ameliyatınız mı?</label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Evet" selected={firstSurgery === 'Evet'} onClick={() => setFirstSurgery('Evet')} />
-                      <CheckboxOption label="Hayır" selected={firstSurgery === 'Hayır'} onClick={() => setFirstSurgery('Hayır')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-
-                <div className="col-12">
-                  <h3 style={{
-                    fontSize: '22px',
-                    fontWeight: '600',
-                    marginBottom: '28px',
-                    marginTop: '40px',
-                    color: '#1a1a1a'
-                  }}>Ek Bilgiler</h3>
+                  <h3 className="medical-step-title">Ek Bilgiler</h3>
                 </div>
                 
                 <div className="col-lg-12">
@@ -931,23 +1046,17 @@ export default function AppointmentSection() {
                 </div>
               </>
             )}
+                  </>
+                )}
+
             {/* Navigation Buttons */}
             <div className="col-12">
-              <div style={{
-                display: 'flex',
-                gap: '20px',
-                justifyContent: 'space-between',
-                marginTop: '40px'
-              }}>
+              <div className="medical-form-nav-buttons">
                 {currentStep > 1 && (
                   <button 
                     type="button"
                     onClick={handlePreviousStep}
-                    className="cs_btn cs_style_1"
-                    style={{
-                      background: '#e8e8e8',
-                      color: '#333'
-                    }}
+                    className="cs_btn cs_style_1 medical-form-btn-secondary"
                   >
                     <span>← Geri</span>
                   </button>
@@ -957,23 +1066,96 @@ export default function AppointmentSection() {
                   <button 
                     type="button"
                     onClick={handleNextStep}
-                    className="cs_btn cs_style_1"
-                    style={{ marginLeft: currentStep === 1 ? 'auto' : 0 }}
+                    className={`cs_btn cs_style_1 ${currentStep === 1 ? 'medical-form-btn-push-right' : 'medical-form-btn-push-left'}`}
                   >
                     <span>İleri →</span>
                   </button>
                 ) : (
                   <button 
-                    type="submit"
-                    className="cs_btn cs_style_1"
-                    style={{ marginLeft: 'auto' }}
+                    type="button"
+                    onClick={handleSubmitButton}
+                    className="cs_btn cs_style_1 medical-form-btn-push-right"
                   >
                     <span>✓ Formu Gönder</span>
                   </button>
                 )}
               </div>
             </div>
-            </form>
+
+                </form>
+                  <div className="mt-4 flex items-center gap-2 text-sm text-dark-3">
+                <i className="bi bi-shield-lock"></i>
+                <span>Bilgileriniz gizlidir ve üçüncü kişilerle paylaşılmaz.</span>
+              </div>
+              </div>
+
+              {/* STICKY SUMMARY - Right Side */}
+              <div className="col-lg-4 hidden lg:block">
+                <div className="sticky top-20 border-2 border-gray-300 rounded-lg p-6 bg-white shadow-md">
+                  <div className="flex items-center justify-between gap-4 mb-6">
+                    <h5 className="font-bold text-lg flex items-center gap-2">
+                      <i className="bi bi-clipboard-check" style={{ color: '#307BC4' }}></i>
+                      Form Özeti
+                    </h5>
+                    {/* PROGRESS CIRCLE */}
+                    <div className="flex justify-center">
+                      <div className="relative w-16 h-16 flex items-center justify-center">
+                        <svg className="transform -rotate-90" width="64" height="64" viewBox="0 0 96 96">
+                          <circle
+                            cx="48"
+                            cy="48"
+                            r="40"
+                            fill="none"
+                            stroke="#e5e7eb"
+                            strokeWidth="6"
+                          />
+                          <circle
+                            cx="48"
+                            cy="48"
+                            r="40"
+                            fill="none"
+                            stroke="#307BC4"
+                            strokeWidth="6"
+                            strokeDasharray={`${(progressPercent / 100) * 2 * Math.PI * 40} ${2 * Math.PI * 40}`}
+                            strokeLinecap="round"
+                            style={{ transition: 'stroke-dasharray 0.5s ease' }}
+                          />
+                        </svg>
+                        <div className="absolute flex flex-col items-center justify-center">
+                          <span className="text-xs font-bold" style={{ color: '#307BC4' }}>{progressPercent}%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ul className="text-sm space-y-2 border-l-4 border-blue-500 pl-3 max-h-[600px] overflow-y-auto">
+                    {questions.map((question) => {
+                      const answer = formValues[question.id]
+                      const additionalAnswer = formValues[`${question.id}_additional`]
+                      
+                      if (!answer) return null
+
+                      return (
+                        <li key={question.id} className="flex items-center gap-2 text-gray-700 text-xs">
+                          <i className="bi bi-check-circle text-blue-500 text-sm"></i>
+                          <span>
+                            <strong>{question.questionText.substring(0, 20)}:</strong> {Array.isArray(answer) ? answer.join(', ') : String(answer).substring(0, 20)}{String(answer).length > 20 ? '...' : ''}
+                            {additionalAnswer && (
+                              <div style={{ fontSize: '12px', color: '#999', marginTop: '4px', paddingLeft: '8px', borderLeft: '2px solid #ddd' }}>
+                                → {question.additionalInputLabel}: {String(additionalAnswer).substring(0, 15)}{String(additionalAnswer).length > 15 ? '...' : ''}
+                              </div>
+                            )}
+                          </span>
+                        </li>
+                      )
+                    })}
+                    {Object.keys(formValues).length === 0 && (
+                      <li className="text-gray-500 italic text-xs">Bilgileri doldurmaya başlayın...</li>
+                    )}
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="cs_height_120"></div>

@@ -88,6 +88,8 @@ body {
   font-weight: 600;
   z-index: 2;
   transition: transform 0.4s ease;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .image-card:hover .overlay-dark {

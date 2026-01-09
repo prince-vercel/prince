@@ -9,9 +9,7 @@ import Toast from '@/src/components/Toast'
 
 import breadcrumbBg from "@/assets/images/backgrounds/breadcrumb-bg.webp"
 import breadcrumbShape from "@/assets/images/illustration/breadcrunb__shape.png"
-import birdWhite from "@/assets/images/illustration/bird-illustration-w.png"
 import tree from "@/assets/images/illustration/tree-illustration.png"
-import bird from "@/assets/images/illustration/bird-illustration.png"
 
 import insta1 from "@/assets/images/instagram/insta-1.webp"
 import insta2 from "@/assets/images/instagram/insta-2.webp"
@@ -68,7 +66,7 @@ export default function ContactPage() {
   return (
     <>
       {/*========== BREADCRUMB STYLE START ==========*/}
-          <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#E8604C' }}>
+          <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#d7b76e' }}>
         <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
         </div>
         <img
@@ -76,11 +74,7 @@ export default function ContactPage() {
           alt="placeholder"
           className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]"
         />
-        <img
-          src={birdWhite.src}
-          alt="placeholder"
-          className="absolute top-[10%] right-[4%] z-1 w-[7.5%]"
-        />
+      
 
         <div className="container relative z-2">
           <nav aria-label="breadcrumb">
@@ -92,7 +86,7 @@ export default function ContactPage() {
           </ol>
           </nav>
 
-          <h2 className="xl:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
+          <h2 className="l:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
             Bizimle İletişime Geçin
           </h2>
         </div>
@@ -108,13 +102,10 @@ export default function ContactPage() {
           />
         </div>
         <div className="absolute top-[5%] left-[1%] max-w-[9%] z-minus lg:inline-block hidden">
-          <img
-            src={bird.src}
-            alt="leaf"
-          />
+       
         </div>
 
-        <div className="container">
+        <div className="container -top-5">
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-base">
             <div className="shadow-custom-1 bg-white lg:py-8 py-7 px-base wow fadeInUp">
               <div className="flex">
@@ -128,18 +119,18 @@ export default function ContactPage() {
                   <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
                     <li>
                       <a
-                        href="mailto:info@supportcompany.com"
+                        href="mailto:info@princetourismagency.com"
                         className="hover:text-primary-1 duration-200"
                       >
-                        info@supportcompany.com
+                        info@princetourismagency.com
                       </a>
                     </li>
                     <li>
                       <a
-                        href="mailto:info@exmple.com"
+                        href="mailto:info@princetourismagency.com"
                         className="hover:text-primary-1 duration-200"
                       >
-                        info@exmple.com
+                        info@princetourismagency.com
                       </a>
                     </li>
                   </ul>
@@ -195,19 +186,29 @@ export default function ContactPage() {
                   </h4>
                   <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
                     <li>
-                      4517 Washington Ave. Manchester, Kentucky 39495
+                      DAP Yapı Z Ofis, Büyükdere Cad. No: 209, 4. Levent, İstanbul, Türkiye
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
-
-          <div className="lg:pt-30 pt-24">
+  <div className="cs_map" style={{margin:'100px'}}>
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.5597041697186!2d29.00434!3d41.05107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab6d6e5131909%3A0xfaa0f0510c542a88!2zREFQIFlhcMSxIFogT2Zpcw!5e0!3m2!1str!2str!4v1673000000000"
+    width="100%"
+    height="450"
+    style={{ border: 0 }}
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+    allowFullScreen
+  />
+</div>
+          <div className="lg:pt-20 pt-15">
             <div className="text-center lg:pb-[60px] pb-[40px]">
               <h5 className="section-sub-title-v1">İletişim Kurun</h5>
               <h2 className="section-title-v1">
-                Bize İletişim Kurmaktan Çekinmeyin
+                Bize Ulaşın!
               </h2>
             </div>
 
@@ -218,30 +219,33 @@ export default function ContactPage() {
                     <input
                       type="text"
                       name="name"
-                      placeholder="Adınız"
+                      placeholder="Adınız *"
                       value={formData.name}
                       onChange={handleInputChange}
                       className="input_style__primary"
+                      required
                     />
                   </div>
                   <div className="lg:col-span-1 col-span-2">
                     <input
                       type="email"
                       name="email"
-                      placeholder="E-postanız"
+                      placeholder="E-postanız *"
                       value={formData.email}
                       onChange={handleInputChange}
                       className="input_style__primary"
+                      required
                     />
                   </div>
                   <div className="col-span-2">
                     <input
                       type="text"
                       name="subject"
-                      placeholder="Konunuz"
+                      placeholder="Konunuz *"
                       value={formData.subject}
                       onChange={handleInputChange}
                       className="input_style__primary"
+                      required
                     />
                   </div>
                   <div className="col-span-2">
@@ -249,9 +253,10 @@ export default function ContactPage() {
                       rows={6}
                       name="message"
                       className="input_style__primary"
-                      placeholder="Mesajınız..."
+                      placeholder="Mesajınız *"
                       value={formData.message}
                       onChange={handleInputChange}
+                      required
                     ></textarea>
                   </div>
                   <div className="col-span-2">
@@ -272,22 +277,12 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-       <div className="cs_map" style={{margin:'50px'}}>
-  <iframe
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.847370035419!2d28.97754807653835!3d41.08531567134069!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabf3df8a0d3f9%3A0x1f6c2c7e6b9b7c2c!2sDAP%20Yap%C4%B1%20Z%20Ofis!5e0!3m2!1str!2str!4v1710000000000"
-    width="100%"
-    height="450"
-    style={{ border: 0 }}
-    loading="lazy"
-    referrerPolicy="no-referrer-when-downgrade"
-    allowFullScreen
-  />
-</div>
+     
 
       
       {/*========== CONTACT US STYLE END ==========*/}
 
-      <Footer />
+      
     </>
   )
 }

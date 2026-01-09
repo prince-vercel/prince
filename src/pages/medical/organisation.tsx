@@ -6,37 +6,13 @@ import Link from 'next/link'
 import { db } from '@/src/lib/firebase'
 import { getDocs, collection } from 'firebase/firestore'
 import bannerImg from '@/assets/img/doctors/banner_img_3.png'
+import { Hospital, Hotel, OrganisationItem } from '@/src/types/medical'
 
 const ITEMS_PER_PAGE = 3
 
-interface Hotel {
-  id: string
-  name: string
-  location: string
-  stars: number
-  image: string
-}
-
-interface Hospital {
-  id: string
-  name: string
-  location: string
-  image: string
-}
-
-interface OrganisationItem {
-  id: string
-  name: string
-  location: string
-  type: 'Oteller' | 'Hastaneler'
-  desc: string
-  image: string
-  stars?: number
-}
 
 export default function OrganisationPage() {
   const [activeFilter, setActiveFilter] = useState<'Tümü' | 'Oteller' | 'Hastaneler'>('Tümü')
-  const [selectedStars, setSelectedStars] = useState<number[]>([])
   const [currentPage, setCurrentPage] = useState(1)
   const [organisations, setOrganisations] = useState<OrganisationItem[]>([])
   const [loading, setLoading] = useState(true)
@@ -63,7 +39,6 @@ export default function OrganisationPage() {
           type: 'Oteller' as const,
           desc: `${data.location}`,
           image: data.image,
-          stars: data.stars,
         }
       })
       allOrganisations.push(...hotels)
@@ -99,12 +74,8 @@ export default function OrganisationPage() {
       list = list.filter(item => item.type === activeFilter)
     }
 
-    if (activeFilter === 'Oteller' && selectedStars.length > 0) {
-      list = list.filter(item => item.stars && selectedStars.includes(item.stars))
-    }
-
     return list
-  }, [activeFilter, selectedStars, organisations])
+  }, [activeFilter, organisations])
 
   const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE)
 
@@ -148,7 +119,6 @@ export default function OrganisationPage() {
                   <button
                     onClick={() => {
                       setActiveFilter(key)
-                      setSelectedStars([])
                       setCurrentPage(1)
                     }}
                     style={{
@@ -174,31 +144,6 @@ export default function OrganisationPage() {
           </div>
         </div>
 
-        {activeFilter === 'Oteller' && (
-          <div className="cs_white_bg cs_radius_20 p-4">
-
-            {[3, 4, 5].map(star => (
-              <label key={star} style={{ marginRight: 20, cursor: 'pointer' }}>
-                <input
-                  type="checkbox"
-                  checked={selectedStars.includes(star)}
-                  onChange={() => {
-                    setSelectedStars(prev =>
-                      prev.includes(star)
-                        ? prev.filter(s => s !== star)
-                        : [...prev, star]
-                    )
-                    setCurrentPage(1)
-                  }}
-      style={{ width: '16px', height: '16px', cursor: 'pointer' }}
-
-                />
-                <span style={{ marginLeft: 8 }}>{star} Yıldız</span>
-              </label>
-            ))}
-          </div>
-        )}
-
         <div className="cs_height_65" />
 
         <div className="row cs_gap_y_40">
@@ -213,7 +158,7 @@ export default function OrganisationPage() {
           ) : (
             paginatedItems.map((item) => (
               <div key={item.id} className="col-xl-4 col-lg-4 col-md-6">
-                <div className="cs_team cs_style_1 cs_type_2 text-center cs_radius_20 overflow-hidden">
+                <div className="cs_team cs_style_1 cs_type_2 cs_radius_20 overflow-hidden">
                   <div className="cs_member_img" style={{ height: '250px', overflow: 'hidden' }}>
                     <Image
                       src={item.image}
@@ -222,16 +167,11 @@ export default function OrganisationPage() {
                       height={300}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
-                    {item.type === 'Oteller' && item.stars && (
-                      <div className="cs_label cs_white_color cs_accent_bg">
-                        {item.stars} Yıldız
-                      </div>
-                    )}
                   </div>
 
-                  <div className="cs_team_meta cs_white_bg" style={{ padding: '12px 15px' }}>
+                  <div className="cs_team_meta cs_white_bg" style={{ padding: '12px 15px', textAlign: 'center' }}>
                     <h3 className="cs_member_name cs_fs_32" style={{ fontSize: '18px', marginBottom: '6px', fontWeight: '500' }}>{item.name}</h3>
-                    <p className="cs_member_description" style={{ fontSize: '14px', marginBottom: 0 }}>{item.desc}</p>
+                    <p className="cs_member_description" style={{ fontSize: '14px', marginBottom: 0, color: '#666' }}>{item.desc}</p>
                   </div>
                 </div>
               </div>

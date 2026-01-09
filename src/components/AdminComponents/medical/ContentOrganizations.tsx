@@ -23,7 +23,6 @@ const ContentOrganizations = () => {
   // Hotels State
   const [hotelName, setHotelName] = useState('')
   const [hotelLocation, setHotelLocation] = useState('')
-  const [hotelStars, setHotelStars] = useState<number>(5)
   const [hotelImageFile, setHotelImageFile] = useState<File | null>(null)
   const [hotelImagePreview, setHotelImagePreview] = useState<string>('')
   const [hotels, setHotels] = useState<Hotel[]>([])
@@ -101,7 +100,6 @@ const ContentOrganizations = () => {
           id: hotelId,
           name: hotelName,
           location: hotelLocation,
-          stars: hotelStars,
           image: imageUrl,
           updatedAt: serverTimestamp(),
           ...(editingHotelId ? {} : { createdAt: serverTimestamp() })
@@ -115,7 +113,6 @@ const ContentOrganizations = () => {
       // Reset form
       setHotelName('')
       setHotelLocation('')
-      setHotelStars(5)
       setHotelImageFile(null)
       setHotelImagePreview('')
       setEditingHotelId(null)
@@ -230,7 +227,6 @@ const ContentOrganizations = () => {
     setEditingHotelId(hotel.id)
     setHotelName(hotel.name)
     setHotelLocation(hotel.location)
-    setHotelStars(hotel.stars)
     setHotelImagePreview(hotel.image)
   }
 
@@ -330,22 +326,7 @@ const ContentOrganizations = () => {
               />
             </div>
 
-            {/* Hotel Stars */}
-            <div className={styles.contentServicesFieldGroup}>
-              <label className={styles.contentServicesLabel}>Yıldız Sayısı</label>
-              <select
-                value={hotelStars}
-                onChange={(e) => setHotelStars(parseInt(e.target.value))}
-                className={styles.contentServicesSelect}
-              >
-                <option value="1">⭐ 1 Yıldız</option>
-                <option value="2">⭐⭐ 2 Yıldız</option>
-                <option value="3">⭐⭐⭐ 3 Yıldız</option>
-                <option value="4">⭐⭐⭐⭐ 4 Yıldız</option>
-                <option value="5">⭐⭐⭐⭐⭐ 5 Yıldız</option>
-              </select>
-            </div>
-
+      
             {/* Hotel Image */}
             <div className={styles.contentServicesFieldGroup}>
               <label className={styles.contentServicesLabel}>Otel Görseli</label>
@@ -453,9 +434,7 @@ const ContentOrganizations = () => {
                     <p style={{ fontSize: '14px', color: '#666', margin: '0 0 4px 0' }}>
                      {hotel.location}
                     </p>
-                    <p style={{ fontSize: '14px', margin: '8px 0 12px 0' }}>
-                      {'⭐'.repeat(hotel.stars)}
-                    </p>
+                  
                     <div style={{ display: 'flex', gap: '8px' }}>
                       <button
                         onClick={() => editHotel(hotel)}
@@ -656,7 +635,7 @@ const ContentOrganizations = () => {
                       {hospital.name}
                     </h3>
                     <p style={{ fontSize: '14px', color: '#666', margin: '0 0 12px 0' }}>
-                      📍 {hospital.location}
+                       {hospital.location}
                     </p>
                     <div style={{ display: 'flex', gap: '8px' }}>
                       <button

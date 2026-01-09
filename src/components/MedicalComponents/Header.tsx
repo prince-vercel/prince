@@ -50,13 +50,13 @@ export default function Header() {
 
                 <nav className="cs_nav">
                   <ul className="cs_nav_list">
-                    <li><Link href="/medical" className="font-semibold" style={{ color: pathname === '/medical' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>Anasayfa</Link></li>
-                    <li><Link href="/medical/organisation" className="font-semibold" style={{ color: pathname === '/medical/organisation' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>Kurumlar</Link></li>
-                    <li><Link href="/medical/results" className="font-semibold" style={{ color: pathname === '/medical/results' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>Mutlu Sonuçlar</Link></li>
-                    <li><Link href="/medical/form" className="font-semibold" style={{ color: pathname === '/medical/form' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>Başvuru</Link></li>
-                    <li><Link href="/medical/blog" className="font-semibold" style={{ color: pathname === '/medical/blog' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>Blog</Link></li>
-                    <li><Link href="/medical/about" className="font-semibold" style={{ color: pathname === '/medical/about' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>Hakkımızda</Link></li>
-                    <li><Link href="/medical/contact" className="font-semibold" style={{ color: pathname === '/medical/contact' ? '#4f8edc' : 'inherit', fontSize: '15px' }}>İletişim</Link></li>
+                    <li><Link href="/medical" className="font-semibold" style={{ color: pathname === '/medical' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>Anasayfa</Link></li>
+                    <li><Link href="/medical/organisation" className="font-semibold" style={{ color: pathname === '/medical/organisation' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>Hizmet Noktaları</Link></li>
+                    <li><Link href="/medical/results" className="font-semibold" style={{ color: pathname === '/medical/results' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>Mutlu Sonuçlar</Link></li>
+                    <li><Link href="/medical/form" className="font-semibold" style={{ color: pathname === '/medical/form' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>Başvuru</Link></li>
+                    <li><Link href="/medical/blog" className="font-semibold" style={{ color: pathname === '/medical/blog' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>Blog</Link></li>
+                    <li><Link href="/medical/about" className="font-semibold" style={{ color: pathname === '/medical/about' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>Hakkımızda</Link></li>
+                    <li><Link href="/medical/contact" className="font-semibold" style={{ color: pathname === '/medical/contact' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>İletişim</Link></li>
                   </ul>
                 </nav>
               </div>
@@ -66,8 +66,8 @@ export default function Header() {
                 {/* SOCIALS – DESKTOP */}
                 <div className="cs_social_links cs_social_desktop">
                   <a href="#"><i className="fa-brands fa-facebook-f"></i></a>
-                  <a href="#"><i className="fa-brands fa-youtube"></i></a>
-                  <a href="#"><i className="fa-brands fa-instagram"></i></a>
+                   <a href="#"><i className="fa-brands fa-instagram"></i></a>
+                   <a href="#"><i className="fa-brands fa-whatsapp"></i></a>
                 </div>
 
                 <div className="cs_toolbox">
@@ -101,7 +101,7 @@ export default function Header() {
           {/* MOBILE MENU */}
           <ul className="cs_mobile_menu">
             <li><Link href="/medical" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Anasayfa</Link></li>
-            <li><Link href="/medical/organisation" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Kurumlar</Link></li>
+            <li><Link href="/medical/organisation" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Hizmet Noktaları</Link></li>
             <li><Link href="/medical/results" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Mutlu Sonuçlar</Link></li>
             <li><Link href="/medical/form" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Başvuru</Link></li>
             <li><Link href="/medical/blog" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Blog</Link></li>

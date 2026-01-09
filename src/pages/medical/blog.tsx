@@ -8,16 +8,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
+import { Blog } from '@/src/types/medical'
 
 
-interface Blog {
-  id: string
-  title: string
-  description: string
-  imageUrl: string
-  isFavorite: boolean
-  createdAt: any
-}
 
 const POSTS_PER_PAGE = 6
 

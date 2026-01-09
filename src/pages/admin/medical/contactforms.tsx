@@ -32,7 +32,7 @@ const PAGE_SIZE = 5
 
 const ContactForms = () => {
   const [forms, setForms] = useState<ContactWithId[]>([])
-  const [lastDoc, setLastDoc] = useState<any>(null)
+  const [currentPage, setCurrentPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [showEmailModal, setShowEmailModal] = useState(false)
@@ -44,20 +44,17 @@ const ContactForms = () => {
     setTotal(snap.data().count)
   }
 
- const fetchForms = useCallback(async (loadMore = false) => {
+ const fetchForms = useCallback(async () => {
   const q = query(
     collection(db, 'medicalcontact'),
-    orderBy('createdAt', 'desc'),
-    ...(loadMore && lastDoc ? [startAfter(lastDoc)] : []),
-    limit(PAGE_SIZE)
+    orderBy('createdAt', 'desc')
   )
 
   const snap = await getDocs(q)
   const list = snap.docs.map(d => ({ id: d.id, ...d.data() })) as ContactWithId[]
 
-  setLastDoc(snap.docs[snap.docs.length - 1])
-  setForms(prev => loadMore ? [...prev, ...list] : list)
-}, [lastDoc])
+  setForms(list)
+}, [])
 
 
 const hasFetched = useRef(false)
@@ -96,77 +93,130 @@ useEffect(() => {
           </div>
         </div>
 
-        {forms
-          .filter(item =>
-            item.name.toLowerCase().includes(filterName.toLowerCase())
+        {(() => {
+          const totalPages = Math.ceil(total / PAGE_SIZE)
+          const startIndex = (currentPage - 1) * PAGE_SIZE
+          const endIndex = startIndex + PAGE_SIZE
+          const paginatedForms = forms.slice(startIndex, endIndex)
+
+          return (
+            <>
+              {paginatedForms
+                .filter(item =>
+                  item.name.toLowerCase().includes(filterName.toLowerCase())
+                )
+                .map((item, index) => (
+                <>
+                  {index === 0 && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '8px 16px', marginBottom: '16px', backgroundColor: '#fafafa', borderRadius: '6px' }}>
+                      <div style={{ flex: '0 0 50px', fontSize: '11px', color: '#999', fontWeight: '600', textTransform: 'uppercase' }}>
+                        Sıra
+                      </div>
+                      <div style={{ flex: '0 0 100px', fontSize: '11px', color: '#999', fontWeight: '600', textTransform: 'uppercase' }}>
+                        Tarih
+                      </div>
+                      <div style={{ flex: '1', fontSize: '11px', color: '#999', fontWeight: '600', textTransform: 'uppercase' }}>
+                        Ad
+                      </div>
+                      <div style={{ flex: '1.6', fontSize: '11px', color: '#999', fontWeight: '600', textTransform: 'uppercase' }}>
+                        Konu
+                      </div>
+                    </div>
+                  )}
+                <div key={item.id} className={styles.gfCard}>
+                  <div className={styles.gfCardRow}>
+                    <div className={styles.gfRowNumber} style={{fontSize:'16px'}}>{startIndex + index + 1}</div>
+                    <div className={styles.gfRowDate} style={{fontSize:'15px'}}>
+                      {item.createdAt?.toDate?.().toLocaleDateString('tr-TR')}
+                    </div>
+                    <div className={styles.gfRowName} style={{fontSize:'16px'}}>{item.name}</div>
+
+                    <div style={{ flex: '1.2', fontSize: '14px', color: '#000', maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {item.subject}
+                    </div>
+
+                    <div className={styles.gfRowActions}>
+              
+
+                      <button
+                        className={styles.gfIconBtn}
+                        onClick={() => {
+                          setSelectedEmail({email: item.email, name: item.name})
+                          setShowEmailModal(true)
+                        }}
+                        title="Cevap gönder"
+                      >
+                        <i className="fas fa-envelope"></i>
+                      </button>
+
+                      <button
+                        className={styles.gfIconBtn}
+                        onClick={() => deleteDoc(doc(db, 'medicalcontact', item.id))}
+                        title="Sil"
+                      >
+                        <i className="fas fa-trash"></i>
+                      </button>
+                              <button
+                        className={styles.gfIconBtn}
+                        onClick={() =>
+                          setExpandedId(expandedId === item.id ? null : item.id)
+                        }
+                        title="Detayları göster/gizle"
+                      >
+                        <i className={`fas fa-chevron-${expandedId === item.id ? 'up' : 'down'}`}></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  {expandedId === item.id && (
+                    <div className={styles.gfCardContent}>
+                      <div className={styles.gfField}>
+                        <label style={{fontSize:'15px'}}>Email</label>
+                        <div style={{fontSize:'16px'}}>{item.email}</div>
+                      </div>
+                      <div className={styles.gfField}>
+                        <label style={{fontSize:'15px'}}>Konu</label>
+                        <div style={{fontSize:'16px'}}>{item.subject}</div>
+                      </div>
+                      <div className={styles.gfField}>
+                        <label style={{fontSize:'15px'}}>Mesaj</label>
+                        <div style={{ whiteSpace: 'pre-line', fontSize:'16px' }}>{item.message}</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                </>
+              ))}
+
+              {totalPages > 1 && (
+                <div className={styles.gfPagination} style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '24px', flexWrap: 'wrap' }}>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                    <button
+                      key={page}
+                      onClick={() => {
+                        setCurrentPage(page)
+                        window.scrollTo({ top: 0, behavior: 'smooth' })
+                      }}
+                      style={{
+                        padding: '8px 12px',
+                        border: page === currentPage ? '2px solid #d7b76e' : '1px solid #ddd',
+                        backgroundColor: page === currentPage ? '#fef3e2' : 'white',
+                        color: page === currentPage ? '#d7b76e' : '#000',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontWeight: page === currentPage ? 'bold' : 'normal',
+                        fontSize: '14px',
+                        transition: 'all 0.3s ease',
+                      }}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </>
           )
-          .map((item, index) => (
-          <div key={item.id} className={styles.gfCard}>
-            <div className={styles.gfCardRow}>
-              <div className={styles.gfRowNumber} style={{fontSize:'16px'}}>{index + 1}</div>
-              <div className={styles.gfRowDate} style={{fontSize:'15px'}}>
-                {item.createdAt?.toDate?.().toLocaleDateString('tr-TR')}
-              </div>
-              <div className={styles.gfRowName} style={{fontSize:'16px'}}>{item.name}</div>
-
-              <div className={styles.gfRowActions}>
-                <button
-                  className={styles.gfIconBtn}
-                  onClick={() =>
-                    setExpandedId(expandedId === item.id ? null : item.id)
-                  }
-                  title="Detayları göster/gizle"
-                >
-                  <i className={`fas fa-chevron-${expandedId === item.id ? 'up' : 'down'}`}></i>
-                </button>
-
-                <button
-                  className={styles.gfIconBtn}
-                  onClick={() => {
-                    setSelectedEmail({email: item.email, name: item.name})
-                    setShowEmailModal(true)
-                  }}
-                  title="Cevap gönder"
-                >
-                  <i className="fas fa-envelope"></i>
-                </button>
-
-                <button
-                  className={styles.gfIconBtn}
-                  onClick={() => deleteDoc(doc(db, 'medicalcontact', item.id))}
-                  title="Sil"
-                >
-                  <i className="fas fa-trash"></i>
-                </button>
-              </div>
-            </div>
-
-            {expandedId === item.id && (
-              <div className={styles.gfCardContent}>
-                <div className={styles.gfField}>
-                  <label style={{fontSize:'15px'}}>Email</label>
-                  <div style={{fontSize:'16px'}}>{item.email}</div>
-                </div>
-                <div className={styles.gfField}>
-                  <label style={{fontSize:'15px'}}>Konu</label>
-                  <div style={{fontSize:'16px'}}>{item.subject}</div>
-                </div>
-                <div className={styles.gfField}>
-                  <label style={{fontSize:'15px'}}>Mesaj</label>
-                  <div style={{ whiteSpace: 'pre-line', fontSize:'16px' }}>{item.message}</div>
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
-
-        {forms.length < total && (
-          <div className={styles.gfPagination}>
-            <button onClick={() => fetchForms(true)} style={{fontSize:'16px'}}>
-              Daha Fazla Yükle ({forms.length}/{total})
-            </button>
-          </div>
-        )}
+        })()}
       </div>
 
       <SendEmail 

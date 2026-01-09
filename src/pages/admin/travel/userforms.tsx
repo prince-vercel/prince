@@ -20,6 +20,18 @@ import styles from '@/src/styles/admin.module.css'
 import SendEmail from '@/src/components/SendEmail'
 import { AdminTravelLayout } from '@/src/components/AdminComponents/travel/AdminTravelLayout'
 
+interface Question {
+  id: string
+  questionText: string
+  type: 'select' | 'checkbox' | 'text' | 'date' | 'radio'
+  options: string[]
+  step: number
+  required: boolean
+  order: number
+  createdAt?: Date
+  additionalInputLabel?: string
+}
+
 interface TravelFormData {
   name: string
   nationality: string
@@ -37,13 +49,15 @@ interface TravelFormData {
 
 interface FormWithId extends TravelFormData {
   id: string
+  answers?: Record<string, any>
 }
 
 const PAGE_SIZE = 10
 
 const GetForms = () => {
   const [forms, setForms] = useState<FormWithId[]>([])
-  const [lastDoc, setLastDoc] = useState<any>(null)
+  const [questions, setQuestions] = useState<Question[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -52,6 +66,28 @@ const GetForms = () => {
   const [filterName, setFilterName] = useState('')
   const [showEmailModal, setShowEmailModal] = useState(false)
   const [selectedEmail, setSelectedEmail] = useState<{email: string, name: string} | null>(null)
+
+  const fetchQuestions = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'travelquestions'))
+      const questionsData: Question[] = []
+      querySnapshot.forEach((doc) => {
+        questionsData.push({
+          id: doc.id,
+          ...doc.data(),
+          createdAt: doc.data().createdAt?.toDate(),
+        } as Question)
+      })
+      setQuestions(questionsData.sort((a, b) => a.step - b.step || a.order - b.order))
+    } catch (error) {
+      console.error('Soru yükleme hatası:', error)
+    }
+  }
+
+  const getQuestionText = (questionId: string): string => {
+    const question = questions.find(q => q.id === questionId)
+    return question ? question.questionText : questionId
+  }
 
   const deleteMedicalForm = async (id: string) => {
     await deleteDoc(doc(db, 'travelforms', id))
@@ -72,20 +108,17 @@ const GetForms = () => {
     setTotal(snap.data().count)
   }
 
-  const fetchForms = useCallback(async (loadMore = false) => {
+  const fetchForms = useCallback(async () => {
     const q = query(
       collection(db, 'travelforms'),
-      orderBy('createdAt', 'desc'),
-      ...(loadMore && lastDoc ? [startAfter(lastDoc)] : []),
-      limit(PAGE_SIZE)
+      orderBy('createdAt', 'desc')
     )
 
     const snap = await getDocs(q)
     const list = snap.docs.map(d => ({ id: d.id, ...d.data() })) as FormWithId[]
 
-    setLastDoc(snap.docs[snap.docs.length - 1])
-    setForms(loadMore ? [...forms, ...list] : list)
-  }, [lastDoc])
+    setForms(list)
+  }, [])
 
 const hasFetched = useRef(false)
 
@@ -93,9 +126,10 @@ useEffect(() => {
   if (hasFetched.current) return
   hasFetched.current = true
 
+  fetchQuestions()
   fetchForms()
   fetchCount()
-}, [fetchForms])
+}, [])
 
 
   return (
@@ -152,155 +186,170 @@ useEffect(() => {
             />
           </div>
           <div className={styles.gfStatBox}>
-            <p className={styles.gfStatLabel}>Toplam Kayıt: <span className={styles.gfStatValue} style={{ color: '#E8604C' }}>{total}</span></p>
+            <p className={styles.gfStatLabel}>Toplam Kayıt: <span className={styles.gfStatValue} style={{ color: '#d7b76e' }}>{total}</span></p>
           </div>
         </div>
 
         {forms.length === 0 ? (
           <div className={styles.gfEmpty}>Henüz başvuru yok</div>
         ) : (
-          forms
-            .filter(item =>
-              item.name.toLowerCase().includes(filterName.toLowerCase())
-            )
-            .map((item, index) => (
-              <div key={item.id} className={styles.gfCard}>
-                {/* KAPALI HAL SATIR */}
-                <div className={styles.gfCardRow}>
-                  <div className={styles.gfRowNumber} style={{ color: '#E8604C', background: '#FBE9E3' }}>{index + 1}</div>
-                  <div className={styles.gfRowDate}>
-                    {item.createdAt?.toDate
-                      ? item.createdAt.toDate().toLocaleDateString('tr-TR')
-                      : '-'}
-                  </div>
-                  <div className={styles.gfRowName}>{item.name}</div>
+          <>
+            {(() => {
+              const totalPages = Math.ceil(total / PAGE_SIZE)
+              const startIndex = (currentPage - 1) * PAGE_SIZE
+              const endIndex = startIndex + PAGE_SIZE
+              const paginatedForms = forms.slice(startIndex, endIndex)
 
-                  <div className={styles.gfRowActions}>
-                    <button
-                      className={styles.gfIconBtn}
-                      title="Sil"
-                      onClick={() =>
-                        openDeleteModal(item.id, item.name)
-                      }
-                    >
-                      <i className="fas fa-trash"></i>
-                    </button>
+              return (
+                <>
+                  {paginatedForms
+                    .filter(item => {
+                      const nameData = item.answers?.['3Ep6SK3ytFKskW6XacTN'] || item.name || ''
+                      return String(nameData).toLowerCase().includes(filterName.toLowerCase())
+                    })
+                    .map((item, index) => {
+                      const nameData = item.answers?.['3Ep6SK3ytFKskW6XacTN'] || item.name || 'İsim Bilinmiyor'
+                      const locationData = item.answers?.['2PbarmXMOjCuAQNFLpbA'] || item.destination || 'Yer Bilinmiyor'
+                      
+                      const email = item.email || ''
 
-                    <button
-                      className={styles.gfIconBtn}
-                      title="Cevapla"
-                      onClick={() => {
-                        setSelectedEmail({email: item.email, name: item.name})
-                        setShowEmailModal(true)
-                      }}
-                    >
-                      <i className="fas fa-envelope"></i>
-                    </button>
-
-                    <button
-                      className={styles.gfIconBtn}
-                      title="Detay"
-                      onClick={() =>
-                        setExpandedId(expandedId === item.id ? null : item.id)
-                      }
-                    >
-                      <i
-                        className={`fas fa-chevron-${
-                          expandedId === item.id ? 'up' : 'down'
-                        }`}
-                      ></i>
-                    </button>
-                  </div>
-                </div>
-
-                {/* AÇIK HAL DETAY */}
-                {expandedId === item.id && (
-                  <div className={styles.gfCardContent}>
-                    <div className={styles.gfSection}>
-                      <h3>Kişisel Bilgiler</h3>
-                      <div className={styles.gfFields}>
-                        <div className={styles.gfField}>
-                          <label>Ad Soyad</label>
-                          <div>{item.name}</div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>E-posta</label>
-                          <div>{item.email}</div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>Telefon</label>
-                          <div>{item.phone}</div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>Uyruk</label>
-                          <div>{item.nationality}</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className={styles.gfSection}>
-                      <h3>Seyahat Bilgileri</h3>
-                      <div className={styles.gfFields}>
-                        <div className={styles.gfField}>
-                          <label>Hedef Yer</label>
-                          <div>{item.destination}</div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>Seyahat Tarihi</label>
-                          <div>{item.date || '-'}</div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>Konaklama Süresi</label>
-                          <div>{item.duration || '-'}</div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>Kişi Sayısı</label>
-                          <div>{item.guests || '-'}</div>
-                        </div>
-                        <div className={styles.gfField}>
-                          <label>Havalimanı Transferi</label>
-                          <div>{item.transfer || '-'}</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {item.requests && (
-                      <div className={styles.gfSection}>
-                        <h3>Özel Talepler</h3>
-                        <div className={styles.gfFields}>
-                          <div className={styles.gfField}>
-                            <label>Talep</label>
-                            <div style={{ whiteSpace: 'pre-line' }}>
-                              {item.requests}
+                      return (
+                        <>
+                          {index === 0 && (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '8px 16px', marginBottom: '16px', backgroundColor: '#fafafa', borderRadius: '6px' }}>
+                              <div style={{ flex: '0 0 50px', fontSize: '11px', color: '#999', fontWeight: '600', textTransform: 'uppercase' }}>
+                                Sıra
+                              </div>
+                              <div style={{ flex: '0 0 100px', fontSize: '11px', color: '#999', fontWeight: '600', textTransform: 'uppercase' }}>
+                                Tarih
+                              </div>
+                              <div style={{ flex: '1', fontSize: '11px', color: '#999', fontWeight: '600', textTransform: 'uppercase' }}>
+                                Ad
+                              </div>
+                              <div style={{ flex: '1.7', fontSize: '11px', color: '#999', fontWeight: '600', textTransform: 'uppercase' }}>
+                                Yer
+                              </div>
+                           
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                          )}
+                          <div key={item.id} className={styles.gfCard}>
+                            {/* KAPALI HAL SATIR */}
+                            <div className={styles.gfCardRow}>
+                              <div className={styles.gfRowNumber} style={{ color: '#d7b76e', background: '#f5edde' }}>{startIndex + index + 1}</div>
+                              <div className={styles.gfRowDate}>
+                                {item.createdAt?.toDate
+                                  ? item.createdAt.toDate().toLocaleDateString('tr-TR')
+                                  : '-'}
+                              </div>
+                              <div className={styles.gfRowName}>{nameData}</div>
 
-                    {item.contact && (
-                      <div className={styles.gfSection}>
-                        <h3>İletişim Tercihi</h3>
-                        <div className={styles.gfFields}>
-                          <div className={styles.gfField}>
-                            <label>Tercih</label>
-                            <div>{item.contact}</div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            ))
-        )}
+                              <div style={{ flex: '1.2', fontSize: '14px', color: '#000', maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                {locationData}
+                              </div>
 
-        {forms.length < total && (
-          <div className={styles.gfPagination}>
-            <button onClick={() => fetchForms(true)}>
-              Daha Fazla Yükle ({forms.length}/{total})
-            </button>
-          </div>
+                              <div className={styles.gfRowActions}>
+                                <button
+                                  className={styles.gfIconBtn}
+                                  title="Sil"
+                                  onClick={() =>
+                                    openDeleteModal(item.id, nameData)
+                                  }
+                                >
+                                  <i className="fas fa-trash"></i>
+                                </button>
+
+                                <button
+                                  className={styles.gfIconBtn}
+                                  title="Cevapla"
+                                  onClick={() => {
+                                    setSelectedEmail({email: email, name: nameData})
+                                    setShowEmailModal(true)
+                                  }}
+                                >
+                                  <i className="fas fa-envelope"></i>
+                                </button>
+
+                                <button
+                                  className={styles.gfIconBtn}
+                                  title="Detay"
+                                  onClick={() =>
+                                    setExpandedId(expandedId === item.id ? null : item.id)
+                                  }
+                                >
+                                  <i
+                                    className={`fas fa-chevron-${
+                                      expandedId === item.id ? 'up' : 'down'
+                                    }`}
+                                  ></i>
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* AÇIK HAL DETAY */}
+                            {expandedId === item.id && (
+                              <div className={styles.gfCardContent}>
+                                <div className={styles.gfSection}>
+                                  <h3>Başvuru Detayları</h3>
+                                  <div className={styles.gfFields}>
+                                    {questions.map(question => {
+                                      const answer = item.answers?.[question.id]
+                                      const additionalAnswer = item.answers?.[`${question.id}_additional`]
+                                      
+                                      if (!answer) return null
+
+                                      return (
+                                        <div key={question.id} className={styles.gfField}>
+                                          <label>{question.questionText}</label>
+                                          <div>
+                                            {Array.isArray(answer) ? answer.join(', ') : String(answer)}
+                                            {additionalAnswer && (
+                                              <div style={{ marginTop: '8px', fontSize: '12px', color: '#666', fontStyle: 'italic' }}>
+                                                ({question.additionalInputLabel}: {additionalAnswer})
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      )
+                                    })}
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </>
+                      )
+                    })}
+
+                  {totalPages > 1 && (
+                    <div className={styles.gfPagination} style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '24px', flexWrap: 'wrap' }}>
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                        <button
+                          key={page}
+                          onClick={() => {
+                            setCurrentPage(page)
+                            window.scrollTo({ top: 0, behavior: 'smooth' })
+                          }}
+                          style={{
+                            padding: '8px 12px',
+                            border: page === currentPage ? '2px solid #d7b76e' : '1px solid #ddd',
+                            backgroundColor: page === currentPage ? '#fef3e2' : 'white',
+                            color: page === currentPage ? '#d7b76e' : '#000',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontWeight: page === currentPage ? 'bold' : 'normal',
+                            fontSize: '14px',
+                            transition: 'all 0.3s ease',
+                          }}
+                        >
+                          {page}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </>
+              )
+            })()}
+          </>
         )}
       </div>
 

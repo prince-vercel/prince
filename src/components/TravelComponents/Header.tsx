@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import logo from '@/assets/logo/logo-black.png'
+import logo from '@/assets/logo/logo-goldd.png'
 import closeIcon from '@/assets/img/icons/close.svg'
 import { usePathname } from 'next/navigation'
 
@@ -50,12 +50,12 @@ export default function Header() {
 
                 <nav className="cs_nav">
                   <ul className="cs_nav_list">
-                    <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel' ? '#E8604C' : 'inherit' }}>Anasayfa</Link></li>
-                    <li><Link href="/travel/all" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/all' ? '#E8604C' : 'inherit' }}>Seyahatler</Link></li>
-                    <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/form' ? '#E8604C' : 'inherit' }}>Başvuru</Link></li>
-                    <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/blog' ? '#E8604C' : 'inherit' }}>Blog</Link></li>
-                    <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/about' ? '#E8604C' : 'inherit' }}>Hakkımızda</Link></li>
-                    <li><Link href="/travel/contact" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/contact' ? '#E8604C' : 'inherit' }}>İletişim</Link></li>
+                    <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel' ? '#d7b76e' : 'inherit' }}>Anasayfa</Link></li>
+                    <li><Link href="/travel/all" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/all' ? '#d7b76e' : 'inherit' }}>Seyahatler</Link></li>
+                    <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/form' ? '#d7b76e' : 'inherit' }}>Rezervasyon</Link></li>
+                    <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/blog' ? '#d7b76e' : 'inherit' }}>Blog</Link></li>
+                    <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/about' ? '#d7b76e' : 'inherit' }}>Hakkımızda</Link></li>
+                    <li><Link href="/travel/contact" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/contact' ? '#d7b76e' : 'inherit' }}>İletişim</Link></li>
                   </ul>
                 </nav>
               </div>
@@ -63,13 +63,13 @@ export default function Header() {
               {/* RIGHT */}
               <div className="cs_social_links cs_social_desktop">
   <a href="#">
-    <i className="fa-brands fa-facebook-f" style={{ color: '#E8604C'  }}></i>
+    <i className="fa-brands fa-facebook-f" style={{ color: '#d7b76e'  }}></i>
   </a>
   <a href="#">
-    <i className="fa-brands fa-youtube" style={{ color: '#E8604C'  }}></i>
+    <i className="fa-brands fa-instagram" style={{ color: '#d7b76e'  }}></i>
   </a>
   <a href="#">
-    <i className="fa-brands fa-instagram" style={{ color: '#E8604C'  }}></i>
+    <i className="fa-brands fa-whatsapp" style={{ color: '#d7b76e'  }}></i>
   </a>
 </div>
               <div className="cs_main_header_right">
@@ -106,7 +106,7 @@ export default function Header() {
           <ul className="cs_mobile_menu">
             <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Anasayfa</Link></li>
             <li><Link href="/travel/all" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Seyahatler</Link></li>
-            <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Başvuru</Link></li>
+            <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Rezervasyon</Link></li>
             <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Blog</Link></li>
             <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Hakkımızda</Link></li>
             <li><Link href="/travel/contact" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>İletişim</Link></li>

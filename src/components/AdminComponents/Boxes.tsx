@@ -8,7 +8,7 @@ import { MdLocalHospital, MdFlightTakeoff, MdVerifiedUser } from 'react-icons/md
 
 const boxes = [
   {
-    title: 'Medikal',
+    title: 'Prince Medikal Estetik & Sağlık Hizmetleri',
     desc: 'Sağlık hizmetleri, kuruluşlar ve başvurular',
     href: '/admin/medical',
     color: '#307BC4',
@@ -16,15 +16,15 @@ const boxes = [
     icon: <MdLocalHospital size={48} />,
   },
   {
-    title: 'Seyahat',
-    desc: 'Tur paketleri, blog ve müşteri başvuruları',
+    title: 'Prince Turizm ve Travel',
+    desc: 'Prince Vize Danışmanlığı',
     href: '/admin/travel',
-    color: '#E8604C',
+    color: '#d7b76e',
     lightColor: '#F19680',
     icon: <MdFlightTakeoff size={48} />,
   },
   {
-    title: 'Vize',
+    title: 'Vize Danışmanlığı',
     desc: 'Vize başvuruları ve belge yönetimi',
     href: '/admin/visa',
     color: '#3A9D7A',

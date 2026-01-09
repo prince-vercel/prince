@@ -16,11 +16,11 @@ const TravelSidebar = () => {
 
   return (
     <>
-      <button className={styles.hamburger} style={{ color: '#E8604C' }} onClick={() => setOpen(true)}>
+      <button className={styles.hamburger} style={{ color: '#d7b76e' }} onClick={() => setOpen(true)}>
         ☰
       </button>
 
-<aside className={`${styles.sidebar} ${open ? styles.open : ''}`} style={{ backgroundColor: '#E8604C' }}>          <div className={styles.logoArea}>
+<aside className={`${styles.sidebar} ${open ? styles.open : ''}`} style={{ backgroundColor: '#d7b76e' }}>          <div className={styles.logoArea}>
           <Image src={logo} alt="Logo" width={140} height={40} />
         </div>
         <h1 className={styles.sidebarTitle}>Prince Seyahat</h1>
@@ -31,6 +31,11 @@ const TravelSidebar = () => {
           <Link href="/admin/travel/contents" className={`${styles.link2} ${isActive('/admin/travel/contents') ? styles.active : ''}`}>İçerik Yönetimi</Link>
           <Link href="/admin/travel/contactforms" className={`${styles.link2} ${isActive('/admin/travel/contactforms') ? styles.active : ''}`}>İletişim</Link>
         </nav>
+
+        <div className={styles.bottomLinks}>
+          <Link href="/admin/visa" className={styles.borderBox}>Vize</Link>
+          <Link href="/admin/medical" className={styles.borderBox}>Medikal</Link>
+        </div>
 
         <button className={styles.close} onClick={() => setOpen(false)}>
           ✕

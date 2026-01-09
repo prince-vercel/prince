@@ -480,7 +480,6 @@
   align-items: center;
   margin-bottom: 10px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #e0e0e0;
 }
 
 .gfTitle {
@@ -626,7 +625,7 @@
   background: #fff;
   padding: 40px;
   text-align: center;
-  color: #888;
+  color: black;
 }
 
 .gfCardRow {
@@ -1065,7 +1064,7 @@
   border: 1px solid #ddd;
   border-radius: 6px;
   box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Gilroy', sans-serif;
   background: #fff;
   cursor: pointer;
 }
@@ -1383,12 +1382,12 @@
 
 .link2:hover {
   background-color: #ffffff;
-  color: #E8604C;
+  color: #d7b76e;
 }
 
 .link2.active {
   background-color: #ffffff;
-  color: #E8604C;
+  color: #d7b76e;
 }
 
 /* CONTACT FORMS STYLES */
@@ -1420,7 +1419,6 @@
   margin-top: 0;
   padding-top: 16px;
   padding-bottom: 16px;
-  border-bottom: 2px solid #eeeeee;
 }
 
 @media (max-width: 640px) {
@@ -1447,14 +1445,14 @@
   padding: 16px 20px;
   gap: 16px;
   border-bottom: 1px solid #f0f0f0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 @media (max-width: 768px) {
   .gfCardRow {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    padding: 12px 8px;
+    gap: 8px;
+    font-size: 12px;
   }
 }
 
@@ -1576,23 +1574,7 @@
   }
 }
 
-.gfPagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 24px;
-  padding: 16px 0;
-}
 
-.gfPagination button {
-  background: #307BC4;
-  color: #fff;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
 
 @media (max-width: 640px) {
   .gfPagination button {
@@ -1602,7 +1584,7 @@
 }
 
 .gfPagination button:hover {
-  background: #2563a0;
+  background: #fafafa;
   box-shadow: 0 4px 12px rgba(48, 123, 196, 0.3);
 }
 
@@ -1768,7 +1750,7 @@
 }
 
 .tourAddBtn {
-  background: #E8604C;
+  background: #d7b76e;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -1779,9 +1761,9 @@
 }
 
 .tourAddBtn:hover {
-  background: #d45437;
+  background: #b59450;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(232, 96, 76, 0.3);
+  box-shadow: 0 4px 12px rgba(181, 148, 80, 0.3);
 }
 
 .tourList {
@@ -1810,7 +1792,7 @@
 
 .tourCard:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-color: #E8604C;
+  border-color: #d7b76e;
 }
 
 .tourCardImage {
@@ -1874,8 +1856,8 @@
 }
 
 .tourEditBtn {
-  background: #e8f4ff;
-  color: #307BC4;
+  background: #d7b76e;
+  color: #fff;
 }
 
 .tourEditBtn:hover {
@@ -1883,8 +1865,9 @@
 }
 
 .tourDeleteBtn {
-  background: #fee2e2;
+  background: white;
   color: #dc2626;
+  border: 1px solid #ddd;
 }
 
 .tourDeleteBtn:hover {
@@ -1970,7 +1953,7 @@
 .tourFormGroup input:focus,
 .tourFormGroup textarea:focus {
   outline: none;
-  border-color: #E8604C;
+  border-color: #d7b76e;
   box-shadow: 0 0 0 3px rgba(232, 96, 76, 0.1);
 }
 
@@ -2002,7 +1985,7 @@
 }
 
 .tourFaqAddBtn {
-  background: #E8604C;
+  background: #d7b76e;
   color: #fff;
   border: none;
   padding: 8px 14px;
@@ -2014,7 +1997,7 @@
 }
 
 .tourFaqAddBtn:hover {
-  background: #d45437;
+  background: #b59450;
 }
 
 .tourFaqItem {
@@ -2039,7 +2022,7 @@
 
 .tourFaqQuestion:focus {
   outline: none;
-  border-color: #E8604C;
+  border-color: #d7b76e;
   box-shadow: 0 0 0 3px rgba(232, 96, 76, 0.1);
 }
 
@@ -2056,7 +2039,7 @@
 
 .tourFaqAnswer:focus {
   outline: none;
-  border-color: #E8604C;
+  border-color: #d7b76e;
   box-shadow: 0 0 0 3px rgba(232, 96, 76, 0.1);
 }
 
@@ -2107,7 +2090,7 @@
 }
 
 .tourBtnSave {
-  background: #E8604C;
+  background: #d7b76e;
   color: #fff;
 }
 
@@ -2140,7 +2123,7 @@
 }
 
 .tourPlanAddBtn {
-  background: #E8604C;
+  background: #d7b76e;
   color: #fff;
   border: none;
   padding: 8px 14px;
@@ -2152,7 +2135,7 @@
 }
 
 .tourPlanAddBtn:hover {
-  background: #d45437;
+  background: #b59450;
   transform: translateY(-2px);
 }
 
@@ -2196,7 +2179,7 @@
 
 .tourPlanDayInput input:focus {
   outline: none;
-  border-color: #E8604C;
+  border-color: #d7b76e;
   box-shadow: 0 0 0 3px rgba(232, 96, 76, 0.1);
 }
 
@@ -2229,7 +2212,7 @@
 
 .tourPlanContent:focus {
   outline: none;
-  border-color: #E8604C;
+  border-color: #d7b76e;
   box-shadow: 0 0 0 3px rgba(232, 96, 76, 0.1);
 }
 
@@ -2245,7 +2228,7 @@
 }
 
 .tourImageUploadBox:hover {
-  border-color: #E8604C;
+  border-color: #d7b76e;
   background: #fef6f5;
 }
 
@@ -2258,7 +2241,7 @@
 }
 
 .tourImageUploadLabel svg {
-  color: #E8604C;
+  color: #d7b76e;
 }
 
 .tourImageUploadLabel p {
@@ -2396,5 +2379,34 @@
   color: #999;
   font-size: 16px;
   padding: 40px 20px;
+}
+
+/* Bottom links for sidebar */
+.bottomLinks {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin-top: auto;
+  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.borderBox {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px 16px;
+  border: 2px solid #ffffff;
+  border-radius: 6px;
+  text-align: center;
+  transition: all 0.2s ease;
+  display: block;
+}
+
+.borderBox:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 

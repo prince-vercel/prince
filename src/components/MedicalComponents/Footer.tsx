@@ -16,8 +16,9 @@ export default function Footer() {
                   </p>
 
                   <ul className="cs_contact_widget">
-                    <li>Kağıthane / İstanbul</li>
+                    <li>Dap Vadisi Z Ofis, Merkez, Seçkin Sk. Z ofis, Kat 2, Daire 229, 34406 Kağıthane/İstanbul</li>
                     <li>+90 212 000 00 00</li>
+                    <li>info@princetourismagency.com</li>
                     <li>medical@princetourismagency.com</li>
                   </ul>
                 </div>
@@ -35,9 +36,9 @@ export default function Footer() {
 
               <div className="col-lg-2">
                 <ul className="cs_menu_widget cs_mp0">
-                  <li><Link href="/medical/about#faqs">Sık Sorulan Sorular</Link></li>
-                  <li><Link href="#">Gizlilik Politikası</Link></li>
-                  <li><Link href="#">KVKK & Aydınlatma</Link></li>
+                  <li><Link href="/medical/faq">Sık Sorulan Sorular</Link></li>
+                  <li><Link href="/medical/privacy">Gizlilik Politikası</Link></li>
+                  <li><Link href="/medical/kvkk">KVKK & Aydınlatma</Link></li>
                 </ul>
               </div>
 
@@ -74,8 +75,9 @@ export default function Footer() {
             <div className="cs_footer_bottom_in">
               <div className="cs_social_links">
                 <Link href="#"><i className="fa-brands fa-facebook-f"></i></Link>
-                <Link href="#"><i className="fa-brands fa-youtube"></i></Link>
                 <Link href="#"><i className="fa-brands fa-instagram"></i></Link>
+                 <Link href="#"><i className="fa-brands fa-whatsapp"></i></Link>
+
               </div>
 
               <div className="cs_copyright">

@@ -32,7 +32,10 @@ const MedicalSidebar = () => {
     <Link href="/admin/medical/contents" className={`${styles.link} ${isActive('/admin/medical/contents') ? styles.active : ''}`}>İçerik Yönetimi</Link>
     <Link href="/admin/medical/contactforms" className={`${styles.link} ${isActive('/admin/medical/contactforms') ? styles.active : ''}`}>İletişim</Link>
   </nav>
-
+      <div className={styles.bottomLinks}>
+          <Link href="/admin/visa" className={styles.borderBox}>Vize</Link>
+          <Link href="/admin/travel" className={styles.borderBox}>Turizm</Link>
+        </div>
   <button className={styles.close} onClick={() => setOpen(false)}>
     ✕
   </button>
