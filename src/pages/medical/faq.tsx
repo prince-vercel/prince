@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
-import { FAQ } from '@/src/types/medical'
+import { FAQ } from '@/src/types/types'
 
 
 

@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
-import { Blog } from '@/src/types/medical'
+import { Blog } from '@/src/types/types'
 
 
 export default function BlogDetailPage() {

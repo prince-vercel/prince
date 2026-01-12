@@ -17,7 +17,7 @@ const boxes = [
   },
   {
     title: 'Prince Turizm ve Travel',
-    desc: 'Prince Vize Danışmanlığı',
+    desc: 'Prince Seyahat turizm yönetimi',
     href: '/admin/travel',
     color: '#d7b76e',
     lightColor: '#F19680',
@@ -27,8 +27,8 @@ const boxes = [
     title: 'Vize Danışmanlığı',
     desc: 'Vize başvuruları ve belge yönetimi',
     href: '/admin/visa',
-    color: '#3A9D7A',
-    lightColor: '#5DB896',
+    color: '#cc0000',
+    lightColor: '#f19680',
     icon: <MdVerifiedUser size={48} />,
   },
 ]
@@ -36,16 +36,7 @@ const boxes = [
 export default function Boxes() {
   return (
     <div className={styles.adminPageWrapper}>
-      <h1 className={styles.adminTitle}>
-        <Image
-          src={logoBlack}
-          alt="Prince Logo"
-          width={110}
-          height={110}
-          className={styles.logo}
-        />
-        Prince Admin Paneli
-      </h1>
+    
 
       <div className={styles.adminBoxGrid}>
         {boxes.map((box) => (

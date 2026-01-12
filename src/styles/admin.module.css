@@ -1,3 +1,135 @@
+/* Login Page Styles */
+.loginWrapper {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 32px 24px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.95);
+  position: relative;
+  border: 1.5px solid #e3e8f0;
+}
+
+.loginHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.loginIconBox {
+  background: linear-gradient(135deg, #307BC4 60%, #5BA3D0 100%);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px #b6d0ee44;
+}
+
+.loginTitle {
+  text-align: center;
+  margin: 0;
+  font-weight: 700;
+  font-size: 26px;
+  color: #307BC4;
+  letter-spacing: 1px;
+}
+
+.loginField {
+  margin-bottom: 18px;
+}
+
+.loginLabel {
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.loginInputIconWrapper {
+  position: relative;
+}
+
+.loginInputIcon {
+  position: absolute;
+  left: 10px;
+  top: 12px;
+  color: #b6c2d6;
+}
+
+.loginInput {
+  width: 100%;
+  padding: 10px 10px 10px 36px;
+  border: 1.5px solid #e3e8f0;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.2s;
+  margin-top: 2px;
+  background: #f8fafc;
+  box-sizing: border-box;
+}
+
+.loginInput:focus {
+  border-color: #307BC4;
+}
+
+.loginError {
+  color: #e53935;
+  background: #fff0f0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 12px 0;
+  background: linear-gradient(90deg, #307BC4 60%, #5BA3D0 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 8px #b6d0ee33;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 6px;
+}
+
+.loginButton:hover:not(:disabled) {
+  background: linear-gradient(90deg, #2566a6 60%, #307BC4 100%);
+}
+
+.loginButtonDisabled,
+.loginButton:disabled {
+  background: #b6c2d6 !important;
+  cursor: not-allowed;
+}
+/* Benzersiz input stili */
+.adminInputCustom {
+  box-shadow: none !important;
+  padding: 7px 12px !important;
+  border: 1.5px solid #dfdfdf !important;
+  border-radius: 6px !important;
+  outline: none !important;
+  background: #fff !important;
+  font-size: 15px !important;
+  color: #222 !important;
+  transition: border-color 0.2s;
+}
+
+.adminInputCustom:focus {
+  border-color: #cecdcd !important;
+    box-shadow: none !important;
+
+}
 .adminPageWrapper {
   min-height: 100vh;
   width: 100%;
@@ -2344,12 +2476,10 @@
   border-color: #307BC4;
   background: #307BC4;
   color: #fff;
-  box-shadow: 0 8px 20px rgba(48, 123, 196, 0.35);
 }
 
 .contentsPageButton.contentsPageButtonActive:hover {
   background: #2563a0;
-  box-shadow: 0 8px 24px rgba(48, 123, 196, 0.45);
   
 }
 
@@ -2410,3 +2540,90 @@
   color: white;
 }
 
+.adminChatbotBox {
+  margin: 32px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 32px 24px;
+  font-family: inherit;
+}
+.adminChatbotTitle {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #205a8c;
+}
+.adminChatbotActions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.adminChatbotBtn {
+  background: #307bc4;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.adminChatbotBtn:hover {
+  background: #205a8c;
+}
+.adminChatbotError {
+  color: #c0392b;
+  margin-bottom: 10px;
+}
+.adminChatbotList {
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  padding: 16px;
+  background: #f9f9fb;
+  border-radius: 8px;
+}
+.adminChatbotItem {
+  margin-bottom: 18px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+.adminChatbotItem:last-child {
+  border-bottom: none;
+}
+.adminChatbotId {
+  font-weight: 600;
+  color: #307bc4;
+}
+.adminChatbotText {
+  margin-left: 6px;
+}
+.adminChatbotOptions {
+  margin-top: 6px;
+  margin-left: 12px;
+  font-size: 14px;
+  color: #274760;
+}
+
+
+/* vize */
+
+.link3 {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 14px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.link3:hover {
+  background-color: #ffffff;
+  color: #cc0000;
+}
+
+.link3.active {
+  background-color: #ffffff;
+  color: #cc0000;
+}

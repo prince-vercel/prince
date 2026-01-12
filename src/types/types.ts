@@ -170,3 +170,13 @@ export interface Result {
   image: string
   category: string
 }
+export interface ChatbotOption {
+  label: string;
+  next: string;
+}
+
+export interface ChatbotStep {
+  id: string;
+  text: string;
+  options?: ChatbotOption[];
+}

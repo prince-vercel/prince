@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { collection, getDocs, query, where, Timestamp } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
-import { ChartDataItem, DashboardStats, FilterPeriod } from '@/src/types/medical'
+import { ChartDataItem, DashboardStats, FilterPeriod } from '@/src/types/types'
 
 
 

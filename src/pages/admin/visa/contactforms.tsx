@@ -17,7 +17,7 @@ import {
 import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
 import SendEmail from '@/src/components/SendEmail'
-import { AdminTravelLayout } from '@/src/components/AdminComponents/travel/AdminTravelLayout'
+import { AdminVisaLayout } from '@/src/components/AdminComponents/visa/AdminVisaLayout'
 
 interface ContactWithId {
   id: string
@@ -40,13 +40,13 @@ const ContactForms = () => {
   const [filterName, setFilterName] = useState('')
 
   const fetchCount = async () => {
-    const snap = await getCountFromServer(collection(db, 'travelcontact'))
+    const snap = await getCountFromServer(collection(db, 'visacontact'))
     setTotal(snap.data().count)
   }
 
  const fetchForms = useCallback(async () => {
   const q = query(
-    collection(db, 'travelcontact'),
+    collection(db, 'visacontact'),
     orderBy('createdAt', 'desc')
   )
 
@@ -69,7 +69,7 @@ useEffect(() => {
 
 
   return (
-    <AdminTravelLayout>
+    <AdminVisaLayout>
       <div className={styles.gfContainer}>
         <h1 className={styles.gfTitle}>İletişim Mesajları</h1>
   <div className={styles.filterWrapper}>
@@ -89,7 +89,7 @@ useEffect(() => {
             />
           </div>
           <div className={styles.gfStatBox}>
-            <p className={styles.gfStatLabel} style={{fontSize:'16px',}}>Toplam Kayıt: <span className={styles.gfStatValue} style={{ color: '#d7b76e' }}>{total}</span></p>
+            <p className={styles.gfStatLabel} style={{fontSize:'16px',}}>Toplam Kayıt: <span className={styles.gfStatValue} style={{ color: '#cc0000' }}>{total}</span></p>
           </div>
         </div>
 
@@ -108,7 +108,7 @@ useEffect(() => {
                 .map((item, index) => (
                 <div key={item.id} className={styles.gfCard}>
                   <div className={styles.gfCardRow}>
-                    <div className={styles.gfRowNumber} style={{fontSize:'16px',color: '#d7b76e', background: '#f5edde'}}>{startIndex + index + 1}</div>
+                    <div className={styles.gfRowNumber} style={{fontSize:'16px',color: '#cc0000', background: '#f5e1de'}}>{startIndex + index + 1}</div>
                     <div className={styles.gfRowDate} style={{fontSize:'15px'}}>
                       {item.createdAt?.toDate?.().toLocaleDateString('tr-TR')}
                     </div>
@@ -129,7 +129,7 @@ useEffect(() => {
 
                       <button
                         className={styles.gfIconBtn}
-                        onClick={() => deleteDoc(doc(db, 'travelcontact', item.id))}
+                        onClick={() => deleteDoc(doc(db, 'visacontact', item.id))}
                         title="Sil"
                       >
                         <i className="fas fa-trash"></i>
@@ -177,9 +177,9 @@ useEffect(() => {
                       }}
                       style={{
                         padding: '8px 12px',
-                        border: page === currentPage ? '2px solid #d7b76e' : '1px solid #ddd',
+                        border: page === currentPage ? '2px solid #cc0000' : '1px solid #ddd',
                         backgroundColor: page === currentPage ? '#fef3e2' : 'white',
-                        color: page === currentPage ? '#d7b76e' : '#000',
+                        color: page === currentPage ? '#cc0000' : '#000',
                         borderRadius: '4px',
                         cursor: 'pointer',
                         fontWeight: page === currentPage ? 'bold' : 'normal',
@@ -203,7 +203,7 @@ useEffect(() => {
         recipientEmail={selectedEmail?.email || ''}
         recipientName={selectedEmail?.name || ''}
       />
-    </AdminTravelLayout>
+    </AdminVisaLayout>
   )
 }
 

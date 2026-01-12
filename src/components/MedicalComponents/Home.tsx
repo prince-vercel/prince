@@ -7,24 +7,6 @@ import Link from 'next/link'
 import heroImg from '@/assets/img/home_1/hero_img.png'
 import heroBg from '@/assets/img/home_1/hero_bg.jpeg'
 
-import compassion from '@/assets/img/home_1/compassion.svg'
-import excellence from '@/assets/img/home_1/excellence.svg'
-import integrity from '@/assets/img/home_1/integrity.svg'
-import respect from '@/assets/img/home_1/respect.svg'
-import teamwork from '@/assets/img/home_1/teamwork.svg'
-
-import post1 from '@/assets/img/home_1/post_1.jpeg'
-import post2 from '@/assets/img/home_1/post_2.jpeg'
-import post3 from '@/assets/img/home_1/post_3.jpeg'
-
-import brand1 from '@/assets/img/brand_1.png'
-import brand2 from '@/assets/img/brand_2.png'
-import brand3 from '@/assets/img/brand_3.png'
-import brand4 from '@/assets/img/brand_4.png'
-import brand5 from '@/assets/img/brand_5.png'
-import brand6 from '@/assets/img/brand_6.png'
-import brand7 from '@/assets/img/brand_7.png'
-import brand8 from '@/assets/img/brand_8.png'
 import dep1 from '@/assets/img/home_1/tooth.png'
 import dep2 from '@/assets/img/home_1/department_icon_3.svg'
 import dep3 from '@/assets/img/home_1/breast (1).png'
@@ -45,7 +27,12 @@ import { useEffect, useState } from 'react'
 import { MdAssignment, MdMedicalServices, MdCheckCircle } from 'react-icons/md'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
-import { Blog, Result } from '@/src/types/medical'
+
+import { Blog, Result } from '@/src/types/types'
+import dynamic from 'next/dynamic'
+import { useEffect as useEffectReact, useState as useStateReact } from 'react'
+
+const Chatbot = dynamic(() => import('./Chatbot'), { ssr: false })
 
 
 export default function HomePage() {
@@ -56,8 +43,24 @@ export default function HomePage() {
     const [loadingResults, setLoadingResults] = useState(true)
     const [brands, setBrands] = useState<any[]>([])
     const [loadingBrands, setLoadingBrands] = useState(true)
+
     const [partners, setPartners] = useState<any[]>([])
     const [loadingPartners, setLoadingPartners] = useState(true)
+
+    // Chatbot state
+    const [chatbotQuestions, setChatbotQuestions] = useState<any[]>([])
+    const [showChatbot, setShowChatbot] = useState(false)
+    useEffectReact(() => {
+      // Firestore'dan chatbotQuestions koleksiyonunu çek
+      import('firebase/firestore').then(({ collection, getDocs }) => {
+        getDocs(collection(db, 'medicalchatbotQuestions'))
+          .then(snapshot => {
+            const data = snapshot.docs.map(doc => doc.data())
+            setChatbotQuestions(data)
+          })
+          .catch(() => setChatbotQuestions([]))
+      })
+    }, [])
 
 
 
@@ -632,6 +635,64 @@ useEffect(() => {
       <span className="cs_scrollup">
         <i className="fa-solid fa-arrow-up" />
       </span>
+
+      {/* CHATBOT BUTTON & BOX */}
+      <style>{`
+        .chatbot-fab {
+          position: fixed;
+          bottom: 32px;
+          right: 32px;
+          z-index: 10000;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          background: #307bc4;
+          color: #fff;
+          border: none;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 32px;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .chatbot-fab:hover {
+          background: #205a8c;
+        }
+        .chatbot-close-btn {
+          position: absolute;
+          top: 8px;
+          right: 12px;
+          background: none;
+          border: none;
+          color: #888;
+          font-size: 22px;
+          cursor: pointer;
+        }
+      `}</style>
+      {chatbotQuestions.length > 0 && (
+        <>
+          {!showChatbot && (
+            <button className="chatbot-fab" onClick={() => setShowChatbot(true)} title="Sohbet Başlat">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 15.5C21 16.3284 20.3284 17 19.5 17H7.41421L4.70711 19.7071C4.07714 20.3371 3 19.8906 3 19.0001V5.5C3 4.67157 3.67157 4 4.5 4H19.5C20.3284 4 21 4.67157 21 5.5V15.5Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="#307bc4"/>
+                <circle cx="8" cy="10" r="1" fill="white"/>
+                <circle cx="12" cy="10" r="1" fill="white"/>
+                <circle cx="16" cy="10" r="1" fill="white"/>
+              </svg>
+            </button>
+          )}
+          {showChatbot && (
+            <div style={{ position: 'fixed', bottom: 32, right: 32, zIndex: 10001 }}>
+              <div style={{ position: 'relative' }}>
+                <button className="chatbot-close-btn" onClick={() => setShowChatbot(false)} title="Kapat">✕</button>
+                <Chatbot />
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </>
   )
 }

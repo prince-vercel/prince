@@ -8,7 +8,7 @@ import { storage } from '@/src/lib/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { MdAdd, MdDelete, MdSave, MdCloudUpload, MdEdit } from 'react-icons/md'
 import styles from '@/src/styles/admin.module.css'
-import { Hospital, Hotel } from '@/src/types/medical'
+import { Hospital, Hotel } from '@/src/types/types'
 
 
 const ContentOrganizations = () => {

@@ -11,7 +11,7 @@ import icon9 from '@/assets/img/departments/icon_9.svg'
 import icon10 from '@/assets/img/departments/icon_10.svg'
 import icon11 from '@/assets/img/departments/icon_11.svg'
 import icon12 from '@/assets/img/departments/icon_12.svg'
-import { TreatmentItem } from '@/src/types/medical'
+import { TreatmentItem } from '@/src/types/types'
 
 
 const slugToTurkishTitle = (slug: string) => {

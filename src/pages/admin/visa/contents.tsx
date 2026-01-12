@@ -21,24 +21,16 @@ import ContentImages from '@/src/components/AdminComponents/travel/ContentImages
 import ContentPartner from '@/src/components/AdminComponents/travel/ContentPartner'
 import FormAsks from '@/src/components/AdminComponents/travel/FormAsks'
 import ContentAdmin from '@/src/components/AdminComponents/travel/ContentChatBot'
+import { AdminVisaLayout } from '@/src/components/AdminComponents/visa/AdminVisaLayout'
 
 const ContentsPage = () => {
   const [activeTab, setActiveTab] = useState<
-    'tours' | 'reviews' | 'blog' | 'faq' | 'testimonials' | 'images' | 'partners' | 'questions' | 'chatbot' | null
+     'reviews' | 'blog' | 'faq' | 'testimonials' | 'partners' | 'questions' | 'chatbot' | null
   >(null)
   const [hoveredBox, setHoveredBox] = useState<string | null>(null)
 
   const contentBoxes = [
     {
-      id: 'tours',
-      title: 'Turlar',
-      icon: <MdAdd size={40} />
-    },
-    {
-      id: 'images',
-      title: 'Anasayfa Bannerları',
-      icon: <MdImage size={40} />
-    },{
       id: 'questions',
       title: 'Başvuru Soruları',
       icon: <MdQuestionAnswer size={40} />
@@ -73,29 +65,19 @@ const ContentsPage = () => {
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'tours':
-        return <ContentTours />
-      case 'images':
-        return <ContentImages />
       case 'testimonials':
-        return <ContentTestimonials />
       case 'blog':
-        return <ContentBlog/>
       case 'chatbot':
-        return <ContentAdmin/>
       case 'faq':
-        return <ContentFaq/>
       case 'partners':
-       return <ContentPartner/>
       case 'questions':
-        return <FormAsks />
       default:
         return null
     }
   }
 
   return (
-    <AdminTravelLayout>
+    <AdminVisaLayout>
       <div className={styles.gfContainer}>
       {/* HEADER */}
       <h1 className={styles.gfTitle}>
@@ -116,15 +98,15 @@ const ContentsPage = () => {
               onMouseLeave={() => setHoveredBox(null)}
               className={styles.contentsPageButton}
               style={{
-                background: isActive ? '#d7b76e' : '#fff',
-                border: isActive || hoveredBox === box.id ? '2px solid #d7b76e' : '2px solid #e5e7eb',
+                background: isActive ? '#cc0000' : '#fff',
+                border: isActive || hoveredBox === box.id ? '2px solid #cc0000' : '2px solid #e5e7eb',
                 color: isActive ? '#fff' : '#1f2937',
                 boxShadow: isActive
-                  ? '0 8px 20px rgba(215,183,110,0.3)'
-                  : hoveredBox === box.id ? '0 4px 12px rgba(215,183,110,0.15)' : '0 1px 3px rgba(0,0,0,0.05)'
+                  ? '0 8px 20px rgba(204,0,0,0.3)'
+                  : hoveredBox === box.id ? '0 4px 12px rgba(204,0,0,0.15)' : '0 1px 3px rgba(0,0,0,0.05)'
               }}
             >
-              <div className={styles.contentsPageButtonIcon} style={{ color: isActive ? '#fff' : '#d7b76e' }}>
+              <div className={styles.contentsPageButtonIcon} style={{ color: isActive ? '#fff' : '#cc0000' }}>
                 {React.cloneElement(box.icon, { size: 52 })}
               </div>
 
@@ -147,7 +129,7 @@ const ContentsPage = () => {
         )}
       </div>
       </div>
-    </AdminTravelLayout>
+    </AdminVisaLayout>
   )
 }
 

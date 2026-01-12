@@ -17,7 +17,7 @@ import avatar5 from '@/assets/img/home_4/avatar_5.png'
 
 import leftArrow from '@/assets/img/icons/left_arrow_blue.svg'
 import rightArrow from '@/assets/img/icons/right_arrow_blue.svg'
-import { Result } from '@/src/types/medical'
+import { Result } from '@/src/types/types'
 
 const GALLERY_PER_PAGE = 9
 

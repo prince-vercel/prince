@@ -95,17 +95,8 @@ export default function ContactPage() {
 
       {/*========== CONTACT US STYLE START ==========*/}
       <div className="lg:pt-30 pt-24 relative z-1">
-        <div className="absolute top-[7%] right-0 max-w-[14%] z-minus lg:inline-block hidden">
-          <img
-            src={tree.src}
-            alt="leaf"
-          />
-        </div>
-        <div className="absolute top-[5%] left-[1%] max-w-[9%] z-minus lg:inline-block hidden">
-       
-        </div>
-
-        <div className="container -top-5">
+  
+        <div className="container" style={{marginTop:-140}}>
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-base">
             <div className="shadow-custom-1 bg-white lg:py-8 py-7 px-base wow fadeInUp">
               <div className="flex">
@@ -139,7 +130,7 @@ export default function ContactPage() {
             </div>
 
             <div
-              className="shadow-custom-1 bg-white lg:py-8 py-7 px-base wow fadeInUp"
+              className="shadow-custom-1 bg-white lg:py-88 py-7 px-base wow fadeInUp"
               data-wow-delay="0.2s"
             >
               <div className="flex">
@@ -193,7 +184,7 @@ export default function ContactPage() {
               </div>
             </div>
           </div>
-  <div className="cs_map" style={{margin:'100px'}}>
+  <div className="cs_map" style={{margin:'50px'}}>
   <iframe
     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.5597041697186!2d29.00434!3d41.05107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab6d6e5131909%3A0xfaa0f0510c542a88!2zREFQIFlhcMSxIFogT2Zpcw!5e0!3m2!1str!2str!4v1673000000000"
     width="100%"

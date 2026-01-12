@@ -15,16 +15,18 @@ import {
   MdArticle,
   MdHelpOutline,
   MdPeople,
-  MdQuestionAnswer
+  MdQuestionAnswer,
+  MdChat
 } from 'react-icons/md'
 import ContentBlog from '@/src/components/AdminComponents/medical/ContentBlog'
 import ContentTestimonials from '@/src/components/AdminComponents/medical/ContentTestimonial'
 import ContentPartner from '@/src/components/AdminComponents/medical/ContentPartner'
 import FormAsks from '@/src/components/AdminComponents/medical/FormAsks'
+import ContentAdmin from '@/src/components/AdminComponents/medical/ContentChatBot'
 
 const ContentsPage = () => {
   const [activeTab, setActiveTab] = useState<
-    'services' | 'organizations' | 'results' | 'blog' | 'faq' | 'testimonials' | 'ortaklar' | 'questions' | null
+    'services' | 'organizations' | 'results' | 'blog' | 'chatbot' | 'faq' | 'testimonials' | 'ortaklar' | 'questions' | null
   >(null)
 
   const contentBoxes = [
@@ -47,6 +49,11 @@ const ContentsPage = () => {
       id: 'results',
       title: 'Mutlu Sonuçlar',
       icon: <MdCheckCircle   size={40} />
+    },
+    {
+      id: 'chatbot',
+      title: 'ChatBot',
+      icon: <MdChat size={40} />
     },
      {
       id: 'testimonials',
@@ -80,6 +87,8 @@ const ContentsPage = () => {
         return <ContentOrganizations />
       case 'results':
         return <ContentResults />
+      case 'chatbot':
+        return <ContentAdmin/>
       case 'blog':
         return <ContentBlog />
       case 'faq':

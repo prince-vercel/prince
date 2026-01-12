@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react'
+import { MdHome, MdLogout } from 'react-icons/md'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -32,10 +33,22 @@ const MedicalSidebar = () => {
     <Link href="/admin/medical/contents" className={`${styles.link} ${isActive('/admin/medical/contents') ? styles.active : ''}`}>İçerik Yönetimi</Link>
     <Link href="/admin/medical/contactforms" className={`${styles.link} ${isActive('/admin/medical/contactforms') ? styles.active : ''}`}>İletişim</Link>
   </nav>
-      <div className={styles.bottomLinks}>
-          <Link href="/admin/visa" className={styles.borderBox}>Vize</Link>
-          <Link href="/admin/travel" className={styles.borderBox}>Turizm</Link>
-        </div>
+      <div className={styles.bottomLinks} style={{ display: 'flex', gap: 12 }}>
+        <Link href="/admin" className={styles.borderBox} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', padding: 0, width: 40, height: 40 }}>
+          <MdHome size={22} />
+        </Link>
+        <button
+          className={styles.borderBox}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none', border: 'none', cursor: 'pointer', padding: 0, width: 40, height: 40 }}
+          title="Çıkış Yap"
+          onClick={() => {
+            localStorage.removeItem('adminSession');
+            window.location.href = '/admin/login';
+          }}
+        >
+          <MdLogout size={22} />
+        </button>
+      </div>
   <button className={styles.close} onClick={() => setOpen(false)}>
     ✕
   </button>

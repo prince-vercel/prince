@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { db } from '@/src/lib/firebase'
 import { getDocs, collection } from 'firebase/firestore'
 import bannerImg from '@/assets/img/doctors/banner_img_3.png'
-import { Hospital, Hotel, OrganisationItem } from '@/src/types/medical'
+import { Hospital, Hotel, OrganisationItem } from '@/src/types/types'
 
 const ITEMS_PER_PAGE = 3
 

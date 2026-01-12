@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { collection, addDoc, serverTimestamp, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
-import { MedicalFormData } from '@/src/types/medical'
+import { MedicalFormData } from '@/src/types/types'
 import Toast from '@/src/components/Toast'
 
 interface Question {

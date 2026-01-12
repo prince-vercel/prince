@@ -17,6 +17,7 @@ import { useRef, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
+import Chatbot from './Chatbot'
 
 const normalizeText = (text: string) => {
   return text
@@ -61,6 +62,20 @@ const [banners, setBanners] = useState<any[]>([])
 const [partners, setPartners] = useState<any[]>([])
 const [loadingPartners, setLoadingPartners] = useState(true)
 
+ // Chatbot state
+    const [chatbotQuestions, setChatbotQuestions] = useState<any[]>([])
+    const [showChatbot, setShowChatbot] = useState(false)
+    useEffect(() => {
+      // Firestore'dan chatbotQuestions koleksiyonunu çek
+      import('firebase/firestore').then(({ collection, getDocs }) => {
+        getDocs(collection(db, 'travelchatbotQuestions'))
+          .then(snapshot => {
+            const data = snapshot.docs.map(doc => doc.data())
+            setChatbotQuestions(data)
+          })
+          .catch(() => setChatbotQuestions([]))
+      })
+    }, [])
 
 // Firebase'den partners'ları çek
 useEffect(() => {
@@ -551,6 +566,63 @@ const handleSearchSubmit = (e: React.FormEvent) => {
 </div>
 {/*========== BLOG STYLE ONE END ==========*/}
 
+      {/* CHATBOT BUTTON & BOX */}
+      <style>{`
+        .chatbot-fab {
+          position: fixed;
+          bottom: 32px;
+          right: 32px;
+          z-index: 10000;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          background: #d7b76e;
+          color: #fff;
+          border: none;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 32px;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .chatbot-fab:hover {
+          background: #a88c4d;
+        }
+        .chatbot-close-btn {
+          position: absolute;
+          top: 8px;
+          right: 12px;
+          background: none;
+          border: none;
+          color: #888;
+          font-size: 22px;
+          cursor: pointer;
+        }
+      `}</style>
+      {chatbotQuestions.length > 0 && (
+        <>
+          {!showChatbot && (
+            <button className="chatbot-fab" onClick={() => setShowChatbot(true)} title="Sohbet Başlat">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 15.5C21 16.3284 20.3284 17 19.5 17H7.41421L4.70711 19.7071C4.07714 20.3371 3 19.8906 3 19.0001V5.5C3 4.67157 3.67157 4 4.5 4H19.5C20.3284 4 21 4.67157 21 5.5V15.5Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="#d7b76e"/>
+                <circle cx="8" cy="10" r="1" fill="white"/>
+                <circle cx="12" cy="10" r="1" fill="white"/>
+                <circle cx="16" cy="10" r="1" fill="white"/>
+              </svg>
+            </button>
+          )}
+          {showChatbot && (
+            <div style={{ position: 'fixed', bottom: 32, right: 32, zIndex: 10001 }}>
+              <div style={{ position: 'relative' }}>
+                <button className="chatbot-close-btn" onClick={() => setShowChatbot(false)} title="Kapat">✕</button>
+                <Chatbot />
+              </div>
+            </div>
+          )}
+        </>
+      )}
 
     </>
   )

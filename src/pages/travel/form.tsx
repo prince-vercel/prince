@@ -387,76 +387,39 @@ const Form = () => {
     </div>
 
     <ul className="text-sm text-dark-2 space-y-3 border-l-4 border-primary-1 pl-4">
-                  {formData.name && (
-                    <li className="flex items-center gap-2">
-                      <i className="bi bi-person-check text-gray-400 text-base"></i>
-                      <span><strong>Ad:</strong> {formData.name}</span>
-                    </li>
-                  )}
-                  {formData.nationality && (
-                    <li className="flex items-center gap-2">
-                      <i className="bi bi-globe text-gray-400 text-base"></i>
-                      <span><strong>Uyruk:</strong> {formData.nationality}</span>
-                    </li>
-                  )}
-                  {formData.phone && (
-                    <li className="flex items-center gap-2">
-                      <i className="bi bi-telephone text-gray-400 text-base"></i>
-                      <span><strong>Telefon:</strong> {formData.phone}</span>
-                    </li>
-                  )}
-                  {formData.email && (
-                    <li className="flex items-center gap-2">
-                      <i className="bi bi-envelope text-gray-400 text-base"></i>
-                      <span><strong>E-posta:</strong> {formData.email}</span>
-                    </li>
-                  )}
-                  {formData.destination && (
-                    <li className="flex items-center gap-2">
-                      <i className="bi bi-geo-alt text-gray-400 text-base"></i>
-                      <span><strong>Yer:</strong> {formData.destination}</span>
-                    </li>
-                  )}
-                  {formData.date && (
-                    <li className="flex items-center gap-2">
-                      <i className="bi bi-calendar3 text-gray-400 text-base"></i>
-                      <span><strong>Tarih:</strong> {formData.date}</span>
-                    </li>
-                  )}
-                  {formData.duration && (
-                    <li className="flex items-center gap-2">
-                      <i className="bi bi-moon-stars text-gray-400 text-base"></i>
-                      <span><strong>Süre:</strong> {formData.duration}</span>
-                    </li>
-                  )}
-                  {formData.guests && (
-                    <li className="flex items-center gap-2">
-                      <i className="bi bi-people text-gray-400 text-base"></i>
-                      <span><strong>Kişi:</strong> {formData.guests}</span>
-                    </li>
-                  )}
-                  {formData.transfer && (
-                    <li className="flex items-center gap-2">
-                      <i className="bi bi-airplane text-gray-400 text-base"></i>
-                      <span><strong>Transfer:</strong> {formData.transfer}</span>
-                    </li>
-                  )}
-                  {formData.requests && (
-                    <li className="flex items-center gap-2">
-                      <i className="bi bi-pencil-square text-gray-400 text-base"></i>
-                      <span><strong>Talep:</strong> {formData.requests.substring(0, 30)}...</span>
-                    </li>
-                  )}
-                  {formData.contact && (
-                    <li className="flex items-center gap-2">
-                      <i className="bi bi-chat-dots text-gray-400 text-base"></i>
-                      <span><strong>İletişim:</strong> {formData.contact}</span>
-                    </li>
-                  )}
-                  {!formData.name && !formData.destination && !formData.date && (
-                    <li className="text-dark-3 italic">Bilgileri doldurmaya başlayın...</li>
-                  )}
-                </ul>
+      {Object.entries(formData)
+        .filter(([_, value]) => value && value.trim() !== '')
+        .map(([key, value]) => {
+          const question = questions.find(q => q.id === key);
+          const label = question ? question.questionText : key;
+          let displayValue = value;
+          // Checkboxlar için okunabilir gösterim ve label düzeltme
+          if (question && question.type === 'checkbox') {
+            const selected = value.split(',').filter(v => v);
+            // Eğer option label'ı varsa onu göster
+            displayValue = selected.length > 0
+              ? selected.map(opt => {
+                  // Eğer options içinde label varsa onu göster
+                  const optionLabel = question.options.find(o => o === opt) || opt;
+                  return optionLabel;
+                }).join(', ')
+              : '';
+          }
+          // Kısaltılmış gösterim (ör: requests)
+          if (key === 'requests' && value.length > 30) {
+            displayValue = value.substring(0, 30) + '...';
+          }
+          return (
+            <li key={key} className="flex items-center gap-2">
+              <i className="bi bi-check2-circle text-gray-400 text-base"></i>
+              <span><strong>{label}:</strong> {displayValue}</span>
+            </li>
+          );
+        })}
+      {Object.values(formData).every(val => !val || val.trim() === '') && (
+        <li className="text-dark-3 italic">Bilgileri doldurmaya başlayın...</li>
+      )}
+    </ul>
               </div>
             </div>
 

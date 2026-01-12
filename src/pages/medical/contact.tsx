@@ -163,11 +163,11 @@ export default function ContactPage() {
               </div>
             </div>
           </div>
-          <div className="cs_map" style={{ margin: '100px' }}>
+          <div className="cs_map" style={{ margin: '50px' }}>
         <iframe
     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.5597041697186!2d29.00434!3d41.05107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab6d6e5131909%3A0xfaa0f0510c542a88!2zREFQIFlhcMSxIFogT2Zpcw!5e0!3m2!1str!2str!4v1673000000000"
-    width="100%"
-    height="450"
+    width="50%"
+    height="250"
     style={{ border: 0 }}
     loading="lazy"
     referrerPolicy="no-referrer-when-downgrade"

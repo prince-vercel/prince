@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
-import { Blog } from '@/src/types/medical'
+import { Blog } from '@/src/types/types'
 
 
 
