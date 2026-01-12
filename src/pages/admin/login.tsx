@@ -87,7 +87,7 @@ const Login = () => {
           </div>
         </div>
         {error && <div className={styles.loginError}>{error}</div>}
-        <button
+        <button 
           type="submit"
           disabled={loading}
           className={styles.loginButton + (loading ? ' ' + styles.loginButtonDisabled : '')}
