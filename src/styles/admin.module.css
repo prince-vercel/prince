@@ -1,3 +1,19 @@
+.lineChartTooltip {
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+/* Line chart for site visits */
+.lineChartWrapper {
+  margin-top: 20px;
+}
+
+.lineChartLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #6c757d;
+  margin-top: 8px;
+}
 /* Login Page Styles */
 .loginWrapper {
   max-width: 400px;
@@ -410,7 +426,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   margin-top: 20px;
 }
 
@@ -481,6 +497,8 @@
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 28px;
+  margin-bottom: 20px;
+
 }
 
 .dashboardSectionTitle {
@@ -490,8 +508,6 @@
   margin-bottom: 20px;
   margin-top: 0;
   padding-bottom: 20px;
-
-
 }
 
 .dashboardEmpty {
@@ -554,6 +570,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  margin-top: 10px;
 }
 
 .operationItem {
@@ -590,7 +607,7 @@
 
 .operationBarFill {
   height: 100%;
-  background: linear-gradient(90deg, #307BC4, #5BA3D0);
+  background: linear-gradient(90deg, #5BA3D0, #307BC4);
   transition: width 0.3s ease;
 }
 

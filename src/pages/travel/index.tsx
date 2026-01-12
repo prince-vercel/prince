@@ -1,13 +1,21 @@
-import Footer from "@/src/components/TravelComponents/Footer";
-import Header from "@/src/components/TravelComponents/Header";
-import HomePage from "@/src/components/TravelComponents/HomePage";
+'use client'
 
-
+import { useEffect } from 'react'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { db } from '@/src/lib/firebase'
+import HomePage from '@/src/components/TravelComponents/HomePage'
 
 export default function TravelPage() {
+  useEffect(() => {
+    addDoc(collection(db, 'travelSiteVisits'), {
+      path: '/travel',
+      createdAt: serverTimestamp()
+    })
+  }, [])
+
   return (
-    <div >
-    <HomePage/>
+    <div>
+      <HomePage />
     </div>
   )
 }
