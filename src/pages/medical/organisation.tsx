@@ -1,12 +1,11 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { db } from '@/src/lib/firebase'
+import { Hospital, Hotel, OrganisationItem } from '@/src/types/types'
+import { collection, getDocs } from 'firebase/firestore'
 import Image from 'next/image'
 import Link from 'next/link'
-import { db } from '@/src/lib/firebase'
-import { getDocs, collection } from 'firebase/firestore'
-import bannerImg from '@/assets/img/doctors/banner_img_3.png'
-import { Hospital, Hotel, OrganisationItem } from '@/src/types/types'
+import { useEffect, useMemo, useState } from 'react'
 
 const ITEMS_PER_PAGE = 3
 
@@ -200,7 +199,7 @@ export default function OrganisationPage() {
           <div className="cs_banner cs_style_9 cs_white_bg cs_radius_30">
             <div className="cs_banner_img">
               <Image
-                src={bannerImg}
+                src="/assets/img/doctors/banner_img_3.png"
                 alt="Banner"
                 width={300}
                 height={200}
@@ -220,6 +219,6 @@ export default function OrganisationPage() {
       </section>
       <div className="cs_height_200" />
 
--    </>
+      -    </>
   )
 }

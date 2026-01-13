@@ -1,12 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
-
-import logo from '@/assets/logo/logo-mavi.png'
-import closeIcon from '@/assets/img/icons/close.svg'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function Header() {
   const pathname = usePathname()
@@ -18,7 +15,7 @@ export default function Header() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsSidebarOpen(false)
     setIsSearchOpen(false)
-    
+
     // Sayfayı en üste scroll et - çoklu yöntem
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
     document.documentElement.scrollTop = 0
@@ -41,22 +38,22 @@ export default function Header() {
         <div className="cs_main_header">
           <div className="container">
             <div className="cs_main_header_in">
-              
+
               {/* LEFT */}
               <div className="cs_main_header_left">
-                <Link href="/" className="cs_site_branding" style={{paddingBottom:'8px'}}>
-                  <Image src={logo} alt="Pro Health Logo" width={110} height={40} />
+                <Link href="/" className="cs_site_branding">
+                  <Image src="/assets/img/logo.png" alt="Pro Health Logo" width={120} height={50} />
                 </Link>
 
                 <nav className="cs_nav">
                   <ul className="cs_nav_list">
-                    <li><Link href="/medical" className="font-semibold" style={{ color: pathname === '/medical' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>Anasayfa</Link></li>
-                    <li><Link href="/medical/organisation" className="font-semibold" style={{ color: pathname === '/medical/organisation' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>Hizmet Noktaları</Link></li>
-                    <li><Link href="/medical/results" className="font-semibold" style={{ color: pathname === '/medical/results' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>Mutlu Sonuçlar</Link></li>
-                    <li><Link href="/medical/form" className="font-semibold" style={{ color: pathname === '/medical/form' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>Başvuru</Link></li>
-                    <li><Link href="/medical/blog" className="font-semibold" style={{ color: pathname === '/medical/blog' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>Blog</Link></li>
-                    <li><Link href="/medical/about" className="font-semibold" style={{ color: pathname === '/medical/about' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>Hakkımızda</Link></li>
-                    <li><Link href="/medical/contact" className="font-semibold" style={{ color: pathname === '/medical/contact' ? '#4f8edc' : 'inherit', fontSize: '14px' }}>İletişim</Link></li>
+                    <li><Link href="/medical" className="font-semibold">Anasayfa</Link></li>
+                    <li><Link href="/medical/organisation" className="font-semibold">Kurumlar</Link></li>
+                    <li><Link href="/medical/results" className="font-semibold">Mutlu Sonuçlar</Link></li>
+                    <li><Link href="/medical/form" className="font-semibold">Başvuru</Link></li>
+                    <li><Link href="/medical/blog" className="font-semibold">Blog</Link></li>
+                    <li><Link href="/medical/about" className="font-semibold">Hakkımızda</Link></li>
+                    <li><Link href="/medical/contact" className="font-semibold">İletişim</Link></li>
                   </ul>
                 </nav>
               </div>
@@ -66,20 +63,20 @@ export default function Header() {
                 {/* SOCIALS – DESKTOP */}
                 <div className="cs_social_links cs_social_desktop">
                   <a href="#"><i className="fa-brands fa-facebook-f"></i></a>
-                   <a href="#"><i className="fa-brands fa-instagram"></i></a>
-                   <a href="#"><i className="fa-brands fa-whatsapp"></i></a>
+                  <a href="#"><i className="fa-brands fa-youtube"></i></a>
+                  <a href="#"><i className="fa-brands fa-instagram"></i></a>
                 </div>
 
                 <div className="cs_toolbox">
-              
-                 <button
-                  type="button"
-                  className="cs_toolbox_btn cs_sidebar_toggle_btn"
-                  onClick={() => setIsSidebarOpen(true)}
-                  aria-label="Open menu"
-                >
-                  <i className="fa-solid fa-bars"></i>
-                </button>
+
+                  <button
+                    type="button"
+                    className="cs_toolbox_btn cs_sidebar_toggle_btn"
+                    onClick={() => setIsSidebarOpen(true)}
+                    aria-label="Open menu"
+                  >
+                    <i className="fa-solid fa-bars"></i>
+                  </button>
 
                 </div>
               </div>
@@ -92,16 +89,16 @@ export default function Header() {
       {/* SIDEBAR */}
       <div className={`cs_sidenav ${isSidebarOpen ? 'active' : ''}`}>
         <div className="cs_sidenav_overlay" onClick={() => setIsSidebarOpen(false)} />
-        
+
         <div className="cs_sidenav_in">
           <button className="cs_close" onClick={() => setIsSidebarOpen(false)}>
-            <Image src={closeIcon} alt="Close" width={20} height={20} />
+            <Image src="/assets/img/icons/close.svg" alt="Close" width={20} height={20} />
           </button>
 
           {/* MOBILE MENU */}
           <ul className="cs_mobile_menu">
             <li><Link href="/medical" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Anasayfa</Link></li>
-            <li><Link href="/medical/organisation" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Hizmet Noktaları</Link></li>
+            <li><Link href="/medical/organisation" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Kurumlar</Link></li>
             <li><Link href="/medical/results" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Mutlu Sonuçlar</Link></li>
             <li><Link href="/medical/form" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Başvuru</Link></li>
             <li><Link href="/medical/blog" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Blog</Link></li>
@@ -128,7 +125,7 @@ export default function Header() {
                 <button type="submit" />
               </form>
               <button className="cs_close" onClick={() => setIsSearchOpen(false)}>
-                <Image src={closeIcon} alt="Close" width={20} height={20} />
+                <Image src="/assets/img/icons/close.svg" alt="Close" width={20} height={20} />
               </button>
             </div>
           </div>

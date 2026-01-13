@@ -1,24 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { useState } from 'react'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
-import { db } from '@/src/lib/firebase'
-import Footer from "@/src/components/TravelComponents/Footer"
 import Toast from '@/src/components/Toast'
+import { db } from '@/src/lib/firebase'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import Link from 'next/link'
+import { useState } from 'react'
 
-import breadcrumbBg from "@/assets/images/backgrounds/breadcrumb-bg.webp"
-import breadcrumbShape from "@/assets/images/illustration/breadcrunb__shape.png"
-import tree from "@/assets/images/illustration/tree-illustration.png"
-
-import insta1 from "@/assets/images/instagram/insta-1.webp"
-import insta2 from "@/assets/images/instagram/insta-2.webp"
-import insta3 from "@/assets/images/instagram/insta-3.webp"
-import insta4 from "@/assets/images/instagram/insta-4.webp"
-import insta5 from "@/assets/images/instagram/insta-5.webp"
-import Link from "next/link"
-
-const instaImages = [insta1, insta2, insta3, insta4, insta5]
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -37,7 +25,7 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       setError(true)
       setTimeout(() => setError(false), 3000)
@@ -66,24 +54,24 @@ export default function ContactPage() {
   return (
     <>
       {/*========== BREADCRUMB STYLE START ==========*/}
-          <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#d7b76e' }}>
+      <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#d7b76e' }}>
         <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
         </div>
         <img
-          src={breadcrumbShape.src}
+          src="/assets/img/illustration/breadcrunb__shape.png"
           alt="placeholder"
           className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]"
         />
-      
+
 
         <div className="container relative z-2">
           <nav aria-label="breadcrumb">
-                  <ol className="breadcrumb2" style={{color:'white'}}>
-            <li className="breadcrumb-item2">
-              <Link href="/travel">Anasayfa</Link>
-            </li>
-            <li className="breadcrumb-item2"> İletişim</li>
-          </ol>
+            <ol className="breadcrumb2" style={{ color: 'white' }}>
+              <li className="breadcrumb-item2">
+                <Link href="/travel">Anasayfa</Link>
+              </li>
+              <li className="breadcrumb-item2"> İletişim</li>
+            </ol>
           </nav>
 
           <h2 className="l:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
@@ -95,8 +83,8 @@ export default function ContactPage() {
 
       {/*========== CONTACT US STYLE START ==========*/}
       <div className="lg:pt-30 pt-24 relative z-1">
-  
-        <div className="container" style={{marginTop:-140}}>
+
+        <div className="container" style={{ marginTop: -140 }}>
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-base">
             <div className="shadow-custom-1 bg-white lg:py-8 py-7 px-base wow fadeInUp">
               <div className="flex">
@@ -184,17 +172,17 @@ export default function ContactPage() {
               </div>
             </div>
           </div>
-  <div className="cs_map" style={{margin:'50px'}}>
-  <iframe
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.5597041697186!2d29.00434!3d41.05107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab6d6e5131909%3A0xfaa0f0510c542a88!2zREFQIFlhcMSxIFogT2Zpcw!5e0!3m2!1str!2str!4v1673000000000"
-    width="100%"
-    height="450"
-    style={{ border: 0 }}
-    loading="lazy"
-    referrerPolicy="no-referrer-when-downgrade"
-    allowFullScreen
-  />
-</div>
+          <div className="cs_map" style={{ margin: '50px' }}>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.5597041697186!2d29.00434!3d41.05107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab6d6e5131909%3A0xfaa0f0510c542a88!2zREFQIFlhcMSxIFogT2Zpcw!5e0!3m2!1str!2str!4v1673000000000"
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
           <div className="lg:pt-20 pt-15">
             <div className="text-center lg:pb-[60px] pb-[40px]">
               <h5 className="section-sub-title-v1">İletişim Kurun</h5>
@@ -268,12 +256,12 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-     
 
-      
+
+
       {/*========== CONTACT US STYLE END ==========*/}
 
-      
+
     </>
   )
 }

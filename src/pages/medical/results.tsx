@@ -1,23 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { db } from '@/src/lib/firebase'
+import { Result } from '@/src/types/types'
+import { collection, getDocs } from 'firebase/firestore'
 import Image from 'next/image'
 import Link from 'next/link'
-import { db } from '@/src/lib/firebase'
-import { getDocs, collection } from 'firebase/firestore'
+import { useEffect, useRef, useState } from 'react'
 
 
 
-import avatar1 from '@/assets/img/home_4/avatar_1.png'
-import avatar2 from '@/assets/img/home_4/avatar_2.png'
-import avatar3 from '@/assets/img/home_4/avatar_3.png'
-import avatar4 from '@/assets/img/home_4/avatar_4.png'
-import avatar5 from '@/assets/img/home_4/avatar_5.png'
 
-import leftArrow from '@/assets/img/icons/left_arrow_blue.svg'
-import rightArrow from '@/assets/img/icons/right_arrow_blue.svg'
-import { Result } from '@/src/types/types'
+
 
 const GALLERY_PER_PAGE = 9
 
@@ -327,7 +321,7 @@ export default function ResultsPage() {
                   onClick={prev}
                   style={{ cursor: 'pointer', opacity: startIndex === 0 ? 0.4 : 1 }}
                 >
-                  <Image src={leftArrow} alt="Prev" />
+                  <Image src="/assets/img/icons/left_arrow_blue.svg" alt="Prev" width={100} height={100} />
                 </div>
                 <div
                   className="cs_slider_next cs_center cs_shadow_2"
@@ -337,7 +331,7 @@ export default function ResultsPage() {
                     opacity: startIndex >= testimonials.length - 2 ? 0.4 : 1,
                   }}
                 >
-                  <Image src={rightArrow} alt="Next" />
+                  <Image src="/assets/img/icons/right_arrow_blue.svg" alt="Next" width={100} height={100} />
                 </div>
               </div>
 
@@ -354,12 +348,12 @@ export default function ResultsPage() {
                   </div>
                 ) : (
                   visibleTestimonials.map((item, i) => (
-                  <div key={i} className="col-md-6">
-                    <div className="cs_testimonial cs_style_4 cs_radius_20" style={{ minHeight: 280, padding: 30 }}>
-                      <div className="cs_testimonial_meta">
-                        <div className="cs_testimonial_avatar">
-                            <img 
-                              src={item.imageUrl} 
+                    <div key={i} className="col-md-6">
+                      <div className="cs_testimonial cs_style_4 cs_radius_20" style={{ minHeight: 280, padding: 30 }}>
+                        <div className="cs_testimonial_meta">
+                          <div className="cs_testimonial_avatar">
+                            <img
+                              src={item.imageUrl}
                               alt={item.name}
                               style={{
                                 width: '64px',
@@ -372,19 +366,19 @@ export default function ResultsPage() {
                           <div>
                             <h3 className="cs_fs_24 cs_semibold m-0">{item.name}</h3>
                           </div>
-                      </div>
+                        </div>
 
-                      <div className="cs_testimonial_text cs_heading_color cs_fs_20" style={{ minHeight: 120 }}>
-                        <p>“{item.text}”</p>
-                      </div>
+                        <div className="cs_testimonial_text cs_heading_color cs_fs_20" style={{ minHeight: 120 }}>
+                          <p>“{item.text}”</p>
+                        </div>
 
-                      <div className="cs_rating cs_accent_color">
-                        {[...Array(5)].map((_, i) => (
-                          <i key={i} className="fa-solid fa-star" />
-                        ))}
+                        <div className="cs_rating cs_accent_color">
+                          {[...Array(5)].map((_, i) => (
+                            <i key={i} className="fa-solid fa-star" />
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
                   ))
                 )}
               </div>
@@ -394,7 +388,7 @@ export default function ResultsPage() {
         </div>
       </div>
 
-   
+
     </>
   )
 }

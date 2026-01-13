@@ -1,12 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
-
-import logo from '@/assets/logo/logo-goldd.png'
-import closeIcon from '@/assets/img/icons/close.svg'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function Header() {
   const pathname = usePathname()
@@ -18,7 +15,7 @@ export default function Header() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsSidebarOpen(false)
     setIsSearchOpen(false)
-    
+
     // Sayfayı en üste scroll et - çoklu yöntem
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
     document.documentElement.scrollTop = 0
@@ -41,11 +38,11 @@ export default function Header() {
         <div className="cs_main_header">
           <div className="container">
             <div className="cs_main_header_in">
-              
+
               {/* LEFT */}
               <div className="cs_main_header_left">
                 <Link href="/" className="cs_site_branding">
-                  <Image src={logo} alt="Pro Health Logo" width={120} height={50} />
+                  <Image src="/assets/img/logo.png" alt="Pro Health Logo" width={120} height={50} />
                 </Link>
 
                 <nav className="cs_nav">
@@ -62,28 +59,28 @@ export default function Header() {
 
               {/* RIGHT */}
               <div className="cs_social_links cs_social_desktop">
-  <a href="#">
-    <i className="fa-brands fa-facebook-f" style={{ color: '#d7b76e'  }}></i>
-  </a>
-  <a href="#">
-    <i className="fa-brands fa-instagram" style={{ color: '#d7b76e'  }}></i>
-  </a>
-  <a href="#">
-    <i className="fa-brands fa-whatsapp" style={{ color: '#d7b76e'  }}></i>
-  </a>
-</div>
+                <a href="#">
+                  <i className="fa-brands fa-facebook-f" style={{ color: '#d7b76e' }}></i>
+                </a>
+                <a href="#">
+                  <i className="fa-brands fa-instagram" style={{ color: '#d7b76e' }}></i>
+                </a>
+                <a href="#">
+                  <i className="fa-brands fa-whatsapp" style={{ color: '#d7b76e' }}></i>
+                </a>
+              </div>
               <div className="cs_main_header_right">
 
                 <div className="cs_toolbox">
-              
-                 <button
-                  type="button"
-                  className="cs_toolbox_btn cs_sidebar_toggle_btn"
-                  onClick={() => setIsSidebarOpen(true)}
-                  aria-label="Open menu"
-                >
-                  <i className="fa-solid fa-bars"></i>
-                </button>
+
+                  <button
+                    type="button"
+                    className="cs_toolbox_btn cs_sidebar_toggle_btn"
+                    onClick={() => setIsSidebarOpen(true)}
+                    aria-label="Open menu"
+                  >
+                    <i className="fa-solid fa-bars"></i>
+                  </button>
 
                 </div>
               </div>
@@ -96,10 +93,10 @@ export default function Header() {
       {/* SIDEBAR */}
       <div className={`cs_sidenav ${isSidebarOpen ? 'active' : ''}`}>
         <div className="cs_sidenav_overlay" onClick={() => setIsSidebarOpen(false)} />
-        
+
         <div className="cs_sidenav_in">
           <button className="cs_close" onClick={() => setIsSidebarOpen(false)}>
-            <Image src={closeIcon} alt="Close" width={20} height={20} />
+            <Image src="/assets/img/icons/close.svg" alt="Close" width={20} height={20} />
           </button>
 
           {/* MOBILE MENU */}
@@ -131,7 +128,7 @@ export default function Header() {
                 <button type="submit" />
               </form>
               <button className="cs_close" onClick={() => setIsSearchOpen(false)}>
-                <Image src={closeIcon} alt="Close" width={20} height={20} />
+                <Image src="/assets/img/icons/close.svg" alt="Close" width={20} height={20} />
               </button>
             </div>
           </div>

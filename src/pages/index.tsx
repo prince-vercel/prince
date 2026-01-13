@@ -1,24 +1,22 @@
+
 import Image from 'next/image'
 import Link from 'next/link'
-import medicalImg from '@/assets/images/medikal.jpeg'
-import visaImg from '@/assets/images/vize.jpeg'
-import travelImg from '@/assets/images/seyahat.jpeg'
 
 const images = {
-  medical: medicalImg.src,
-  visa: visaImg.src,
-  travel: travelImg.src,
+  medical: '/assets/images/medikal.jpeg',
+  visa: '/assets/images/vize.jpeg',
+  travel: '/assets/images/seyahat.jpeg',
 }
 
 export default function HomePage() {
   return (
     <div className="page-wrapper">
 
-   <header className="header">
-  <div className="logo-wrapper">
-    <Image src="/logo.png" alt="Logo" width={90} height={80} priority />
-  </div>
-</header>
+      <header className="header">
+        <div className="logo-wrapper">
+          <Image src="/logo.png" alt="Logo" width={90} height={80} priority />
+        </div>
+      </header>
 
 
       <div className="image-row">

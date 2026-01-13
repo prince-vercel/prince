@@ -1,16 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
 import { db } from '@/src/lib/firebase'
 import { doc, getDoc } from 'firebase/firestore'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
-import icon9 from '@/assets/img/departments/icon_9.svg'
-import icon10 from '@/assets/img/departments/icon_10.svg'
-import icon11 from '@/assets/img/departments/icon_11.svg'
-import icon12 from '@/assets/img/departments/icon_12.svg'
 import { TreatmentItem } from '@/src/types/types'
 
 
@@ -36,7 +32,7 @@ const slugToTurkishTitle = (slug: string) => {
 export default function MedicalDetailPage() {
   const router = useRouter()
   const { slug } = router.query
-  
+
   const [treatments, setTreatments] = useState<TreatmentItem[]>([])
   const [content, setContent] = useState({
     title: '',
@@ -131,87 +127,87 @@ export default function MedicalDetailPage() {
                   }}
                 />
               ) : (
-               <p></p>
+                <p></p>
               )}
             </div>
           </div>
         </div>
       </section>
 
-    <section id="department-services" style={{margin:'30px'}}>
+      <section id="department-services" style={{ margin: '30px' }}>
 
-  <div className="container">
-    <div className="cs_section_heading cs_style_1 text-center">
+        <div className="container">
+          <div className="cs_section_heading cs_style_1 text-center">
 
-      <div className="cs_height_5"></div>
-      <h2 className="cs_section_title cs_fs_72 m-0">
-        Tedaviler
-      </h2>
-    </div>
-
-
-    <div className="cs_iconbox_12_wrap">
-      {isLoading ? (
-        <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
-          <p>Tedaviler yükleniyor...</p>
-        </div>
-      ) : error ? (
-        <div style={{ textAlign: 'center', padding: '40px', width: '100%', color: '#dc2626' }}>
-          <p>{error}</p>
-        </div>
-      ) : treatments.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
-          <p>Tedavi listesi bulunamadı</p>
-        </div>
-      ) : (
-        treatments.map((item, i) => (
-          <div key={i}>
-            <div className="cs_iconbox cs_style_12">
-              <div className="cs_iconbox_info cs_radius_20">
-                <span className="cs_iconbox_circle cs_accent_bg"></span>
-
-                <h2 className="cs_iconbox_title cs_fs_24 cs_semibold">
-                  {item.title}
-                </h2>
-
-                <p className="cs_iconbox_subtitle mb-0 cs_heading_color" style={{ fontSize: '14px' }}>
-                  {item.description}
-                </p>
-              </div>
-
-              <div className="cs_iconbox_icon cs_center">
-                {item.image ? (
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    width={80}
-                    height={80}
-                    quality={50}
-                    loading="lazy"
-                    sizes="80px"
-                    style={{
-                      objectFit: 'cover',
-                      borderRadius: '50%',
-                      width: '80px',
-                      height: '80px'
-                    }}
-                  />
-                ) : (
-                  <div style={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '50%',
-                    background: '#e5e7eb'
-                  }} />
-                )}
-              </div>
-            </div>
+            <div className="cs_height_5"></div>
+            <h2 className="cs_section_title cs_fs_72 m-0">
+              Tedaviler
+            </h2>
           </div>
-        ))
-      )}
-    </div>
-  </div>
-</section>
+
+
+          <div className="cs_iconbox_12_wrap">
+            {isLoading ? (
+              <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
+                <p>Tedaviler yükleniyor...</p>
+              </div>
+            ) : error ? (
+              <div style={{ textAlign: 'center', padding: '40px', width: '100%', color: '#dc2626' }}>
+                <p>{error}</p>
+              </div>
+            ) : treatments.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
+                <p>Tedavi listesi bulunamadı</p>
+              </div>
+            ) : (
+              treatments.map((item, i) => (
+                <div key={i}>
+                  <div className="cs_iconbox cs_style_12">
+                    <div className="cs_iconbox_info cs_radius_20">
+                      <span className="cs_iconbox_circle cs_accent_bg"></span>
+
+                      <h2 className="cs_iconbox_title cs_fs_24 cs_semibold">
+                        {item.title}
+                      </h2>
+
+                      <p className="cs_iconbox_subtitle mb-0 cs_heading_color" style={{ fontSize: '14px' }}>
+                        {item.description}
+                      </p>
+                    </div>
+
+                    <div className="cs_iconbox_icon cs_center">
+                      {item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          width={80}
+                          height={80}
+                          quality={50}
+                          loading="lazy"
+                          sizes="80px"
+                          style={{
+                            objectFit: 'cover',
+                            borderRadius: '50%',
+                            width: '80px',
+                            height: '80px'
+                          }}
+                        />
+                      ) : (
+                        <div style={{
+                          width: '80px',
+                          height: '80px',
+                          borderRadius: '50%',
+                          background: '#e5e7eb'
+                        }} />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </section>
 
 
       {/* TREATMENTS */}
@@ -239,22 +235,22 @@ export default function MedicalDetailPage() {
             <div className="row">
               {[
                 {
-                  icon: icon9,
+                  icon: '/assets/img/departments/icon_9.svg',
                   title: 'Aşı Uygulamaları',
                   desc: 'Hastalıklara karşı koruyucu aşı hizmetleri.',
                 },
                 {
-                  icon: icon10,
+                  icon: '/assets/img/departments/icon_10.svg',
                   title: 'Akut Hastalıklar',
                   desc: 'Enfeksiyon ve ani gelişen rahatsızlıkların tedavisi.',
                 },
                 {
-                  icon: icon11,
+                  icon: '/assets/img/departments/icon_11.svg',
                   title: 'Kronik Tedaviler',
                   desc: 'Uzun süreli hastalıkların takibi ve tedavisi.',
                 },
                 {
-                  icon: icon12,
+                  icon: '/assets/img/departments/icon_12.svg',
                   title: 'Gelişim Taramaları',
                   desc: 'Erken tanı için düzenli sağlık kontrolleri.',
                 },
@@ -262,7 +258,7 @@ export default function MedicalDetailPage() {
                 <div key={i} className="col-xl-3 col-md-6">
                   <div className="cs_iconbox cs_style_8 text-center cs_radius_20">
                     <div className="cs_iconbox_icon rounded-circle cs_center">
-                      <Image src={item.icon} alt={item.title} />
+                      <Image src={item.icon} alt={item.title} width={100} height={100} />
                     </div>
                     <h2 className="cs_iconbox_title cs_fs_32">
                       {item.title}
@@ -278,74 +274,74 @@ export default function MedicalDetailPage() {
         </div>
       </section>
 
-        {/* APPOINTMENT */}
-<section className="cs_shape_wrap">
-  <div className="cs_shape_2">
-    <svg
-      width="1089"
-      height="520"
-      viewBox="0 0 1089 520"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        opacity="0.2"
-        d="M444.57 826.314C529.104 1065.89 739.237 1008.47 834.547 949.171C981.567 843.507 997.742 626.309 999.967 542.103C1001.75 474.739 1058.26 303.318 1086.29 226.028C1115.11 -40.9119 843.814 0.833657 795.515 6.26561C747.215 11.6976 593.662 71.4673 441.083 40.606C319.02 15.917 205.529 28.8791 164.042 38.4462C-13.0065 100.952 -2.22156 200.043 3.13034 242.954C8.48234 285.864 53.2821 366.319 234.465 453.073C379.411 522.475 435.469 730.386 444.57 826.314Z"
-        fill="url(#paint0_linear)"
-      />
-      <defs>
-        <linearGradient
-          id="paint0_linear"
-          x1="844.274"
-          y1="950.214"
-          x2="424.319"
-          y2="-69.4782"
-          gradientUnits="userSpaceOnUse"
+      {/* APPOINTMENT */}
+      <section className="cs_shape_wrap">
+        <div className="cs_shape_2">
+          <svg
+            width="1089"
+            height="520"
+            viewBox="0 0 1089 520"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              opacity="0.2"
+              d="M444.57 826.314C529.104 1065.89 739.237 1008.47 834.547 949.171C981.567 843.507 997.742 626.309 999.967 542.103C1001.75 474.739 1058.26 303.318 1086.29 226.028C1115.11 -40.9119 843.814 0.833657 795.515 6.26561C747.215 11.6976 593.662 71.4673 441.083 40.606C319.02 15.917 205.529 28.8791 164.042 38.4462C-13.0065 100.952 -2.22156 200.043 3.13034 242.954C8.48234 285.864 53.2821 366.319 234.465 453.073C379.411 522.475 435.469 730.386 444.57 826.314Z"
+              fill="url(#paint0_linear)"
+            />
+            <defs>
+              <linearGradient
+                id="paint0_linear"
+                x1="844.274"
+                y1="950.214"
+                x2="424.319"
+                y2="-69.4782"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop offset="0" stopColor="#86BBF1" />
+                <stop offset="1" stopColor="#D2EAEF" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+
+        <div
+          className="container cs_radius_30"
+          style={{
+          }}
         >
-          <stop offset="0" stopColor="#86BBF1" />
-          <stop offset="1" stopColor="#D2EAEF" />
-        </linearGradient>
-      </defs>
-    </svg>
-  </div>
 
+          <div className="d-flex align-items-center justify-content-center">
 
-<div
-  className="container cs_radius_30"
-  style={{
-  }}
->
-    
-<div className="d-flex align-items-center justify-content-center">
+            <div className="cs_section_heading cs_style_1 text-center">
+              <h3 className="cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_fs_32">
+              </h3>
+              <div className="cs_animated_btn_wrap">
 
-  <div className="cs_section_heading cs_style_1 text-center">
-    <h3 className="cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_fs_32">
-    </h3>
-    <div className="cs_animated_btn_wrap">
-      
-  <Link 
-    href="/medical/form" 
-    className="cs_btn cs_style_1 cs_center cs_animated_btn mt-2"
-    style={{
-      padding: '30px 60px',
-      fontSize: '20px',
-      fontWeight: '600',
-      minHeight: '70px',
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}
-  >
-    <span>       Başvuru Ekle
-→</span>
-  </Link>
-</div>
+                <Link
+                  href="/medical/form"
+                  className="cs_btn cs_style_1 cs_center cs_animated_btn mt-2"
+                  style={{
+                    padding: '30px 60px',
+                    fontSize: '20px',
+                    fontWeight: '600',
+                    minHeight: '70px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <span>       Başvuru Ekle
+                    →</span>
+                </Link>
+              </div>
 
-  </div>
-</div>
+            </div>
+          </div>
 
-  </div>
-</section>
+        </div>
+      </section>
 
 
     </>

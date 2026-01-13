@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
-import React, { useMemo, useState, useEffect } from "react";
+import { db } from "@/src/lib/firebase";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
-import { db } from "@/src/lib/firebase";
-
-import breadcrumbBg from "../../../assets/images/backgrounds/breadcrumb-bg.webp";
-import breadcrumbShape from "../../../assets/images/illustration/breadcrunb__shape.png";
+import React, { useEffect, useMemo, useState } from "react";
 
 export default function PackageList() {
   const router = useRouter()
@@ -76,7 +73,7 @@ export default function PackageList() {
     return tours.filter((tour) => {
       const destinationOk =
         selectedDestinations.length === 0 ||
-        selectedDestinations.some(dest => 
+        selectedDestinations.some(dest =>
           normalizeText(dest) === normalizeText(tour.location || '')
         )
 
@@ -118,14 +115,14 @@ export default function PackageList() {
   }, [tours, selectedDestinations, selectedDurations, selectedMaxPeople, priceRange, selectedDays, selectedInclusions, showPricedOnly])
 
   const uniqueDestinations = useMemo(() => {
-    const defaultDestinations = ["İstanbul","Ankara","İzmir","Antalya","Bursa"]
+    const defaultDestinations = ["İstanbul", "Ankara", "İzmir", "Antalya", "Bursa"]
     const dbDestinations = new Set(tours.map(tour => tour.location).filter(Boolean))
     const combined = new Set([...defaultDestinations, ...Array.from(dbDestinations)])
     return Array.from(combined).sort()
   }, [tours])
 
   const uniqueDurations = useMemo(() => {
-    const defaultDurations = ["2 Gün 2 Gece","3 Gün 3 Gece","4 Gün 5 Gece","5 Gün 6 Gece"]
+    const defaultDurations = ["2 Gün 2 Gece", "3 Gün 3 Gece", "4 Gün 5 Gece", "5 Gün 6 Gece"]
     const dbDurations = new Set(tours.map(tour => tour.duration).filter(Boolean))
     const combined = new Set([...defaultDurations, ...Array.from(dbDurations)])
     return Array.from(combined)
@@ -154,10 +151,10 @@ export default function PackageList() {
         <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
         </div>
 
-        <img src={breadcrumbShape.src} alt="shape" className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" />
+        <img src="/assets/img/illustration/breadcrunb__shape.png" alt="shape" className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" />
 
         <div className="container relative z-2 pb-10">
-          <ol className="breadcrumb2" style={{color:'white'}}>
+          <ol className="breadcrumb2" style={{ color: 'white' }}>
             <li className="breadcrumb-item2">
               <Link href="/travel">Anasayfa</Link>
             </li>
@@ -187,23 +184,23 @@ export default function PackageList() {
                 </div>
               ) : (
                 filteredPackages.map((tour) => (
-                  <div 
-                    key={tour.id} 
+                  <div
+                    key={tour.id}
                     className="group/card package-card-style-one"
                     onMouseEnter={() => setHoveredCardId(tour.id)}
                     onMouseLeave={() => setHoveredCardId(null)}
                   >
-                    <div className="overflow-hidden relative" style={{height: '280px', maxHeight: '280px'}}>
+                    <div className="overflow-hidden relative" style={{ height: '280px', maxHeight: '280px' }}>
                       <a href={`/travel/all/${tour.id}`} className="block w-full h-full">
                         {tour.mainImageUrl || tour.imageUrl ? (
                           <img
                             src={tour.mainImageUrl || tour.imageUrl}
                             alt={tour.title}
-                            style={{width: '100%', height: '100%', objectFit: 'cover'}}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             className="group-hover/card:scale-105 duration-300"
                           />
                         ) : (
-                          <div style={{width: '100%', height: '100%'}} className="bg-gray-200 flex items-center justify-center">
+                          <div style={{ width: '100%', height: '100%' }} className="bg-gray-200 flex items-center justify-center">
                             <span className="text-gray-400">Görsel Yok</span>
                           </div>
                         )}
@@ -221,14 +218,14 @@ export default function PackageList() {
                           {tour.days.slice(0, 2).join(', ')}
                         </li>
                       ) : null}
-                      
+
                       {tour.location ? (
                         <li className="mr-4">
                           <i className="bi bi-geo-alt text-primary-1 mr-2"></i>
                           {tour.location}
                         </li>
                       ) : null}
-                      
+
                       <li className="mr-4">
                         {tour.price ? (
                           <>
@@ -258,53 +255,53 @@ export default function PackageList() {
                 <h4 className="text-lg font-semibold text-dark-1">Filtrele</h4>
               </div>
 
-            {/* PRICE FILTER */}
-            <aside>
-              <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">
-                Fiyat Aralığı (€):
-              </h5>
+              {/* PRICE FILTER */}
+              <aside>
+                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">
+                  Fiyat Aralığı (€):
+                </h5>
 
-              <div className="pt-4 flex gap-3 items-center">
-                <input
-                  type="number"
-                  placeholder="Min"
-                  value={priceRange[0]}
-                  onChange={(e) =>
-                    setPriceRange([Number(e.target.value), priceRange[1]])
-                  }
-                  className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
-                />
+                <div className="pt-4 flex gap-3 items-center">
+                  <input
+                    type="number"
+                    placeholder="Min"
+                    value={priceRange[0]}
+                    onChange={(e) =>
+                      setPriceRange([Number(e.target.value), priceRange[1]])
+                    }
+                    className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
+                  />
 
-                <span className="text-dark-2">–</span>
+                  <span className="text-dark-2">–</span>
 
-                <input
-                  type="number"
-                  placeholder="Max"
-                  value={priceRange[1]}
-                  onChange={(e) =>
-                    setPriceRange([priceRange[0], Number(e.target.value)])
-                  }
-                  className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
-                />
-              </div>
-              
-              <div className="custom-checkbox mt-3">
-                <input
-                  type="checkbox"
-                  id="priced-only"
-                  checked={showPricedOnly}
-                  onChange={() => setShowPricedOnly(!showPricedOnly)}
-                />
-                <label htmlFor="priced-only">Fiyat Al</label>
-              </div>
-            </aside>
+                  <input
+                    type="number"
+                    placeholder="Max"
+                    value={priceRange[1]}
+                    onChange={(e) =>
+                      setPriceRange([priceRange[0], Number(e.target.value)])
+                    }
+                    className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
+                  />
+                </div>
+
+                <div className="custom-checkbox mt-3">
+                  <input
+                    type="checkbox"
+                    id="priced-only"
+                    checked={showPricedOnly}
+                    onChange={() => setShowPricedOnly(!showPricedOnly)}
+                  />
+                  <label htmlFor="priced-only">Fiyat Al</label>
+                </div>
+              </aside>
 
               <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
 
               {/* DESTINATIONS */}
               <aside>
                 <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Şehir</h5>
-                <select 
+                <select
                   value={selectedDestinations[0] || ''}
                   onChange={(e) => {
                     if (e.target.value) {
@@ -328,7 +325,7 @@ export default function PackageList() {
               {/* DURATION */}
               <aside>
                 <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Gün</h5>
-                <select 
+                <select
                   value={selectedDays[0] || ''}
                   onChange={(e) => {
                     if (e.target.value) {

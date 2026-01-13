@@ -1,16 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { db } from '@/src/lib/firebase'
+import { doc, getDoc } from 'firebase/firestore'
 import Image from 'next/image'
 import Link from 'next/link'
-import { doc, getDoc } from 'firebase/firestore'
-import { db } from '@/src/lib/firebase'
-
-import breadcrumbBg from '@/assets/images/backgrounds/breadcrumb-bg.webp'
-import breadcrumbShape from '@/assets/images/illustration/breadcrunb__shape.png'
-import treeIllustration from '@/assets/images/illustration/tree-illustration.png'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 interface Blog {
   id: string
@@ -63,12 +59,12 @@ export default function BlogDetail() {
     <>
 
       {/* BREADCRUMB */}
-       <div className="paralax-container lg:py-20 py-16 relative overflow-hidden">
+      <div className="paralax-container lg:py-20 py-16 relative overflow-hidden">
         <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
-          <img src={breadcrumbBg.src} alt="breadcrumb" className="w-full h-full object-cover" />
+          <img src="/assets/images/backgrounds/breadcrumb-bg.webp" alt="breadcrumb" className="w-full h-full object-cover" width={100} height={100} />
         </div>
 
-        <Image src={breadcrumbShape} alt="shape" className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" />
+        <Image src="/assets/images/illustration/breadcrunb__shape.png" alt="shape" className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" width={100} height={100} />
 
         <div className="container relative z-2">
           <nav>
@@ -86,7 +82,7 @@ export default function BlogDetail() {
 
       {/* CONTENT */}
       <div className=" lg:pt-[110px] pt-[86px] relative z-1">
-        <Image src={treeIllustration} alt="tree" className="absolute top-1/2 -translate-y-1/2 right-0 max-w-[14%] z-minus hidden lg:block" />
+        <Image src="/assets/images/illustration/tree-illustration.png" alt="tree" className="absolute top-1/2 -translate-y-1/2 right-0 max-w-[14%] z-minus hidden lg:block" width={100} height={100} />
 
         <div className="container">
           <div className="grid grid-cols-12 gap-base">
@@ -96,7 +92,7 @@ export default function BlogDetail() {
 
                 {/* HEADER */}
                 <div className="disc__header text-center lg:pb-7 pb-6 border-b border-stock-1 lg:mb-10">
-                  <img src={blog.imageUrl} alt={blog.title} style={{ width: '100%', height: '350px', borderRadius: '8px', objectFit: 'cover' }} />
+                  <img src={blog.imageUrl} alt={blog.title} style={{ width: '100%', height: '350px', borderRadius: '8px', objectFit: 'cover' }} width={100} height={100} />
 
                   <ul className="flex items-center justify-center lg:text-sm text-xs font-medium text-dark-2 flex-wrap pt-7">
                     <li className="flex items-center pl-2 pr-2">
@@ -119,10 +115,10 @@ export default function BlogDetail() {
                   {(blog.secondaryImage1Url || blog.secondaryImage2Url) && (
                     <div className="grid grid-cols-2 lg:gap-base gap-5 lg:pt-[10px] lg:pb-9 pb-6">
                       {blog.secondaryImage1Url && (
-                        <img src={blog.secondaryImage1Url} alt="secondary1" style={{ width: '100%', height: '300px', objectFit: 'cover', borderRadius: '8px' }} />
+                        <img src={blog.secondaryImage1Url} alt="secondary1" style={{ width: '100%', height: '300px', objectFit: 'cover', borderRadius: '8px' }} width={100} height={100} />
                       )}
                       {blog.secondaryImage2Url && (
-                        <img src={blog.secondaryImage2Url} alt="secondary2" style={{ width: '100%', height: '300px', objectFit: 'cover', borderRadius: '8px' }} />
+                        <img src={blog.secondaryImage2Url} alt="secondary2" style={{ width: '100%', height: '300px', objectFit: 'cover', borderRadius: '8px' }} width={100} height={100} />
                       )}
                     </div>
                   )}
@@ -138,7 +134,7 @@ export default function BlogDetail() {
             <div className="lg:col-span-4 col-span-12">
 
 
-    
+
             </div>
           </div>
         </div>

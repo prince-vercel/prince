@@ -1,0 +1,186 @@
+/* References Section CSS */
+.references-section-modern {
+    --ref-primary: #C42127;
+    --ref-primary-dark: #A31B20;
+    --ref-text-primary: #1A1A2E;
+    --ref-text-muted: #8E8EA9;
+    --ref-bg-primary: #FFFFFF;
+    --ref-bg-secondary: #F8F9FC;
+    --ref-border: #E8EAF0;
+    --ref-radius: 16px;
+    --ref-transition: 300ms ease;
+    background: var(--ref-bg-primary);
+    padding: 80px 0;
+    overflow: hidden;
+}
+
+.references-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.header-icon-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--ref-primary) 0%, var(--ref-primary-dark) 100%);
+    border-radius: 14px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.header-icon-badge svg {
+    width: 24px;
+    height: 24px;
+}
+
+.references-title {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    color: var(--ref-text-primary);
+    margin: 0 0 12px;
+}
+
+.references-subtitle {
+    font-size: 17px;
+    color: var(--ref-text-muted);
+    margin: 0;
+}
+
+.references-marquee-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.marquee-track {
+    position: relative;
+    width: 100%;
+}
+
+.marquee-track::before,
+.marquee-track::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 150px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.marquee-track::before {
+    left: 0;
+    background: linear-gradient(to right, var(--ref-bg-primary) 0%, transparent 100%);
+}
+
+.marquee-track::after {
+    right: 0;
+    background: linear-gradient(to left, var(--ref-bg-primary) 0%, transparent 100%);
+}
+
+.marquee-content {
+    display: flex;
+    gap: 32px;
+    animation: marqueeScroll 40s linear infinite;
+    width: max-content;
+}
+
+.marquee-content.reverse {
+    animation: marqueeScrollReverse 40s linear infinite;
+}
+
+@keyframes marqueeScroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes marqueeScrollReverse {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.marquee-track:hover .marquee-content {
+    animation-play-state: paused;
+}
+
+.reference-item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 80px;
+    background: var(--ref-bg-secondary);
+    border-radius: 12px;
+    padding: 16px 24px;
+    border: 1px solid var(--ref-border);
+    transition: all var(--ref-transition);
+}
+
+.reference-item:hover {
+    background: var(--ref-bg-primary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transform: scale(1.05);
+}
+
+.reference-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all var(--ref-transition);
+}
+
+.reference-item:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .references-section-modern {
+        padding: 60px 0;
+    }
+
+    .marquee-track::before,
+    .marquee-track::after {
+        width: 60px;
+    }
+
+    .reference-item {
+        width: 120px;
+        height: 60px;
+        padding: 12px 16px;
+    }
+
+    .marquee-content {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .marquee-track::before,
+    .marquee-track::after {
+        width: 30px;
+    }
+
+    .reference-item {
+        width: 100px;
+        height: 50px;
+        padding: 10px 12px;
+    }
+}

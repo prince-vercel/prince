@@ -1,14 +1,11 @@
 'use client'
 
-import { useState } from 'react'
-import Footer from '@/src/components/MedicalComponents/Footer'
-import Header from '@/src/components/MedicalComponents/Header'
 import Toast from '@/src/components/Toast'
-import Image from 'next/image'
-import banner_img from '@/assets/img/contact/banner_img.png'
-import Link from 'next/link'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useState } from 'react'
 
 export default function ContactPage() {
   const [name, setName] = useState('')
@@ -53,36 +50,36 @@ export default function ContactPage() {
     <>
       <section style={{ background: '#4f8edc', padding: '40px 0 40px 0', position: 'relative', overflow: 'hidden' }}>
         <div className="container">
-       
 
-        <div className="container" style={{ marginBottom: '30px', marginTop: '10px', position: 'relative', zIndex: 2 }}>
-          <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
-            <li className="breadcrumb-item2" style={{ color: '#fff' }}>
-              <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
-            </li>
-            <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>İletişim</li>
-          </ol>
 
-          <div className="cs_banner_text">
-            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }}>
-              Bize Ulaşın
-            </h2>
-            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
-              En hızlı yanıt için bize ulaşın.
-            </p>
+          <div className="container" style={{ marginBottom: '30px', marginTop: '10px', position: 'relative', zIndex: 2 }}>
+            <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
+              <li className="breadcrumb-item2" style={{ color: '#fff' }}>
+                <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
+              </li>
+              <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>İletişim</li>
+            </ol>
+
+            <div className="cs_banner_text">
+              <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }}>
+                Bize Ulaşın
+              </h2>
+              <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
+                En hızlı yanıt için bize ulaşın.
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div style={{ position: 'absolute', right: '0', bottom: '0', width: '40%', height: '100%', display: 'flex', alignItems: 'flex-end' }}>
-          <Image src={banner_img} alt="Banner" width={400} height={400} style={{ objectFit: 'contain' }} />
-        </div>
+          <div style={{ position: 'absolute', right: '0', bottom: '0', width: '40%', height: '100%', display: 'flex', alignItems: 'flex-end' }}>
+            <Image src="/assets/img/contact/banner_img.png" alt="Banner" width={400} height={400} style={{ objectFit: 'contain' }} />
+          </div>
         </div>
       </section>
 
       <section>
-        
+
         <div className="container cs_mt_minus_110 cs_contact_fix" style={{ marginTop: '-30px' }}>
-             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-base">
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-base">
             <div className="shadow-custom-1 bg-white lg:py-8 py-7 px-base wow fadeInUp">
               <div className="flex">
                 <div className="mr-[15px] shrink-0 lg:text-3xl text-2xl text-[#219FFF]">
@@ -164,22 +161,22 @@ export default function ContactPage() {
             </div>
           </div>
           <div className="cs_map" style={{ margin: '50px' }}>
-        <iframe
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.5597041697186!2d29.00434!3d41.05107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab6d6e5131909%3A0xfaa0f0510c542a88!2zREFQIFlhcMSxIFogT2Zpcw!5e0!3m2!1str!2str!4v1673000000000"
-    width="50%"
-    height="250"
-    style={{ border: 0 }}
-    loading="lazy"
-    referrerPolicy="no-referrer-when-downgrade"
-    allowFullScreen
-  />
-      </div>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.5597041697186!2d29.00434!3d41.05107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab6d6e5131909%3A0xfaa0f0510c542a88!2zREFQIFlhcMSxIFogT2Zpcw!5e0!3m2!1str!2str!4v1673000000000"
+              width="50%"
+              height="250"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
           <form
             className="cs_contact_form cs_style_1 cs_white_bg cs_radius_30"
             onSubmit={handleSubmit}
           >
             <div className="row">
-            <h2 className="section-title-v1">
+              <h2 className="section-title-v1">
                 Bize Ulaşın!
               </h2>              <div className="col-lg-6">
                 <label className="cs_input_label">Ad <span style={{ color: 'red' }}>*</span></label>
@@ -239,7 +236,7 @@ export default function ContactPage() {
         </div>
       </section>
 
- 
+
 
     </>
   )
