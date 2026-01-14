@@ -1,99 +1,102 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import '../../i18n'
 import '../../styles/visa/BasvuruDurumlari.css'
 
-// Tablo verileri
-const tableData = [
-    {
-        country: 'Almanya',
-        applications: '2.453',
-        rates: '%57 Turist - %24 Çalışma - %11 Akraba Ziyareti - %8 Ticari'
-    },
-    {
-        country: 'İtalya',
-        applications: '2.184',
-        rates: '%78 Turist - %2 Çalışma - %6 Arkadaş - %14 Eğitim'
-    },
-    {
-        country: 'Fransa',
-        applications: '2.061',
-        rates: '%45 Turist - %35 Çalışma - %18 Arkadaş Ziyareti - %2 Ticari'
-    },
-    {
-        country: 'Hollanda',
-        applications: '1.874',
-        rates: '%82 Turist - %1 Çalışma - %14 Arkadaş Ziyareti - %3 Ticari'
-    },
-    {
-        country: 'Yunanistan',
-        applications: '1.799',
-        rates: '%95 Turist - %5 Ticari'
-    },
-    {
-        country: 'Amerika',
-        applications: '1.784',
-        rates: '%99 Turist - %1 Diğer'
-    },
-    {
-        country: 'Kanada',
-        applications: '1.619',
-        rates: '%84 Turist - %10 Ticari - %6 Diğer'
-    },
-    {
-        country: 'İngiltere',
-        applications: '1.120',
-        rates: '%65 Turist - %17 Eğitim - %15 Ticari - %3 Diğer'
-    },
-    {
-        country: 'İspanya',
-        applications: '1.403',
-        rates: '%72 Turist - %19 Ticari - %9 Diğer'
-    },
-    {
-        country: 'Polonya',
-        applications: '964',
-        rates: '%38 Turist - %44 Çalışma - %16 Eğitim %2 Diğer'
-    },
-    {
-        country: 'Avustralya',
-        applications: '911',
-        rates: '%45 Turist - %45 Eğitim - %10 Diğer'
-    },
-    {
-        country: 'Dubai',
-        applications: '1.814',
-        rates: '%100 Turist - %100 Başarı Oranı'
-    },
-    {
-        country: 'Rusya',
-        applications: '624',
-        rates: '%100 Turist - %100 Başarı Oranı'
-    },
-    {
-        country: 'Belçika',
-        applications: '720',
-        rates: '%50 Turist - %24 Arkadaş Ziyareti - %26 Diğer'
-    },
-    {
-        country: 'Avusturya',
-        applications: '1.180',
-        rates: '%25 Turist- % 63 Arkadaş Ziyareti - %12 Diğer'
-    },
-    {
-        country: 'Macaristan',
-        applications: '627',
-        rates: '%65 Turist - %18 Ticari - %5 Eğitim - %12 Diğer'
-    },
-    {
-        country: 'Portekiz',
-        applications: '328',
-        rates: '%90 Turist - %10 Diğer'
-    }
-]
-
 export default function BasvuruDurumlariPage() {
+    const { t, i18n } = useTranslation()
+
+    // Tablo verileri
+    const tableData = useMemo(() => [
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.germany.country', 'Almanya'),
+            applications: '2.453',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.germany.rates', '%57 Turist - %24 Çalışma - %11 Akraba Ziyareti - %8 Ticari')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.italy.country', 'İtalya'),
+            applications: '2.184',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.italy.rates', '%78 Turist - %2 Çalışma - %6 Arkadaş - %14 Eğitim')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.france.country', 'Fransa'),
+            applications: '2.061',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.france.rates', '%45 Turist - %35 Çalışma - %18 Arkadaş Ziyareti - %2 Ticari')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.netherlands.country', 'Hollanda'),
+            applications: '1.874',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.netherlands.rates', '%82 Turist - %1 Çalışma - %14 Arkadaş Ziyareti - %3 Ticari')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.greece.country', 'Yunanistan'),
+            applications: '1.799',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.greece.rates', '%95 Turist - %5 Ticari')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.usa.country', 'Amerika'),
+            applications: '1.784',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.usa.rates', '%99 Turist - %1 Diğer')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.canada.country', 'Kanada'),
+            applications: '1.619',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.canada.rates', '%84 Turist - %10 Ticari - %6 Diğer')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.uk.country', 'İngiltere'),
+            applications: '1.120',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.uk.rates', '%65 Turist - %17 Eğitim - %15 Ticari - %3 Diğer')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.spain.country', 'İspanya'),
+            applications: '1.403',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.spain.rates', '%72 Turist - %19 Ticari - %9 Diğer')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.poland.country', 'Polonya'),
+            applications: '964',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.poland.rates', '%38 Turist - %44 Çalışma - %16 Eğitim %2 Diğer')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.australia.country', 'Avustralya'),
+            applications: '911',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.australia.rates', '%45 Turist - %45 Eğitim - %10 Diğer')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.dubai.country', 'Dubai'),
+            applications: '1.814',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.dubai.rates', '%100 Turist - %100 Başarı Oranı')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.russia.country', 'Rusya'),
+            applications: '624',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.russia.rates', '%100 Turist - %100 Başarı Oranı')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.belgium.country', 'Belçika'),
+            applications: '720',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.belgium.rates', '%50 Turist - %24 Arkadaş Ziyareti - %26 Diğer')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.austria.country', 'Avusturya'),
+            applications: '1.180',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.austria.rates', '%25 Turist- % 63 Arkadaş Ziyareti - %12 Diğer')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.hungary.country', 'Macaristan'),
+            applications: '627',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.hungary.rates', '%65 Turist - %18 Ticari - %5 Eğitim - %12 Diğer')
+        },
+        {
+            country: t('visa.pages.basvuruDurumlari.table.rows.portugal.country', 'Portekiz'),
+            applications: '328',
+            rates: t('visa.pages.basvuruDurumlari.table.rows.portugal.rates', '%90 Turist - %10 Diğer')
+        }
+    ], [t, i18n.language])
     const shapesRef = useRef<HTMLDivElement>(null)
 
     // Parallax effect on hero shapes
@@ -109,7 +112,7 @@ export default function BasvuruDurumlariPage() {
                     const scrolled = window.pageYOffset
                     shapes.forEach((shape, index) => {
                         const speed = (index + 1) * 0.03
-                        ;(shape as HTMLElement).style.transform = `translateY(${scrolled * speed}px)`
+                            ; (shape as HTMLElement).style.transform = `translateY(${scrolled * speed}px)`
                     })
                     ticking = false
                 })
@@ -153,20 +156,20 @@ export default function BasvuruDurumlariPage() {
                         <div className="hero-content">
                             {/* Breadcrumb */}
                             <nav className="breadcrumb-nav">
-                                <Link href="/visa">Ana Sayfa</Link>
+                                <Link href="/visa">{t('visa.pages.basvuruDurumlari.breadcrumb')}</Link>
                                 <span className="separator">/</span>
-                                <span className="current">Vize Başvuru Başarı Oranları</span>
+                                <span className="current">{t('visa.pages.basvuruDurumlari.title')}</span>
                             </nav>
 
                             {/* Title */}
-                            <h1 className="hero-title">Vize Başvuru Başarı Oranları</h1>
+                            <h1 className="hero-title">{t('visa.pages.basvuruDurumlari.title')}</h1>
 
                             {/* CTA Button */}
                             <Link href="/visa/basvuru-yap" className="hero-cta">
-                                <span>Başvurunuzu Başlatın</span>
+                                <span>{t('visa.common.apply')}</span>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <line x1="5" y1="12" x2="19" y2="12"/>
-                                    <polyline points="12 5 19 12 12 19"/>
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
                                 </svg>
                             </Link>
                         </div>
@@ -187,13 +190,13 @@ export default function BasvuruDurumlariPage() {
                                         <tbody>
                                             <tr>
                                                 <td style={{ padding: '5px', border: '1px solid #ddd' }}>
-                                                    <b>Ülkeler</b>
+                                                    <b>{t('visa.pages.basvuruDurumlari.table.country')}</b>
                                                 </td>
                                                 <td style={{ padding: '5px', border: '1px solid #ddd' }}>
-                                                    <b>Başvuru</b> <b>Sayısı</b>
+                                                    <b>{t('visa.pages.basvuruDurumlari.table.applications')}</b>
                                                 </td>
                                                 <td style={{ padding: '5px', border: '1px solid #ddd' }}>
-                                                    <b>Başvuru Yapılan</b> <b>Vize Türü</b> <b>Oranı</b>
+                                                    <b>{t('visa.pages.basvuruDurumlari.table.rates')}</b>
                                                 </td>
                                             </tr>
                                             {tableData.map((row, index) => (
@@ -217,7 +220,7 @@ export default function BasvuruDurumlariPage() {
                                         <b><br /></b>
                                     </p>
                                     <p style={{ textAlign: 'center', marginRight: 0, marginBottom: '10px', marginLeft: 0, padding: 0, border: 0 }}>
-                                        <b>Veriler 6 aylık olarak güncellenmektedir.</b>
+                                        <b>{t('visa.pages.basvuruDurumlari.table.updateNote', 'Veriler 6 aylık olarak güncellenmektedir.')}</b>
                                     </p>
                                 </div>
                             </article>

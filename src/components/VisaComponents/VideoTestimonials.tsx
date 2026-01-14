@@ -2,6 +2,8 @@
 
 import Image from 'next/image'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import '../../i18n'
 
 interface VideoTestimonial {
     title: string
@@ -43,6 +45,8 @@ const videoTestimonials: VideoTestimonial[] = [
 ]
 
 export default function VideoTestimonials() {
+    const { t } = useTranslation()
+    
     // main.js'teki swiperVerticalCardSliders ve iframeModal init fonksiyonlarını çağır
     useEffect(() => {
         const initSliders = () => {
@@ -113,7 +117,7 @@ export default function VideoTestimonials() {
             <section className="section section-shorts">
                 <div className="container">
                     <div className="section-head type-1" data-scroll-animation>
-                        <span className="heading-2">Bizi danışanlarımızdan dinleyin!</span>
+                        <span className="heading-2">{t('visa.videoTestimonials.title')}</span>
                     </div>
                 </div>
                 <div className="swiper swiper-vertical-card-sliders">

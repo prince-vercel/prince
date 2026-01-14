@@ -1,62 +1,67 @@
+'use client'
+
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import '../../i18n';
 import '../../styles/visa/BasvuruYap.css';
 
-const countries = [
-    'ABD', 'Almanya', 'Avustralya', 'Avusturya', 'Belçika', 'Bulgaristan',
-    'Çekya', 'Danimarka', 'Estonya', 'Finlandiya', 'Fransa', 'Hollanda',
-    'İngiltere', 'İrlanda', 'İspanya', 'İsveç', 'İsviçre', 'İtalya',
-    'Kanada', 'Letonya', 'Litvanya', 'Lüksemburg', 'Macaristan', 'Malta',
-    'Norveç', 'Polonya', 'Portekiz', 'Romanya', 'Slovakya', 'Slovenya', 'Yunanistan'
-];
-
-const visaTypes = [
-    'Turistik Vize',
-    'İş Vizesi',
-    'Öğrenci Vizesi',
-    'Aile Birleşimi',
-    'Transit Vize',
-    'Çalışma Vizesi'
-];
-
-const travelWithOptions = [
-    'Yalnız',
-    'Eş ile',
-    'Aile ile',
-    'Arkadaş ile',
-    'İş arkadaşı ile',
-    'Grup'
-];
-
-const jobOptions = [
-    'Çalışan',
-    'İşveren',
-    'Serbest Meslek',
-    'Öğrenci',
-    'Emekli',
-    'Ev Hanımı',
-    'İşsiz'
-];
-
-const workYearsOptions = [
-    '0-1 yıl',
-    '1-3 yıl',
-    '3-5 yıl',
-    '5-10 yıl',
-    '10+ yıl',
-    'Çalışmıyorum'
-];
-
-const salaryOptions = [
-    '0-10.000 TL',
-    '10.000-20.000 TL',
-    '20.000-35.000 TL',
-    '35.000-50.000 TL',
-    '50.000-75.000 TL',
-    '75.000-100.000 TL',
-    '100.000+ TL'
-];
-
 export default function BasvuruYapPage() {
+    const { t } = useTranslation();
+
+    const countries = [
+        'ABD', 'Almanya', 'Avustralya', 'Avusturya', 'Belçika', 'Bulgaristan',
+        'Çekya', 'Danimarka', 'Estonya', 'Finlandiya', 'Fransa', 'Hollanda',
+        'İngiltere', 'İrlanda', 'İspanya', 'İsveç', 'İsviçre', 'İtalya',
+        'Kanada', 'Letonya', 'Litvanya', 'Lüksemburg', 'Macaristan', 'Malta',
+        'Norveç', 'Polonya', 'Portekiz', 'Romanya', 'Slovakya', 'Slovenya', 'Yunanistan'
+    ];
+
+    const visaTypes = [
+        t('visa.pages.basvuruYap.options.visaTypes.tourist', 'Turistik Vize'),
+        t('visa.pages.basvuruYap.options.visaTypes.business', 'İş Vizesi'),
+        t('visa.pages.basvuruYap.options.visaTypes.student', 'Öğrenci Vizesi'),
+        t('visa.pages.basvuruYap.options.visaTypes.family', 'Aile Birleşimi'),
+        t('visa.pages.basvuruYap.options.visaTypes.transit', 'Transit Vize'),
+        t('visa.pages.basvuruYap.options.visaTypes.work', 'Çalışma Vizesi')
+    ];
+
+    const travelWithOptions = [
+        t('visa.pages.basvuruYap.options.alone'),
+        t('visa.pages.basvuruYap.options.withSpouse'),
+        t('visa.pages.basvuruYap.options.withFamily'),
+        t('visa.pages.basvuruYap.options.withFriend'),
+        t('visa.pages.basvuruYap.options.withColleague'),
+        t('visa.pages.basvuruYap.options.group')
+    ];
+
+    const jobOptions = [
+        t('visa.pages.basvuruYap.options.jobs.employee', 'Çalışan'),
+        t('visa.pages.basvuruYap.options.jobs.employer', 'İşveren'),
+        t('visa.pages.basvuruYap.options.jobs.freelance', 'Serbest Meslek'),
+        t('visa.pages.basvuruYap.options.jobs.student', 'Öğrenci'),
+        t('visa.pages.basvuruYap.options.jobs.retired', 'Emekli'),
+        t('visa.pages.basvuruYap.options.jobs.housewife', 'Ev Hanımı'),
+        t('visa.pages.basvuruYap.options.jobs.unemployed', 'İşsiz')
+    ];
+
+    const workYearsOptions = [
+        t('visa.pages.basvuruYap.options.workYears.0-1', '0-1 yıl'),
+        t('visa.pages.basvuruYap.options.workYears.1-3', '1-3 yıl'),
+        t('visa.pages.basvuruYap.options.workYears.3-5', '3-5 yıl'),
+        t('visa.pages.basvuruYap.options.workYears.5-10', '5-10 yıl'),
+        t('visa.pages.basvuruYap.options.workYears.10+', '10+ yıl'),
+        t('visa.pages.basvuruYap.options.workYears.none', 'Çalışmıyorum')
+    ];
+
+    const salaryOptions = [
+        t('visa.pages.basvuruYap.options.salary.0-10k', '0-10.000 TL'),
+        t('visa.pages.basvuruYap.options.salary.10-20k', '10.000-20.000 TL'),
+        t('visa.pages.basvuruYap.options.salary.20-35k', '20.000-35.000 TL'),
+        t('visa.pages.basvuruYap.options.salary.35-50k', '35.000-50.000 TL'),
+        t('visa.pages.basvuruYap.options.salary.50-75k', '50.000-75.000 TL'),
+        t('visa.pages.basvuruYap.options.salary.75-100k', '75.000-100.000 TL'),
+        t('visa.pages.basvuruYap.options.salary.100k+', '100.000+ TL')
+    ];
     const [currentStep, setCurrentStep] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -187,26 +192,26 @@ export default function BasvuruYapPage() {
     // Field label mapping
     const getFieldLabel = (key: string): string => {
         const labels: Record<string, string> = {
-            country: 'Gidilecek Ülke',
-            visa_type: 'Vize Türü',
-            travel_subject: 'Seyahat Konusu',
-            travel_date: 'Tahmini Seyahat Tarihi',
-            flight_ticket: 'Uçak Biletiniz Var mı?',
-            name: 'Adınız',
-            surname: 'Soyadınız',
-            email: 'E-posta',
-            phone: 'Telefon',
-            age: 'Yaşınız',
-            travel_with: 'Kiminle Seyahat Edeceksiniz?',
-            marital_status: 'Medeni Durum',
-            visa_before: 'Bu ülkeye daha önce vize aldınız mı?',
-            visa_rejection: 'Daha önce vize reddi aldınız mı?',
-            schengen_visa: 'Schengen vizesi var mı?',
-            job: 'Mesleğiniz',
-            work_years: 'Kaç yıldır aynı iş yerinde?',
-            net_salary: 'Net Maaşınız',
-            salary_to_bank: 'Maaşınız banka hesabına yatıyor mu?',
-            message: 'Eklemek istediğiniz not veya soru'
+            country: t('visa.pages.basvuruYap.fields.country'),
+            visa_type: t('visa.pages.basvuruYap.fields.visaType'),
+            travel_subject: t('visa.pages.basvuruYap.fields.travelSubject'),
+            travel_date: t('visa.pages.basvuruYap.fields.travelDate'),
+            flight_ticket: t('visa.pages.basvuruYap.fields.flightTicket'),
+            name: t('visa.pages.basvuruYap.fields.name'),
+            surname: t('visa.pages.basvuruYap.fields.surname'),
+            email: t('visa.pages.basvuruYap.fields.email'),
+            phone: t('visa.pages.basvuruYap.fields.phone'),
+            age: t('visa.pages.basvuruYap.fields.age'),
+            travel_with: t('visa.pages.basvuruYap.fields.travelWith'),
+            marital_status: t('visa.pages.basvuruYap.fields.maritalStatus'),
+            visa_before: t('visa.pages.basvuruYap.fields.visaBefore'),
+            visa_rejection: t('visa.pages.basvuruYap.fields.visaRejection'),
+            schengen_visa: t('visa.pages.basvuruYap.fields.schengenVisa'),
+            job: t('visa.pages.basvuruYap.fields.job'),
+            work_years: t('visa.pages.basvuruYap.fields.workYears'),
+            net_salary: t('visa.pages.basvuruYap.fields.netSalary'),
+            salary_to_bank: t('visa.pages.basvuruYap.fields.salaryToBank'),
+            message: t('visa.pages.basvuruYap.fields.message')
         };
         return labels[key] || key;
     };
@@ -285,10 +290,30 @@ export default function BasvuruYapPage() {
             await new Promise(resolve => setTimeout(resolve, 2000));
 
             // Redirect or show success message
-            alert('Başvurunuz başarıyla gönderildi!');
+            if (window.Swal) {
+                window.Swal.fire({
+                    icon: 'success',
+                    title: t('visa.common.success', 'Başarılı!'),
+                    text: t('visa.pages.basvuruYap.success'),
+                    confirmButtonColor: '#C42127',
+                    confirmButtonText: t('visa.common.ok')
+                });
+            } else {
+                alert(t('visa.pages.basvuruYap.success'));
+            }
         } catch (error) {
             console.error('Form submission error:', error);
-            alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+            if (window.Swal) {
+                window.Swal.fire({
+                    icon: 'error',
+                    title: t('visa.common.error'),
+                    text: t('visa.pages.basvuruYap.error'),
+                    confirmButtonColor: '#C42127',
+                    confirmButtonText: t('visa.common.ok')
+                });
+            } else {
+                alert(t('visa.pages.basvuruYap.error'));
+            }
         } finally {
             setIsLoading(false);
             if (loadingOverlay) loadingOverlay.classList.remove('active');
@@ -314,14 +339,14 @@ export default function BasvuruYapPage() {
                                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                                 <polyline points="22 4 12 14.01 9 11.01" />
                             </svg>
-                            <span>Ücretsiz Ön Değerlendirme</span>
+                            <span>{t('visa.pages.basvuruYap.badge')}</span>
                         </div>
                         <h1 className="hero-title">
                             <span className="title-accent">Çilek Vize</span>
-                            <span className="title-main">Vize Başvurusu</span>
+                            <span className="title-main">{t('visa.pages.basvuruYap.title')}</span>
                         </h1>
                         <p className="hero-subtitle">
-                            Hayalinizdeki ülkeye vizesiz seyahat için ilk adımı atın. Uzman ekibimiz sizinle birlikte çalışacak.
+                            {t('visa.pages.basvuruYap.subtitle')}
                         </p>
                     </div>
                 </div>
@@ -343,7 +368,7 @@ export default function BasvuruYapPage() {
                                                 <polyline points="20 6 9 17 4 12" />
                                             </svg>
                                         </div>
-                                        <span className="step-label">Vize Bilgileri</span>
+                                        <span className="step-label">{t('visa.pages.basvuruYap.steps.visaInfo')}</span>
                                     </div>
                                     <div className="step-line"></div>
                                     <div className={`step-item ${currentStep >= 2 ? 'active' : ''} ${formData.name && formData.surname && formData.email && formData.phone ? 'completed' : ''}`} data-step="2">
@@ -353,7 +378,7 @@ export default function BasvuruYapPage() {
                                                 <polyline points="20 6 9 17 4 12" />
                                             </svg>
                                         </div>
-                                        <span className="step-label">Kişisel Bilgiler</span>
+                                        <span className="step-label">{t('visa.pages.basvuruYap.steps.personalInfo')}</span>
                                     </div>
                                     <div className="step-line"></div>
                                     <div className={`step-item ${currentStep >= 3 ? 'active' : ''} ${formData.visa_before && formData.visa_rejection && formData.schengen_visa ? 'completed' : ''}`} data-step="3">
@@ -363,7 +388,7 @@ export default function BasvuruYapPage() {
                                                 <polyline points="20 6 9 17 4 12" />
                                             </svg>
                                         </div>
-                                        <span className="step-label">Vize Geçmişi</span>
+                                        <span className="step-label">{t('visa.pages.basvuruYap.steps.visaHistory')}</span>
                                     </div>
                                     <div className="step-line"></div>
                                     <div className={`step-item ${currentStep >= 4 ? 'active' : ''} ${formData.job && formData.work_years && formData.net_salary ? 'completed' : ''}`} data-step="4">
@@ -373,7 +398,7 @@ export default function BasvuruYapPage() {
                                                 <polyline points="20 6 9 17 4 12" />
                                             </svg>
                                         </div>
-                                        <span className="step-label">İş Bilgileri</span>
+                                        <span className="step-label">{t('visa.pages.basvuruYap.steps.workInfo')}</span>
                                     </div>
                                 </div>
                             </div>
@@ -392,8 +417,8 @@ export default function BasvuruYapPage() {
                                                 </svg>
                                             </div>
                                             <div className="section-title-wrapper">
-                                                <h2 className="section-title">Vize Bilgileri</h2>
-                                                <p className="section-desc">Seyahat planınız hakkında bilgi verin</p>
+                                                <h2 className="section-title">{t('visa.pages.basvuruYap.sections.visaInfo.title')}</h2>
+                                                <p className="section-desc">{t('visa.pages.basvuruYap.sections.visaInfo.description')}</p>
                                             </div>
                                         </div>
 
@@ -413,12 +438,12 @@ export default function BasvuruYapPage() {
                                                         }}
                                                         required
                                                     >
-                                                        <option value="" disabled>Seçiniz</option>
+                                                        <option value="" disabled>{t('visa.common.select')}</option>
                                                         {countries.map(country => (
                                                             <option key={country} value={country}>{country}</option>
                                                         ))}
                                                     </select>
-                                                    <label htmlFor="country">Gidilecek Ülke <span className="required">*</span></label>
+                                                    <label htmlFor="country">{t('visa.pages.basvuruYap.fields.country')} <span className="required">*</span></label>
                                                     <span className="select-arrow">
                                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                             <polyline points="6 9 12 15 18 9" />
@@ -443,12 +468,12 @@ export default function BasvuruYapPage() {
                                                         }}
                                                         required
                                                     >
-                                                        <option value="" disabled>Seçiniz</option>
+                                                        <option value="" disabled>{t('visa.common.select')}</option>
                                                         {visaTypes.map(type => (
                                                             <option key={type} value={type}>{type}</option>
                                                         ))}
                                                     </select>
-                                                    <label htmlFor="visa_type">Vize Türü <span className="required">*</span></label>
+                                                    <label htmlFor="visa_type">{t('visa.pages.basvuruYap.fields.visaType')} <span className="required">*</span></label>
                                                     <span className="select-arrow">
                                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                             <polyline points="6 9 12 15 18 9" />
@@ -467,8 +492,8 @@ export default function BasvuruYapPage() {
                                                         onChange={handleInputChange}
                                                         placeholder=" "
                                                     />
-                                                    <label htmlFor="travel_subject">Seyahat Konusu</label>
-                                                    <span className="input-hint">Örn: İş görüşmesi, Tatil, Eğitim...</span>
+                                                    <label htmlFor="travel_subject">{t('visa.pages.basvuruYap.fields.travelSubject')}</label>
+                                                    <span className="input-hint">{t('visa.pages.basvuruYap.fields.travelSubjectHint', 'Örn: İş görüşmesi, Tatil, Eğitim...')}</span>
                                                 </div>
                                             </div>
 
@@ -482,38 +507,38 @@ export default function BasvuruYapPage() {
                                                         onChange={handleInputChange}
                                                         placeholder=" "
                                                     />
-                                                    <label htmlFor="travel_date">Tahmini Seyahat Tarihi</label>
+                                                    <label htmlFor="travel_date">{t('visa.pages.basvuruYap.fields.travelDate')}</label>
                                                 </div>
                                             </div>
 
                                             <div className="form-group">
-                                                <label className="group-label">Uçak Biletiniz Var mı? <span className="required">*</span></label>
+                                                <label className="group-label">{t('visa.pages.basvuruYap.fields.flightTicket')} <span className="required">*</span></label>
                                                 <div className="radio-cards">
                                                     <label className="radio-card">
                                                         <input
                                                             type="radio"
                                                             name="flight_ticket"
-                                                            value="Evet"
-                                                            checked={formData.flight_ticket === 'Evet'}
+                                                            value={t('visa.pages.basvuruYap.options.yes')}
+                                                            checked={formData.flight_ticket === t('visa.pages.basvuruYap.options.yes')}
                                                             onChange={handleInputChange}
                                                             required
                                                         />
                                                         <span className="radio-card-content">
                                                             <span className="radio-indicator"></span>
-                                                            <span className="radio-text">Evet</span>
+                                                            <span className="radio-text">{t('visa.pages.basvuruYap.options.yes')}</span>
                                                         </span>
                                                     </label>
                                                     <label className="radio-card">
                                                         <input
                                                             type="radio"
                                                             name="flight_ticket"
-                                                            value="Hayır"
-                                                            checked={formData.flight_ticket === 'Hayır'}
+                                                            value={t('visa.pages.basvuruYap.options.no')}
+                                                            checked={formData.flight_ticket === t('visa.pages.basvuruYap.options.no')}
                                                             onChange={handleInputChange}
                                                         />
                                                         <span className="radio-card-content">
                                                             <span className="radio-indicator"></span>
-                                                            <span className="radio-text">Hayır</span>
+                                                            <span className="radio-text">{t('visa.pages.basvuruYap.options.no')}</span>
                                                         </span>
                                                     </label>
                                                 </div>
@@ -531,8 +556,8 @@ export default function BasvuruYapPage() {
                                                 </svg>
                                             </div>
                                             <div className="section-title-wrapper">
-                                                <h2 className="section-title">Kişisel Bilgiler</h2>
-                                                <p className="section-desc">Sizinle iletişim kurmamız için bilgileriniz</p>
+                                                <h2 className="section-title">{t('visa.pages.basvuruYap.sections.personalInfo.title')}</h2>
+                                                <p className="section-desc">{t('visa.pages.basvuruYap.sections.personalInfo.description')}</p>
                                             </div>
                                         </div>
 
@@ -548,7 +573,7 @@ export default function BasvuruYapPage() {
                                                         placeholder=" "
                                                         required
                                                     />
-                                                    <label htmlFor="name">Adınız <span className="required">*</span></label>
+                                                    <label htmlFor="name">{t('visa.pages.basvuruYap.fields.name')} <span className="required">*</span></label>
                                                 </div>
                                             </div>
 
@@ -563,7 +588,7 @@ export default function BasvuruYapPage() {
                                                         placeholder=" "
                                                         required
                                                     />
-                                                    <label htmlFor="surname">Soyadınız <span className="required">*</span></label>
+                                                    <label htmlFor="surname">{t('visa.pages.basvuruYap.fields.surname')} <span className="required">*</span></label>
                                                 </div>
                                             </div>
 
@@ -580,7 +605,7 @@ export default function BasvuruYapPage() {
                                                         autoComplete="email"
                                                         required
                                                     />
-                                                    <label htmlFor="email">E-posta <span className="required">*</span></label>
+                                                    <label htmlFor="email">{t('visa.pages.basvuruYap.fields.email')} <span className="required">*</span></label>
                                                 </div>
                                             </div>
 
@@ -597,7 +622,7 @@ export default function BasvuruYapPage() {
                                                         autoComplete="tel"
                                                         required
                                                     />
-                                                    <label htmlFor="phone">Telefon <span className="required">*</span></label>
+                                                    <label htmlFor="phone">{t('visa.pages.basvuruYap.fields.phone')} <span className="required">*</span></label>
                                                     <span className="input-hint">0532 123 4567</span>
                                                 </div>
                                             </div>
@@ -616,7 +641,7 @@ export default function BasvuruYapPage() {
                                                         inputMode="numeric"
                                                         required
                                                     />
-                                                    <label htmlFor="age">Yaşınız <span className="required">*</span></label>
+                                                    <label htmlFor="age">{t('visa.pages.basvuruYap.fields.age')} <span className="required">*</span></label>
                                                 </div>
                                             </div>
 
@@ -636,12 +661,12 @@ export default function BasvuruYapPage() {
                                                         }}
                                                         required
                                                     >
-                                                        <option value="" disabled>Seçiniz</option>
+                                                        <option value="" disabled>{t('visa.common.select')}</option>
                                                         {travelWithOptions.map(option => (
                                                             <option key={option} value={option}>{option}</option>
                                                         ))}
                                                     </select>
-                                                    <label htmlFor="travel_with">Kiminle Seyahat Edeceksiniz? <span className="required">*</span></label>
+                                                    <label htmlFor="travel_with">{t('visa.pages.basvuruYap.fields.travelWith')} <span className="required">*</span></label>
                                                     <span className="select-arrow">
                                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                             <polyline points="6 9 12 15 18 9" />
@@ -651,33 +676,33 @@ export default function BasvuruYapPage() {
                                             </div>
 
                                             <div className="form-group">
-                                                <label className="group-label">Medeni Durum <span className="required">*</span></label>
+                                                <label className="group-label">{t('visa.pages.basvuruYap.fields.maritalStatus')} <span className="required">*</span></label>
                                                 <div className="radio-cards">
                                                     <label className="radio-card">
                                                         <input
                                                             type="radio"
                                                             name="marital_status"
-                                                            value="Evli"
-                                                            checked={formData.marital_status === 'Evli'}
+                                                            value={t('visa.pages.basvuruYap.options.married')}
+                                                            checked={formData.marital_status === t('visa.pages.basvuruYap.options.married')}
                                                             onChange={handleInputChange}
                                                             required
                                                         />
                                                         <span className="radio-card-content">
                                                             <span className="radio-indicator"></span>
-                                                            <span className="radio-text">Evli</span>
+                                                            <span className="radio-text">{t('visa.pages.basvuruYap.options.married')}</span>
                                                         </span>
                                                     </label>
                                                     <label className="radio-card">
                                                         <input
                                                             type="radio"
                                                             name="marital_status"
-                                                            value="Bekar"
-                                                            checked={formData.marital_status === 'Bekar'}
+                                                            value={t('visa.pages.basvuruYap.options.single')}
+                                                            checked={formData.marital_status === t('visa.pages.basvuruYap.options.single')}
                                                             onChange={handleInputChange}
                                                         />
                                                         <span className="radio-card-content">
                                                             <span className="radio-indicator"></span>
-                                                            <span className="radio-text">Bekar</span>
+                                                            <span className="radio-text">{t('visa.pages.basvuruYap.options.single')}</span>
                                                         </span>
                                                     </label>
                                                 </div>
@@ -695,106 +720,106 @@ export default function BasvuruYapPage() {
                                                 </svg>
                                             </div>
                                             <div className="section-title-wrapper">
-                                                <h2 className="section-title">Vize Geçmişi</h2>
-                                                <p className="section-desc">Daha önce vize deneyimleriniz</p>
+                                                <h2 className="section-title">{t('visa.pages.basvuruYap.sections.visaHistory.title')}</h2>
+                                                <p className="section-desc">{t('visa.pages.basvuruYap.sections.visaHistory.description')}</p>
                                             </div>
                                         </div>
 
                                         <div className="form-grid three-cols">
                                             <div className="form-group">
-                                                <label className="group-label">Bu ülkeye daha önce vize aldınız mı? <span className="required">*</span></label>
+                                                <label className="group-label">{t('visa.pages.basvuruYap.fields.visaBefore')} <span className="required">*</span></label>
                                                 <div className="radio-cards">
                                                     <label className="radio-card">
                                                         <input
                                                             type="radio"
                                                             name="visa_before"
-                                                            value="Evet"
-                                                            checked={formData.visa_before === 'Evet'}
+                                                            value={t('visa.pages.basvuruYap.options.yes')}
+                                                            checked={formData.visa_before === t('visa.pages.basvuruYap.options.yes')}
                                                             onChange={handleInputChange}
                                                             required
                                                         />
                                                         <span className="radio-card-content">
                                                             <span className="radio-indicator"></span>
-                                                            <span className="radio-text">Evet</span>
+                                                            <span className="radio-text">{t('visa.pages.basvuruYap.options.yes')}</span>
                                                         </span>
                                                     </label>
                                                     <label className="radio-card">
                                                         <input
                                                             type="radio"
                                                             name="visa_before"
-                                                            value="Hayır"
-                                                            checked={formData.visa_before === 'Hayır'}
+                                                            value={t('visa.pages.basvuruYap.options.no')}
+                                                            checked={formData.visa_before === t('visa.pages.basvuruYap.options.no')}
                                                             onChange={handleInputChange}
                                                         />
                                                         <span className="radio-card-content">
                                                             <span className="radio-indicator"></span>
-                                                            <span className="radio-text">Hayır</span>
+                                                            <span className="radio-text">{t('visa.pages.basvuruYap.options.no')}</span>
                                                         </span>
                                                     </label>
                                                 </div>
                                             </div>
 
                                             <div className="form-group">
-                                                <label className="group-label">Daha önce vize reddi aldınız mı? <span className="required">*</span></label>
+                                                <label className="group-label">{t('visa.pages.basvuruYap.fields.visaRejection')} <span className="required">*</span></label>
                                                 <div className="radio-cards">
                                                     <label className="radio-card">
                                                         <input
                                                             type="radio"
                                                             name="visa_rejection"
-                                                            value="Evet"
-                                                            checked={formData.visa_rejection === 'Evet'}
+                                                            value={t('visa.pages.basvuruYap.options.yes')}
+                                                            checked={formData.visa_rejection === t('visa.pages.basvuruYap.options.yes')}
                                                             onChange={handleInputChange}
                                                             required
                                                         />
                                                         <span className="radio-card-content">
                                                             <span className="radio-indicator"></span>
-                                                            <span className="radio-text">Evet</span>
+                                                            <span className="radio-text">{t('visa.pages.basvuruYap.options.yes')}</span>
                                                         </span>
                                                     </label>
                                                     <label className="radio-card">
                                                         <input
                                                             type="radio"
                                                             name="visa_rejection"
-                                                            value="Hayır"
-                                                            checked={formData.visa_rejection === 'Hayır'}
+                                                            value={t('visa.pages.basvuruYap.options.no')}
+                                                            checked={formData.visa_rejection === t('visa.pages.basvuruYap.options.no')}
                                                             onChange={handleInputChange}
                                                         />
                                                         <span className="radio-card-content">
                                                             <span className="radio-indicator"></span>
-                                                            <span className="radio-text">Hayır</span>
+                                                            <span className="radio-text">{t('visa.pages.basvuruYap.options.no')}</span>
                                                         </span>
                                                     </label>
                                                 </div>
                                             </div>
 
                                             <div className="form-group">
-                                                <label className="group-label">Schengen vizesi var mı? <span className="required">*</span></label>
+                                                <label className="group-label">{t('visa.pages.basvuruYap.fields.schengenVisa')} <span className="required">*</span></label>
                                                 <div className="radio-cards">
                                                     <label className="radio-card">
                                                         <input
                                                             type="radio"
                                                             name="schengen_visa"
-                                                            value="Evet"
-                                                            checked={formData.schengen_visa === 'Evet'}
+                                                            value={t('visa.pages.basvuruYap.options.yes')}
+                                                            checked={formData.schengen_visa === t('visa.pages.basvuruYap.options.yes')}
                                                             onChange={handleInputChange}
                                                             required
                                                         />
                                                         <span className="radio-card-content">
                                                             <span className="radio-indicator"></span>
-                                                            <span className="radio-text">Evet</span>
+                                                            <span className="radio-text">{t('visa.pages.basvuruYap.options.yes')}</span>
                                                         </span>
                                                     </label>
                                                     <label className="radio-card">
                                                         <input
                                                             type="radio"
                                                             name="schengen_visa"
-                                                            value="Hayır"
-                                                            checked={formData.schengen_visa === 'Hayır'}
+                                                            value={t('visa.pages.basvuruYap.options.no')}
+                                                            checked={formData.schengen_visa === t('visa.pages.basvuruYap.options.no')}
                                                             onChange={handleInputChange}
                                                         />
                                                         <span className="radio-card-content">
                                                             <span className="radio-indicator"></span>
-                                                            <span className="radio-text">Hayır</span>
+                                                            <span className="radio-text">{t('visa.pages.basvuruYap.options.no')}</span>
                                                         </span>
                                                     </label>
                                                 </div>
@@ -812,8 +837,8 @@ export default function BasvuruYapPage() {
                                                 </svg>
                                             </div>
                                             <div className="section-title-wrapper">
-                                                <h2 className="section-title">İş ve Finansal Bilgiler</h2>
-                                                <p className="section-desc">Çalışma durumunuz ve gelir bilgileriniz</p>
+                                                <h2 className="section-title">{t('visa.pages.basvuruYap.sections.workInfo.title')}</h2>
+                                                <p className="section-desc">{t('visa.pages.basvuruYap.sections.workInfo.description')}</p>
                                             </div>
                                         </div>
 
@@ -833,12 +858,12 @@ export default function BasvuruYapPage() {
                                                         }}
                                                         required
                                                     >
-                                                        <option value="" disabled>Seçiniz</option>
+                                                        <option value="" disabled>{t('visa.common.select')}</option>
                                                         {jobOptions.map(job => (
                                                             <option key={job} value={job}>{job}</option>
                                                         ))}
                                                     </select>
-                                                    <label htmlFor="job">Mesleğiniz <span className="required">*</span></label>
+                                                    <label htmlFor="job">{t('visa.pages.basvuruYap.fields.job')} <span className="required">*</span></label>
                                                     <span className="select-arrow">
                                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                             <polyline points="6 9 12 15 18 9" />
@@ -862,12 +887,12 @@ export default function BasvuruYapPage() {
                                                         }}
                                                         required
                                                     >
-                                                        <option value="" disabled>Seçiniz</option>
+                                                        <option value="" disabled>{t('visa.common.select')}</option>
                                                         {workYearsOptions.map(year => (
                                                             <option key={year} value={year}>{year}</option>
                                                         ))}
                                                     </select>
-                                                    <label htmlFor="work_years">Kaç yıldır aynı iş yerinde? <span className="required">*</span></label>
+                                                    <label htmlFor="work_years">{t('visa.pages.basvuruYap.fields.workYears')} <span className="required">*</span></label>
                                                     <span className="select-arrow">
                                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                             <polyline points="6 9 12 15 18 9" />
@@ -891,12 +916,12 @@ export default function BasvuruYapPage() {
                                                         }}
                                                         required
                                                     >
-                                                        <option value="" disabled>Seçiniz</option>
+                                                        <option value="" disabled>{t('visa.common.select')}</option>
                                                         {salaryOptions.map(salary => (
                                                             <option key={salary} value={salary}>{salary}</option>
                                                         ))}
                                                     </select>
-                                                    <label htmlFor="net_salary">Net Maaşınız <span className="required">*</span></label>
+                                                    <label htmlFor="net_salary">{t('visa.pages.basvuruYap.fields.netSalary')} <span className="required">*</span></label>
                                                     <span className="select-arrow">
                                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                             <polyline points="6 9 12 15 18 9" />
@@ -906,33 +931,33 @@ export default function BasvuruYapPage() {
                                             </div>
 
                                             <div className="form-group">
-                                                <label className="group-label">Maaşınız banka hesabına yatıyor mu? <span className="required">*</span></label>
+                                                <label className="group-label">{t('visa.pages.basvuruYap.fields.salaryToBank')} <span className="required">*</span></label>
                                                 <div className="radio-cards">
                                                     <label className="radio-card">
                                                         <input
                                                             type="radio"
                                                             name="salary_to_bank"
-                                                            value="Evet"
-                                                            checked={formData.salary_to_bank === 'Evet'}
+                                                            value={t('visa.pages.basvuruYap.options.yes')}
+                                                            checked={formData.salary_to_bank === t('visa.pages.basvuruYap.options.yes')}
                                                             onChange={handleInputChange}
                                                             required
                                                         />
                                                         <span className="radio-card-content">
                                                             <span className="radio-indicator"></span>
-                                                            <span className="radio-text">Evet</span>
+                                                            <span className="radio-text">{t('visa.pages.basvuruYap.options.yes')}</span>
                                                         </span>
                                                     </label>
                                                     <label className="radio-card">
                                                         <input
                                                             type="radio"
                                                             name="salary_to_bank"
-                                                            value="Hayır"
-                                                            checked={formData.salary_to_bank === 'Hayır'}
+                                                            value={t('visa.pages.basvuruYap.options.no')}
+                                                            checked={formData.salary_to_bank === t('visa.pages.basvuruYap.options.no')}
                                                             onChange={handleInputChange}
                                                         />
                                                         <span className="radio-card-content">
                                                             <span className="radio-indicator"></span>
-                                                            <span className="radio-text">Hayır</span>
+                                                            <span className="radio-text">{t('visa.pages.basvuruYap.options.no')}</span>
                                                         </span>
                                                     </label>
                                                 </div>
@@ -949,8 +974,8 @@ export default function BasvuruYapPage() {
                                                 </svg>
                                             </div>
                                             <div className="section-title-wrapper">
-                                                <h2 className="section-title">Ek Bilgiler</h2>
-                                                <p className="section-desc">Eklemek istediğiniz notlar</p>
+                                                <h2 className="section-title">{t('visa.pages.basvuruYap.sections.additionalInfo.title', 'Ek Bilgiler')}</h2>
+                                                <p className="section-desc">{t('visa.pages.basvuruYap.sections.additionalInfo.description', 'Eklemek istediğiniz notlar')}</p>
                                             </div>
                                         </div>
 
@@ -965,7 +990,7 @@ export default function BasvuruYapPage() {
                                                         placeholder=" "
                                                         rows={4}
                                                     />
-                                                    <label htmlFor="message">Eklemek istediğiniz not veya soru</label>
+                                                    <label htmlFor="message">{t('visa.pages.basvuruYap.fields.message')}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -983,7 +1008,7 @@ export default function BasvuruYapPage() {
 
                                         <button type="submit" className={`submit-btn ${isLoading ? 'loading' : ''}`} disabled={isLoading}>
                                             <span className="btn-content">
-                                                <span className="btn-text">Başvuruyu Gönder</span>
+                                                <span className="btn-text">{t('visa.pages.basvuruYap.submit')}</span>
                                                 <svg className="btn-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                     <line x1="22" y1="2" x2="11" y2="13" />
                                                     <polygon points="22 2 15 22 11 13 2 9 22 2" />
@@ -1102,7 +1127,7 @@ export default function BasvuruYapPage() {
             <div className="loading-overlay" id="loadingOverlay">
                 <div className="loading-content">
                     <div className="loading-spinner"></div>
-                    <p>Başvurunuz gönderiliyor...</p>
+                    <p>{t('visa.common.submitting', 'Başvurunuz gönderiliyor...')}</p>
                 </div>
             </div>
         </div>

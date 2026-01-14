@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import '../../../styles/visa/Subelerimiz.css';
+import '../../../i18n';
 
 // Mock Data - Şehirlere göre şube bilgileri
 interface BranchData {
@@ -118,6 +120,7 @@ const branchesData: Record<string, BranchData> = {
 const allBranches = Object.values(branchesData);
 
 export default function SubelerimizPage() {
+    const { t } = useTranslation();
     const router = useRouter();
     const { sehir } = router.query;
     const formRef = useRef<HTMLFormElement>(null);
@@ -143,9 +146,9 @@ export default function SubelerimizPage() {
         return (
             <div className="branch-page">
                 <div className="container" style={{ padding: '100px 24px', textAlign: 'center' }}>
-                    <h1>Şube Bulunamadı</h1>
-                    <p>Aradığınız şube bulunamadı.</p>
-                    <Link href="/visa">Ana Sayfaya Dön</Link>
+                    <h1>{t('visa.branches.notFound.title', 'Şube Bulunamadı')}</h1>
+                    <p>{t('visa.branches.notFound.description', 'Aradığınız şube bulunamadı.')}</p>
+                    <Link href="/visa">{t('visa.branches.notFound.backHome', 'Ana Sayfaya Dön')}</Link>
                 </div>
             </div>
         );
@@ -288,11 +291,11 @@ export default function SubelerimizPage() {
         try {
             // Form submission logic here
             await new Promise(resolve => setTimeout(resolve, 2000));
-            alert('Bilgi talebiniz başarıyla gönderildi!');
+            alert(t('visa.branches.form.success', 'Bilgi talebiniz başarıyla gönderildi!'));
             setFormData({ name: '', surname: '', phone: '', interest_branch: currentBranch?.name || '' });
         } catch (error) {
             console.error('Form submission error:', error);
-            alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+            alert(t('visa.branches.form.error', 'Bir hata oluştu. Lütfen tekrar deneyin.'));
         } finally {
             setIsLoading(false);
             if (submitBtn) submitBtn.classList.remove('loading');
@@ -314,9 +317,9 @@ export default function SubelerimizPage() {
                         {/* Sol Taraf: Ana İçerik */}
                         <div className="hero-content">
                             <div className="breadcrumb-nav">
-                                <Link href="/visa">Ana Sayfa</Link>
+                                <Link href="/visa">{t('visa.common.home')}</Link>
                                 <span className="separator">/</span>
-                                <Link href="/visa/subelerimiz/bursa">Şubelerimiz</Link>
+                                <Link href="/visa/subelerimiz/bursa">{t('visa.branches.title', 'Şubelerimiz')}</Link>
                                 <span className="separator">/</span>
                                 <span className="current">{currentBranch.name}</span>
                             </div>
@@ -328,7 +331,7 @@ export default function SubelerimizPage() {
 
                             <div className="hero-cta-group">
                                 <a href="#bilgi-formu" className="btn-primary-v2">
-                                    <span>Hemen Bilgi Al</span>
+                                    <span>{t('visa.branches.getInfo', 'Hemen Bilgi Al')}</span>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                         <path d="M5 12h14M12 5l7 7-7 7" />
                                     </svg>
@@ -337,7 +340,7 @@ export default function SubelerimizPage() {
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                                     </svg>
-                                    <span>Hemen Ara</span>
+                                    <span>{t('visa.branches.callNow', 'Hemen Ara')}</span>
                                 </a>
                             </div>
                         </div>
@@ -352,7 +355,7 @@ export default function SubelerimizPage() {
                                         </svg>
                                     </div>
                                     <div className="card-info">
-                                        <span className="card-label">Telefon</span>
+                                        <span className="card-label">{t('visa.branches.phone', 'Telefon')}</span>
                                         <a href={`tel:${currentBranch.phone}`} className="card-value">
                                             {currentBranch.phone}
                                         </a>
@@ -372,7 +375,7 @@ export default function SubelerimizPage() {
                                         </svg>
                                     </div>
                                     <div className="card-info">
-                                        <span className="card-label">Adres</span>
+                                        <span className="card-label">{t('visa.branches.address', 'Adres')}</span>
                                         <span className="card-value card-value-truncate">{currentBranch.addressShort}</span>
                                     </div>
                                     <div className="card-arrow">
@@ -389,8 +392,8 @@ export default function SubelerimizPage() {
                                         </svg>
                                     </div>
                                     <div className="card-info">
-                                        <span className="card-label">WhatsApp</span>
-                                        <span className="card-value">Hemen Yazın</span>
+                                        <span className="card-label">{t('visa.branches.whatsapp', 'WhatsApp')}</span>
+                                        <span className="card-value">{t('visa.branches.writeNow', 'Hemen Yazın')}</span>
                                     </div>
                                     <div className="card-arrow">
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -445,7 +448,7 @@ export default function SubelerimizPage() {
                                                     value={formData.name}
                                                     onChange={handleInputChange}
                                                 />
-                                                <label htmlFor="form-name">Adınız</label>
+                                                <label htmlFor="form-name">{t('visa.branches.form.firstName', 'Adınız')}</label>
                                                 <span className="input-border"></span>
                                             </div>
                                         </div>
@@ -461,7 +464,7 @@ export default function SubelerimizPage() {
                                                     value={formData.surname}
                                                     onChange={handleInputChange}
                                                 />
-                                                <label htmlFor="form-surname">Soyadınız</label>
+                                                <label htmlFor="form-surname">{t('visa.branches.form.lastName', 'Soyadınız')}</label>
                                                 <span className="input-border"></span>
                                             </div>
                                         </div>
@@ -477,7 +480,7 @@ export default function SubelerimizPage() {
                                                     value={formData.phone}
                                                     onChange={handleInputChange}
                                                 />
-                                                <label htmlFor="form-phone">Telefon Numarası</label>
+                                                <label htmlFor="form-phone">{t('visa.branches.form.phone', 'Telefon Numarası')}</label>
                                                 <span className="input-border"></span>
                                             </div>
                                         </div>
@@ -501,7 +504,7 @@ export default function SubelerimizPage() {
                                                         </option>
                                                     ))}
                                                 </select>
-                                                <label htmlFor="form-branch">İlgilendiğiniz Şube</label>
+                                                <label htmlFor="form-branch">{t('visa.branches.form.branch', 'İlgilendiğiniz Şube')}</label>
                                                 <span className="select-arrow">
                                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                         <polyline points="6 9 12 15 18 9" />
@@ -515,13 +518,13 @@ export default function SubelerimizPage() {
                                                 <input type="checkbox" name="privacy" required />
                                                 <span className="checkmark"></span>
                                                 <span className="checkbox-text">
-                                                    <a href="/visa/gizlilik-politikasi" target="_blank" rel="noopener noreferrer">Gizlilik Politikası</a>'nı okudum, kabul ediyorum.
+                                                    <a href="/visa/gizlilik-politikasi" target="_blank" rel="noopener noreferrer">{t('visa.branches.form.privacyPolicy', 'Gizlilik Politikası')}</a>{t('visa.branches.form.privacyAccept', "'nı okudum, kabul ediyorum.")}
                                                 </span>
                                             </label>
                                         </div>
 
                                         <button type="submit" className="submit-btn" disabled={isLoading}>
-                                            <span className="btn-text">Bilgi Al</span>
+                                            <span className="btn-text">{t('visa.branches.form.submit', 'Bilgi Al')}</span>
                                             <span className="btn-icon">
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                     <line x1="22" y1="2" x2="11" y2="13" />

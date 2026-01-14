@@ -3,11 +3,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import '../../i18n'
 
 export default function VisaHeader() {
+    const { t, i18n } = useTranslation()
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
-    const [selectedLanguage, setSelectedLanguage] = useState('TR')
+    const [selectedLanguage, setSelectedLanguage] = useState(i18n.language === 'en' ? 'EN' : 'TR')
 
     // Mobile menu açıkken body scroll'unu engelle
     useEffect(() => {
@@ -18,23 +21,29 @@ export default function VisaHeader() {
         }
     }, [isMobileMenuOpen])
 
+    // Language change handler
+    useEffect(() => {
+        const currentLang = i18n.language === 'en' ? 'EN' : 'TR'
+        setSelectedLanguage(currentLang)
+    }, [i18n.language])
+
 
     const countries = [
-        { title: 'İngiltere', href: '/visa/vize-basvurusu/ingiltere' },
-        { title: 'Almanya', href: '/visa/vize-basvurusu/almanya' },
-        { title: 'Fransa', href: '/visa/vize-basvurusu/fransa' },
-        { title: 'Kanada', href: '/visa/vize-basvurusu/kanada' },
-        { title: 'ABD', href: '/visa/vize-basvurusu/abd' },
+        { title: t('visa.header.countriesList.uk'), href: '/visa/vize-basvurusu/ingiltere' },
+        { title: t('visa.header.countriesList.germany'), href: '/visa/vize-basvurusu/almanya' },
+        { title: t('visa.header.countriesList.france'), href: '/visa/vize-basvurusu/fransa' },
+        { title: t('visa.header.countriesList.canada'), href: '/visa/vize-basvurusu/kanada' },
+        { title: t('visa.header.countriesList.usa'), href: '/visa/vize-basvurusu/abd' },
     ]
 
     const otherLinks = [
-        { title: 'Hakkımızda', href: '/visa/hakkimizda' },
-        { title: 'Vize Tablosu', href: '/visa/vize-tablosu' },
-        { title: 'Vize Başvuru Başarı Oranları', href: '/visa/basvuru-durumlari' },
-        { title: 'Sunduğumuz Avantajlar', href: '/visa/sundugumuz-avantajlar' },
-        { title: 'Nasıl Vize Alırım?', href: '/visa/nasil-vize-alirim' },
-        { title: 'İletişim', href: '/visa/iletisim' },
-        { title: 'Sıkça Sorulan Sorular', href: '/visa/sss' },
+        { title: t('visa.header.aboutUs'), href: '/visa/hakkimizda' },
+        { title: t('visa.header.visaTable'), href: '/visa/vize-tablosu' },
+        { title: t('visa.header.successRates'), href: '/visa/basvuru-durumlari' },
+        { title: t('visa.header.advantages'), href: '/visa/sundugumuz-avantajlar' },
+        { title: t('visa.header.howToGetVisa'), href: '/visa/nasil-vize-alirim' },
+        { title: t('visa.header.contact'), href: '/visa/iletisim' },
+        { title: t('visa.header.faq'), href: '/visa/sss' },
     ]
 
     const branches = [
@@ -148,6 +157,7 @@ export default function VisaHeader() {
                                     className={`language-option ${selectedLanguage === 'TR' ? 'active' : ''}`}
                                     onClick={() => {
                                         setSelectedLanguage('TR')
+                                        i18n.changeLanguage('tr')
                                         setIsLanguageDropdownOpen(false)
                                     }}
                                 >
@@ -157,6 +167,7 @@ export default function VisaHeader() {
                                     className={`language-option ${selectedLanguage === 'EN' ? 'active' : ''}`}
                                     onClick={() => {
                                         setSelectedLanguage('EN')
+                                        i18n.changeLanguage('en')
                                         setIsLanguageDropdownOpen(false)
                                     }}
                                 >
@@ -168,20 +179,21 @@ export default function VisaHeader() {
 
                     <div className="primary-menu">
                         <div className="menu-item">
-                            <Link href="/visa" title="Anasayfa">
-                                Anasayfa
+                            <Link href="/visa" title={t('visa.header.home')} suppressHydrationWarning>
+                                {t('visa.header.home')}
                             </Link>
                         </div>
 
                         <div className="menu-item">
                             <Link
                                 href="#"
-                                title="Hizmet Verdiğimiz Ülkeler"
+                                title={t('visa.header.countries')}
+                                suppressHydrationWarning
                                 onClick={(e) => {
                                     e.preventDefault()
                                 }}
                             >
-                                Hizmet Verdiğimiz Ülkeler
+                                {t('visa.header.countries')}
                                 <span className="caret-icon">
                                     <Image
                                         src="/visa/assets/img/icon/caret-down.svg"
@@ -211,38 +223,39 @@ export default function VisaHeader() {
                         </div>
 
                         <div className="menu-item">
-                            <Link href="/visa/nasil-vize-alirim" title="Nasıl Vize Alırım ?">
-                                Nasıl Vize Alırım ?
+                            <Link href="/visa/nasil-vize-alirim" title={t('visa.header.howToGetVisa')} suppressHydrationWarning>
+                                {t('visa.header.howToGetVisa')}
                             </Link>
                         </div>
 
                         <div className="menu-item">
-                            <Link href="/visa/basvuru-yap" title="Başvuru Yap">
-                                Başvuru Yap
+                            <Link href="/visa/basvuru-yap" title={t('visa.header.apply')} suppressHydrationWarning>
+                                {t('visa.header.apply')}
                             </Link>
                         </div>
 
                         <div className="menu-item">
-                            <Link href="/visa/blog" title="Blog">
-                                Blog
+                            <Link href="/visa/blog" title={t('visa.header.blog')} suppressHydrationWarning>
+                                {t('visa.header.blog')}
                             </Link>
                         </div>
 
                         <div className="menu-item">
-                            <Link href="/visa/hakkimizda" title="Hakkımızda">
-                                Hakkımızda
+                            <Link href="/visa/hakkimizda" title={t('visa.header.about')} suppressHydrationWarning>
+                                {t('visa.header.about')}
                             </Link>
                         </div>
 
                         <div className="menu-item">
                             <Link
                                 href="#"
-                                title="Diğer Bilgilendirmeler"
+                                title={t('visa.header.otherInfo')}
+                                suppressHydrationWarning
                                 onClick={(e) => {
                                     e.preventDefault()
                                 }}
                             >
-                                Diğer Bilgilendirmeler
+                                {t('visa.header.otherInfo')}
                                 <span className="caret-icon">
                                     <Image
                                         src="/visa/assets/img/icon/caret-down.svg"
@@ -349,14 +362,14 @@ export default function VisaHeader() {
                         </button>
                         <nav className="mobile-nav">
                             <Link href="/visa" onClick={() => setIsMobileMenuOpen(false)}>
-                                Anasayfa
+                                {t('visa.header.home')}
                             </Link>
                             <div className="mobile-menu-section">
                                 <button onClick={(e) => {
                                     const target = e.currentTarget.parentElement
                                     target?.classList.toggle('active')
                                 }}>
-                                    Hizmet Verdiğimiz Ülkeler
+                                    {t('visa.header.countries')}
                                 </button>
                                 <div className="mobile-submenu">
                                     {countries.map((country) => (
@@ -371,17 +384,17 @@ export default function VisaHeader() {
                                 </div>
                             </div>
                             <Link href="/visa/nasil-vize-alirim" onClick={() => setIsMobileMenuOpen(false)}>
-                                Nasıl Vize Alırım ?
+                                {t('visa.header.howToGetVisa')}
                             </Link>
                             <Link href="/visa/blog" onClick={() => setIsMobileMenuOpen(false)}>
-                                Blog
+                                {t('visa.header.blog')}
                             </Link>
                             <div className="mobile-menu-section">
                                 <button onClick={(e) => {
                                     const target = e.currentTarget.parentElement
                                     target?.classList.toggle('active')
                                 }}>
-                                    Diğer Bilgilendirmeler
+                                    {t('visa.header.otherInfo')}
                                 </button>
                                 <div className="mobile-submenu">
                                     {otherLinks.map((link) => (
@@ -396,10 +409,10 @@ export default function VisaHeader() {
                                 </div>
                             </div>
                             <Link href="/visa/basvuru-yap" onClick={() => setIsMobileMenuOpen(false)}>
-                                Başvuru Yap
+                                {t('visa.header.apply')}
                             </Link>
                             <Link href="/visa/hakkimizda" onClick={() => setIsMobileMenuOpen(false)}>
-                                Hakkımızda
+                                {t('visa.header.about')}
                             </Link>
                         </nav>
                     </div>

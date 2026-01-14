@@ -1,0 +1,845 @@
+{
+  "visa": {
+    "header": {
+      "home": "Anasayfa",
+      "countries": "Hizmet Verdiğimiz Ülkeler",
+      "howToGetVisa": "Nasıl Vize Alırım ?",
+      "apply": "Başvuru Yap",
+      "blog": "Blog",
+      "about": "Hakkımızda",
+      "otherInfo": "Diğer Bilgilendirmeler",
+      "aboutUs": "Hakkımızda",
+      "visaTable": "Vize Tablosu",
+      "successRates": "Vize Başvuru Başarı Oranları",
+      "advantages": "Sunduğumuz Avantajlar",
+      "contact": "İletişim",
+      "faq": "Sıkça Sorulan Sorular",
+      "countriesList": {
+        "uk": "İngiltere",
+        "germany": "Almanya",
+        "france": "Fransa",
+        "canada": "Kanada",
+        "usa": "ABD"
+      }
+    },
+    "footer": {
+      "description": "Çilek Vize ile Resmi Belgelerinizi\nHızlı bir şekilde alın..",
+      "address": "Muradiye Mahallesi Beşikçiler Cad. No:73A Osmangazi / Bursa",
+      "phone": "+90 850 888 70 71",
+      "email": "info@cilekvize.com",
+      "home": "Anasayfa",
+      "howToGetVisa": "Nasıl Vize Alırım?",
+      "blog": "Blog",
+      "about": "Hakkımızda",
+      "contact": "İletişim",
+      "faq": "Sık Sorulan Sorular",
+      "privacy": "Gizlilik Politikası",
+      "kvkk": "KVKK & Aydınlatma",
+      "newsletter": {
+        "title": "Bize Katılın",
+        "description": "Kampanyalar, yenilikler ve vize içerikleri için e-posta listemize\nkayıt olun.",
+        "placeholder": "E-posta adresiniz",
+        "submit": "Gönder"
+      },
+      "copyright": "Copyright © {{year}} Çilek Vize. Tüm hakları saklıdır."
+    },
+    "hero": {
+      "slides": [
+        {
+          "title": "Avrupa'ya 15 Günde Adım Atın !",
+          "description": "Çilek Vize bünyesinde schengen randevunuzu 15 gün içinde alıyoruz. Önce işlem sonra ücret garantisi!",
+          "cta": "Başvurunuzu Başlatın"
+        },
+        {
+          "title": "Amerika Vize Randevunuzu 30 Günde Alıyoruz",
+          "description": "Çilek Vize olarak Amerika vize randevunuzu 30 gün içinde alıyoruz ve buna garanti veriyoruz. Önce işlem sonra ücret garantisi!",
+          "cta": "Başvurunuzu Başlatın"
+        },
+        {
+          "title": "Vize Karmaşasına Son Verin!",
+          "description": "Yeni maceranızın kapısını çalarken vize başvuruları stres mi yaratıyor? Sorun değil! Çilek Vize adım adım yanınızda, başvurularınızı kolaylaştırmak için burada!",
+          "cta": "Başvurunuzu Başlatın"
+        },
+        {
+          "title": "En İyi Vize Danışmanlık Firmasıyla Güvenli Adımlar!",
+          "description": "Vize başvuruları ile uğraşmak sizi strese mi sokuyor? Çilek Vize işte burada, tüm başvurularınızı kolaylaştırmak için!",
+          "cta": "Başvurunuzu Başlatın"
+        },
+        {
+          "title": "İtalya'nın Büyüsünü Keşfedin",
+          "description": "Tarihi ve kültürel zenginlikleriyle İtalya'da yaşamak veya seyahat etmek mi istiyorsunuz? Vize başvurunuzu uzman ekibimizle birlikte güvenle yapın. İtalya'nın büyüsünü yakalayın!",
+          "cta": "Başvurunuzu Başlatın"
+        },
+        {
+          "title": "Amerika Rüyasına Adım Atın!",
+          "description": "Amerika'ya seyahat, eğitim veya iş için mi gitmek istiyorsunuz? Vize sürecinizi kolaylaştırmak için buradayız. Profesyonel danışmanlık hizmetimizle Amerikan rüyasına adım atın!",
+          "cta": "Başvurunuzu Başlatın"
+        }
+      ],
+      "readMore": "Devamını Oku",
+      "testimonials": [
+        {
+          "name": "Pelin Civelek",
+          "text": "Çilek Vize'den ABD vizesi için danışmanlık aldım . Zeynep hanımın desteği ile 1,5 sene sonraya verilen randevumu 1 ay sonraya alabildiler, evraklarımız hazırlarkende destek oldukları için vizemi başvurduktan 1,5 ay sonra sorunsuzca aldım. Destekleri için teşekkürler özellikle de Zeynep hanıma"
+        },
+        {
+          "name": "Ogün Şen",
+          "text": "Merhaba arkadaşlar uzun araştırmalar sonucu karar verip çilek vize ailesi ile iletişime geçtim ve işlemlere başladım. Danışmanım olarak çilek vize ailesinden Elif hanım ile görüşmelerimizi tamamladık güler yüzlü ve bilgili olmaları güvenli hissettirdi eminimki bu süre zarfında her türlü bilgiyi , gelişmeleri ve sonuçları tarafıma ileteceklerdir. Gönül rahatlığıyla uğrayıp bilgi alabilirsiniz. Teşekkürler ."
+        },
+        {
+          "name": "Nisan Gökdemirel",
+          "text": "Şirket olarak toplu basvuru yapmak istedigimiz bir danismanlik sirketi arayışındaydık. Cilek vize ile hızla geri bildirim aldığımız bir deneyim oldu. Süreçlerimiz özenle takip ediliyor. Özellikle Ezgi Hanım'a ilgisi ve özeni için çok teşekkür ediyoruz."
+        },
+        {
+          "name": "Burçin Gül",
+          "text": "Yakın zamanda Fransa'dan red aldığım için bir danışmanlık şirketiyle yoluma devam etmeye karar verip buldum aslında Çilek Vize'yi. Farklı bir ülkeden red yediğim için tekrardan red alır mıyım, param ve onca çabam boşa gider mi gibi onlarca soru vardı aklımda. Ancak danışmanım Irmak Hanım özenle cevapladı her bir sorum. Beni ikna etti. Ayrıca ailemin de içini rahatlatıp tekrardan vize başvurusunda bulunmam konusunda cesaretlendirdi. Süreç benim için farklı bir ülkeden red almamdan kaynaklı oldukça gericiydi ama Irmak Hanım her yardıma ihtiyacım olduğunda bir tık uzağımdaydı. 2 haftanın sonunda İsveç'ten vizem geldi. Her şey için Çilek Vize'ye, danışmanım Irmak Hanım'a ve Nalan Hanım'a teşekkür ederim."
+        },
+        {
+          "name": "Handan Evcimen",
+          "text": "Kanada süreci için çilek vize'den destek aldım, başta soru işaretleri ve endişeler vardı kafamda fakat bu süreçte ırmak hanım ile işlemlerimizi sürdürdük kendisi alanında profesyonel ve ilgili bir danışan yardımları için kendisine bir kere daha teşekkür ediyorum iyi ki çilek vize"
+        }
+      ]
+    },
+    "services": {
+      "title": "Keşfetmeniz için tüm seyahat ihtiyaçlarınızı\ntek bir çatı altında karşılayan Çilek Vize !",
+      "tourist": {
+        "title": "Turist Vize Danışmanlığı",
+        "description": "Turist Vize başvuru sürecinizi kolaylaştırarak, seyahat planlarınızı mümkün kılmak için profesyonel rehberlik sunuyoruz."
+      },
+      "work": {
+        "title": "Çalışma Vizesi Danışmanlığı",
+        "description": "Yurtdışında kariyer fırsatlarını keşfetmeniz için uzmanlıkla hazırlanmış danışmanlık hizmeti sunuyoruz."
+      },
+      "education": {
+        "title": "Yurtdışı Eğitim Danışmanlığı",
+        "description": "Uluslararası eğitim fırsatlarını araştırmanıza ve en uygun olanı bulmanıza yardımcı olmak için danışmanlık sağlıyoruz."
+      }
+    },
+    "faq": {
+      "title": "🤔 Turist Vizesi SSS",
+      "questions": [
+        {
+          "question": "Turist vizesi nedir?",
+          "answer": "Turist vizesi, bir kişinin turistik amaçlarla başka bir ülkeye seyahat etmesine izin veren resmi bir belgedir. Bu vize genellikle tatil, gezi, kültürel etkinlikler veya arkadaş ve akraba ziyareti gibi turistik faaliyetler için verilir. Turist vizesi, genellikle belirli bir süre için geçerlidir ve bu süre boyunca kişinin ülkeye giriş yapmasına ve kalmasına izin verir. Her ülkenin vize politikaları farklı olduğundan, turist vizesi başvuru süreci, gerekli belgeler ve vize süreleri ülkeye göre değişiklik gösterebilir."
+        },
+        {
+          "question": "Turist vizesi almak için pasaportum gerekli mi?",
+          "answer": "Evet, tüm vize başvuruları için bir pasaporta ihtiyacınız var."
+        },
+        {
+          "question": "Turist vizesine başvurmak için neler gereklidir?",
+          "answer": "Pasaportunuzun bulunması ve yurt dışına çıkış yasağınızın olmaması gerekmektedir."
+        },
+        {
+          "question": "Schengen vizesi nedir?",
+          "answer": "Avrupa Birliğine dahil olan ülkeler ve AB'ye üye olmayan İsviçre, İzlanda, Norveç ve Lichtenstein ülkelerine seyahat etmek amacıyla alınan vizedir. Tek bir ülkeye alınan schengen vizesi ile öncelikle vize aldığınız ülkeye giriş yapmak koşuluyla toplam 29 ülkeye seyahat edilebilmektedir."
+        },
+        {
+          "question": "Çilek Vize benim için turist vizesini nasıl alır?",
+          "answer": "Gidiş dönüş uçak bileti ve otel rezervasyonunuz tarafımızca konfirme olarak gösterilir, seyahat sağlık sigortanızı da biz gerçekleştiriyoruz. Vize uzmanlarımız tarafından niyet ve motivasyon mektuplarınız profesyonelce, kişiye özel hazırlanır. Başvuru formlarınızı biz dolduruyoruz. Kısacası tüm evrak takibiniz bize ait. Siz sadece konsolosluğa parmak izi, evrak teslimi için gidiyorsunuz."
+        },
+        {
+          "question": "Çilek Vize'nin seyahat vizemi işleme koyması ne kadar sürer?",
+          "answer": "Danışmanlık sözleşmesi sonrasında 24 saat içerisinde danışanımıza bir vize uzmanı atanır. Evrak hazırlığı ve randevu takibi sürecine başlanır. Bunlara ek olarak Amerika ve Schengen ülkelerinde vip randevu desteği sağlamaktayız."
+        },
+        {
+          "question": "Schengen Vizesinde süreç ne kadar sürüyor?",
+          "answer": "Schengen vizesi alma süreci konsolosluk yoğunluğuna göre değişmektedir. Ortalama olarak 2 - 4 ay sürmektedir."
+        },
+        {
+          "question": "Davetiyemin olması vize sonucumu olumlu etkiler mi veya süreci kısaltır mı?",
+          "answer": "Davetiyenizin olması vize sonucunuzu olumlu etkileyebilir ancak sürecinizi kısaltmaz."
+        },
+        {
+          "question": "Bir ülkeden aldığım Schengen vizesiyle diğer Schengen ülkelerine de gidebilir miyim?",
+          "answer": "Öncelikle vizesini aldığınız ülkeye giriş yapmak koşuluyla tüm Schengen ülkelerine giriş yapabilirsiniz."
+        },
+        {
+          "question": "Aktif olarak çalışmıyorum, vize başvurumda sorun olur mu?",
+          "answer": "Hayır sorun olmaz. Birinci dereceden bir yakınınız size sponsor olursa ya da hesabınızda gerekli miktarda para gösterirseniz başvuruda bulunabilirsiniz."
+        },
+        {
+          "question": "Kanada vize sonucumu beklediğim süreçte farklı bir Schengen ülkesinden vize-randevu alabilir miyim?",
+          "answer": "Evet, alabilirsiniz."
+        },
+        {
+          "question": "Seyahat sağlık sigortasının süresi ne kadar oluyor?",
+          "answer": "Seyahat planınızın süresine uygun sürede olmaktadır."
+        },
+        {
+          "question": "18 yaşından küçüğüm, vize alabiliyor muyum?",
+          "answer": "Anne ve babadan muvaffakatname olursa evet alabiliyoruz."
+        }
+      ],
+      "cta": {
+        "title": "Başka bir sorunuz mu var?",
+        "description": "İhtiyacınız olan tüm cevapları vize uzmanlarımızdan hızlıca alabilirsiniz.",
+        "button": "Vize Uzmanına Sor"
+      }
+    },
+    "comparison": {
+      "title": "Karmaşık vize başvurularına elveda",
+      "with": {
+        "title": "Çilek Vize İle",
+        "items": [
+          "Vize başvuru süreçleri hızlı ve basittir.",
+          "Başvuruların hızlı bir şekilde onaylanması",
+          "Seyahat destek ve tavsiye hizmeti sunulur.",
+          "Tek sabit fiyat ile bütçenizi koruyarak işlem yapma imkanı.",
+          "Başvuru sürecindeki aşamalarda profesyonel destek."
+        ]
+      },
+      "without": {
+        "title": "Çilek Vize Olmadan",
+        "items": [
+          "Vize evraklarıyla uğraşmak karmaşık olabilir.",
+          "Hata yapma ve vize reddi riski artabilir.",
+          "Başvuru onayı için belirsiz bir zaman çizelgesi olabilir.",
+          "Farklı firmalara yüksek ücretler ödemek gerekebilir.",
+          "Yanlış evrakları hazırlamak zorunda kalırsınız."
+        ]
+      },
+      "cta": "Başvurunuzu Başlatın"
+    },
+    "awards": {
+      "title": "Vizelerimiz",
+      "subtitle": "Başarılı vize başvurularımızdan örnekler",
+      "approved": "Onaylandı",
+      "congrats": "Hayırlı Olsun",
+      "thanks": "bizi tercih ettikleri için teşekkür ederiz",
+      "description": "Schengen ve dünya çapında vize işlemleriniz için bizimle iletişime geçin.",
+      "brand": "CİLEK",
+      "prev": "Önceki",
+      "next": "Sonraki",
+      "list": [
+        {
+          "title": "Faruk Bey'in 1 Yıllık Almanya Vizesi",
+          "image": "/visa/uploads/contents/awards/2024a3a4cc_166c1f02f98dc2.webp"
+        },
+        {
+          "title": "Ebru Hanım'ın 1 Aylık Avusturya vizesi",
+          "image": "/visa/uploads/contents/awards/2024324569_166c1f14fde365.webp"
+        },
+        {
+          "title": "Mustafa Yıldıray Bey'in 1 Aylık Bulgaristan - Schengen Vizesi",
+          "image": "/visa/uploads/contents/awards/202472eeb2_166c1f168bce50.webp"
+        },
+        {
+          "title": "Hasan Bey'in 1 Aylık Schengen Vizesi",
+          "image": "/visa/uploads/contents/awards/2024cb2a3f_166c1f17ea010d.webp"
+        },
+        {
+          "title": "Yener Bey'in 10 Yıllık Abd Vizesi",
+          "image": "/visa/uploads/contents/awards/202484dda8_166c1f1b1a459e.webp"
+        },
+        {
+          "title": "Tuğba Hanım'ın 30 günlük dubai vizesi",
+          "image": "/visa/uploads/contents/awards/2024e0983f_166c1f1c81ce34.webp"
+        },
+        {
+          "title": "Sena Hanım'ın 6 aylık ingiltere vizesi",
+          "image": "/visa/uploads/contents/awards/20248bc162_166c1f26bc269b.webp"
+        },
+        {
+          "title": "nisa hanım schengen vizesi",
+          "image": "/visa/uploads/contents/awards/202438fab7_166c1f27be5307.webp"
+        }
+      ]
+    },
+    "references": {
+      "title": "Randevu İçin Aracı Kurumlar",
+      "subtitle": "Güvenilir iş ortaklarımız"
+    },
+    "featured": {
+      "title": "Vize belgelerini hızlandırmak hiç bu kadar kolay olmamıştı.",
+      "description": "Saatlerce doğru evrak listesini aramaya son! Çilek Vize ile tüm resmi belgelerinizi hızlı, kolay ve tek bir kurumdan ayarlayıp vizeye başvurabilirsiniz. Vize uzmanlarından hemen bilgi alın.",
+      "features": [
+        "Müşteri Hizmetleri",
+        "Hizmet Sözleşmesi",
+        "Vize Uzmanları İletişim",
+        "Vize Süreci",
+        "Evrak Başvuru",
+        "Sonuç"
+      ],
+      "cta": "Başvurunuzu Başlatın"
+    },
+    "videoTestimonials": {
+      "title": "Bizi danışanlarımızdan dinleyin!"
+    },
+    "common": {
+      "apply": "Başvuru Yap",
+      "applyStart": "Başvurunuzu Başlatın",
+      "whatsapp": "WhatsApp",
+      "whatsappTitle": "WhatsApp ile İletişime Geçin",
+      "home": "Ana Sayfa",
+      "readMore": "Devamını Oku",
+      "close": "Kapat",
+      "loading": "Yükleniyor...",
+      "submit": "Gönder",
+      "cancel": "İptal",
+      "yes": "Evet",
+      "no": "Hayır",
+      "select": "Seçiniz",
+      "thanks": "Teşekkürler!",
+      "infoReceived": "Bilgileriniz başarıyla alındı.",
+      "ok": "Tamam",
+      "error": "Hata!",
+      "errorOccurred": "Bir hata oluştu.",
+      "success": "Başarılı!",
+      "submitting": "Başvurunuz gönderiliyor..."
+    },
+    "pages": {
+      "nasilVizeAlirim": {
+        "title": "Nasıl Vize Alırım ?",
+        "breadcrumb": "Ana Sayfa",
+        "whatIsVisa": "Vize Nedir?",
+        "whatIsVisaDesc1": "Vize, bir ülkeye giriş yapmak için konsolosluklardan veya giriş noktalarından alınan resmi bir izin belgesidir. Farklı amaçlara hizmet eden çeşitli vize türleri bulunmaktadır. Örneğin, çalışma vizesi, seyahat vizesi ve eğitim vizesi gibi farklı vize türleri, kişinin seyahat amacına göre değişiklik göstermektedir.",
+        "whatIsVisaDesc2": "Her ülkenin kendi vize politikaları ve gereksinimleri bulunmaktadır. Vize başvurusu yapmadan önce, gidilecek ülkenin vize şartlarını ve gerekli belgeleri öğrenmek önemlidir.",
+        "howToGetVisa": "Vize Nasıl Alınır?",
+        "howToGetVisaDesc1": "Vize başvurusu yapmadan önce, profesyonel bir danışmanlık hizmeti almanızı öneririz. Öncelikle hangi vize türüne ihtiyacınız olduğunu belirlemelisiniz. Ardından, doğru belgeleri toplamalı ve seyahat amacınızı net bir şekilde belirtmelisiniz. Vize başvuru sürecinde dikkat edilmesi gereken birçok detay bulunmaktadır.",
+        "howToGetVisaDesc2": "Detaylı bilgi için bizimle iletişime geçebilirsiniz. Uzman ekibimiz, vize başvuru sürecinizde size rehberlik edecek ve tüm adımları birlikte tamamlayacağız.",
+        "workVisa": "Yurtdışı çalışma için vize başvuruları",
+        "workVisaDesc1": "Yurtdışında çalışmak, kariyerinizi geliştirmek ve yeni deneyimler kazanmak için harika bir fırsattır. Farklı ülkelerde çalışma fırsatları, mesleki gelişiminize katkı sağlayabilir ve yeni bir dil öğrenmenize yardımcı olabilir.",
+        "workVisaDesc2": "Yurtdışında çalışmak için vize başvurusu yapmadan önce, hedef ülkenin çalışma vize şartlarını detaylı bir şekilde araştırmalısınız. İyi bir vize danışmanlığı hizmeti almak, başvuru sürecinizi kolaylaştıracaktır. Ayrıca, kültürel adaptasyon için en az bir yıl kalış süresi önerilmektedir.",
+        "travelVisa": "Seyahat Vizesi Başvuruları",
+        "travelVisaDesc1": "Seyahat vizesi, turistik amaçlı seyahatler için gerekli olan vize türüdür. Birçok ülke, turistler için farklı vize politikaları uygulamaktadır. Bazı ülkeler vize muafiyeti sunarken, bazıları için önceden vize başvurusu yapılması gerekmektedir.",
+        "travelVisaDesc2": "Seyahat vizesi başvurusu yaparken, seyahat amacınızı net bir şekilde belirtmeli ve gerekli tüm belgeleri eksiksiz olarak hazırlamalısınız. Pasaport geçerliliği, seyahat sigortası ve konaklama rezervasyonları gibi belgeler genellikle istenmektedir."
+      },
+      "sss": {
+        "title": "Sıkça Sorulan Sorular",
+        "subtitle": "Vize başvuru sürecinizle ilgili merak ettiğiniz tüm soruların cevaplarını burada bulabilirsiniz.",
+        "breadcrumb": "Ana Sayfa"
+      },
+      "basvuruDurumlari": {
+        "title": "Vize Başvuru Başarı Oranları",
+        "breadcrumb": "Ana Sayfa",
+        "table": {
+          "country": "Ülke",
+          "applications": "Başvuru Sayısı",
+          "rates": "Vize Türü Oranları",
+          "updateNote": "Veriler 6 aylık olarak güncellenmektedir.",
+          "rows": {
+            "germany": {
+              "country": "Almanya",
+              "rates": "%57 Turist - %24 Çalışma - %11 Akraba Ziyareti - %8 Ticari"
+            },
+            "italy": {
+              "country": "İtalya",
+              "rates": "%78 Turist - %2 Çalışma - %6 Arkadaş - %14 Eğitim"
+            },
+            "france": {
+              "country": "Fransa",
+              "rates": "%45 Turist - %35 Çalışma - %18 Arkadaş Ziyareti - %2 Ticari"
+            },
+            "netherlands": {
+              "country": "Hollanda",
+              "rates": "%82 Turist - %1 Çalışma - %14 Arkadaş Ziyareti - %3 Ticari"
+            },
+            "greece": {
+              "country": "Yunanistan",
+              "rates": "%95 Turist - %5 Ticari"
+            },
+            "usa": {
+              "country": "Amerika",
+              "rates": "%99 Turist - %1 Diğer"
+            },
+            "canada": {
+              "country": "Kanada",
+              "rates": "%84 Turist - %10 Ticari - %6 Diğer"
+            },
+            "uk": {
+              "country": "İngiltere",
+              "rates": "%65 Turist - %17 Eğitim - %15 Ticari - %3 Diğer"
+            },
+            "spain": {
+              "country": "İspanya",
+              "rates": "%72 Turist - %19 Ticari - %9 Diğer"
+            },
+            "poland": {
+              "country": "Polonya",
+              "rates": "%38 Turist - %44 Çalışma - %16 Eğitim %2 Diğer"
+            },
+            "australia": {
+              "country": "Avustralya",
+              "rates": "%45 Turist - %45 Eğitim - %10 Diğer"
+            },
+            "dubai": {
+              "country": "Dubai",
+              "rates": "%100 Turist - %100 Başarı Oranı"
+            },
+            "russia": {
+              "country": "Rusya",
+              "rates": "%100 Turist - %100 Başarı Oranı"
+            },
+            "belgium": {
+              "country": "Belçika",
+              "rates": "%50 Turist - %24 Arkadaş Ziyareti - %26 Diğer"
+            },
+            "austria": {
+              "country": "Avusturya",
+              "rates": "%25 Turist- % 63 Arkadaş Ziyareti - %12 Diğer"
+            },
+            "hungary": {
+              "country": "Macaristan",
+              "rates": "%65 Turist - %18 Ticari - %5 Eğitim - %12 Diğer"
+            },
+            "portugal": {
+              "country": "Portekiz",
+              "rates": "%90 Turist - %10 Diğer"
+            }
+          }
+        }
+      },
+      "basvuruYap": {
+        "title": "Vize Başvurusu",
+        "badge": "Ücretsiz Ön Değerlendirme",
+        "subtitle": "Hayalinizdeki ülkeye vizesiz seyahat için ilk adımı atın. Uzman ekibimiz sizinle birlikte çalışacak.",
+        "steps": {
+          "visaInfo": "Vize Bilgileri",
+          "personalInfo": "Kişisel Bilgiler",
+          "visaHistory": "Vize Geçmişi",
+          "workInfo": "İş Bilgileri"
+        },
+        "sections": {
+          "visaInfo": {
+            "title": "Vize Bilgileri",
+            "description": "Seyahat planınız hakkında bilgi verin"
+          },
+          "personalInfo": {
+            "title": "Kişisel Bilgiler",
+            "description": "Sizinle iletişim kurmamız için bilgileriniz"
+          },
+          "visaHistory": {
+            "title": "Vize Geçmişi",
+            "description": "Daha önce vize deneyimleriniz"
+          },
+          "workInfo": {
+            "title": "İş ve Finansal Bilgiler",
+            "description": "Çalışma durumunuz ve gelir bilgileriniz"
+          }
+        },
+        "fields": {
+          "country": "Gidilecek Ülke",
+          "visaType": "Vize Türü",
+          "travelSubject": "Seyahat Konusu",
+          "travelDate": "Tahmini Seyahat Tarihi",
+          "flightTicket": "Uçak Biletiniz Var mı?",
+          "name": "Adınız",
+          "surname": "Soyadınız",
+          "email": "E-posta",
+          "phone": "Telefon",
+          "age": "Yaşınız",
+          "travelWith": "Kiminle Seyahat Edeceksiniz?",
+          "maritalStatus": "Medeni Durum",
+          "visaBefore": "Bu ülkeye daha önce vize aldınız mı?",
+          "visaRejection": "Daha önce vize reddi aldınız mı?",
+          "schengenVisa": "Schengen vizesi var mı?",
+          "job": "Mesleğiniz",
+          "workYears": "Kaç yıldır aynı iş yerinde?",
+          "netSalary": "Net Maaşınız",
+          "salaryToBank": "Maaşınız banka hesabına yatıyor mu?",
+          "message": "Eklemek istediğiniz not veya soru"
+        },
+        "options": {
+          "yes": "Evet",
+          "no": "Hayır",
+          "alone": "Yalnız",
+          "withSpouse": "Eş ile",
+          "withFamily": "Aile ile",
+          "withFriend": "Arkadaş ile",
+          "withColleague": "İş arkadaşı ile",
+          "group": "Grup",
+          "single": "Bekar",
+          "married": "Evli",
+          "divorced": "Boşanmış",
+          "widowed": "Dul",
+          "visaTypes": {
+            "tourist": "Turistik Vize",
+            "business": "İş Vizesi",
+            "student": "Öğrenci Vizesi",
+            "family": "Aile Birleşimi",
+            "transit": "Transit Vize",
+            "work": "Çalışma Vizesi"
+          },
+          "jobs": {
+            "employee": "Çalışan",
+            "employer": "İşveren",
+            "freelance": "Serbest Meslek",
+            "student": "Öğrenci",
+            "retired": "Emekli",
+            "housewife": "Ev Hanımı",
+            "unemployed": "İşsiz"
+          },
+          "workYears": {
+            "0-1": "0-1 yıl",
+            "1-3": "1-3 yıl",
+            "3-5": "3-5 yıl",
+            "5-10": "5-10 yıl",
+            "10+": "10+ yıl",
+            "none": "Çalışmıyorum"
+          },
+          "salary": {
+            "0-10k": "0-10.000 TL",
+            "10-20k": "10.000-20.000 TL",
+            "20-35k": "20.000-35.000 TL",
+            "35-50k": "35.000-50.000 TL",
+            "50-75k": "50.000-75.000 TL",
+            "75-100k": "75.000-100.000 TL",
+            "100k+": "100.000+ TL"
+          }
+        },
+        "summary": {
+          "title": "Form Özeti",
+          "progress": "İlerleme",
+          "filledFields": "Doldurulan Alanlar",
+          "noFields": "Henüz hiçbir alan doldurulmadı"
+        },
+        "submit": "Başvuruyu Gönder",
+        "success": "Başvurunuz başarıyla gönderildi!",
+        "error": "Bir hata oluştu. Lütfen tekrar deneyin."
+      },
+      "sundugumuzAvantajlar": {
+        "title": "Sunduğumuz Avantajlar",
+        "breadcrumb": "Ana Sayfa",
+        "advantages": [
+          {
+            "title": "Schengen (VIP) Erken Randevu Hizmeti",
+            "description": "Çilek Vize olarak, Schengen bölgesine yapacağınız seyahatler için hızlı ve güvenilir vize randevuları sunuyoruz. Yunanistan, Fransa, Hollanda gibi Schengen ülkeleri için sadece 15 gün içinde randevu alabilmenizi sağlıyoruz. Macaristan ve Portekiz için ise bu süreyi 10 güne kadar indiriyoruz. Sunduğumuz VIP hizmetle, seyahat planlarınızı aksatmadan, en kısa sürede vize işlemlerinizi tamamlayabilirsiniz."
+          },
+          {
+            "title": "Amerika (VIP) Erken Randevu Hizmeti",
+            "description": "Amerika Birleşik Devletleri'ne yapacağınız vize başvuruları için en uygun randevuyu almak artık çok daha kolay. 2025 ve sonrasına bırakılmış birçok vize randevusunu, 45 gün içinde öne çekme garantisi sunuyoruz. Amerika seyahatinizi ertelemeden, planladığınız tarihlerde yola çıkabilmeniz için profesyonel hizmet sağlıyoruz."
+          },
+          {
+            "title": "Gelişmiş Randevu Sistemi",
+            "description": "Uzman ekibimizle 7/24 vize randevu sistemlerini aktif olarak takip ediyor, sizin için en uygun randevuyu bulmak adına sürekli çalışıyoruz. İstediğiniz randevuyu almanız için tüm süreçleri titizlikle yönetiyor ve size en iyi hizmeti sunuyoruz. Vize başvurularınızda zaman kaybetmeden, en hızlı şekilde ilerlemeniz için buradayız."
+          },
+          {
+            "title": "Uzman Vize Ekibi",
+            "description": "Alanında uzman vize ekibiyle hizmet sunan Çilek Vize, size birçok avantaj sağlıyor."
+          },
+          {
+            "title": "Online Danışmanlık",
+            "description": "Bursa'da bulunan ofisimiz ile sadece Bursa ve çevre illere değil, tüm Türkiye'ye online olarak hizmet edebiliyor, sürecinizi kolaylıkla yönetebiliyoruz."
+          },
+          {
+            "title": "Kişiye Özel Danışmanlık",
+            "description": "Şirketimizde başvurusunu yaptığımız her ülke için ayrı bir vize uzmanı bulunmaktadır. Danışmanlık sürecinizi başlattıktan sonra ilgili vize uzmanımız atamanızı gerçekleştirdikten sonra, sizleri arayarak ön bilgilendirme yaparlar ve süreciniz başlamış olur."
+          },
+          {
+            "title": "Zaman Tasarrufu",
+            "description": "Uzman ekibimiz ile görüştükten sonra vize sonucu beklemek dışında hiçbir evrak işiyle uğraşmıyorsunuz. Siz bize hayallerinizi anlatın, günlük rutininizi bozmadan işlerinizi halledelim!"
+          },
+          {
+            "title": "Alternatif Vize Çözümleri",
+            "description": "İsteklerinize ve mesleğinize en uygun vize türünü belirleyebiliyoruz."
+          },
+          {
+            "title": "Dil Desteği",
+            "description": "Tercümesi zorunlu belgeler için yeminli tercümanımız ek ücretle tercüme işlemlerinizi yapmaktadır."
+          },
+          {
+            "title": "Yurt Dışı Eğitim",
+            "description": "Turistik ve birçok alanda vize hizmeti sunan Çilek Vize, Amerika, Kanada, Malta ve birçok ülkede eğitim alma şansı sunuyor!"
+          }
+        ]
+      },
+      "hakkimizda": {
+        "heroTitle": "Evraklarla Uğraşmadan Vize Başvurunuzu Çilek Vize ile Tamamlayın!",
+        "testimonialsTitle": "Bizi danışanlarımızdan dinleyin!",
+        "content": {
+          "intro": "Günümüz dünyasında, uluslararası seyahat ve göçmenlik süreçleri giderek daha karmaşık hale gelmektedir. İş, eğitim, turizm veya aile birleşimi gibi nedenlerle yurt dışına çıkmak isteyen bireyler, vize başvuruları sırasında karşılaştıkları karmaşık prosedürler ve belgeler nedeniyle çoğu zaman zorlanmaktadır. Vize başvuru sürecindeki bu zorlukları aşmak ve başvurularının başarı şansını artırmak isteyen kişiler için profesyonel vize danışmanlık hizmetleri büyük bir önem taşımaktadır. İşte bu noktada, Çilek Vize olarak biz devreye giriyoruz.",
+          "mission": {
+            "title": "Firmamızın Amacı ve Misyonu",
+            "text": "Çilek Vize, uluslararası vize başvurularında bireylere ve kurumlara profesyonel danışmanlık hizmeti sunan, alanında uzmanlaşmış bir firmadır. Misyonumuz, müşterilerimizin vize başvuru süreçlerini en hızlı, en doğru ve en etkili şekilde yönetmelerini sağlamaktır. Bu kapsamda, her müşterimizin ihtiyaçlarına özel çözümler sunuyor ve başvurularının başarıya ulaşması için titizlikle çalışıyoruz."
+          },
+          "services": {
+            "title": "Hizmetlerimiz;",
+            "subtitle": "1. Vize Türleri ve Başvuru Süreçleri:",
+            "tourist": {
+              "title": "Turist Vizeleri:",
+              "text": "Turistik amaçlarla yurt dışına seyahat etmek isteyen müşterilerimize, başvurulacak ülkenin vize gereklilikleri, seyahat sağlık sigortası, rezervasyonlar ve gerekli belgeler hakkında kapsamlı bilgi sağlıyoruz. Başvuru sürecini baştan sona yöneterek, müşterilerimizin sorunsuz bir şekilde vizelerini almasını sağlıyoruz."
+            },
+            "education": {
+              "title": "Eğitim Vizeleri:",
+              "text": "Yurt dışında eğitim almak isteyen öğrenciler için başvurulacak okul ve ülkenin gereksinimlerine uygun olarak, eğitim vizesi başvuru sürecini yönetiyoruz. Belgelerin doğru şekilde hazırlanmasından, okul kabul mektubu ve mali yeterlilik belgelerine kadar tüm detayları gözden geçiriyoruz."
+            },
+            "work": {
+              "title": "İş Vizeleri:",
+              "text": "Yurt dışında çalışmak isteyen profesyoneller için iş vizesi başvuru sürecinde gerekli tüm belgelerin hazırlanması, işverenle koordinasyon ve konsolosluk görüşmeleri konusunda danışmanlık hizmeti sunuyoruz. Çalışma izni, iş sözleşmesi ve diğer ilgili belgelerin eksiksiz olmasını sağlıyoruz."
+            },
+            "family": {
+              "title": "Aile Birleşimi Vizeleri:",
+              "text": "Aile bireylerini yurt dışına taşımak isteyen müşterilerimiz için aile birleşimi vizesi başvurusunu detaylı bir şekilde ele alıyoruz. Aile bağlarını kanıtlayan belgelerin hazırlanması, konsolosluk görüşmelerine hazırlık ve başvuru takibi gibi hizmetler sunuyoruz."
+            }
+          },
+          "process": {
+            "title": "2. Vize Başvuru Süreci Yönetimi:",
+            "documentation": {
+              "title": "Dokümantasyon:",
+              "text": "Vize başvuru sürecinin en kritik aşaması olan dokümantasyonun doğru ve eksiksiz bir şekilde hazırlanmasını sağlıyoruz. Müşterilerimizin ihtiyaç duyduğu tüm belgeleri temin etmelerine yardımcı oluyor, eksik veya hatalı dokümanların düzeltilmesi için destek veriyoruz."
+            },
+            "forms": {
+              "title": "Başvuru Formları:",
+              "text": "Vize başvuru formlarının doldurulması sürecinde müşterilerimize rehberlik ediyoruz. Hatalı veya eksik doldurulmuş formların vize başvurularını riske atabileceğinin farkında olarak, formların doğru ve eksiksiz bir şekilde tamamlanmasını sağlıyoruz."
+            },
+            "appointment": {
+              "title": "Randevu ve Takip:",
+              "text": "Konsolosluk ve büyükelçilik randevularının alınmasından, başvuruların takibine kadar tüm süreci yönetiyoruz. Müşterilerimizin başvuru süreçlerinde herhangi bir aksaklık yaşamaması için sürekli olarak süreçleri izliyor ve gerekli durumlarda müdahalelerde bulunuyoruz."
+            }
+          },
+          "rejection": {
+            "title": "3. Vize Reddi Sonrası Destek:",
+            "appeal": {
+              "title": "İtiraz ve Yeniden Başvuru:",
+              "text": "Vize başvurusu reddedilen müşterilerimize, ret nedenlerini analiz ederek itiraz süreçlerinde destek veriyoruz. Yeniden başvuru yapma durumunda ise gerekli düzeltmeleri yaparak, başvurunun kabul edilme şansını artırıyoruz."
+            },
+            "alternatives": {
+              "title": "Alternatif Çözümler:",
+              "text": "Vize reddi sonrası alternatif seyahat veya göç seçenekleri sunarak, müşterilerimizin hedeflerine ulaşmalarını sağlıyoruz."
+            }
+          },
+          "personalized": {
+            "title": "4. Kişiselleştirilmiş Danışmanlık:",
+            "text": "Her müşterimizin ihtiyaçları farklıdır ve bu nedenle sunduğumuz hizmetler de kişiselleştirilmiştir. Müşterilerimizin hedeflerine, seyahat planlarına ve kişisel durumlarına uygun olarak özel çözümler sunuyoruz. Onların vize başvuru süreçlerini en verimli şekilde yönetmeleri için yanlarında oluyoruz."
+          },
+          "team": {
+            "title": "Uzman Ekibimiz",
+            "text": "Çilek Vize olarak, alanında uzman ve deneyimli bir ekip ile çalışıyoruz. Ekibimiz, uluslararası vize başvuruları konusunda geniş bir bilgi birikimine ve deneyime sahiptir. Her biri, konsolosluk prosedürleri, yasal gereklilikler ve uluslararası göç politikaları konusunda derinlemesine bilgi sahibidir. Müşterilerimize en güncel ve doğru bilgileri sunarak, onların vize başvuru süreçlerini başarıya ulaştırmayı hedefliyoruz."
+          },
+          "why": {
+            "title": "Neden Çilek Vize ?",
+            "reliability": {
+              "title": "Güvenilirlik:",
+              "text": "Yılların deneyimi ile müşterilerimize en güvenilir ve etkili danışmanlık hizmetlerini sunuyoruz. Tüm süreçlerde şeffaflığı ve dürüstlüğü ilke ediniyoruz."
+            },
+            "success": {
+              "title": "Başarı Oranı:",
+              "text": "Yüksek başarı oranımız, hizmet kalitemizin bir göstergesidir. Müşterilerimizin vize başvurularını en yüksek standartlarda yöneterek, başarılı sonuçlar elde ediyoruz."
+            },
+            "personal": {
+              "title": "Kişiye Özel Hizmet:",
+              "text": "Her müşteri bizim için özeldir ve her birinin ihtiyaçlarına özel çözümler sunarız. Danışmanlık sürecimizi, müşterilerimizin kişisel durumlarına ve hedeflerine uygun şekilde tasarlıyoruz."
+            },
+            "support": {
+              "title": "Destek ve Rehberlik:",
+              "text": "Başvuruların her aşamasında müşterilerimize tam destek sağlıyoruz. Gerekli tüm belgeleri hazırlamaktan, konsolosluk görüşmelerine kadar her adımda yanlarındayız."
+            }
+          },
+          "conclusion": "Çilek Vize olarak, uluslararası seyahat ve yurt dışı çalışma süreçlerinde müşterilerimizin en güvenilir yol arkadaşı olmayı amaçlıyoruz. Vize başvurularının karmaşık yapısını, deneyimimiz ve uzmanlığımızla basitleştiriyor ve müşterilerimize sorunsuz bir süreç sunuyoruz. Her müşterimizin hayatını kolaylaştırmak ve hedeflerine ulaşmalarını sağlamak için burada olmaktan gurur duyuyoruz. Müşterilerimizin memnuniyeti, başarımızın en büyük ödülüdür."
+        },
+        "comparison": {
+          "title": "Karmaşık vize başvurularına elveda",
+          "with": {
+            "items": {
+              "fast": "Vize başvuru süreçleri hızlı ve basittir.",
+              "approval": "Başvuruların hızlı bir şekilde onaylanması",
+              "support": "Seyahat destek ve tavsiye hizmeti sunulur.",
+              "price": "Tek sabit fiyat ile bütçenizi koruyarak işlem yapma imkanı.",
+              "professional": "Başvuru sürecindeki aşamalarda profesyonel destek."
+            }
+          },
+          "without": {
+            "items": {
+              "complex": "Vize evraklarıyla uğraşmak karmaşık olabilir.",
+              "risk": "Hata yapma ve vize reddi riski artabilir.",
+              "timeline": "Başvuru onayı için belirsiz bir zaman çizelgesi olabilir.",
+              "cost": "Farklı firmalara yüksek ücretler ödemek gerekebilir.",
+              "wrong": "Yanlış evrakları hazırlamak zorunda kalırsınız."
+          }
+        },
+        "testimonials": {
+          "1": {
+            "title": "🎄 2025'e Özel Çilek Vize Yılbaşı Ağacı! 🍓 KARTONGİLLER 🎅🤶",
+            "description": "Yeni yıl ruhunu ofisimize taşıdık ve biraz da yaratıcılığımızı konuşturduk! ?✨ İşte Çilek Vize ailesi olarak bir araya gelip kendimizden bir yılbaşı ağacı yaptığımız bu eğlenceli proje! ?\r\n 2025 yılına girerken dileğimiz, hayallerinize giden tüm yolların açık olması!"
+          },
+          "2": {
+            "title": "Almanya Turist Vizesi",
+            "description": "Almanya'ya giden danışanımız Baran Bey'den video var."
+          },
+          "3": {
+            "title": "🎉 ÇEKİLİŞ ZAMANI! 🎉",
+            "description": "Çilek Vize  ve Lider İnsan Kaynakları iş birliğiyle 3 şanslı kişiye ÜCRETSİZ VİZE DANIŞMANLIĞI hediye ediyoruz!"
+          },
+          "4": {
+            "title": "Rusya Vizesi Çilek Vize ile Artık Çok Daha Kolay! 🍓",
+            "description": "Sadece 1 haftada Rusya vizenizi alıyoruz! Hızlı, güvenilir ve profesyonel hizmetimizle sizi gereksiz bekleyişlerden kurtarıyoruz. ✈️"
+          },
+          "5": {
+            "title": " @TaklitMan   Gösterisinde Tüm Çilek Vize Ekibi Olarak Oradaydık😎",
+            "description": "Güzel bir gösteri de güzel bir çekiliş yaptık?️\r\n2 SEYİRCİMİZ ÜCRETSİZ DANIŞMANLIK KAZANDI?✨\r\nEğlendiğimiz bir günü sizinle paylaşmaktan mutluyuz!\r\n☎️0850 888 7071 www.cilekvize.com"
+          },
+          "6": {
+            "title": "Avustralya Turist Vizesi",
+            "description": "Avustralya'ya giden danışanımız Cansu Hanım."
+          },
+          "7": {
+            "title": "Hayalinizdeki İtalya Seyahati İçin İlk Adımı Atın! 🍓",
+            "description": "İtalya vizesiyle ilgili tüm süreçlerde yanınızdayız! Hızlı ve güvenilir bir hizmetle vize işlemlerinizi kolaylaştırıyoruz. Şimdi bizimle iletişime geçin ve hayallerinizdeki İtalya yolculuğuna başlayın! ✈️"
+          },
+          "8": {
+            "title": "Avusturya Aile Birleşimi Vizesi",
+            "description": "Aile Birleşimi Vizesi ile yurt dışına giden danışanımız  Batuhan bey."
+          },
+          "9": {
+            "title": "VİZE BAŞVURULARINDA BİLMENİZ GEREKENLER! En Sık Sorulan Sorular ve Cevaplar Neler?",
+            "description": "Vize başvurusu süreci karmaşık mı geliyor? Endişelenmeyin! Bu videoda, vize süreçlerinde en çok merak edilen sorulara ve kritik ipuçlarına değiniyoruz.\r\n"
+          },
+          "10": {
+            "title": "İngiltere Çalışma Vizesi",
+            "description": "Çalışma vizesi hizmeti alarak ailesiyle birlikte İngiltere'ya giden danışanımız."
+          },
+          "11": {
+            "title": "ÇİLEK VİZE ile ONLİNE VİZE BAŞVURU SÜRECİ – Kolay ve Hızlı!",
+            "description": "Çilek Vize ile online vize başvurusu artık çok kolay!\r\nBu videoda, vize işlemlerinizi hızlı ve sorunsuz bir şekilde tamamlamanız için adım adım rehberlik sunuyoruz."
+          },
+          "12": {
+            "title": "Vize alamayan yoktur, Çilek vize'ye gelmeyen vardır 😎✈️",
+            "description": "Daha fazla bilgi ve başvuru için✨\r\n☎️0850 888 7071\r\nwww.cilekvize.com"
+          },
+          "13": {
+            "title": "Hollanda'ya giden danışanımızdan video!",
+            "description": ""
+          },
+          "14": {
+            "title": "🎉 İngiltere Vizesi için %20 İndirim Fırsatı! 🇬🇧✈️",
+            "description": "Çilek Vize olarak İngiltere vize danışmanlığında %20 indirim kampanyasıyla karşınızdayız!  Başvurunuzu sorunsuz ve hızlı bir şekilde tamamlamak için bu fırsatı kaçırmayın. ? Kampanyamız yalnızca 20 Kasım'a kadar geçerli!"
+          },
+          "15": {
+            "title": "Kanada'ya giden danışanımızın videosu...",
+            "description": ""
+          },
+          "16": {
+            "title": "Hollanda'ya giden danışanımız!",
+            "description": ""
+          }
+        }
+      },
+      "vizeTablosu": {
+        "table": {
+          "headers": {
+            "country": "Ülke",
+            "visaRequired": "Vize Gerekli mi?",
+            "visaType": "Vize Türü",
+            "processingTime": "İşlem Süresi",
+            "notes": "Notlar"
+          },
+          "rows": {
+            "uk": {
+              "country": "İngiltere",
+              "visaType": "Standart Ziyaretçi Vizesi",
+              "processingTime": "15-20 iş günü"
+            },
+            "germany": {
+              "country": "Almanya",
+              "visaType": "Schengen Vizesi",
+              "processingTime": "10-15 iş günü"
+            },
+            "france": {
+              "country": "Fransa",
+              "visaType": "Schengen Vizesi",
+              "processingTime": "10-15 iş günü"
+            },
+            "canada": {
+              "country": "Kanada",
+              "visaType": "Turist Vizesi",
+              "processingTime": "20-30 iş günü"
+            },
+            "usa": {
+              "country": "ABD",
+              "visaType": "B1/B2 Vizesi",
+              "processingTime": "15-20 iş günü"
+            }
+          }
+        }
+      }
+    },
+      "contact": {
+        "title": "Bize Ulaşın",
+        "subtitle": "Herhangi bir sorunuz veya yorumunuz var mı? Sadece bize bir mesaj yazın!",
+        "loading": "Mesajınız gönderiliyor...",
+        "info": {
+          "title": "İletişim Bilgileri",
+          "description": "Sohbet başlatmak için bir şey söyleyin!"
+        },
+        "form": {
+          "sendMessage": "Mesaj Gönderin",
+          "firstName": "Adınız",
+          "lastName": "Soyadınız",
+          "email": "E-Posta Adresiniz",
+          "phone": "Telefon Numaranız",
+          "subject": "Konu Seçiniz",
+          "message": "Mesajınız",
+          "submit": "Mesaj Gönder",
+          "placeholders": {
+            "firstName": "Adınızı giriniz",
+            "lastName": "Soyadınızı giriniz",
+            "email": "ornek@email.com",
+            "phone": "0532 123 4567",
+            "message": "Mesajınızı buraya yazın..."
+          },
+          "subjects": {
+            "schengen": "Schengen Vize Alımı",
+            "application": "Başvuru Yapı",
+            "appointment": "Vize Randevusu",
+            "popular": "Popüler Ülkeler",
+            "other": "Diğer"
+          },
+          "errors": {
+            "firstNameMin": "Adınız en az {{count}} karakter olmalıdır.",
+            "lastNameMin": "Soyadınız en az {{count}} karakter olmalıdır.",
+            "invalidEmail": "Geçerli bir e-posta adresi giriniz.",
+            "invalidPhone": "Geçerli bir Türkiye telefon numarası giriniz.",
+            "messageMin": "Mesajınız en az {{count}} karakter olmalıdır.",
+            "fillAllFields": "Lütfen tüm alanları doldurun."
+          },
+          "successMessage": "Mesajınız başarıyla gönderildi.",
+          "errorMessage": "Bir hata oluştu. Lütfen tekrar deneyiniz."
+        }
+      },
+      "branches": {
+        "title": "Şubelerimiz",
+        "notFound": {
+          "title": "Şube Bulunamadı",
+          "description": "Aradığınız şube bulunamadı.",
+          "backHome": "Ana Sayfaya Dön"
+        },
+        "getInfo": "Hemen Bilgi Al",
+        "callNow": "Hemen Ara",
+        "phone": "Telefon",
+        "address": "Adres",
+        "whatsapp": "WhatsApp",
+        "writeNow": "Hemen Yazın",
+        "otherBranches": "Diğer Şubelerimiz",
+        "form": {
+          "firstName": "Adınız",
+          "lastName": "Soyadınız",
+          "phone": "Telefon Numarası",
+          "branch": "İlgilendiğiniz Şube",
+          "privacyPolicy": "Gizlilik Politikası",
+          "privacyAccept": "'nı okudum, kabul ediyorum.",
+          "submit": "Bilgi Al",
+          "success": "Bilgi talebiniz başarıyla gönderildi!",
+          "error": "Bir hata oluştu. Lütfen tekrar deneyin."
+        }
+      },
+      "blog": {
+        "badge": "Çilek Vize Blog",
+        "featured": {
+          "title": "Vize Alırken Dikkat Edilmesi Gerekenler",
+          "readTime": "15 dk okuma"
+        },
+        "readPost": "Yazıyı Oku",
+        "all": "Tümü",
+        "popular": "Popüler Yazılar",
+        "read": "Oku"
+      },
+      "countryApplication": {
+        "notFound": "Ülke bulunamadı",
+        "backHome": "Ana Sayfaya Dön",
+        "guide": "Vize Başvuru Rehberi",
+        "gallery": "Galeri"
+      }
+    }
+  }
+}

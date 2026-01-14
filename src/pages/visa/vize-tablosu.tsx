@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import '../../i18n'
 import '../../styles/visa/VizeTablosu.css'
 
 declare global {
@@ -12,6 +14,7 @@ declare global {
 }
 
 export default function VizeTablosuPage() {
+    const { t } = useTranslation()
     const sidebarRef = useRef<HTMLDivElement>(null)
     const shapesRef = useRef<HTMLDivElement>(null)
     const [isLightboxOpen, setIsLightboxOpen] = useState(false)
@@ -30,7 +33,7 @@ export default function VizeTablosuPage() {
                     const scrolled = window.pageYOffset
                     shapes.forEach((shape, index) => {
                         const speed = (index + 1) * 0.03
-                        ;(shape as HTMLElement).style.transform = `translateY(${scrolled * speed}px)`
+                            ; (shape as HTMLElement).style.transform = `translateY(${scrolled * speed}px)`
                     })
                     ticking = false
                 })
@@ -120,7 +123,7 @@ export default function VizeTablosuPage() {
 
             const display = document.createElement('div')
             display.className = 'custom-select-display placeholder'
-            display.textContent = 'Seçiniz'
+            display.textContent = t('visa.common.select', 'Seçiniz')
 
             const dropdown = document.createElement('div')
             dropdown.className = 'custom-select-dropdown'
@@ -229,30 +232,30 @@ export default function VizeTablosuPage() {
                 if (window.Swal) {
                     window.Swal.fire({
                         icon: 'success',
-                        title: 'Teşekkürler!',
-                        text: result.message || 'Bilgileriniz başarıyla alındı.',
+                        title: t('visa.common.thanks', 'Teşekkürler!'),
+                        text: result.message || t('visa.common.infoReceived', 'Bilgileriniz başarıyla alındı.'),
                         confirmButtonColor: '#C42127',
-                        confirmButtonText: 'Tamam'
+                        confirmButtonText: t('visa.common.ok', 'Tamam')
                     })
                 }
                 form.reset()
 
                 const customDisplay = form.querySelector('.custom-select-display')
                 if (customDisplay) {
-                    customDisplay.textContent = 'Seçiniz'
+                    customDisplay.textContent = t('visa.common.select', 'Seçiniz')
                     customDisplay.classList.add('placeholder')
                 }
             } else {
-                throw new Error(result.message || 'Form gönderilemedi')
+                throw new Error(result.message || t('visa.common.errorOccurred', 'Bir hata oluştu.'))
             }
         } catch (error: any) {
             if (window.Swal) {
                 window.Swal.fire({
                     icon: 'error',
-                    title: 'Hata!',
-                    text: error.message || 'Bir hata oluştu.',
+                    title: t('visa.common.error', 'Hata!'),
+                    text: error.message || t('visa.common.errorOccurred', 'Bir hata oluştu.'),
                     confirmButtonColor: '#C42127',
-                    confirmButtonText: 'Tamam'
+                    confirmButtonText: t('visa.common.ok', 'Tamam')
                 })
             }
         } finally {
@@ -277,13 +280,13 @@ export default function VizeTablosuPage() {
                         <div className="hero-content">
                             {/* Breadcrumb */}
                             <nav className="breadcrumb-nav">
-                                <Link href="/visa">Ana Sayfa</Link>
+                                <Link href="/visa">{t('visa.common.home')}</Link>
                                 <span className="separator">/</span>
-                                <span className="current">Vize Tablosu</span>
+                                <span className="current">{t('visa.header.visaTable')}</span>
                             </nav>
 
                             {/* Title */}
-                            <h1 className="hero-title">Vize Tablosu</h1>
+                            <h1 className="hero-title">{t('visa.header.visaTable')}</h1>
                         </div>
                     </div>
                 </div>
@@ -302,47 +305,47 @@ export default function VizeTablosuPage() {
                                         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                             <thead>
                                                 <tr>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>Ülke</th>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>Vize Gerekli mi?</th>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>Vize Türü</th>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>İşlem Süresi</th>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>Notlar</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>{t('visa.pages.vizeTablosu.table.headers.country', 'Ülke')}</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>{t('visa.pages.vizeTablosu.table.headers.visaRequired', 'Vize Gerekli mi?')}</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>{t('visa.pages.vizeTablosu.table.headers.visaType', 'Vize Türü')}</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>{t('visa.pages.vizeTablosu.table.headers.processingTime', 'İşlem Süresi')}</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>{t('visa.pages.vizeTablosu.table.headers.notes', 'Notlar')}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>İngiltere</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>Evet</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>Standart Ziyaretçi Vizesi</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>15-20 iş günü</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.uk.country', 'İngiltere')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.common.yes', 'Evet')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.uk.visaType', 'Standart Ziyaretçi Vizesi')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.uk.processingTime', '15-20 iş günü')}</td>
                                                     <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>-</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>Almanya</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>Evet</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>Schengen Vizesi</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>10-15 iş günü</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.germany.country', 'Almanya')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.common.yes', 'Evet')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.germany.visaType', 'Schengen Vizesi')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.germany.processingTime', '10-15 iş günü')}</td>
                                                     <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>-</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>Fransa</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>Evet</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>Schengen Vizesi</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>10-15 iş günü</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.france.country', 'Fransa')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.common.yes', 'Evet')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.france.visaType', 'Schengen Vizesi')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.france.processingTime', '10-15 iş günü')}</td>
                                                     <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>-</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>Kanada</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>Evet</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>Turist Vizesi</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>20-30 iş günü</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.canada.country', 'Kanada')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.common.yes', 'Evet')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.canada.visaType', 'Turist Vizesi')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.canada.processingTime', '20-30 iş günü')}</td>
                                                     <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>-</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>ABD</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>Evet</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>B1/B2 Vizesi</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>15-20 iş günü</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.usa.country', 'ABD')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.common.yes', 'Evet')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.usa.visaType', 'B1/B2 Vizesi')}</td>
+                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.usa.processingTime', '15-20 iş günü')}</td>
                                                     <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>-</td>
                                                 </tr>
                                             </tbody>

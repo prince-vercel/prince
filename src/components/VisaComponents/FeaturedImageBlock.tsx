@@ -2,48 +2,36 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-
-const features = [
-  {
-    icon: '/visa/uploads/icons/1765240574_dfce9e0f1e5bc7e1c524.svg',
-    title: 'Müşteri Hizmetleri'
-  },
-  {
-    icon: '/visa/uploads/icons/1765240574_e56f5f0af6ab942ee106.svg',
-    title: 'Hizmet Sözleşmesi'
-  },
-  {
-    icon: '/visa/uploads/icons/1765240574_ca2ff7d8096738745f67.svg',
-    title: 'Vize Uzmanları İletişim'
-  },
-  {
-    icon: '/visa/uploads/icons/1765240574_1d9915c577aa7dc8f8ea.svg',
-    title: 'Vize Süreci'
-  },
-  {
-    icon: '/visa/uploads/icons/1765240574_bdc92e3562e859d8ee05.svg',
-    title: 'Evrak Başvuru'
-  },
-  {
-    icon: '/visa/uploads/icons/1765240574_a73bd471175491f12fc7.svg',
-    title: 'Sonuç'
-  }
-]
+import { useTranslation } from 'react-i18next'
+import '../../i18n'
 
 export default function FeaturedImageBlock() {
+  const { t } = useTranslation()
+  
+  const features = t('visa.featured.features', { returnObjects: true }) as string[]
+  
+  // Icon paths'i ekle
+  const featuresWithIcons = [
+    { title: features[0], icon: '/visa/uploads/icons/1765240574_dfce9e0f1e5bc7e1c524.svg' },
+    { title: features[1], icon: '/visa/uploads/icons/1765240574_e56f5f0af6ab942ee106.svg' },
+    { title: features[2], icon: '/visa/uploads/icons/1765240574_ca2ff7d8096738745f67.svg' },
+    { title: features[3], icon: '/visa/uploads/icons/1765240574_1d9915c577aa7dc8f8ea.svg' },
+    { title: features[4], icon: '/visa/uploads/icons/1765240574_bdc92e3562e859d8ee05.svg' },
+    { title: features[5], icon: '/visa/uploads/icons/1765240574_a73bd471175491f12fc7.svg' },
+  ]
   return (
     <section className="section">
       <div className="container">
         <div className="section-head" data-scroll-animation>
           <span className="heading-2 colorfull">
-            Vize belgelerini hızlandırmak hiç bu kadar kolay olmamıştı.
+            {t('visa.featured.title')}
           </span>
         </div>
         <div className="featured-image-block">
           <div className="img">
             <Image
               src="/visa/uploads/contents/main/1764368714_c0efee420e7155ec8653.webp"
-              alt="Vize belgelerini hızlandırmak hiç bu kadar kolay olmamıştı."
+              alt={t('visa.featured.title')}
               width={965}
               height={677}
               decoding="async"
@@ -54,13 +42,22 @@ export default function FeaturedImageBlock() {
             <div className="heading-3 colorfull">
               <p>
                 <strong>
-                  Saatlerce doğru evrak listesini aramaya son! Çilek Vize ile tüm resmi belgelerinizi{' '}
-                  <span style={{ color: '#ff0000' }}>hızlı, kolay ve tek</span> bir kurumdan ayarlayıp vizeye başvurabilirsiniz. Vize uzmanlarından hemen bilgi alın.
+                  {(() => {
+                    const desc = t('visa.featured.description')
+                    const parts = desc.split('hızlı, kolay ve tek')
+                    return (
+                      <>
+                        {parts[0]}
+                        <span style={{ color: '#ff0000' }}>hızlı, kolay ve tek</span>
+                        {parts[1]}
+                      </>
+                    )
+                  })()}
                 </strong>
               </p>
             </div>
             <div className="list-huge">
-              {features.map((feature, index) => (
+              {featuresWithIcons.map((feature, index) => (
                 <div key={index} className="icon-list-item">
                   <span className="icon">
                     <Image
@@ -76,8 +73,8 @@ export default function FeaturedImageBlock() {
                 </div>
               ))}
             </div>
-            <Link title="Başvurunuzu Başlatın" href="/visa/basvuru-yap" className="btn btn-primary">
-              Başvurunuzu Başlatın
+            <Link title={t('visa.featured.cta')} href="/visa/basvuru-yap" className="btn btn-primary">
+              {t('visa.featured.cta')}
             </Link>
           </div>
         </div>

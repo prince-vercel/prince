@@ -1,7 +1,9 @@
 'use client'
 
 import Head from 'next/head'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import '../../i18n'
 import '../../styles/visa/AwardsSection.css'
 
 interface Award {
@@ -10,50 +12,18 @@ interface Award {
   status: 'approved' | 'pending'
 }
 
-const awards: Award[] = [
-  {
-    title: "Faruk Bey'in 1 Yıllık Almanya Vizesi",
-    image: '/visa/uploads/contents/awards/2024a3a4cc_166c1f02f98dc2.webp',
-    status: 'approved'
-  },
-  {
-    title: "Ebru Hanım'ın 1 Aylık Avusturya vizesi",
-    image: '/visa/uploads/contents/awards/2024324569_166c1f14fde365.webp',
-    status: 'approved'
-  },
-  {
-    title: "Mustafa Yıldıray Bey'in 1 Aylık Bulgaristan - Schengen Vizesi",
-    image: '/visa/uploads/contents/awards/202472eeb2_166c1f168bce50.webp',
-    status: 'approved'
-  },
-  {
-    title: "Hasan Bey'in 1 Aylık Schengen Vizesi",
-    image: '/visa/uploads/contents/awards/2024cb2a3f_166c1f17ea010d.webp',
-    status: 'approved'
-  },
-  {
-    title: "Yener Bey'in 10 Yıllık Abd Vizesi",
-    image: '/visa/uploads/contents/awards/202484dda8_166c1f1b1a459e.webp',
-    status: 'approved'
-  },
-  {
-    title: "Tuğba Hanım'ın 30 günlük dubai vizesi",
-    image: '/visa/uploads/contents/awards/2024e0983f_166c1f1c81ce34.webp',
-    status: 'approved'
-  },
-  {
-    title: "Sena Hanım'ın 6 aylık ingiltere vizesi",
-    image: '/visa/uploads/contents/awards/20248bc162_166c1f26bc269b.webp',
-    status: 'approved'
-  },
-  {
-    title: 'nisa hanım schengen vizesi',
-    image: '/visa/uploads/contents/awards/202438fab7_166c1f27be5307.webp',
-    status: 'approved'
-  }
-]
-
 export default function AwardsSection() {
+  const { t, i18n } = useTranslation()
+
+  const awards: Award[] = useMemo(() => {
+    const awardsData = t('visa.awards.list', { returnObjects: true }) as Array<{ title: string; image: string }>
+    return awardsData.map((award) => ({
+      title: award.title,
+      image: award.image,
+      status: 'approved' as const
+    }))
+  }, [t, i18n.language])
+
   // HTML'deki script'leri başlat: Swiper ve LightGallery
   useEffect(() => {
     const initAwards = () => {
@@ -174,8 +144,8 @@ export default function AwardsSection() {
                 <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
               </svg>
             </div>
-            <h2 className="awards-title">Vizelerimiz</h2>
-            <p className="awards-subtitle">Başarılı vize başvurularımızdan örnekler</p>
+            <h2 className="awards-title">{t('visa.awards.title')}</h2>
+            <p className="awards-subtitle">{t('visa.awards.subtitle')}</p>
           </div>
 
           <div className="awards-swiper-wrapper">
@@ -211,16 +181,16 @@ export default function AwardsSection() {
                       <div className="award-content">
                         <div className="award-title-section">
                           <h3 className="award-title-text">{award.title.toUpperCase()}</h3>
-                          <div className="award-congrats">Hayırlı Olsun</div>
-                          <p className="award-thanks">bizi tercih ettikleri için teşekkür ederiz</p>
+                          <div className="award-congrats">{t('visa.awards.congrats')}</div>
+                          <p className="award-thanks">{t('visa.awards.thanks')}</p>
                           <p className="award-description">
-                            Schengen ve dünya çapında vize işlemleriniz için bizimle iletişime geçin.
+                            {t('visa.awards.description')}
                           </p>
                           <div className="award-brand">
                             <svg className="award-brand-icon" viewBox="0 0 24 24" fill="currentColor">
                               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                             </svg>
-                            <span className="award-brand-text">CİLEK</span>
+                            <span className="award-brand-text">{t('visa.awards.brand')}</span>
                           </div>
                         </div>
                         <div className="award-info">
@@ -228,7 +198,7 @@ export default function AwardsSection() {
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                               <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Onaylandı
+                            {t('visa.awards.approved')}
                           </span>
                           <h3 className="award-name">{award.title}</h3>
                         </div>
@@ -239,12 +209,12 @@ export default function AwardsSection() {
               </div>
             </div>
 
-            <button className="awards-nav awards-nav-prev" aria-label="Önceki">
+            <button className="awards-nav awards-nav-prev" aria-label={t('visa.awards.prev')}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="15 18 9 12 15 6" />
               </svg>
             </button>
-            <button className="awards-nav awards-nav-next" aria-label="Sonraki">
+            <button className="awards-nav awards-nav-next" aria-label={t('visa.awards.next')}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
