@@ -17,9 +17,9 @@ export default function HomePage() {
           <Image src="/logo.png" alt="Logo" width={90} height={80} priority />
         </div>
       </header>
+  
 
-
-      <div className="image-row">
+      <div className="image-row">  
 
         <Link href="/medical" className="image-card" style={{ backgroundImage: `url(${images.medical})` }}>
           <div className="overlay-dark" />
