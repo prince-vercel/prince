@@ -3,58 +3,210 @@ import Link from 'next/link'
 
 export default function VisaFooter() {
     return (
-        <footer id="footer">
-            <div className="container">
-                <div className="main-inner">
-                    <div className="left-side">
-                        {/* Top Section: Logo + Phone + Social */}
-                        <div className="left-side-top">
-                            <div className="footer-card">
-                                <span className="logo">
-                                    <Image
-                                        src="/visa/assets/img/logo/logo.svg"
-                                        alt="Çilek Vize"
-                                        width={104}
-                                        height={50}
-                                        loading="lazy"
-                                    />
-                                </span>
-                                <div className="body-sm">
-                                    <p>
-                                        Çilek Vize ile Resmi Belgelerinizi<br />
-                                        Hızlı bir şekilde alın..
-                                    </p>
+        <>
+            <style>{`
+                .visa-footer-wrapper .cs_footer_item a:hover,
+                .visa-footer-wrapper .cs_menu_widget a:hover {
+                    color: #C42127 !important;
+                }
+            `}</style>
+            <div className="visa-footer-wrapper">
+                <footer className="cs_footer cs_style_1 cs_heading_color" style={{ padding: '80px 0 0', backgroundColor: '#f8f9fa' }}>
+                    <div className="cs_footer_main" style={{ padding: '60px 0' }}>
+                        <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 15px' }}>
+                            <div className="row" style={{ display: 'flex', flexWrap: 'wrap', margin: '0 -15px' }}>
+                                <div className="col-lg-4" style={{ flex: '0 0 33.333333%', maxWidth: '33.333333%', padding: '0 15px' }}>
+                                    <div className="cs_footer_item" style={{ marginBottom: '30px' }}>
+                                        <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333', marginBottom: '20px' }}>
+                                            Çilek Vize ile Resmi Belgelerinizi<br />
+                                            Hızlı bir şekilde alın..
+                                        </p>
+                                        <ul className="cs_contact_widget" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                                            <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }}>
+                                                Muradiye Mahallesi Beşikçiler Cad. No:73A Osmangazi / Bursa
+                                            </li>
+                                            <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }}>
+                                                +90 850 888 70 71
+                                            </li>
+                                            <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }}>
+                                                info@cilekvize.com
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="col-lg-2" style={{ flex: '0 0 16.666667%', maxWidth: '16.666667%', padding: '0 15px' }}>
+                                    <ul className="cs_menu_widget cs_mp0" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                                        <li style={{ marginBottom: '12px' }}>
+                                            <Link href="/visa" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
+                                                Anasayfa
+                                            </Link>
+                                        </li>
+                                        <li style={{ marginBottom: '12px' }}>
+                                            <Link href="/visa/nasil-vize-alirim" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
+                                                Nasıl Vize Alırım?
+                                            </Link>
+                                        </li>
+                                        <li style={{ marginBottom: '12px' }}>
+                                            <Link href="/visa/blog" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
+                                                Blog
+                                            </Link>
+                                        </li>
+                                        <li style={{ marginBottom: '12px' }}>
+                                            <Link href="/visa/hakkimizda" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
+                                                Hakkımızda
+                                            </Link>
+                                        </li>
+                                        <li style={{ marginBottom: '12px' }}>
+                                            <Link href="/visa/iletisim" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
+                                                İletişim
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div className="col-lg-2" style={{ flex: '0 0 16.666667%', maxWidth: '16.666667%', padding: '0 15px' }}>
+                                    <ul className="cs_menu_widget cs_mp0" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                                        <li style={{ marginBottom: '12px' }}>
+                                            <Link href="/visa/sss" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
+                                                Sık Sorulan Sorular
+                                            </Link>
+                                        </li>
+                                        <li style={{ marginBottom: '12px' }}>
+                                            <Link href="/visa/gizlilik-politikasi" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
+                                                Gizlilik Politikası
+                                            </Link>
+                                        </li>
+                                        <li style={{ marginBottom: '12px' }}>
+                                            <Link href="/visa/kisisel-verilerin-korunma-kanunu" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
+                                                KVKK & Aydınlatma
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div className="col-lg-4" style={{ flex: '0 0 33.333333%', maxWidth: '33.333333%', padding: '0 15px' }}>
+                                    <div className="cs_newsletter cs_style1">
+                                        <h2 className="cs_newsletter_title" style={{ fontSize: '42px', fontWeight: 700, marginBottom: '11px', color: '#333' }}>
+                                            Bize Katılın
+                                        </h2>
+                                        <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#666', marginBottom: '25px' }}>
+                                            Kampanyalar, yenilikler ve vize içerikleri için e-posta listemize
+                                            kayıt olun.
+                                        </p>
+                                        <form
+                                            className="cs_newsletter_form"
+                                            onSubmit={(e) => e.preventDefault()}
+                                            style={{ position: 'relative', marginTop: '25px' }}
+                                        >
+                                            <div style={{ position: 'relative', width: '100%' }}>
+                                                <input
+                                                    type="email"
+                                                    className="cs_newsletter_input"
+                                                    placeholder="E-posta adresiniz"
+                                                    style={{
+                                                        width: '100%',
+                                                        border: '2px solid #C42127',
+                                                        borderRadius: '32px',
+                                                        padding: '15px 140px 15px 32px',
+                                                        outline: 'none',
+                                                        fontSize: '16px',
+                                                        height: '60px',
+                                                        transition: 'border-color 0.3s'
+                                                    }}
+                                                />
+                                                <button
+                                                    type="submit"
+                                                    style={{
+                                                        position: 'absolute',
+                                                        top: '50%',
+                                                        right: '6px',
+                                                        transform: 'translateY(-50%)',
+                                                        background: '#C42127',
+                                                        color: '#fff',
+                                                        borderRadius: '24px',
+                                                        padding: '10px 28px',
+                                                        border: 'none',
+                                                        fontWeight: 500,
+                                                        cursor: 'pointer',
+                                                        whiteSpace: 'nowrap',
+                                                        fontSize: '16px',
+                                                        transition: 'background 0.3s'
+                                                    }}
+                                                >
+                                                    Gönder
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="footer-social-box">
-                                <a
-                                    title="0850 888 70 71"
-                                    href="tel:0850 888 70 71"
-                                    className="link-elem heading-4"
-                                >
-                                    <span className="icon">
+                        </div>
+                    </div>
+
+                    <div className="cs_footer_bottom cs_accent_bg" style={{ backgroundColor: '#C42127', padding: '25px 0' }}>
+                        <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 15px' }}>
+                            <div className="cs_footer_bottom_in" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
+                                <div className="cs_social_links" style={{ display: 'flex', gap: '10px' }}>
+                                    <a
+                                        title="WhatsApp"
+                                        href="https://wa.me/905508887071"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            width: '40px',
+                                            height: '40px',
+                                            borderRadius: '50%',
+                                            backgroundColor: 'white',
+                                            textDecoration: 'none',
+                                            transition: 'all 0.3s'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.9)'
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.backgroundColor = 'white'
+                                        }}
+                                    >
                                         <Image
-                                            src="/visa/assets/img/icon/phone-green.svg"
-                                            alt="Phone"
-                                            width={28}
-                                            height={28}
+                                            src="/visa/assets/img/icon/whatsapp.svg"
+                                            alt="WhatsApp"
+                                            width={18}
+                                            height={18}
                                             loading="lazy"
                                         />
-                                    </span>
-                                    0850 888 70 71
-                                </a>
-                                <div className="social-list">
+                                    </a>
                                     <a
                                         title="Facebook"
                                         href="https://www.facebook.com/cilekvize"
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            width: '40px',
+                                            height: '40px',
+                                            borderRadius: '50%',
+                                            backgroundColor: 'white',
+                                            textDecoration: 'none',
+                                            transition: 'all 0.3s'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.9)'
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.backgroundColor = 'white'
+                                        }}
                                     >
                                         <Image
                                             src="/visa/assets/img/icon/social/facebook.svg"
                                             alt="Facebook"
-                                            width={9}
-                                            height={15}
+                                            width={18}
+                                            height={18}
                                             loading="lazy"
                                         />
                                     </a>
@@ -63,383 +215,46 @@ export default function VisaFooter() {
                                         href="https://www.instagram.com/turkiyeninvizecisi"
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            width: '40px',
+                                            height: '40px',
+                                            borderRadius: '50%',
+                                            backgroundColor: 'white',
+                                            textDecoration: 'none',
+                                            transition: 'all 0.3s'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.9)'
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.backgroundColor = 'white'
+                                        }}
                                     >
                                         <Image
                                             src="/visa/assets/img/icon/social/instagram.svg"
                                             alt="Instagram"
-                                            width={15}
-                                            height={15}
-                                            loading="lazy"
-                                        />
-                                    </a>
-                                    <a
-                                        title="X"
-                                        href="https://x.com/cilekvize?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <Image
-                                            src="/visa/assets/img/icon/social/x.svg"
-                                            alt="X"
-                                            width={19}
-                                            height={15}
-                                            loading="lazy"
-                                        />
-                                    </a>
-                                    <a
-                                        title="LinkedIn"
-                                        href="https://www.linkedin.com/company/cilekvize/"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <Image
-                                            src="/visa/assets/img/icon/linkedin.svg"
-                                            alt="LinkedIn"
-                                            width={19}
-                                            height={15}
-                                            loading="lazy"
-                                        />
-                                    </a>
-                                    <a
-                                        title="YouTube"
-                                        href="https://www.youtube.com/channel/UCszeNMk_76nfPkl8YPLjqSw"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <Image
-                                            src="/visa/assets/img/icon/youtube.svg"
-                                            alt="YouTube"
-                                            width={19}
-                                            height={15}
+                                            width={18}
+                                            height={18}
                                             loading="lazy"
                                         />
                                     </a>
                                 </div>
-                            </div>
-                        </div>
 
-                        {/* Center Section: Menu Columns */}
-                        <div className="left-side-center">
-                            <div className="menu-col">
-                                <span className="body-sm">Çilek Vize Hakkında</span>
-                                <ul className="primary-list">
-                                    <li>
-                                        <Link href="#" title="Neden Çilek Vize?">
-                                            <i className="icofont-minus"></i>
-                                            Neden Çilek Vize?
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/visa/hakkimizda" title="Hakkımızda">
-                                            <i className="icofont-minus"></i>
-                                            Hakkımızda
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/visa/iletisim" title="Bize Ulaşın - İletişim">
-                                            <i className="icofont-minus"></i>
-                                            Bize Ulaşın - İletişim
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div className="menu-col">
-                                <span className="body-sm">Popüler Destinasyonlar</span>
-                                <ul className="primary-list">
-                                    <li>
-                                        <Link href="/visa/ingiltere" title="İngiltere">
-                                            <i className="icofont-minus"></i>
-                                            İngiltere
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/visa/almanya" title="Almanya">
-                                            <i className="icofont-minus"></i>
-                                            Almanya
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/visa/amerika" title="Amerika">
-                                            <i className="icofont-minus"></i>
-                                            Amerika
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/visa/fransa" title="Fransa">
-                                            <i className="icofont-minus"></i>
-                                            Fransa
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/visa/hollanda" title="Hollanda">
-                                            <i className="icofont-minus"></i>
-                                            Hollanda
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/visa/italya" title="İtalya">
-                                            <i className="icofont-minus"></i>
-                                            İtalya
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/visa/kanada" title="Kanada">
-                                            <i className="icofont-minus"></i>
-                                            Kanada
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/visa/yunanistan" title="Yunanistan">
-                                            <i className="icofont-minus"></i>
-                                            Yunanistan
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/visa/ispanya" title="İspanya">
-                                            <i className="icofont-minus"></i>
-                                            İspanya
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div className="menu-col">
-                                <span className="body-sm">Bilgi Bankası</span>
-                                <ul className="primary-list">
-                                    <li>
-                                        <Link
-                                            href="/visa/schengen-vizesi-nedir-nasil-alinir"
-                                            title="Schengen Vizesi Nedir? Nasıl Alınır?"
-                                        >
-                                            <i className="icofont-minus"></i>
-                                            Schengen Vizesi Nedir? Nasıl Alınır?
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href="/visa/en-kolay-schengen-vizesi-veren-ulkeler"
-                                            title="En Kolay Schengen Vizesi Veren Ülkeler"
-                                        >
-                                            <i className="icofont-minus"></i>
-                                            En Kolay Schengen Vizesi Veren Ülkeler
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href="/visa/cascade-kurali-nedir"
-                                            title="Cascade Kuralı Nedir?"
-                                        >
-                                            <i className="icofont-minus"></i>
-                                            Cascade Kuralı Nedir?
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/visa/c-tipi-vize-nedir" title="C Tipi Vize Nedir?">
-                                            <i className="icofont-minus"></i>
-                                            C Tipi Vize Nedir?
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/visa/d-tipi-vize-nedir" title="D Tipi Vize Nedir?">
-                                            <i className="icofont-minus"></i>
-                                            D Tipi Vize Nedir?
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/visa/muvafakatname-nedir" title="Muvafakatname Nedir?">
-                                            <i className="icofont-minus"></i>
-                                            Muvafakatname Nedir?
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href="/visa/idata-vize-randevusu-alamiyorum"
-                                            title="iData Vize Randevusu Alamıyorum, Ne Yapmalıyım?"
-                                        >
-                                            <i className="icofont-minus"></i>
-                                            iData Vize Randevusu Alamıyorum, Ne Yapmalıyım?
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href="/visa/kosmos-vize-randevusu-alamiyorum"
-                                            title="Kosmos Vize Randevusu Alamıyorum, Ne Yapmalıyım?"
-                                        >
-                                            <i className="icofont-minus"></i>
-                                            Kosmos Vize Randevusu Alamıyorum, Ne Yapmalıyım?
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href="/visa/yunanistan-vizesi-kac-gunde-cikar"
-                                            title="Yunanistan Vizesi Kaç Günde Çıkar?"
-                                        >
-                                            <i className="icofont-minus"></i>
-                                            Yunanistan Vizesi Kaç Günde Çıkar?
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        {/* Bottom Section: Sponsorship + Legal Links + Copyright */}
-                        <div className="left-side-bottom">
-                            {/* Sponsorship/Reference Box */}
-                            <div
-                                className="footer-sponsorship-box w-100"
-                                style={{ justifyContent: 'space-between' }}
-                            >
-                                <div className="align-items-center d-flex justify-content-between justify-content-center footerReferanceArae">
-                                    <div className="footerReferanceItem align-items-center d-flex flex-column justify-content-center">
-                                        <Image
-                                            src="/visa/assets/img/bursaspor.webp"
-                                            alt="Bursaspor"
-                                            width={71}
-                                            height={81}
-                                            loading="lazy"
-                                        />
-                                        <p
-                                            className="text-center"
-                                            style={{
-                                                marginTop: '5px',
-                                                fontSize: '9px',
-                                                fontWeight: 600,
-                                            }}
-                                        >
-                                            Official Partner of <br /> Bursaspor
-                                        </p>
-                                    </div>
-                                    <div className="footerReferanceItem align-items-center d-flex flex-column justify-content-center">
-                                        <Image
-                                            src="/visa/assets/img/adanademir.webp"
-                                            alt="Adana Demir Spor"
-                                            width={71}
-                                            height={81}
-                                            loading="lazy"
-                                        />
-                                        <p
-                                            className="text-center"
-                                            style={{
-                                                marginTop: '5px',
-                                                fontSize: '9px',
-                                                fontWeight: 600,
-                                            }}
-                                        >
-                                            Official Partner of <br /> Adana Demir Spor
-                                        </p>
-                                    </div>
-                                    <div className="footerReferanceItem align-items-center d-flex flex-column justify-content-center">
-                                        <Image
-                                            src="/visa/assets/img/kocaeli.webp"
-                                            alt="Kocaelispor"
-                                            width={71}
-                                            height={81}
-                                            loading="lazy"
-                                        />
-                                        <p
-                                            className="text-center"
-                                            style={{
-                                                marginTop: '5px',
-                                                fontSize: '9px',
-                                                fontWeight: 600,
-                                            }}
-                                        >
-                                            Official Partner of <br /> Kocaelispor
-                                        </p>
-                                    </div>
+                                <div className="cs_copyright" style={{ color: 'white', fontSize: '14px', fontWeight: 400 }}>
+                                    Copyright &copy; {new Date().getFullYear()} Çilek Vize. Tüm hakları saklıdır.
                                 </div>
-                                <a
-                                    title="Türsab"
-                                    href="https://www.tursab.org.tr/tr/ddsv"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <Image
-                                        src="/visa/assets/img/tursab-dds-14846.png"
-                                        alt="Türsab"
-                                        width={200}
-                                        height={100}
-                                        loading="lazy"
-                                    />
-                                </a>
-                            </div>
-
-                            {/* Legal Links */}
-                            <ul className="primary-list type-1">
-                                <li>
-                                    <Link href="/visa/cerez-politikasi" title="Çerez Politikası">
-                                        Çerez Politikası
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/visa/kisisel-verilerin-korunma-kanunu"
-                                        title="Kişisel Verilerin Korunma Kanunu"
-                                    >
-                                        Kişisel Verilerin Korunma Kanunu
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/visa/gizlilik-politikasi" title="Gizlilik Politikası">
-                                        Gizlilik Politikası
-                                    </Link>
-                                </li>
-                            </ul>
-
-                            {/* Copyright */}
-                            <div className="footer-copyright-box">
-                                <p>
-                                    Copyright &copy; {new Date().getFullYear()} Çilek Vize Tüm hakları
-                                    saklıdır. Tasarım ve Kodlama: TheFabrika.
-                                </p>
                             </div>
                         </div>
                     </div>
+                </footer>
 
-                    {/* Right Side: CTA Box */}
-                    <div className="right-side">
-                        <div className="footer-feature-box">
-                            <div className="content-huge">
-                                <span className="body">Başvurunuzu şimdi başlatın!</span>
-                                <div className="body-sm">
-                                    <p>
-                                        Önce randevu sonra ücret ödemesi garantisi ile belgelerinizi hızlı
-                                        bir şekilde alın. Çilek Vize ile tüm işlemleriniz kolaylıkla
-                                        tamamlanıyor!
-                                    </p>
-                                </div>
-                                <Link
-                                    href="/visa/basvuru-yap"
-                                    title="Başvurunuzu Başlatın"
-                                    className="btn btn-primary"
-                                >
-                                    Başvurunuzu Başlatın
-                                </Link>
-                            </div>
-                            <div className="pattern">
-                                <Image
-                                    src="/visa/assets/img/pattern/comment-green.svg"
-                                    alt="Comment"
-                                    width={300}
-                                    height={300}
-                                    loading="lazy"
-                                />
-                            </div>
-                            <div className="image">
-                                <Image
-                                    src="/visa/assets/img/small-images/person-keeps-passport-and-phone5e1f.png"
-                                    alt="Person"
-                                    width={308}
-                                    height={358}
-                                    loading="lazy"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <span className="cs_scrollup" style={{ position: 'fixed', bottom: '30px', right: '30px', width: '50px', height: '50px', backgroundColor: '#C42127', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 999, transition: 'background 0.3s' }}>
+                    <i className="fa-solid fa-arrow-up" style={{ color: 'white', fontSize: '20px' }}></i>
+                </span>
             </div>
-        </footer>
+        </>
     )
 }
-

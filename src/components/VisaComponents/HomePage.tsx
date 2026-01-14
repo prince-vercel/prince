@@ -4,12 +4,10 @@ import Image from 'next/image'
 import AwardsSection from './AwardsSection'
 import ComparisonSection from './ComparisonSection'
 import CountryMarquee from './CountryMarquee'
-import FAQSection from './FAQSection'
 import FeaturedImageBlock from './FeaturedImageBlock'
 import HeroSection from './HeroSection'
 import ReferencesSection from './ReferencesSection'
 import ServicesSection from './ServicesSection'
-import VideoTestimonials from './VideoTestimonials'
 
 export default function VisaHomePage() {
   return (
@@ -19,8 +17,6 @@ export default function VisaHomePage() {
       <ServicesSection />
       <FeaturedImageBlock />
       <ComparisonSection />
-      <FAQSection />
-      <VideoTestimonials />
       <AwardsSection />
       <ReferencesSection />
 
