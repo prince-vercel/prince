@@ -30,14 +30,9 @@ export default function VisaHeader() {
     const otherLinks = [
         { title: 'Hakkımızda', href: '/visa/hakkimizda' },
         { title: 'Vize Tablosu', href: '/visa/vize-tablosu' },
-        { title: 'Marka Kataloglarımız ve Sözleşmelerimiz', href: '/visa/marka-kataloglarimiz' },
         { title: 'Vize Başvuru Başarı Oranları', href: '/visa/basvuru-durumlari' },
         { title: 'Sunduğumuz Avantajlar', href: '/visa/sundugumuz-avantajlar' },
-        { title: 'Garantili Vize Aldığımız Ülkeler', href: '/visa/garantili-vize-aldigimiz-ulkeler' },
         { title: 'Nasıl Vize Alırım?', href: '/visa/nasil-vize-alirim' },
-        { title: 'Tırcı ( Şöför ) Vizesi', href: '/visa/tirci-sofor-vizesi' },
-        { title: 'Konsolosluk Harçları', href: '/visa/konsolosluk-ve-araci-kurum-odemeleri' },
-        { title: 'Yabancılara Türkiye Oturum İzni', href: '/visa/yabancilara-turkiye-de-oturum-izni' },
         { title: 'İletişim', href: '/visa/iletisim' },
         { title: 'Sıkça Sorulan Sorular', href: '/visa/sss' },
     ]
