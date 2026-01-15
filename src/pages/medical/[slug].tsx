@@ -166,11 +166,14 @@ export default function MedicalDetailPage() {
                     <div className="cs_iconbox_info cs_radius_20">
                       <span className="cs_iconbox_circle cs_accent_bg"></span>
 
-                      <h2 className="cs_iconbox_title cs_fs_24 cs_semibold">
+                      <h2 className="cs_iconbox_title cs_semibold">
                         {item.title}
                       </h2>
 
-                      <p className="cs_iconbox_subtitle mb-0 cs_heading_color" style={{ fontSize: '14px' }}>
+                      <p
+                        className="cs_iconbox_subtitle mb-0 cs_heading_color"
+                        style={{ fontSize: '13px', width: '100%', lineHeight: '1.6' }}
+                      >
                         {item.description}
                       </p>
                     </div>
@@ -180,22 +183,22 @@ export default function MedicalDetailPage() {
                         <Image
                           src={item.image}
                           alt={item.title}
-                          width={80}
-                          height={80}
-                          quality={50}
-                          loading="lazy"
-                          sizes="80px"
+                          width={160}
+                          height={160}
+                          quality={100}
+                          loading="eager"
+                          sizes="150px"
                           style={{
                             objectFit: 'cover',
                             borderRadius: '50%',
-                            width: '80px',
-                            height: '80px'
+                            width: '150px',
+                            height: '150px'
                           }}
                         />
                       ) : (
                         <div style={{
-                          width: '80px',
-                          height: '80px',
+                          width: '150px',
+                          height: '150px',
                           borderRadius: '50%',
                           background: '#e5e7eb'
                         }} />

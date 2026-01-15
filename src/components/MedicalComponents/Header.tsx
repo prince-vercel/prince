@@ -42,7 +42,7 @@ export default function Header() {
               {/* LEFT */}
               <div className="cs_main_header_left">
                 <Link href="/" className="cs_site_branding">
-                  <Image src="/assets/img/logo.png" alt="Pro Health Logo" width={120} height={50} />
+                  <Image src="/assets/logo/logo-mavi.png" alt="Logo" width={110} height={35} />
                 </Link>
 
                 <nav className="cs_nav">

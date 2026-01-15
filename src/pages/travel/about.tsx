@@ -110,7 +110,7 @@ export default function AboutPage() {
         </div>
 
         <img
-          src="/assets/img/illustration/breadcrunb__shape.png"
+          src="/assets/images/illustration/breadcrunb__shape.png"
           alt=""
           className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]"
         />

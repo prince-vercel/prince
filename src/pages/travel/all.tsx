@@ -151,7 +151,7 @@ export default function PackageList() {
         <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
         </div>
 
-        <img src="/assets/img/illustration/breadcrunb__shape.png" alt="shape" className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" />
+        <img src="/assets/images/illustration/breadcrunb__shape.png" alt="shape" className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" />
 
         <div className="container relative z-2 pb-10">
           <ol className="breadcrumb2" style={{ color: 'white' }}>

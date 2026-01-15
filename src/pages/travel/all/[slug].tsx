@@ -104,7 +104,7 @@ export default function TravelDetailPage() {
           )}
         </div>
 
-        <img src="/assets/img/illustration/breadcrunb__shape.png" className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" alt="" />
+        <img src="/assets/images/illustration/breadcrunb__shape.png" className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" alt="" />
 
         <div className="container relative z-2">
           <nav aria-label="breadcrumb">

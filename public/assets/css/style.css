@@ -2601,12 +2601,12 @@ textarea {
 }
 
 .cs_fs_24 {
-  font-size: 24px;
+  font-size: 20px;
   line-height: 1.41em;
 }
 @media (max-width: 1700px) {
   .cs_fs_24 {
-    font-size: 22px;
+    font-size: 20px;
   }
 }
 
@@ -10275,16 +10275,16 @@ a.ui-button:active,
 }
 .cs_iconbox.cs_style_12 .cs_iconbox_info {
   position: relative;
-  max-width: 440px;
-  padding: 30px;
+  max-width: 450px;
+  padding: 20px;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
-    border: 1px solid #e6e6e6;
+  border: 1px solid #e6e6e6;
 
 }
 @media (max-width: 1400px) {
   .cs_iconbox.cs_style_12 .cs_iconbox_info {
-    padding: 25px;
+    padding: 20px;
   }
 }
 @media (max-width: 575px) {
