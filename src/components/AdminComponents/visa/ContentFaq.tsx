@@ -29,7 +29,7 @@ const ContentFaq = () => {
 
   const fetchFaqs = async () => {
     try {
-      const faqsRef = collection(db, 'medicalcontents/faq/list')
+      const faqsRef = collection(db, 'visacontents/faq/list')
       const snapshot = await getDocs(faqsRef)
       const faqsData = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -52,7 +52,7 @@ const ContentFaq = () => {
       const faqId = editingFaqId || Date.now().toString()
 
       await setDoc(
-        doc(db, 'medicalcontents/faq/list', faqId),
+        doc(db, 'visacontents/faq/list', faqId),
         {
           id: faqId,
           question,
@@ -79,7 +79,7 @@ const ContentFaq = () => {
   const deleteFaq = async (id: string) => {
     if (confirm('Bu soruyu silmek istediğinizden emin misiniz?')) {
       try {
-        await deleteDoc(doc(db, 'medicalcontents/faq/list', id))
+        await deleteDoc(doc(db, 'visacontents/faq/list', id))
         await fetchFaqs()
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -125,7 +125,7 @@ const ContentFaq = () => {
       <div className={styles.contentServicesFormSection}>
         {/* Question */}
         <div className={styles.contentServicesFieldGroup}>
-          <label className={styles.contentServicesLabel} style={{fontSize:'15px'}}>Soru</label>
+          <label className={styles.contentServicesLabel} style={{fontSize:'15px', fontWeight: '600'}}>Soru</label>
           <input
             type="text"
             placeholder="Soruyu girin"
@@ -138,7 +138,7 @@ const ContentFaq = () => {
 
         {/* Answer */}
         <div className={styles.contentServicesFieldGroup}>
-          <label className={styles.contentServicesLabel} style={{fontSize:'15px'}}>Cevap</label>
+          <label className={styles.contentServicesLabel} style={{fontSize:'15px',fontWeight: '600'}}>Cevap</label>
           <textarea
             placeholder="Cevabı girin"
             value={answer}
@@ -156,6 +156,7 @@ const ContentFaq = () => {
           onClick={handleSave}
           disabled={loading || !question || !answer}
           className={styles.contentServicesSaveBtn}
+          style={{ backgroundColor: '#c42721', color: 'white', border: 'none' }}
         >
           <MdSave size={18} />
           {loading ? 'Kaydediliyor...' : isEditMode ? 'Güncelle' : 'Kaydet'}
@@ -205,7 +206,7 @@ const ContentFaq = () => {
                   boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
                 }}
               >
-                <h3 style={{ fontSize: '18px', fontWeight: '600', margin: '0 0 12px 0', color: '#307bc4' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', margin: '0 0 12px 0', color: '#c42721' }}>
                   S: {faq.question}
                 </h3>
                 <p style={{ fontSize: '15px', color: '#666', margin: '0 0 16px 0', lineHeight: '1.6', paddingLeft: '16px' }}>
@@ -221,8 +222,8 @@ const ContentFaq = () => {
                       justifyContent: 'center',
                       gap: '4px',
                       padding: '6px 12px',
-                      background: '#e0f2fe',
-                      color: '#0369a1',
+                      background: '#c42721',
+                      color: 'white',
                       border: 'none',
                       borderRadius: '4px',
                       cursor: 'pointer',
@@ -243,7 +244,7 @@ const ContentFaq = () => {
                       gap: '4px',
                       padding: '6px 12px',
                       background: '#fee2e2',
-                      color: '#dc2626',
+                      color: '#c42721',
                       border: 'none',
                       borderRadius: '4px',
                       cursor: 'pointer',

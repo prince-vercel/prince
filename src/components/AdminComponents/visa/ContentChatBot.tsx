@@ -13,7 +13,7 @@ const ContentAdmin: React.FC = () => {
   // Sayfa açıldığında Firestore'dan soruları çek
   useEffect(() => {
     import('firebase/firestore').then(({ collection, getDocs }) => {
-      getDocs(collection(db, 'medicalchatbotQuestions'))
+      getDocs(collection(db, 'visachatbotQuestions'))
         .then(snapshot => {
           const data = snapshot.docs.map(docSnap => {
             const d = docSnap.data();
@@ -53,6 +53,10 @@ const ContentAdmin: React.FC = () => {
         }
       }
       setQuestions(imported);
+      // Save imported questions to Firestore
+      await Promise.all(
+        imported.map(q => setDoc(doc(db, 'visachatbotQuestions', q.id), q))
+      );
     } catch (err: any) {
       setImportError('Geçersiz JSON dosyası: ' + (err?.message || 'Bilinmeyen hata'));
     }
@@ -117,7 +121,7 @@ const ContentAdmin: React.FC = () => {
   const handleSave = async () => {
     if (!questions.length) return;
     await Promise.all(
-      questions.map(q => setDoc(doc(db, 'medicalchatbotQuestions', q.id), q))
+      questions.map(q => setDoc(doc(db, 'visachatbotQuestions', q.id), q))
     );
     alert('Sorular kaydedildi!');
   };
@@ -127,41 +131,32 @@ const ContentAdmin: React.FC = () => {
     const dataStr = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(questions, null, 2));
     const dlAnchor = document.createElement('a');
     dlAnchor.setAttribute('href', dataStr);
-    dlAnchor.setAttribute('download', 'medicalchatbotQuestions.json');
+    dlAnchor.setAttribute('download', 'visachatbotQuestions.json');
     dlAnchor.click();
   };
 
   return (
     <div className={styles.adminChatbotBox}>
-      <h2 className={styles.adminChatbotTitle}>Chatbot Soruları Yönetimi</h2>
-      <div style={{marginBottom: 16, color: '#205a8c', fontSize: 15}}>
+      <h2 className={styles.adminChatbotTitle} style={{color:'#C42127'}}>Chatbot Soruları Yönetimi</h2>
+      <div style={{marginBottom: 16, color: 'black', fontSize: 15}}>
         <b>Adım ID:</b> Her sorunun benzersiz anahtarıdır. <br/>
         <b>Soru metni:</b> Kullanıcıya gösterilecek metin.<br/>
         <b>Seçenekler:</b> Her butonun metni ve tıklanınca geçilecek adımın ID&apos;si.<br/>
         <span style={{color:'#888'}}>Yeni soru eklediğinizde ID otomatik gelir, isterseniz değiştirebilirsiniz.</span>
       </div>
-      <div className={styles.adminChatbotActions}>
-        <input
-          type="file"
-          accept="application/json"
-          ref={fileInputRef}
-          style={{ display: 'none' }}
-          onChange={handleImport}
-        />
 
-      </div>
       {importError && <div className={styles.adminChatbotError}>{importError}</div>}
       <div className={styles.adminChatbotList}>
         {Array.isArray(questions) && questions.length > 0 ? (
           questions.map((q, qIdx) => (
             <div key={qIdx} className={styles.adminChatbotItem}>
-              <div style={{ display: 'flex', gap: 8, alignItems: 'center', borderRadius: 8, padding: 8, marginBottom: 4 }}>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center',  borderRadius: 8, padding: 8, marginBottom: 4 }}>
                 <input
                   className={`${styles.adminChatbotId} ${styles.adminInputCustom}`}
                   value={q.id}
                   placeholder="Benzersiz adım ID (örn: start, adim1)"
                   onChange={e => handleQuestionChange(qIdx, 'id', e.target.value)}
-                  style={{ width: 140, fontWeight: 600, color: '#205a8c' }}
+                  style={{ width: 140, fontWeight: 600, color: '#C42127' }}
                   title="Bu adımın benzersiz anahtarı."
                 />
                 <input
@@ -172,9 +167,9 @@ const ContentAdmin: React.FC = () => {
                   style={{ flex: 1 }}
                   title="Kullanıcıya gösterilecek metin."
                 />
-                <button className={styles.adminChatbotBtn} onClick={() => handleRemoveQuestion(qIdx)} title="Soruyu Sil">Sil</button>
+                <button className={styles.adminChatbotBtn}  style={{backgroundColor:'#C42127'}} onClick={() => handleRemoveQuestion(qIdx)} title="Soruyu Sil">Sil</button>
               </div>
-              <div style={{ marginLeft: 12, marginTop: 6, background: '#f9f9fb', borderRadius: 6, padding: 8 }}>
+              <div style={{ marginLeft: 12, marginTop: 6, background: '#fcfcfc', borderRadius: 6, padding: 8 }}>
                 <b>Seçenekler (Butonlar):</b>
                 <ul className={styles.adminChatbotOptions}>
                   {q.options && q.options.length > 0 ? (
@@ -196,26 +191,26 @@ const ContentAdmin: React.FC = () => {
                           style={{ width: 140 }}
                           title="Tıklanınca geçilecek adımın ID'si."
                         />
-                        <button className={styles.adminChatbotBtn} onClick={() => handleRemoveOption(qIdx, oIdx)} title="Seçeneği Sil">Sil</button>
+                        <button className={styles.adminChatbotBtn}  style={{backgroundColor:'#C42127'}} onClick={() => handleRemoveOption(qIdx, oIdx)} title="Seçeneği Sil">Sil</button>
                       </li>
                     ))
                   ) : (
                     <li>Seçenek yok.</li>
                   )}
                 </ul>
-                <button className={styles.adminChatbotBtn} onClick={() => handleAddOption(qIdx)} style={{ marginTop: 4 }}>Seçenek Ekle</button>
+                <button className={styles.adminChatbotBtn}  style={{backgroundColor:'#C42127', marginTop: 4}} onClick={() => handleAddOption(qIdx)}>Seçenek Ekle</button>
                 <div style={{ color: '#888', fontSize: 13, marginTop: 2 }}>Buton metni ve tıklanınca geçilecek adım ID&apos;si girin.</div>
               </div>
             </div>
           ))
         ) : (
-          <div>Henüz soru yok.</div>
+          <div>Henüz soru yok. </div>
         )}
       </div>
       <div style={{ display: 'flex', marginTop: 16 }}>
-        <button className={styles.adminChatbotBtn} onClick={handleAddQuestion}>Yeni Soru Ekle</button>
+        <button className={styles.adminChatbotBtn} onClick={handleAddQuestion} style={{ backgroundColor:'#C42127' }}>Yeni Soru Ekle</button>
         <div style={{ flex: 1 }}></div>
-        <button className={styles.adminChatbotBtn} onClick={handleSave}>Kaydet</button>
+        <button className={styles.adminChatbotBtn} style={{ backgroundColor:'#C42127' }} onClick={handleSave}>Kaydet</button>
       </div>
 
       <div style={{marginTop: 18, color: '#888', fontSize: 13}}>

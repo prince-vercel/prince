@@ -202,15 +202,16 @@ const ContentBlog = () => {
       `}</style>
 
       {/* Başlık */}
-      <h2 style={{ margin: '0 0 30px 0', fontSize: '24px', fontWeight: 'bold' }}>Blog Yönetimi</h2>
+      <h2 style={{ margin: '0 0 30px 0', fontSize: '28px', fontWeight: 'bold' }}>Blog Yönetimi</h2>
 
       {/* Form */}
       {(
         <div
           style={{
-            backgroundColor: '#f9fafb',
-            padding: '20px',
-            borderRadius: '8px',
+            backgroundColor: '#fff',
+            boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
+            padding: '32px',
+            borderRadius: '12px',
             marginBottom: '30px',
             border: '1px solid #e5e7eb',
           }}
@@ -229,10 +230,10 @@ const ContentBlog = () => {
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 style={{
                   width: '100%',
-                  padding: '10px 12px',
                   border: '1px solid #ddd',
                   borderRadius: '6px',
-                  fontSize: '14px',
+                  padding: '10px 14px',
+                fontSize: '15px',
                   boxSizing: 'border-box',
                 }}
               />
@@ -249,10 +250,10 @@ const ContentBlog = () => {
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 style={{
                   width: '100%',
-                  padding: '10px 12px',
+                  padding: '10px 14px',
                   border: '1px solid #ddd',
                   borderRadius: '6px',
-                  fontSize: '14px',
+                  fontSize: '15px',
                   minHeight: '150px',
                   fontFamily: 'inherit',
                   boxSizing: 'border-box',
@@ -269,11 +270,11 @@ const ContentBlog = () => {
                 accept="image/*"
                 onChange={handleImageChange}
                 style={{
-                  padding: '10px',
+                  padding: '10px 14px',
                   border: '1px solid #ddd',
                   borderRadius: '6px',
                   width: '100%',
-                  fontSize: '14px',
+                  fontSize: '15px',
                 }}
               />
               {(imagePreview || editingId) && (

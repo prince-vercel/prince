@@ -18,6 +18,7 @@ import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
 import { AdminMedicalLayout } from '@/src/components/AdminComponents/medical/AdminMedicalLayout'
 import SendEmail from '@/src/components/SendEmail'
+import { MdEmail, MdDelete, MdExpandMore, MdExpandLess } from 'react-icons/md'
 
 interface ContactWithId {
   id: string
@@ -146,7 +147,7 @@ useEffect(() => {
                         }}
                         title="Cevap gönder"
                       >
-                        <i className="fas fa-envelope"></i>
+                        <MdEmail size={20} color="#888" />
                       </button>
 
                       <button
@@ -154,16 +155,20 @@ useEffect(() => {
                         onClick={() => deleteDoc(doc(db, 'medicalcontact', item.id))}
                         title="Sil"
                       >
-                        <i className="fas fa-trash"></i>
+                        <MdDelete size={20} color="#888" />
                       </button>
-                              <button
+                      <button
                         className={styles.gfIconBtn}
                         onClick={() =>
                           setExpandedId(expandedId === item.id ? null : item.id)
                         }
                         title="Detayları göster/gizle"
                       >
-                        <i className={`fas fa-chevron-${expandedId === item.id ? 'up' : 'down'}`}></i>
+                        {expandedId === item.id ? (
+                          <MdExpandLess size={20} color="#888" />
+                        ) : (
+                          <MdExpandMore size={20} color="#888" />
+                        )}
                       </button>
                     </div>
                   </div>

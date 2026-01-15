@@ -3,38 +3,39 @@ import { useState } from 'react'
 import React from 'react'
 import styles from '@/src/styles/admin.module.css'
 import {
-  MdAdd,
   MdStar,
   MdArticle,
   MdHelpOutline,
   MdQuestionAnswer,
   MdImage,
-  MdPeople,
   MdChat
 } from 'react-icons/md'
-import { AdminTravelLayout } from '@/src/components/AdminComponents/travel/AdminTravelLayout'
-import ContentTours from '@/src/components/AdminComponents/travel/ContentTours'
-import ContentFaq from '@/src/components/AdminComponents/travel/ContentFaq'
-import ContentTestimonials from '@/src/components/AdminComponents/travel/ContentTestimonials'
-import ContentBlog from '@/src/components/AdminComponents/travel/ContentBlog'
-import ContentImages from '@/src/components/AdminComponents/travel/ContentImages'
-import ContentPartner from '@/src/components/AdminComponents/travel/ContentPartner'
-import FormAsks from '@/src/components/AdminComponents/travel/FormAsks'
-import ContentAdmin from '@/src/components/AdminComponents/travel/ContentChatBot'
 import { AdminVisaLayout } from '@/src/components/AdminComponents/visa/AdminVisaLayout'
+import ContentVisa from '@/src/components/AdminComponents/visa/ContentVisa'
+import FormAsks from '@/src/components/AdminComponents/visa/FormAsks'
+import ContentAdmin from '@/src/components/AdminComponents/visa/ContentChatBot'
+import ContentTestimonials from '@/src/components/AdminComponents/visa/ContentTestimonials'
+import ContentBlog from '@/src/components/AdminComponents/visa/ContentBlog'
+import ContentFaq from '@/src/components/AdminComponents/visa/ContentFaq'
 
 const ContentsPage = () => {
   const [activeTab, setActiveTab] = useState<
-     'reviews' | 'blog' | 'faq' | 'testimonials' | 'partners' | 'questions' | 'chatbot' | null
+     'reviews' | 'blog' | 'faq' | 'testimonials' | 'visa' | 'questions' | 'chatbot' | null
   >(null)
   const [hoveredBox, setHoveredBox] = useState<string | null>(null)
 
   const contentBoxes = [
     {
+      id: 'visa',
+      title: 'Vizelerimiz',
+      icon: <MdImage size={40} />
+    },
+    {
       id: 'questions',
       title: 'Başvuru Soruları',
       icon: <MdQuestionAnswer size={40} />
     },
+    
      {
        id: 'chatbot',
        title: 'ChatBot',
@@ -55,22 +56,24 @@ const ContentsPage = () => {
       title: 'SSS',
       icon: <MdHelpOutline size={40} />
     },
-     {
-      id: 'partners',
-      title: 'Ortaklar',
-      icon: <MdPeople size={40} />
-    },
+
 
   ] as const
 
   const renderContent = () => {
     switch (activeTab) {
       case 'testimonials':
+        return <ContentTestimonials/>
       case 'blog':
+        return <ContentBlog/>
       case 'chatbot':
+        return <ContentAdmin/>
       case 'faq':
-      case 'partners':
+        return <ContentFaq/>
       case 'questions':
+        return <FormAsks/>
+      case 'visa':
+        return <ContentVisa />
       default:
         return null
     }
@@ -98,15 +101,15 @@ const ContentsPage = () => {
               onMouseLeave={() => setHoveredBox(null)}
               className={styles.contentsPageButton}
               style={{
-                background: isActive ? '#cc0000' : '#fff',
-                border: isActive || hoveredBox === box.id ? '2px solid #cc0000' : '2px solid #e5e7eb',
+                background: isActive ? '#c42127' : '#fff',
+                border: isActive || hoveredBox === box.id ? '2px solid #c42127' : '2px solid #e5e7eb',
                 color: isActive ? '#fff' : '#1f2937',
                 boxShadow: isActive
                   ? '0 8px 20px rgba(204,0,0,0.3)'
                   : hoveredBox === box.id ? '0 4px 12px rgba(204,0,0,0.15)' : '0 1px 3px rgba(0,0,0,0.05)'
               }}
             >
-              <div className={styles.contentsPageButtonIcon} style={{ color: isActive ? '#fff' : '#cc0000' }}>
+              <div className={styles.contentsPageButtonIcon} style={{ color: isActive ? '#fff' : '#c42127' }}>
                 {React.cloneElement(box.icon, { size: 52 })}
               </div>
 

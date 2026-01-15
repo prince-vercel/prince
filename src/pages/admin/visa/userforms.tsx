@@ -20,6 +20,7 @@ import styles from '@/src/styles/admin.module.css'
 import SendEmail from '@/src/components/SendEmail'
 import { AdminTravelLayout } from '@/src/components/AdminComponents/travel/AdminTravelLayout'
 import { AdminVisaLayout } from '@/src/components/AdminComponents/visa/AdminVisaLayout'
+import { MdDelete, MdEmail, MdExpandMore, MdExpandLess } from 'react-icons/md'
 
 interface Question {
   id: string
@@ -51,6 +52,7 @@ interface VisaFormData {
 interface FormWithId extends VisaFormData {
   id: string
   answers?: Record<string, any>
+  [key: string]: any;
 }
 
 const PAGE_SIZE = 10
@@ -187,7 +189,7 @@ useEffect(() => {
             />
           </div>
           <div className={styles.gfStatBox}>
-            <p className={styles.gfStatLabel}>Toplam Kayıt: <span className={styles.gfStatValue} style={{ color: '#cc0000' }}>{total}</span></p>
+            <p className={styles.gfStatLabel}>Toplam Kayıt: <span className={styles.gfStatValue} style={{ color: '#c42127' }}>{total}</span></p>
           </div>
         </div>
 
@@ -236,7 +238,7 @@ useEffect(() => {
                           <div key={item.id} className={styles.gfCard}>
                             {/* KAPALI HAL SATIR */}
                             <div className={styles.gfCardRow}>
-                              <div className={styles.gfRowNumber} style={{ color: '#cc0000', background: '#f5edde' }}>{startIndex + index + 1}</div>
+                              <div className={styles.gfRowNumber} style={{ color: '#c42127', background: '#f5edde' }}>{startIndex + index + 1}</div>
                               <div className={styles.gfRowDate}>
                                 {item.createdAt?.toDate
                                   ? item.createdAt.toDate().toLocaleDateString('tr-TR')
@@ -256,7 +258,7 @@ useEffect(() => {
                                     openDeleteModal(item.id, nameData)
                                   }
                                 >
-                                  <i className="fas fa-trash"></i>
+                                  <MdDelete size={20} color="#888" />
                                 </button>
 
                                 <button
@@ -267,7 +269,7 @@ useEffect(() => {
                                     setShowEmailModal(true)
                                   }}
                                 >
-                                  <i className="fas fa-envelope"></i>
+                                  <MdEmail size={20} color="#888" />
                                 </button>
 
                                 <button
@@ -277,11 +279,11 @@ useEffect(() => {
                                     setExpandedId(expandedId === item.id ? null : item.id)
                                   }
                                 >
-                                  <i
-                                    className={`fas fa-chevron-${
-                                      expandedId === item.id ? 'up' : 'down'
-                                    }`}
-                                  ></i>
+                                  {expandedId === item.id ? (
+                                    <MdExpandLess size={20} color="#888" />
+                                  ) : (
+                                    <MdExpandMore size={20} color="#888" />
+                                  )}
                                 </button>
                               </div>
                             </div>
@@ -292,25 +294,36 @@ useEffect(() => {
                                 <div className={styles.gfSection}>
                                   <h3>Başvuru Detayları</h3>
                                   <div className={styles.gfFields}>
-                                    {questions.map(question => {
-                                      const answer = item.answers?.[question.id]
-                                      const additionalAnswer = item.answers?.[`${question.id}_additional`]
-                                      
-                                      if (!answer) return null
-
+                                    {[
+                                      { key: 'country', label: 'Başvuru Ülkesi' },
+                                      { key: 'visa_type', label: 'Vize Türü' },
+                                      { key: 'travel_subject', label: 'Seyahat Konusu' },
+                                      { key: 'travel_date', label: 'Seyahat Tarihi' },
+                                      { key: 'flight_ticket', label: 'Uçak Bileti' },
+                                      { key: 'name', label: 'Ad' },
+                                      { key: 'surname', label: 'Soyad' },
+                                      { key: 'email', label: 'E-posta' },
+                                      { key: 'phone', label: 'Telefon' },
+                                      { key: 'age', label: 'Yaş' },
+                                      { key: 'travel_with', label: 'Kiminle Seyahat' },
+                                      { key: 'marital_status', label: 'Medeni Durum' },
+                                      { key: 'visa_before', label: 'Daha Önce Vize' },
+                                      { key: 'visa_rejection', label: 'Vize Reddi' },
+                                      { key: 'schengen_visa', label: 'Schengen Vizesi' },
+                                      { key: 'job', label: 'Meslek' },
+                                      { key: 'work_years', label: 'İş Yılı' },
+                                      { key: 'net_salary', label: 'Net Maaş' },
+                                      { key: 'salary_to_bank', label: 'Banka Yatan Maaş' },
+                                      { key: 'message', label: 'Ek Mesaj' },
+                                    ].map(field => {
+                                      const value = item.answers?.[field.key] || item[field.key] || '';
+                                      if (!value) return null;
                                       return (
-                                        <div key={question.id} className={styles.gfField}>
-                                          <label>{question.questionText}</label>
-                                          <div>
-                                            {Array.isArray(answer) ? answer.join(', ') : String(answer)}
-                                            {additionalAnswer && (
-                                              <div style={{ marginTop: '8px', fontSize: '12px', color: '#666', fontStyle: 'italic' }}>
-                                                ({question.additionalInputLabel}: {additionalAnswer})
-                                              </div>
-                                            )}
-                                          </div>
+                                        <div key={field.key} className={styles.gfField}>
+                                          <label>{field.label}</label>
+                                          <div>{String(value)}</div>
                                         </div>
-                                      )
+                                      );
                                     })}
                                   </div>
                                 </div>
@@ -332,9 +345,9 @@ useEffect(() => {
                           }}
                           style={{
                             padding: '8px 12px',
-                            border: page === currentPage ? '2px solid #cc0000' : '1px solid #ddd',
+                            border: page === currentPage ? '2px solid #c42127' : '1px solid #ddd',
                             backgroundColor: page === currentPage ? '#fef3e2' : 'white',
-                            color: page === currentPage ? '#cc0000' : '#000',
+                            color: page === currentPage ? '#c42127' : '#000',
                             borderRadius: '4px',
                             cursor: 'pointer',
                             fontWeight: page === currentPage ? 'bold' : 'normal',

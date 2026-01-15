@@ -27,7 +27,7 @@ const boxes = [
     title: 'Vize Danışmanlığı',
     desc: 'Vize başvuruları ve belge yönetimi',
     href: '/admin/visa',
-    color: '#cc0000',
+    color: '#c42127',
     lightColor: '#f19680',
     icon: <MdVerifiedUser size={48} />,
   },

@@ -127,7 +127,7 @@ export default function VisaHeader() {
             <div id="overlay"></div>
             <header id="header">
                 <div className="container">
-                    <Link href="/visa" title="Çilek Vize" className="logo" style={{ width: "9%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Link href="/" title="Çilek Vize" className="logo" style={{ width: "9%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <img
                             src="/assets/img/logo.png"
                             alt="Çilek Vize"

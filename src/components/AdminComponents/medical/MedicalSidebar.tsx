@@ -23,7 +23,7 @@ const MedicalSidebar = () => {
 
 <aside className={`${styles.sidebar} ${open ? styles.open : ''}`}>
   <div className={styles.logoArea}>
-    <Image src={logo} alt="Logo" width={140} height={40} />
+    <Image src={logo} alt="Logo" width={140} height={60} />
   </div>
   <h1 className={styles.sidebarTitle}>Prince Medikal</h1>
 

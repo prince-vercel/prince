@@ -18,6 +18,7 @@ import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
 import SendEmail from '@/src/components/SendEmail'
 import { AdminVisaLayout } from '@/src/components/AdminComponents/visa/AdminVisaLayout'
+import { MdDelete, MdEmail, MdExpandLess, MdExpandMore } from 'react-icons/md'
 
 interface ContactWithId {
   id: string
@@ -89,7 +90,7 @@ useEffect(() => {
             />
           </div>
           <div className={styles.gfStatBox}>
-            <p className={styles.gfStatLabel} style={{fontSize:'16px',}}>Toplam Kayıt: <span className={styles.gfStatValue} style={{ color: '#cc0000' }}>{total}</span></p>
+            <p className={styles.gfStatLabel} style={{fontSize:'16px',}}>Toplam Kayıt: <span className={styles.gfStatValue} style={{ color: '#c42127' }}>{total}</span></p>
           </div>
         </div>
 
@@ -108,15 +109,14 @@ useEffect(() => {
                 .map((item, index) => (
                 <div key={item.id} className={styles.gfCard}>
                   <div className={styles.gfCardRow}>
-                    <div className={styles.gfRowNumber} style={{fontSize:'16px',color: '#cc0000', background: '#f5e1de'}}>{startIndex + index + 1}</div>
+                    <div className={styles.gfRowNumber} style={{fontSize:'16px',color: '#c42127', background: '#f5e1de'}}>{startIndex + index + 1}</div>
                     <div className={styles.gfRowDate} style={{fontSize:'15px'}}>
                       {item.createdAt?.toDate?.().toLocaleDateString('tr-TR')}
                     </div>
                     <div className={styles.gfRowName} style={{fontSize:'16px'}}>{item.name}</div>
 
                     <div className={styles.gfRowActions}>
-                     
-                      <button
+                          <button
                         className={styles.gfIconBtn}
                         onClick={() => {
                           setSelectedEmail({email: item.email, name: item.name})
@@ -124,7 +124,7 @@ useEffect(() => {
                         }}
                         title="Cevap gönder"
                       >
-                        <i className="fas fa-envelope"></i>
+                        <MdEmail size={20} color="#888" />
                       </button>
 
                       <button
@@ -132,16 +132,20 @@ useEffect(() => {
                         onClick={() => deleteDoc(doc(db, 'visacontact', item.id))}
                         title="Sil"
                       >
-                        <i className="fas fa-trash"></i>
+                        <MdDelete size={20} color="#888" />
                       </button>
-                       <button
+                      <button
                         className={styles.gfIconBtn}
                         onClick={() =>
                           setExpandedId(expandedId === item.id ? null : item.id)
                         }
                         title="Detayları göster/gizle"
                       >
-                        <i className={`fas fa-chevron-${expandedId === item.id ? 'up' : 'down'}`}></i>
+                        {expandedId === item.id ? (
+                          <MdExpandLess size={20} color="#888" />
+                        ) : (
+                          <MdExpandMore size={20} color="#888" />
+                        )}
                       </button>
 
                     </div>
@@ -177,9 +181,9 @@ useEffect(() => {
                       }}
                       style={{
                         padding: '8px 12px',
-                        border: page === currentPage ? '2px solid #cc0000' : '1px solid #ddd',
+                        border: page === currentPage ? '2px solid #c42127' : '1px solid #ddd',
                         backgroundColor: page === currentPage ? '#fef3e2' : 'white',
-                        color: page === currentPage ? '#cc0000' : '#000',
+                        color: page === currentPage ? '#c42127' : '#000',
                         borderRadius: '4px',
                         cursor: 'pointer',
                         fontWeight: page === currentPage ? 'bold' : 'normal',

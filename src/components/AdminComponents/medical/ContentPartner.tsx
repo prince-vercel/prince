@@ -161,22 +161,22 @@ const ContentPartner = () => {
       `}</style>
 
       {/* Başlık */}
-      <h2 style={{ margin: '0 0 30px 0', fontSize: '24px', fontWeight: 'bold' }}>Ortak Yönetimi</h2>
+      <h2 style={{ margin: '0 0 30px 0', fontSize: '28px', fontWeight: 'bold' }}>Ortak Yönetimi</h2>
 
       {/* Form */}
       <div
         style={{
-          backgroundColor: '#f9fafb',
-          padding: '20px',
-          borderRadius: '8px',
+           backgroundColor: '#fff',
+            boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
+            padding: '32px',
           marginBottom: '30px',
-          border: '1px solid #e5e7eb',
-          marginTop: '10px'
+          marginTop: '10px',
+          borderRadius:'6px' 
         }}
       >
         <form onSubmit={handleSubmit}>
           {/* Başlık */}
-          <div style={{ marginBottom: '20px' }}>
+          <div style={{ marginBottom: '20px'}}>
             <label style={{ display: 'block', fontWeight: '500', marginBottom: '8px', fontSize: '14px' }}>
               Başlık *
             </label>
@@ -187,10 +187,11 @@ const ContentPartner = () => {
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               style={{
                 width: '100%',
-                padding: '10px 12px',
+                padding: '10px 14px',
+                fontSize: '15px',
                 border: '1px solid #ddd',
                 borderRadius: '6px',
-                fontSize: '14px',
+                
                 boxSizing: 'border-box',
               }}
             />
@@ -206,12 +207,12 @@ const ContentPartner = () => {
               accept="image/*"
               onChange={handleImageChange}
               style={{
-                padding: '10px',
+                padding: '10px 14px',
+                fontSize: '15px',
                 border: '1px solid #ddd',
                 borderRadius: '6px',
-                width: '100%',
-                fontSize: '14px',
-              }}
+                width: '100%'
+                          }}
             />
             {imagePreview && (
               <div style={{ marginTop: '10px' }}>

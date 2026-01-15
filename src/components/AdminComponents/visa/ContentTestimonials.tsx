@@ -35,7 +35,7 @@ const ContentTestimonials = () => {
 
   const fetchTestimonials = async () => {
     try {
-      const testimonialsRef = collection(db, 'medicalcontents/testimonials/list')
+      const testimonialsRef = collection(db, 'visacontents/testimonials/list')
       const snapshot = await getDocs(testimonialsRef)
       const testimonialsData = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -78,7 +78,7 @@ const ContentTestimonials = () => {
       const testimonialId = editingTestimonialId || Date.now().toString()
 
       await setDoc(
-        doc(db, 'medicalcontents/testimonials/list', testimonialId),
+        doc(db, 'visacontents/testimonials/list', testimonialId),
         {
           id: testimonialId,
           name,
@@ -116,7 +116,7 @@ const ContentTestimonials = () => {
         }
 
         // Veri sil
-        await deleteDoc(doc(db, 'medicalcontents/testimonials/list', id))
+        await deleteDoc(doc(db, 'visacontents/testimonials/list', id))
         await fetchTestimonials()
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -153,7 +153,7 @@ const ContentTestimonials = () => {
 
       {/* Header */}
       <div className={styles.contentServicesHeader}>
-        <h1 className={styles.contentServicesTitle} style={{fontSize:'28px'}}>
+        <h1 className={styles.contentServicesTitle} style={{fontSize:'32px'}}>
           {isEditMode ? 'Yorumu Düzenle' : 'Yeni Yorum Ekle'}
         </h1>
         <p className={styles.contentServicesSubtitle} style={{fontSize:'16px'}}>
@@ -231,7 +231,7 @@ const ContentTestimonials = () => {
           onClick={handleSave}
           disabled={loading || !name || !text || !imageUrl || uploadingImage}
           className={styles.contentServicesSaveBtn}
-          style={{ backgroundColor: '#307bc4', color: 'white', border: 'none' }}
+          style={{ backgroundColor: '#c42721', color: 'white', border: 'none' }}
         >
           <MdSave size={18} />
           {loading ? 'Kaydediliyor...' : isEditMode ? 'Güncelle' : 'Kaydet'}
@@ -312,8 +312,8 @@ const ContentTestimonials = () => {
                       justifyContent: 'center',
                       gap: '4px',
                       padding: '6px 12px',
-                      color: '#307bc4',
-                      background: '#dbeafe',
+                      background: '#c42721',
+                      color: 'white',
                       border: 'none',
                       borderRadius: '4px',
                       cursor: 'pointer',

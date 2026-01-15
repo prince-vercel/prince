@@ -18,6 +18,7 @@ import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
 import SendEmail from '@/src/components/SendEmail'
 import { AdminTravelLayout } from '@/src/components/AdminComponents/travel/AdminTravelLayout'
+import { MdDelete, MdEmail, MdExpandLess, MdExpandMore } from 'react-icons/md'
 
 interface ContactWithId {
   id: string
@@ -116,7 +117,7 @@ useEffect(() => {
 
                     <div className={styles.gfRowActions}>
                      
-                      <button
+                         <button
                         className={styles.gfIconBtn}
                         onClick={() => {
                           setSelectedEmail({email: item.email, name: item.name})
@@ -124,7 +125,7 @@ useEffect(() => {
                         }}
                         title="Cevap gönder"
                       >
-                        <i className="fas fa-envelope"></i>
+                        <MdEmail size={20} color="#888" />
                       </button>
 
                       <button
@@ -132,16 +133,20 @@ useEffect(() => {
                         onClick={() => deleteDoc(doc(db, 'travelcontact', item.id))}
                         title="Sil"
                       >
-                        <i className="fas fa-trash"></i>
+                        <MdDelete size={20} color="#888" />
                       </button>
-                       <button
+                      <button
                         className={styles.gfIconBtn}
                         onClick={() =>
                           setExpandedId(expandedId === item.id ? null : item.id)
                         }
                         title="Detayları göster/gizle"
                       >
-                        <i className={`fas fa-chevron-${expandedId === item.id ? 'up' : 'down'}`}></i>
+                        {expandedId === item.id ? (
+                          <MdExpandLess size={20} color="#888" />
+                        ) : (
+                          <MdExpandMore size={20} color="#888" />
+                        )}
                       </button>
 
                     </div>

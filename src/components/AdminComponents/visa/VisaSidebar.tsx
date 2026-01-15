@@ -17,20 +17,20 @@ const VisaSidebar = () => {
 
   return (
     <>
-      <button className={styles.hamburger} style={{ color: '#cc0000' }} onClick={() => setOpen(true)}>
+      <button className={styles.hamburger} style={{ color: '#c42127' }} onClick={() => setOpen(true)}>
         ☰
       </button>
 
-<aside className={`${styles.sidebar} ${open ? styles.open : ''}`} style={{ backgroundColor: '#cc0000' }}>          <div className={styles.logoArea}>
-          <Image src={logo} alt="Logo" width={140} height={40} />
+<aside className={`${styles.sidebar} ${open ? styles.open : ''}`} style={{ backgroundColor: '#c42127' }}>          <div className={styles.logoArea}>
+          <Image src={logo} alt="Logo" width={140} height={60} />
         </div>
         <h1 className={styles.sidebarTitle}>Prince Vize</h1>
 
         <nav className={styles.menu}>
-          <Link href="/admin/visa" className={`${styles.link3} ${isActive('/admin/visa') ? styles.active : '#cc0000'}`}>Anasayfa</Link>
-          <Link href="/admin/visa/userforms" className={`${styles.link3} ${isActive('/admin/visa/userforms') ? styles.active : '#cc0000'}`}>Başvurular</Link>
-          <Link href="/admin/visa/contents" className={`${styles.link3} ${isActive('/admin/visa/contents') ? styles.active : '#cc0000'}`}>İçerik Yönetimi</Link>
-          <Link href="/admin/visa/contactforms" className={`${styles.link3} ${isActive('/admin/visa/contactforms') ? styles.active : '#cc0000'}`}>İletişim</Link>
+          <Link href="/admin/visa" className={`${styles.link3} ${isActive('/admin/visa') ? styles.active : '#c42127'}`}>Anasayfa</Link>
+          <Link href="/admin/visa/userforms" className={`${styles.link3} ${isActive('/admin/visa/userforms') ? styles.active : '#c42127'}`}>Başvurular</Link>
+          <Link href="/admin/visa/contents" className={`${styles.link3} ${isActive('/admin/visa/contents') ? styles.active : '#c42127'}`}>İçerik Yönetimi</Link>
+          <Link href="/admin/visa/contactforms" className={`${styles.link3} ${isActive('/admin/visa/contactforms') ? styles.active : '#c42127'}`}>İletişim</Link>
         </nav>
 
            <div className={styles.bottomLinks} style={{ display: 'flex', gap: 12 }}>

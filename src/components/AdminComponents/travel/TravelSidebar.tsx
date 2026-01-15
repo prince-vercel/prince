@@ -22,7 +22,7 @@ const TravelSidebar = () => {
       </button>
 
 <aside className={`${styles.sidebar} ${open ? styles.open : ''}`} style={{ backgroundColor: '#d7b76e' }}>          <div className={styles.logoArea}>
-          <Image src={logo} alt="Logo" width={140} height={40} />
+          <Image src={logo} alt="Logo" width={140} height={60} />
         </div>
         <h1 className={styles.sidebarTitle}>Prince Seyahat</h1>
 

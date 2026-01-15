@@ -17,7 +17,7 @@ import { db } from '@/src/lib/firebase'
 import { storage } from '@/src/lib/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import styles from '@/src/styles/admin.module.css'
-import { MdEdit, MdDelete, MdLocationOn, MdDateRange, MdImage, MdStar, MdStarOutline } from 'react-icons/md'
+  import { MdEdit, MdDelete, MdLocationOn, MdDateRange, MdImage, MdStar, MdStarOutline, MdChat } from 'react-icons/md'
 import SendEmail from '../../SendEmail'
 
 interface Tour {
@@ -392,7 +392,7 @@ const ContentTours = () => {
                         className={styles.tourEditBtn}
                         title="Gelen Talepleri Görünt"
                       >
-                        <i className="bi bi-chat-dots" style={{ fontSize: '18px' }}></i>
+                        <MdChat size={18} />
                       </button>
                       <button
                         onClick={() => handleDelete(tour.id)}

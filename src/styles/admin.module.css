@@ -1332,6 +1332,7 @@
   font-weight: 700;
   color: #1a1a1a;
   margin: 0;
+  margin-bottom: 10px;
 }
 
 .contentServicesAddBtn {
@@ -2597,7 +2598,7 @@
   overflow-y: auto;
   border: 1px solid #e0e0e0;
   padding: 16px;
-  background: #f9f9fb;
+  background: #fff;
   border-radius: 8px;
 }
 .adminChatbotItem {
@@ -2637,10 +2638,10 @@
 
 .link3:hover {
   background-color: #ffffff;
-  color: #cc0000;
+  color: #c42127;
 }
 
 .link3.active {
   background-color: #ffffff;
-  color: #cc0000;
+  color: #c42127;
 }

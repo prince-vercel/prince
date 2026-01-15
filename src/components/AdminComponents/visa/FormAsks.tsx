@@ -58,7 +58,7 @@ const FormAsks = () => {
 
   const loadQuestions = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'questions'))
+      const querySnapshot = await getDocs(collection(db, 'travelquestions'))
       const questionsData: Question[] = []
       querySnapshot.forEach((doc) => {
         questionsData.push({
@@ -76,7 +76,7 @@ const FormAsks = () => {
 
   const loadSteps = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'steps'))
+      const querySnapshot = await getDocs(collection(db, 'travelsteps'))
       const stepsData: StepName[] = []
       querySnapshot.forEach((doc) => {
         stepsData.push({
@@ -144,10 +144,10 @@ const FormAsks = () => {
       }
 
       if (editingId) {
-        await updateDoc(doc(db, 'questions', editingId), questionData)
+        await updateDoc(doc(db, 'travelquestions', editingId), questionData)
         showNotification('success', 'Soru başarıyla güncellendi')
       } else {
-        await addDoc(collection(db, 'questions'), {
+        await addDoc(collection(db, 'travelquestions'), {
           ...questionData,
           createdAt: new Date(),
         })
@@ -180,7 +180,7 @@ const FormAsks = () => {
     if (!confirm('Bu soruyu silmek istediğinize emin misiniz?')) return
 
     try {
-      await deleteDoc(doc(db, 'questions', questionId))
+      await deleteDoc(doc(db, 'travelquestions', questionId))
       showNotification('success', 'Soru başarıyla silindi')
       loadQuestions()
     } catch (error) {
@@ -205,15 +205,17 @@ const FormAsks = () => {
     setShowForm(true)
   }
 
+  
+
   const handleSaveSteps = async () => {
     try {
       for (const step of steps) {
         if (step.id) {
-          await updateDoc(doc(db, 'steps', step.id), {
+          await updateDoc(doc(db, 'travelsteps', step.id), {
             name: step.name,
           })
         } else {
-          await addDoc(collection(db, 'steps'), {
+          await addDoc(collection(db, 'travelsteps'), {
             number: step.number,
             name: step.name,
           })
@@ -233,7 +235,6 @@ const FormAsks = () => {
     return step ? step.name : `Adım ${stepNumber}`
   }
 
-  // JSON İçe Aktar
  
 
   const groupedQuestions = questions.reduce(
@@ -312,7 +313,7 @@ const FormAsks = () => {
               alignItems: 'center',
               gap: '8px',
               padding: '10px 20px',
-              backgroundColor: '#307BC4',
+              backgroundColor: '#C42127',
               color: 'white',
               border: 'none',
               borderRadius: '6px',
@@ -323,6 +324,7 @@ const FormAsks = () => {
             <MdAdd size={18} />
             Yeni Soru Ekle
           </button>
+
         </div>
       </div>
 
@@ -339,7 +341,7 @@ const FormAsks = () => {
         >
           <h3 style={{ marginTop: 0, marginBottom: '20px' }}>Adım İsimleri</h3>
           <div style={{ display: 'grid', gap: '16px', marginBottom: '20px' }}>
-            {Array.from({ length: 7 }).map((_, i) => {
+            {Array.from({ length: 3 }).map((_, i) => {
               const stepNum = i + 1
               const currentStep = steps.find((s) => s.number === stepNum)
               return (
@@ -401,7 +403,7 @@ const FormAsks = () => {
                 alignItems: 'center',
                 gap: '8px',
                 padding: '10px 24px',
-                backgroundColor: '#10b981',
+                backgroundColor: '#C42127',
                 color: 'white',
                 border: 'none',
                 borderRadius: '6px',
@@ -666,7 +668,7 @@ const FormAsks = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={styles.contentServicesSaveBtn}
+                className={styles.contentServicesSaveBtn} style={{backgroundColor:'#C42127'}}
               >
                 <MdSave size={18} />
                 {loading ? 'Yükleniyor...' : editingId ? 'Güncelle' : 'Kaydet'}
@@ -689,8 +691,8 @@ const FormAsks = () => {
                   fontWeight: 'bold',
                   marginBottom: '20px',
                   paddingBottom: '25px',
-                  borderBottom: '2px solid #307BC4',
-                  color: '#307BC4',
+                  borderBottom: '2px solid #C42127',
+                  color: '#C42127',
                 }}
               >
                 {getStepName(stepNum)}
@@ -725,8 +727,8 @@ const FormAsks = () => {
                         <div style={{ display: 'flex', gap: '12px', fontSize: '12px', color: '#6b7280' }}>
                           <span
                             style={{
-                              backgroundColor: '#e0f2fe',
-                              color: '#0369a1',
+                              background: 'rgb(255, 241, 241)',
+                              color: '#C42127',
                               padding: '4px 8px',
                               borderRadius: '4px',
                               fontWeight: '600',
@@ -745,8 +747,7 @@ const FormAsks = () => {
                           {question.required && (
                             <span
                               style={{
-                                backgroundColor: '#fee2e2',
-                                color: '#dc2626',
+                                color: '#C42127',
                                 padding: '4px 8px',
                                 borderRadius: '4px',
                                 fontWeight: '600',
@@ -772,8 +773,8 @@ const FormAsks = () => {
                             justifyContent: 'center',
                             gap: '4px',
                             padding: '6px 12px',
-                            background: '#e0f2fe',
-                            color: '#0369a1',
+                            background: 'rgb(255, 241, 241)',
+                            color: '#C42127',
                             border: 'none',
                             borderRadius: '4px',
                             cursor: 'pointer',
@@ -793,8 +794,8 @@ const FormAsks = () => {
                             justifyContent: 'center',
                             gap: '4px',
                             padding: '6px 12px',
-                            background: '#fee2e2',
-                            color: '#dc2626',
+                            background: 'rgb(255, 241, 241)',
+                            color: '#C42127',
                             border: 'none',
                             borderRadius: '4px',
                             cursor: 'pointer',

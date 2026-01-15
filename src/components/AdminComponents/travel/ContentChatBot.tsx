@@ -173,7 +173,7 @@ const ContentAdmin: React.FC = () => {
                 />
                 <button className={styles.adminChatbotBtn}  style={{backgroundColor:'#d7b76e'}} onClick={() => handleRemoveQuestion(qIdx)} title="Soruyu Sil">Sil</button>
               </div>
-              <div style={{ marginLeft: 12, marginTop: 6, background: '#f9f9fb', borderRadius: 6, padding: 8 }}>
+              <div style={{ marginLeft: 12, marginTop: 6, background: '#fcfcfc', borderRadius: 6, padding: 8 }}>
                 <b>Seçenekler (Butonlar):</b>
                 <ul className={styles.adminChatbotOptions}>
                   {q.options && q.options.length > 0 ? (
@@ -208,7 +208,7 @@ const ContentAdmin: React.FC = () => {
             </div>
           ))
         ) : (
-          <div>Henüz soru yok. JSON ile içe aktarabilirsiniz.</div>
+          <div>Henüz soru yok.</div>
         )}
       </div>
       <div style={{ display: 'flex', marginTop: 16 }}>

@@ -166,12 +166,12 @@ const ContentPartner = () => {
       {/* Form */}
       <div
         style={{
-          backgroundColor: '#f9fafb',
-          padding: '20px',
-          borderRadius: '8px',
+           backgroundColor: '#fff',
+            boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
+            padding: '32px',
           marginBottom: '30px',
-          border: '1px solid #e5e7eb',
-          marginTop: '10px'
+          marginTop: '10px',
+          borderRadius:'6px' 
         }}
       >
         <form onSubmit={handleSubmit}>

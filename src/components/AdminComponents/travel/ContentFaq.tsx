@@ -113,7 +113,7 @@ const ContentFaq = () => {
 
       {/* Header */}
       <div className={styles.contentServicesHeader}>
-        <h1 className={styles.contentServicesTitle} style={{fontSize:'32px'}}>
+        <h1 className={styles.contentServicesTitle} style={{fontSize:'28px'}}>
           {isEditMode ? 'Soruyu Düzenle' : 'Yeni Soru Ekle'}
         </h1>
         <p className={styles.contentServicesSubtitle} style={{fontSize:'16px'}}>
