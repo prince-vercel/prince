@@ -19,6 +19,8 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import styles from '@/src/styles/admin.module.css'
   import { MdEdit, MdDelete, MdLocationOn, MdDateRange, MdImage, MdStar, MdStarOutline, MdChat } from 'react-icons/md'
 import SendEmail from '../../SendEmail'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '@/src/lib/localization'
 
 interface Tour {
   id: string
@@ -68,6 +70,7 @@ const ContentTours = () => {
   const [enquiryPage, setEnquiryPage] = useState(1)
   const [emailModalOpen, setEmailModalOpen] = useState(false)
   const [selectedEmail, setSelectedEmail] = useState<{ email: string; name: string } | null>(null)
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
   const [formData, setFormData] = useState<FormData>({
     title: '',
     description: '',
@@ -84,19 +87,15 @@ const ContentTours = () => {
     galleryImageUrls: []
   })
 
-  const hasFetched = useRef(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (!hasFetched.current) {
-      hasFetched.current = true
-      fetchTours()
-    }
-  }, [])
+    fetchTours()
+  }, [selectedLanguage])
 
   const fetchTours = async () => {
     try {
-      const q = query(collection(db, 'traveltours'), orderBy('createdAt', 'desc'))
+      const q = query(collection(db, getCollectionName('traveltours', selectedLanguage)), orderBy('createdAt', 'desc'))
       const snap = await getDocs(q)
       setTours(snap.docs.map(d => ({ id: d.id, ...d.data() })) as Tour[])
     } catch (error) {
@@ -106,7 +105,7 @@ const ContentTours = () => {
 
   const fetchEnquiries = async (tourId: string) => {
     try {
-      const q = query(collection(db, 'traveltours', tourId, 'enquiries'), orderBy('createdAt', 'desc'))
+      const q = query(collection(db, getCollectionName('traveltours', selectedLanguage), tourId, 'enquiries'), orderBy('createdAt', 'desc'))
       const snap = await getDocs(q)
       setEnquiries(snap.docs.map(d => ({ id: d.id, ...d.data() })))
     } catch (error) {
@@ -226,13 +225,13 @@ const ContentTours = () => {
 
     try {
       if (editingId) {
-        await updateDoc(doc(db, 'traveltours', editingId), {
+        await updateDoc(doc(db, getCollectionName('traveltours', selectedLanguage), editingId), {
           ...formData,
           updatedAt: serverTimestamp()
         })
         setSuccess('Tur başarıyla güncellendi!')
       } else {
-        await addDoc(collection(db, 'traveltours'), {
+        await addDoc(collection(db, getCollectionName('traveltours', selectedLanguage)), {
           ...formData,
           createdAt: serverTimestamp()
         })
@@ -290,7 +289,7 @@ const ContentTours = () => {
   const handleDelete = async (id: string) => {
     if (confirm('Bu turu silmek istediğinizden emin misiniz?')) {
       try {
-        await deleteDoc(doc(db, 'traveltours', id))
+        await deleteDoc(doc(db, getCollectionName('traveltours', selectedLanguage), id))
         setSuccess('Tur silindi!')
         fetchTours()
         setTimeout(() => setSuccess(''), 3000)
@@ -303,7 +302,7 @@ const ContentTours = () => {
 
   const toggleFavorite = async (id: string, currentFavorite: boolean) => {
     try {
-      await updateDoc(doc(db, 'traveltours', id), {
+      await updateDoc(doc(db, getCollectionName('traveltours', selectedLanguage), id), {
         isFavorite: !currentFavorite
       })
       fetchTours()
@@ -317,7 +316,7 @@ const ContentTours = () => {
   return (
     <div className={styles.tourWrapper}>
       {success && <div className={styles.tourSuccess}>{success}</div>}
-
+<LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
       {!showForm ? (
         <div>
           <div className={styles.tourHeader}>

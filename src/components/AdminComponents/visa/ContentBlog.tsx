@@ -7,6 +7,8 @@ import { doc, setDoc, serverTimestamp, getDocs, collection, deleteDoc } from 'fi
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
 import { MdDelete, MdSave, MdEdit } from 'react-icons/md'
 import styles from '@/src/styles/admin.module.css'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '../../../lib/localization'
 
 interface Blog {
   id: string
@@ -26,15 +28,16 @@ const ContentBlog = () => {
   const [isEditMode, setIsEditMode] = useState(false)
   const [editingBlogId, setEditingBlogId] = useState<string | null>(null)
   const [uploadingImage, setUploadingImage] = useState(false)
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru' | 'es' | 'ar' | 'ru'>('tr')
 
   // Fetch Blogs on component mount
   useEffect(() => {
     fetchBlogs()
-  }, [])
+  }, [selectedLanguage])
 
   const fetchBlogs = async () => {
     try {
-      const blogsRef = collection(db, 'visablogs')
+      const blogsRef = collection(db, getCollectionName('visablogs', selectedLanguage))
       const snapshot = await getDocs(blogsRef)
       const blogsData = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -76,7 +79,7 @@ const ContentBlog = () => {
       const blogId = editingBlogId || Date.now().toString()
 
       await setDoc(
-        doc(db, 'visablogs', blogId),
+        doc(db, getCollectionName('visablogs', selectedLanguage), blogId),
         {
           id: blogId,
           title,
@@ -115,7 +118,7 @@ const ContentBlog = () => {
         }
 
         // Veri sil
-        await deleteDoc(doc(db, 'visablogs', id))
+        await deleteDoc(doc(db, getCollectionName('visablogs', selectedLanguage), id))
         await fetchBlogs()
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -148,7 +151,11 @@ const ContentBlog = () => {
           ✓ Blog başarıyla kaydedildi
         </div>
       )}
-
+{/* Language Selector */}
+      <LanguageSelector
+        selectedLanguage={selectedLanguage}
+        onLanguageChange={setSelectedLanguage as (lang: 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru') => void}
+      />
       {/* Header */}
       <div className={styles.contentServicesHeader}>
         <h1 className={styles.contentServicesTitle} style={{fontSize:'32px'}}>
@@ -158,6 +165,8 @@ const ContentBlog = () => {
           {isEditMode ? 'Blog yazısını güncelleyin' : 'Yeni blog yazısı ekleyin'}
         </p>
       </div>
+
+      
 
       {/* Form */}
       <div className={styles.contentServicesFormSection}>

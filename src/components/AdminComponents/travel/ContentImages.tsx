@@ -19,6 +19,8 @@ import { storage } from '@/src/lib/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import styles from '@/src/styles/admin.module.css'
 import { MdDelete, MdEdit } from 'react-icons/md'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '@/src/lib/localization'
 
 interface Image {
   id: string
@@ -35,6 +37,7 @@ const ContentImages = () => {
   const [uploadingImage, setUploadingImage] = useState(false)
   const [success, setSuccess] = useState('')
   const [error, setError] = useState('')
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
   const [formData, setFormData] = useState({
     title: '',
     imageUrl: ''
@@ -46,7 +49,7 @@ const ContentImages = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const q = query(collection(db, 'travelcontents', 'images', 'banners'), orderBy('createdAt', 'desc'))
+        const q = query(collection(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners'), orderBy('createdAt', 'desc'))
         const querySnapshot = await getDocs(q)
         const imagesList = querySnapshot.docs.map(doc => ({
           id: doc.id,
@@ -59,7 +62,7 @@ const ContentImages = () => {
       }
     }
     fetchImages()
-  }, [])
+  }, [selectedLanguage])
 
   // Handle image file selection
   const handleImageSelect = (e: any) => {
@@ -131,7 +134,7 @@ const ContentImages = () => {
 
       if (editingId) {
         // Update existing image
-        const docRef = doc(db, 'travelcontents', 'images', 'banners', editingId)
+        const docRef = doc(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners', editingId)
         await updateDoc(docRef, {
           title: formData.title,
           imageUrl: imageUrl,
@@ -140,7 +143,7 @@ const ContentImages = () => {
         setSuccess('Görsel güncellendi')
       } else {
         // Add new image
-        await addDoc(collection(db, 'travelcontents', 'images', 'banners'), {
+        await addDoc(collection(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners'), {
           title: formData.title,
           imageUrl: imageUrl,
           createdAt: serverTimestamp()
@@ -149,7 +152,7 @@ const ContentImages = () => {
       }
 
       // Refresh images
-      const q = query(collection(db, 'travelcontents', 'images', 'banners'), orderBy('createdAt', 'desc'))
+      const q = query(collection(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners'), orderBy('createdAt', 'desc'))
       const querySnapshot = await getDocs(q)
       const imagesList = querySnapshot.docs.map(doc => ({
         id: doc.id,
@@ -201,7 +204,7 @@ const ContentImages = () => {
         try {
           const uploadedUrl = await uploadImageToStorage(file)
           if (uploadedUrl) {
-            await addDoc(collection(db, 'travelcontents', 'images', 'banners'), {
+            await addDoc(collection(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners'), {
               title: file.name.split('.')[0] || 'Banner',
               imageUrl: uploadedUrl,
               createdAt: serverTimestamp()
@@ -216,7 +219,7 @@ const ContentImages = () => {
       setSuccess(`${uploadedCount} görsel başarıyla eklendi`)
 
       // Refresh images
-      const q = query(collection(db, 'travelcontents', 'images', 'banners'), orderBy('createdAt', 'desc'))
+      const q = query(collection(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners'), orderBy('createdAt', 'desc'))
       const querySnapshot = await getDocs(q)
       const imagesList = querySnapshot.docs.map(doc => ({
         id: doc.id,
@@ -240,11 +243,11 @@ const ContentImages = () => {
 
     try {
       setLoading(true)
-      await deleteDoc(doc(db, 'travelcontents', 'images', 'banners', id))
+      await deleteDoc(doc(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners', id))
       setSuccess('Görsel silindi')
       
       // Refresh images
-      const q = query(collection(db, 'travelcontents', 'images', 'banners'), orderBy('createdAt', 'desc'))
+      const q = query(collection(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners'), orderBy('createdAt', 'desc'))
       const querySnapshot = await getDocs(q)
       const imagesList = querySnapshot.docs.map(doc => ({
         id: doc.id,
@@ -269,7 +272,10 @@ const ContentImages = () => {
 
   return (
     <div>
+      <LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
+
       <div className={styles.gfHeader}>
+        
         <h2 className={styles.gfTitle}>Anasayfa Bannerları</h2>
         <div style={{ display: 'flex', gap: '10px', marginLeft: 'auto' }}>
           {!showForm && (

@@ -14,6 +14,8 @@ import {
 import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
 import { MdDelete, MdEdit, MdSave, MdAdd } from 'react-icons/md'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '../../../lib/localization'
 
 interface Question {
   id: string
@@ -43,6 +45,7 @@ const FormAsks = () => {
   const [showStepsForm, setShowStepsForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru' | 'es' | 'ar' | 'ru'>('tr')
 
   const [formData, setFormData] = useState({
     questionText: '',
@@ -58,7 +61,7 @@ const FormAsks = () => {
 
   const loadQuestions = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'travelquestions'))
+      const querySnapshot = await getDocs(collection(db, getCollectionName('travelquestions', selectedLanguage)))
       const questionsData: Question[] = []
       querySnapshot.forEach((doc) => {
         questionsData.push({
@@ -76,7 +79,7 @@ const FormAsks = () => {
 
   const loadSteps = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'travelsteps'))
+      const querySnapshot = await getDocs(collection(db, getCollectionName('travelsteps', selectedLanguage)))
       const stepsData: StepName[] = []
       querySnapshot.forEach((doc) => {
         stepsData.push({
@@ -94,7 +97,7 @@ const FormAsks = () => {
   useEffect(() => {
     loadQuestions()
     loadSteps()
-  }, [loadQuestions, loadSteps])
+  }, [selectedLanguage])
 
   const showNotification = (type: 'success' | 'error', message: string) => {
     setNotification({ type, message })
@@ -144,10 +147,10 @@ const FormAsks = () => {
       }
 
       if (editingId) {
-        await updateDoc(doc(db, 'travelquestions', editingId), questionData)
+        await updateDoc(doc(db, getCollectionName('travelquestions', selectedLanguage), editingId), questionData)
         showNotification('success', 'Soru başarıyla güncellendi')
       } else {
-        await addDoc(collection(db, 'travelquestions'), {
+        await addDoc(collection(db, getCollectionName('travelquestions', selectedLanguage)), {
           ...questionData,
           createdAt: new Date(),
         })
@@ -180,7 +183,7 @@ const FormAsks = () => {
     if (!confirm('Bu soruyu silmek istediğinize emin misiniz?')) return
 
     try {
-      await deleteDoc(doc(db, 'travelquestions', questionId))
+      await deleteDoc(doc(db, getCollectionName('travelquestions', selectedLanguage), questionId))
       showNotification('success', 'Soru başarıyla silindi')
       loadQuestions()
     } catch (error) {
@@ -211,11 +214,11 @@ const FormAsks = () => {
     try {
       for (const step of steps) {
         if (step.id) {
-          await updateDoc(doc(db, 'travelsteps', step.id), {
+          await updateDoc(doc(db, getCollectionName('travelsteps', selectedLanguage), step.id), {
             name: step.name,
           })
         } else {
-          await addDoc(collection(db, 'travelsteps'), {
+          await addDoc(collection(db, getCollectionName('travelsteps', selectedLanguage)), {
             number: step.number,
             name: step.name,
           })
@@ -269,11 +272,16 @@ const FormAsks = () => {
           {notification.message}
         </div>
       )}
-
+<LanguageSelector
+            selectedLanguage={selectedLanguage as 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'}
+            onLanguageChange={(lang: 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru') => setSelectedLanguage(lang)}
+          />
       {/* Başlık ve Butonlar */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', gap: '10px', flexWrap: 'wrap' }}>
+    
         <h2 style={{ margin: 0, fontSize: '28px', fontWeight: 'bold' }}>Soru Yönetimi</h2>
         <div style={{ display: 'flex', gap: '10px' }}>
+          
           <button
             onClick={() => setShowStepsForm(!showStepsForm)}
             style={{

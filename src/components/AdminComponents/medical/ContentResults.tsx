@@ -8,6 +8,8 @@ import { storage } from '@/src/lib/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { MdDelete, MdSave, MdCloudUpload, MdEdit } from 'react-icons/md'
 import styles from '@/src/styles/admin.module.css'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '@/src/lib/localization'
 
 const medicalSpecialties = {
   dis: 'Diş',
@@ -34,6 +36,7 @@ interface Result {
 
 const ContentResults = () => {
   const [activeTab, setActiveTab] = useState<SpecialtyKey>('dis')
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [imageFile, setImageFile] = useState<File | null>(null)
@@ -47,7 +50,7 @@ const ContentResults = () => {
   // Fetch results on component mount
   useEffect(() => {
     fetchResultsByCategory(activeTab)
-  }, [activeTab])
+  }, [activeTab, selectedLanguage])
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -82,7 +85,8 @@ const ContentResults = () => {
 
   const fetchResultsByCategory = async (category: SpecialtyKey) => {
     try {
-      const resultsRef = collection(db, `medicalcontents/results/${category}`)
+      const collectionName = getCollectionName('medicalcontents', selectedLanguage) + `/results/${category}`
+      const resultsRef = collection(db, collectionName)
       const snapshot = await getDocs(resultsRef)
       const resultsData = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -112,7 +116,7 @@ const ContentResults = () => {
       }
 
       await setDoc(
-        doc(db, `medicalcontents/results/${activeTab}`, resultId),
+        doc(db, getCollectionName('medicalcontents', selectedLanguage) + `/results/${activeTab}`, resultId),
         {
           id: resultId,
           title,
@@ -141,7 +145,7 @@ const ContentResults = () => {
   const deleteResult = async (id: string) => {
     if (confirm('Bu sonucu silmek istediğinizden emin misiniz?')) {
       try {
-        await deleteDoc(doc(db, `medicalcontents/results/${activeTab}`, id))
+        await deleteDoc(doc(db, getCollectionName('medicalcontents', selectedLanguage) + `/results/${activeTab}`, id))
         await fetchResultsByCategory(activeTab)
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -160,6 +164,14 @@ const ContentResults = () => {
 
   return (
     <div className={styles.contentServicesWrapper}>
+      {/* Language Selector */}
+      <LanguageSelector
+        selectedLanguage={selectedLanguage}
+        onLanguageChange={(lang) => {
+          setSelectedLanguage(lang)
+          fetchResultsByCategory(activeTab)
+        }}
+      />
       {/* Category Tabs */}
       <div className={styles.contentServicesTabsContainer}>
         {Object.entries(medicalSpecialties).map(([key, value]) => (

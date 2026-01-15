@@ -14,6 +14,8 @@ import {
 import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
 import { MdDelete, MdEdit, MdSave, MdAdd } from 'react-icons/md'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '@/src/lib/localization'
 
 interface Question {
   id: string
@@ -36,6 +38,11 @@ interface StepName {
 }
 
 const FormAsks = () => {
+    // Step name helper
+    const getStepName = (stepNum: number) => {
+      const step = steps.find((s) => s.number === stepNum)
+      return step?.name || `Adım ${stepNum}`
+    }
   const [questions, setQuestions] = useState<Question[]>([])
   const [steps, setSteps] = useState<StepName[]>([])
   const [loading, setLoading] = useState(false)
@@ -43,6 +50,7 @@ const FormAsks = () => {
   const [showStepsForm, setShowStepsForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru' | 'es' | 'ar' | 'ru'>('tr')
 
   const [formData, setFormData] = useState({
     questionText: '',
@@ -58,7 +66,8 @@ const FormAsks = () => {
 
   const loadQuestions = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'questions'))
+      const collectionName = getCollectionName('questions', selectedLanguage)
+      const querySnapshot = await getDocs(collection(db, collectionName))
       const questionsData: Question[] = []
       querySnapshot.forEach((doc) => {
         questionsData.push({
@@ -76,7 +85,8 @@ const FormAsks = () => {
 
   const loadSteps = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'steps'))
+      const collectionName = getCollectionName('steps', selectedLanguage)
+      const querySnapshot = await getDocs(collection(db, collectionName))
       const stepsData: StepName[] = []
       querySnapshot.forEach((doc) => {
         stepsData.push({
@@ -144,10 +154,12 @@ const FormAsks = () => {
       }
 
       if (editingId) {
-        await updateDoc(doc(db, 'questions', editingId), questionData)
+        const collectionName = getCollectionName('questions', selectedLanguage)
+        await updateDoc(doc(db, collectionName, editingId), questionData)
         showNotification('success', 'Soru başarıyla güncellendi')
       } else {
-        await addDoc(collection(db, 'questions'), {
+        const collectionName = getCollectionName('questions', selectedLanguage)
+        await addDoc(collection(db, collectionName), {
           ...questionData,
           createdAt: new Date(),
         })
@@ -180,7 +192,8 @@ const FormAsks = () => {
     if (!confirm('Bu soruyu silmek istediğinize emin misiniz?')) return
 
     try {
-      await deleteDoc(doc(db, 'questions', questionId))
+      const collectionName = getCollectionName('questions', selectedLanguage)
+      await deleteDoc(doc(db, collectionName, questionId))
       showNotification('success', 'Soru başarıyla silindi')
       loadQuestions()
     } catch (error) {
@@ -207,18 +220,23 @@ const FormAsks = () => {
 
   const handleSaveSteps = async () => {
     try {
-      for (const step of steps) {
+      const collectionName = getCollectionName('steps', selectedLanguage)
+      const updatedSteps = [...steps]
+      for (let i = 0; i < steps.length; i++) {
+        const step = steps[i]
         if (step.id) {
-          await updateDoc(doc(db, 'steps', step.id), {
+          await updateDoc(doc(db, collectionName, step.id), {
             name: step.name,
           })
         } else {
-          await addDoc(collection(db, 'steps'), {
+          const docRef = await addDoc(collection(db, collectionName), {
             number: step.number,
             name: step.name,
           })
+          updatedSteps[i] = { ...step, id: docRef.id }
         }
       }
+      setSteps(updatedSteps)
       showNotification('success', 'Adım isimleri başarıyla kaydedildi')
       setShowStepsForm(false)
       loadSteps()
@@ -226,11 +244,6 @@ const FormAsks = () => {
       console.error('Adım kaydetme hatası:', error)
       showNotification('error', 'Adım kaydedilirken hata oluştu')
     }
-  }
-
-  const getStepName = (stepNumber: number): string => {
-    const step = steps.find((s) => s.number === stepNumber)
-    return step ? step.name : `Adım ${stepNumber}`
   }
 
   // JSON İçe Aktar
@@ -268,9 +281,17 @@ const FormAsks = () => {
           {notification.message}
         </div>
       )}
-
+  <LanguageSelector
+        selectedLanguage={selectedLanguage}
+        onLanguageChange={(lang) => {
+          setSelectedLanguage(lang)
+          loadQuestions()
+          loadSteps()
+        }}
+      />
       {/* Başlık ve Butonlar */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', gap: '10px', flexWrap: 'wrap' }}>
+    
         <h2 style={{ margin: 0, fontSize: '28px', fontWeight: 'bold' }}>Soru Yönetimi</h2>
         <div style={{ display: 'flex', gap: '10px' }}>
           <button
@@ -520,10 +541,9 @@ const FormAsks = () => {
                 >
                   {Array.from({ length: 7 }).map((_, i) => {
                     const stepNum = i + 1
-                    const stepName = getStepName(stepNum)
                     return (
                       <option key={stepNum} value={stepNum}>
-                        {stepName}
+                        {getStepName(stepNum)}
                       </option>
                     )
                   })}

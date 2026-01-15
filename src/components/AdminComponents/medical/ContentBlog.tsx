@@ -16,6 +16,8 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { db, storage } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
 import { MdEdit, MdDelete,MdSave } from 'react-icons/md'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '@/src/lib/localization'
 
 interface Blog {
   id: string
@@ -35,6 +37,7 @@ const ContentBlog = () => {
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null)
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
 
   const [formData, setFormData] = useState({
     title: '',
@@ -44,11 +47,12 @@ const ContentBlog = () => {
   // Blogları yükle
   useEffect(() => {
     loadBlogs()
-  }, [])
+  }, [selectedLanguage])
 
   const loadBlogs = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'medicalblogs'))
+      const collectionName = getCollectionName('medicalblogs', selectedLanguage)
+      const querySnapshot = await getDocs(collection(db, collectionName))
       const blogsData: Blog[] = []
       querySnapshot.forEach((doc) => {
         blogsData.push({
@@ -102,7 +106,8 @@ const ContentBlog = () => {
 
       if (editingId) {
         // Düzenleme
-        await updateDoc(doc(db, 'medicalblogs', editingId), {
+        const collectionName = getCollectionName('medicalblogs', selectedLanguage)
+        await updateDoc(doc(db, collectionName, editingId), {
           title: formData.title,
           description: formData.description,
           ...(imageFile && { imageUrl }), // Sadece yeni resim varsa güncelle
@@ -110,7 +115,8 @@ const ContentBlog = () => {
         showNotification('success', 'Blog başarıyla güncellendi')
       } else {
         // Yeni ekleme
-        await addDoc(collection(db, 'medicalblogs'), {
+        const collectionName = getCollectionName('medicalblogs', selectedLanguage)
+        await addDoc(collection(db, collectionName), {
           title: formData.title,
           description: formData.description,
           imageUrl: imageUrl,
@@ -138,7 +144,8 @@ const ContentBlog = () => {
     if (!confirm('Bu blogu silmek istediğinize emin misiniz?')) return
 
     try {
-      await deleteDoc(doc(db, 'medicalblogs', blogId))
+      const collectionName = getCollectionName('medicalblogs', selectedLanguage)
+      await deleteDoc(doc(db, collectionName, blogId))
       showNotification('success', 'Blog başarıyla silindi')
       loadBlogs()
     } catch (error) {
@@ -149,7 +156,8 @@ const ContentBlog = () => {
 
   const toggleFavorite = async (blogId: string, currentFavorite: boolean) => {
     try {
-      await updateDoc(doc(db, 'medicalblogs', blogId), {
+      const collectionName = getCollectionName('medicalblogs', selectedLanguage)
+      await updateDoc(doc(db, collectionName, blogId), {
         isFavorite: !currentFavorite,
       })
       loadBlogs()
@@ -200,6 +208,13 @@ const ContentBlog = () => {
           }
         }
       `}</style>
+      <LanguageSelector
+        selectedLanguage={selectedLanguage}
+        onLanguageChange={(lang) => {
+          setSelectedLanguage(lang)
+          loadBlogs()
+        }}
+      />
 
       {/* Başlık */}
       <h2 style={{ margin: '0 0 30px 0', fontSize: '28px', fontWeight: 'bold' }}>Blog Yönetimi</h2>

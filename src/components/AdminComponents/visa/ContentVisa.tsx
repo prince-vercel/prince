@@ -19,6 +19,8 @@ import { storage } from '@/src/lib/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import styles from '@/src/styles/admin.module.css'
 import { MdDelete, MdEdit } from 'react-icons/md'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '../../../lib/localization'
 
 interface Image {
   id: string
@@ -41,12 +43,13 @@ const ContentVisa = () => {
   })
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru' | 'es' | 'ar' | 'ru'>('tr')
 
   // Fetch images
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const q = query(collection(db, 'visacontents', 'images', 'visa'), orderBy('createdAt', 'desc'))
+        const q = query(collection(db, getCollectionName('visacontents', selectedLanguage), 'images', 'visa'), orderBy('createdAt', 'desc'))
         const querySnapshot = await getDocs(q)
         const imagesList = querySnapshot.docs.map(doc => ({
           id: doc.id,
@@ -59,7 +62,7 @@ const ContentVisa = () => {
       }
     }
     fetchImages()
-  }, [])
+  }, [selectedLanguage])
 
   // Handle image file selection
   const handleImageSelect = (e: any) => {
@@ -131,7 +134,7 @@ const ContentVisa = () => {
 
       if (editingId) {
         // Update existing image
-        const docRef = doc(db, 'visacontents', 'images', 'visa', editingId)
+        const docRef = doc(db, getCollectionName('visacontents', selectedLanguage), 'images', 'visa', editingId)
         await updateDoc(docRef, {
           title: formData.title,
           imageUrl: imageUrl,
@@ -140,7 +143,7 @@ const ContentVisa = () => {
         setSuccess('Görsel güncellendi')
       } else {
         // Add new image
-        await addDoc(collection(db, 'visacontents', 'images', 'visa'), {
+        await addDoc(collection(db, getCollectionName('visacontents', selectedLanguage), 'images', 'visa'), {
           title: formData.title,
           imageUrl: imageUrl,
           createdAt: serverTimestamp()
@@ -149,7 +152,7 @@ const ContentVisa = () => {
       }
 
       // Refresh images
-      const q = query(collection(db, 'visacontents', 'images', 'visa'), orderBy('createdAt', 'desc'))
+      const q = query(collection(db, getCollectionName('visacontents', selectedLanguage), 'images', 'visa'), orderBy('createdAt', 'desc'))
       const querySnapshot = await getDocs(q)
       const imagesList = querySnapshot.docs.map(doc => ({
         id: doc.id,
@@ -201,7 +204,7 @@ const ContentVisa = () => {
         try {
           const uploadedUrl = await uploadImageToStorage(file)
           if (uploadedUrl) {
-            await addDoc(collection(db, 'visacontents', 'images', 'visa'), {
+            await addDoc(collection(db, getCollectionName('visacontents', selectedLanguage), 'images', 'visa'), {
               title: file.name.split('.')[0] || 'Vize Görseli',
               imageUrl: uploadedUrl,
               createdAt: serverTimestamp()
@@ -216,7 +219,7 @@ const ContentVisa = () => {
       setSuccess(`${uploadedCount} görsel başarıyla eklendi`)
 
       // Refresh images
-      const q = query(collection(db, 'visacontents', 'images', 'visa'), orderBy('createdAt', 'desc'))
+      const q = query(collection(db, getCollectionName('visacontents', selectedLanguage), 'images', 'visa'), orderBy('createdAt', 'desc'))
       const querySnapshot = await getDocs(q)
       const imagesList = querySnapshot.docs.map(doc => ({
         id: doc.id,
@@ -240,11 +243,11 @@ const ContentVisa = () => {
 
     try {
       setLoading(true)
-      await deleteDoc(doc(db, 'visacontents', 'images', 'visa', id))
+      await deleteDoc(doc(db, getCollectionName('visacontents', selectedLanguage), 'images', 'visa', id))
       setSuccess('Görsel silindi')
       
       // Refresh images
-      const q = query(collection(db, 'visacontents', 'images', 'visa'), orderBy('createdAt', 'desc'))
+      const q = query(collection(db, getCollectionName('visacontents', selectedLanguage), 'images', 'visa'), orderBy('createdAt', 'desc'))
       const querySnapshot = await getDocs(q)
       const imagesList = querySnapshot.docs.map(doc => ({
         id: doc.id,
@@ -286,6 +289,9 @@ const ContentVisa = () => {
           )}
         </div>
       </div>
+
+      {/* Language Selector */}
+      <LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
 
       {selectedFiles.length > 0 && (
         <div className="bulk-upload-section" style={{ marginBottom: '30px', padding: '24px', background: '#f0f9ff', border: '2px solid #219FFF', borderRadius: '8px' }}>

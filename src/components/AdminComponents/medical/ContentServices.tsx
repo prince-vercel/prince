@@ -8,6 +8,8 @@ import { storage } from '@/src/lib/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { MdAdd, MdDelete, MdSave, MdCloudUpload, MdEdit } from 'react-icons/md'
 import styles from '@/src/styles/admin.module.css'
+import { getCollectionName } from '@/src/lib/localization'
+import LanguageSelector from '@/src/components/LanguageSelector'
 
 interface Treatment {
   title: string
@@ -33,6 +35,7 @@ type SpecialtyKey = keyof typeof medicalSpecialties
 
 const ContentServices = () => {
   const [activeTab, setActiveTab] = useState<SpecialtyKey>('dis')
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [imageFile, setImageFile] = useState<File | null>(null)
@@ -40,7 +43,6 @@ const ContentServices = () => {
   const [treatments, setTreatments] = useState<Treatment[]>([])
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const [isEditMode, setIsEditMode] = useState(false)
   const [existingImageUrl, setExistingImageUrl] = useState('')
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +69,8 @@ const ContentServices = () => {
 
   const fetchContentBySlug = async (slug: SpecialtyKey) => {
     try {
-      const ref = doc(db, 'medicalcontents', slug)
+      const collectionName = getCollectionName('medicalcontents', selectedLanguage)
+      const ref = doc(db, collectionName, slug)
       const snap = await getDoc(ref)
 
       if (snap.exists()) {
@@ -77,9 +80,7 @@ const ContentServices = () => {
         setExistingImageUrl(data.image || '')
         setImagePreview(data.image || '')
         setTreatments(data.treatments || [])
-        setIsEditMode(true)
       } else {
-        setIsEditMode(false)
         setTitle('')
         setDescription('')
         setImageFile(null)
@@ -121,7 +122,8 @@ const ContentServices = () => {
   const deleteService = async () => {
     if (confirm('Bu hizmeti ve tüm tedavilerini silmek istediğinizden emin misiniz?')) {
       try {
-        await deleteDoc(doc(db, 'medicalcontents', activeTab))
+        const collectionName = getCollectionName('medicalcontents', selectedLanguage)
+        await deleteDoc(doc(db, collectionName, activeTab))
         alert('Hizmet başarıyla silindi')
         // Form sıfırla
         setTitle('')
@@ -129,7 +131,6 @@ const ContentServices = () => {
         setImageFile(null)
         setImagePreview('')
         setTreatments([])
-        setIsEditMode(false)
         setExistingImageUrl('')
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -175,8 +176,9 @@ const ContentServices = () => {
         })
       )
 
+      const collectionName = getCollectionName('medicalcontents', selectedLanguage)
       await setDoc(
-        doc(db, 'medicalcontents', activeTab),
+        doc(db, collectionName, activeTab),
         {
           slug: activeTab,
           title,
@@ -184,7 +186,7 @@ const ContentServices = () => {
           image: mainImageUrl,
           treatments: treatmentsWithUrls,
           updatedAt: serverTimestamp(),
-          ...(isEditMode ? {} : { createdAt: serverTimestamp() })
+          createdAt: serverTimestamp()
         },
         { merge: true }
       )
@@ -197,7 +199,6 @@ const ContentServices = () => {
       setImageFile(null)
       setImagePreview('')
       setTreatments([])
-      setIsEditMode(false)
       setExistingImageUrl('')
     } catch (error) {
       console.error('Hata:', error)
@@ -209,6 +210,15 @@ const ContentServices = () => {
 
   return (
     <div className={styles.contentServicesWrapper}>
+      {/* Language Selector */}
+      <LanguageSelector
+        selectedLanguage={selectedLanguage}
+        onLanguageChange={(lang) => {
+          setSelectedLanguage(lang)
+          fetchContentBySlug(activeTab)
+        }}
+      />
+
       {/* Tabs */}
       <div className={styles.contentServicesTabsContainer}>
         {Object.entries(medicalSpecialties).map(([key, value]) => (
@@ -244,10 +254,10 @@ const ContentServices = () => {
       {/* Header */}
       <div className={styles.contentServicesHeader}>
         <h1 className={styles.contentServicesTitle}>
-          {isEditMode ? ` Güncelle` : `Yeni Ekle`}
+          Hizmet Yönetimi
         </h1>
         <p className={styles.contentServicesSubtitle}>
-          {isEditMode ? 'Hizmet bilgilerini güncelleyin' : 'Yeni hizmet ekleyin'}
+          Hizmet bilgilerini yönetin
         </p>
       </div>
 
@@ -350,99 +360,93 @@ const ContentServices = () => {
           </button>
         </div>
 
-        {treatments.length === 0 ? (
-          <div className={styles.contentServicesEmptyTreatments}>
-            Henüz tedavi eklenmemiş. Yukarıdaki butona tıklayarak tedavi ekleyin.
-          </div>
-        ) : (
-          <div className={styles.contentServicesTreatmentsList}>
-            {treatments.map((t, i) => (
-              <div
-                key={i}
-                className={styles.contentServicesTreatmentCard}
-              >
-                <div className={styles.contentServicesTreatmentCardHeader}>
-                  <h3 className={styles.contentServicesTreatmentCardTitle}>
-                    Tedavi #{i + 1}
-                  </h3>
-                  <button
-                    onClick={() => removeTreatment(i)}
-                    className={styles.contentServicesDeleteBtn}
-                  >
-                    <MdDelete size={16} />
-                    Sil
-                  </button>
-                </div>
-
-                {/* Treatment Title */}
-                <div className={styles.contentServicesTreatmentFieldGroup}>
-                  <label className={styles.contentServicesTreatmentLabel}>
-                    Tedavi Başlığı
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Tedavi adı"
-                    value={t.title}
-                    onChange={(e) => updateTreatment(i, 'title', e.target.value)}
-                    className={styles.contentServicesTreatmentInput}
-                  />
-                </div>
-
-                {/* Treatment Description */}
-                <div className={styles.contentServicesTreatmentFieldGroup}>
-                  <label className={styles.contentServicesTreatmentLabel}>
-                    Tedavi Açıklaması
-                  </label>
-                  <textarea
-                    placeholder="Tedavi hakkında detaylı açıklama"
-                    value={t.description}
-                    onChange={(e) => updateTreatment(i, 'description', e.target.value)}
-                    className={styles.contentServicesTreatmentTextarea}
-                  />
-                </div>
-
-                {/* Treatment Image */}
-                <div>
-                  <label className={styles.contentServicesTreatmentLabel}>
-                    Tedavi Görseli
-                  </label>
-                  
-                  {t.image && !treatments[i].imageFile && (
-                    <div className={styles.contentServicesTreatmentExistingImage}>
-                      <img
-                        src={t.image}
-                        alt="Mevcut Görsel"
-                        className={styles.contentServicesTreatmentExistingImageImg}
-                      />
-                      <p className={styles.contentServicesTreatmentExistingImageText}>
-                        Mevcut görsel
-                      </p>
-                    </div>
-                  )}
-
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0]
-                      if (file) {
-                        handleTreatmentImageChange(i, file)
-                      }
-                    }}
-                    className={styles.contentServicesTreatmentImageFile}
-                  />
-                  {treatments[i].imageFile && (
-                    <div className={styles.contentServicesTreatmentNewImageNotice}>
-                      <p className={styles.contentServicesTreatmentNewImageText}>
-                        ✓ Yeni: {treatments[i].imageFile?.name}
-                      </p>
-                    </div>
-                  )}
-                </div>
+        <div className={styles.contentServicesTreatmentsList}>
+          {treatments.map((t, i) => (
+            <div
+              key={i}
+              className={styles.contentServicesTreatmentCard}
+            >
+              <div className={styles.contentServicesTreatmentCardHeader}>
+                <h3 className={styles.contentServicesTreatmentCardTitle}>
+                  Tedavi #{i + 1}
+                </h3>
+                <button
+                  onClick={() => removeTreatment(i)}
+                  className={styles.contentServicesDeleteBtn}
+                >
+                  <MdDelete size={16} />
+                  Sil
+                </button>
               </div>
-            ))}
-          </div>
-        )}
+
+              {/* Treatment Title */}
+              <div className={styles.contentServicesTreatmentFieldGroup}>
+                <label className={styles.contentServicesTreatmentLabel}>
+                  Tedavi Başlığı
+                </label>
+                <input
+                  type="text"
+                  placeholder="Tedavi adı"
+                  value={t.title}
+                  onChange={(e) => updateTreatment(i, 'title', e.target.value)}
+                  className={styles.contentServicesTreatmentInput}
+                />
+              </div>
+
+              {/* Treatment Description */}
+              <div className={styles.contentServicesTreatmentFieldGroup}>
+                <label className={styles.contentServicesTreatmentLabel}>
+                  Tedavi Açıklaması
+                </label>
+                <textarea
+                  placeholder="Tedavi hakkında detaylı açıklama"
+                  value={t.description}
+                  onChange={(e) => updateTreatment(i, 'description', e.target.value)}
+                  className={styles.contentServicesTreatmentTextarea}
+                />
+              </div>
+
+              {/* Treatment Image */}
+              <div>
+                <label className={styles.contentServicesTreatmentLabel}>
+                  Tedavi Görseli
+                </label>
+                
+                {t.image && !treatments[i].imageFile && (
+                  <div className={styles.contentServicesTreatmentExistingImage}>
+                    <img
+                      src={t.image}
+                      alt="Mevcut Görsel"
+                      className={styles.contentServicesTreatmentExistingImageImg}
+                    />
+                    <p className={styles.contentServicesTreatmentExistingImageText}>
+                      Mevcut görsel
+                    </p>
+                  </div>
+                )}
+
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) {
+                      handleTreatmentImageChange(i, file)
+                    }
+                  }}
+                  className={styles.contentServicesTreatmentImageFile}
+                />
+                {treatments[i].imageFile && (
+                  <div className={styles.contentServicesTreatmentNewImageNotice}>
+                    <p className={styles.contentServicesTreatmentNewImageText}>
+                      ✓ Yeni: {treatments[i].imageFile?.name}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Save Button */}
@@ -453,33 +457,31 @@ const ContentServices = () => {
           className={styles.contentServicesSaveBtn}
         >
           <MdSave size={18} />
-          {loading ? 'Kaydediliyor...' : isEditMode ? 'Güncelle' : 'Kaydet'}
+          {loading ? 'Kaydediliyor...' : 'Kaydet'}
         </button>
-        {isEditMode && (
-          <button
-            onClick={deleteService}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '12px 28px',
-              background: '#fee2e2',
-              color: '#dc2626',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: '600',
-              transition: 'background 0.2s',
-              marginLeft: '12px'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.background = '#fecaca'}
-            onMouseLeave={(e) => e.currentTarget.style.background = '#fee2e2'}
-          >
-            <MdDelete size={18} />
-            Hizmeti Sil
-          </button>
-        )}
+        <button
+          onClick={deleteService}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '12px 28px',
+            background: '#fee2e2',
+            color: '#dc2626',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: '600',
+            transition: 'background 0.2s',
+            marginLeft: '12px'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.background = '#fecaca'}
+          onMouseLeave={(e) => e.currentTarget.style.background = '#fee2e2'}
+        >
+          <MdDelete size={18} />
+          Hizmeti Sil
+        </button>
       </div>
     </div>
   )

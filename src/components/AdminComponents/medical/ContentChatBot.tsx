@@ -6,14 +6,22 @@ import { db } from '../../../lib/firebase';
 import { setDoc, doc } from 'firebase/firestore';
 import { ChatbotStep } from '../../../types/types';
 import styles from '../../../styles/admin.module.css'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '../../../lib/localization'
 
 
 
 const ContentAdmin: React.FC = () => {
+  const [questions, setQuestions] = useState<ChatbotStep[]>([]);
+  const [importError, setImportError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
+
   // Sayfa açıldığında Firestore'dan soruları çek
   useEffect(() => {
     import('firebase/firestore').then(({ collection, getDocs }) => {
-      getDocs(collection(db, 'medicalchatbotQuestions'))
+      const collectionName = getCollectionName('medicalchatbotQuestions', selectedLanguage)
+      getDocs(collection(db, collectionName))
         .then(snapshot => {
           const data = snapshot.docs.map(docSnap => {
             const d = docSnap.data();
@@ -27,12 +35,7 @@ const ContentAdmin: React.FC = () => {
         })
         .catch(() => setQuestions([]));
     });
-  }, [])
-  const [questions, setQuestions] = useState<ChatbotStep[]>([]);
-  const [importError, setImportError] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // Import questions from JSON file
+  }, [selectedLanguage])
   const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setImportError(null);
     const file = e.target.files?.[0];
@@ -116,8 +119,9 @@ const ContentAdmin: React.FC = () => {
   // Save questions to Firestore
   const handleSave = async () => {
     if (!questions.length) return;
+    const collectionName = getCollectionName('medicalchatbotQuestions', selectedLanguage)
     await Promise.all(
-      questions.map(q => setDoc(doc(db, 'medicalchatbotQuestions', q.id), q))
+      questions.map(q => setDoc(doc(db, collectionName, q.id), q))
     );
     alert('Sorular kaydedildi!');
   };
@@ -133,6 +137,29 @@ const ContentAdmin: React.FC = () => {
 
   return (
     <div className={styles.adminChatbotBox}>
+       <LanguageSelector
+        selectedLanguage={selectedLanguage}
+        onLanguageChange={(lang) => {
+          setSelectedLanguage(lang)
+          // Reload questions
+          import('firebase/firestore').then(({ collection, getDocs }) => {
+            const collectionName = getCollectionName('medicalchatbotQuestions', lang)
+            getDocs(collection(db, collectionName))
+              .then(snapshot => {
+                const data = snapshot.docs.map(docSnap => {
+                  const d = docSnap.data();
+                  return {
+                    id: typeof d.id === 'string' ? d.id : '',
+                    text: typeof d.text === 'string' ? d.text : '',
+                    options: Array.isArray(d.options) ? d.options : []
+                  };
+                });
+                setQuestions(data);
+              })
+              .catch(() => setQuestions([]));
+          });
+        }}
+      />
       <h2 className={styles.adminChatbotTitle}>Chatbot Soruları Yönetimi</h2>
       <div style={{marginBottom: 16, color: '#205a8c', fontSize: 15}}>
         <b>Adım ID:</b> Her sorunun benzersiz anahtarıdır. <br/>

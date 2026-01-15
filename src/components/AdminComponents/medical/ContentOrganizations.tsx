@@ -9,16 +9,19 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { MdAdd, MdDelete, MdSave, MdCloudUpload, MdEdit } from 'react-icons/md'
 import styles from '@/src/styles/admin.module.css'
 import { Hospital, Hotel } from '@/src/types/types'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '@/src/lib/localization'
 
 
 const ContentOrganizations = () => {
   const [activeTab, setActiveTab] = useState<'hotels' | 'hospitals'>('hotels')
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
 
   // Fetch data on component mount
   useEffect(() => {
     fetchHotels()
     fetchHospitals()
-  }, [])
+  }, [selectedLanguage])
 
   // Hotels State
   const [hotelName, setHotelName] = useState('')
@@ -95,7 +98,7 @@ const ContentOrganizations = () => {
       }
 
       await setDoc(
-        doc(db, 'medicalcontents/hotels/list', hotelId),
+        doc(db, getCollectionName('medicalcontents', selectedLanguage) + '/hotels/list', hotelId),
         {
           id: hotelId,
           name: hotelName,
@@ -144,7 +147,7 @@ const ContentOrganizations = () => {
       }
 
       await setDoc(
-        doc(db, 'medicalcontents/hospitals/list', hospitalId),
+        doc(db, getCollectionName('medicalcontents', selectedLanguage) + '/hospitals/list', hospitalId),
         {
           id: hospitalId,
           name: hospitalName,
@@ -177,7 +180,8 @@ const ContentOrganizations = () => {
   // Fetch Hotels
   const fetchHotels = async () => {
     try {
-      const hotelsRef = collection(db, 'medicalcontents/hotels/list')
+      const collectionName = getCollectionName('medicalcontents', selectedLanguage) + '/hotels/list'
+      const hotelsRef = collection(db, collectionName)
       const snapshot = await getDocs(hotelsRef)
       const hotelsData = snapshot.docs.map((doc) => doc.data() as Hotel)
       setHotels(hotelsData)
@@ -189,7 +193,8 @@ const ContentOrganizations = () => {
   // Fetch Hospitals
   const fetchHospitals = async () => {
     try {
-      const hospitalsRef = collection(db, 'medicalcontents/hospitals/list')
+      const collectionName = getCollectionName('medicalcontents', selectedLanguage) + '/hospitals/list'
+      const hospitalsRef = collection(db, collectionName)
       const snapshot = await getDocs(hospitalsRef)
       const hospitalsData = snapshot.docs.map((doc) => doc.data() as Hospital)
       setHospitals(hospitalsData)
@@ -202,7 +207,7 @@ const ContentOrganizations = () => {
   const deleteHotel = async (id: string) => {
     if (confirm('Bu oteli silmek istediğinizden emin misiniz?')) {
       try {
-        await setDoc(doc(db, 'medicalcontents/hotels/list', id), {}, { merge: false })
+        await setDoc(doc(db, getCollectionName('medicalcontents', selectedLanguage) + '/hotels/list', id), {}, { merge: false })
         await fetchHotels()
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -214,7 +219,7 @@ const ContentOrganizations = () => {
   const deleteHospital = async (id: string) => {
     if (confirm('Bu hastaneyi silmek istediğinizden emin misiniz?')) {
       try {
-        await setDoc(doc(db, 'medicalcontents/hospitals/list', id), {}, { merge: false })
+        await setDoc(doc(db, getCollectionName('medicalcontents', selectedLanguage) + '/hospitals/list', id), {}, { merge: false })
         await fetchHospitals()
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -239,8 +244,16 @@ const ContentOrganizations = () => {
   }
 
   return (
+ 
     <div className={styles.contentServicesWrapper}>
-      {/* Tabs */}
+      {/* Tabs */}   <LanguageSelector
+        selectedLanguage={selectedLanguage}
+        onLanguageChange={(lang) => {
+          setSelectedLanguage(lang)
+          fetchHotels()
+          fetchHospitals()
+        }}
+      />
       <div style={{
         display: 'flex',
         gap: '16px',

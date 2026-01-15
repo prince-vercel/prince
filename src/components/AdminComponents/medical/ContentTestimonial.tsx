@@ -8,6 +8,8 @@ import { doc, setDoc, serverTimestamp, getDocs, collection, deleteDoc } from 'fi
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
 import { MdDelete, MdSave, MdEdit, MdAdd } from 'react-icons/md'
 import styles from '@/src/styles/admin.module.css'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '@/src/lib/localization'
 
 interface Testimonial {
   id: string
@@ -27,15 +29,17 @@ const ContentTestimonials = () => {
   const [editingTestimonialId, setEditingTestimonialId] = useState<string | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [uploadingImage, setUploadingImage] = useState(false)
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru' | 'es' | 'ar' | 'ru'>('tr')
 
   // Fetch Testimonials on component mount
   useEffect(() => {
     fetchTestimonials()
-  }, [])
+  }, [selectedLanguage])
 
   const fetchTestimonials = async () => {
     try {
-      const testimonialsRef = collection(db, 'medicalcontents/testimonials/list')
+      const collectionName = getCollectionName('medicalcontents', selectedLanguage) + '/testimonials/list'
+      const testimonialsRef = collection(db, collectionName)
       const snapshot = await getDocs(testimonialsRef)
       const testimonialsData = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -78,7 +82,7 @@ const ContentTestimonials = () => {
       const testimonialId = editingTestimonialId || Date.now().toString()
 
       await setDoc(
-        doc(db, 'medicalcontents/testimonials/list', testimonialId),
+        doc(db, getCollectionName('medicalcontents', selectedLanguage) + '/testimonials/list', testimonialId),
         {
           id: testimonialId,
           name,
@@ -116,7 +120,7 @@ const ContentTestimonials = () => {
         }
 
         // Veri sil
-        await deleteDoc(doc(db, 'medicalcontents/testimonials/list', id))
+        await deleteDoc(doc(db, getCollectionName('medicalcontents', selectedLanguage) + '/testimonials/list', id))
         await fetchTestimonials()
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -150,7 +154,13 @@ const ContentTestimonials = () => {
           ✓ Yorum başarıyla kaydedildi
         </div>
       )}
-
+      <LanguageSelector
+        selectedLanguage={selectedLanguage}
+        onLanguageChange={(lang) => {
+          setSelectedLanguage(lang)
+          fetchTestimonials()
+        }}
+      />
       {/* Header */}
       <div className={styles.contentServicesHeader}>
         <h1 className={styles.contentServicesTitle} style={{fontSize:'28px'}}>

@@ -6,14 +6,18 @@ import { db } from '../../../lib/firebase';
 import { setDoc, doc } from 'firebase/firestore';
 import { ChatbotStep } from '../../../types/types';
 import styles from '../../../styles/admin.module.css'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '../../../lib/localization'
+
 
 
 
 const ContentAdmin: React.FC = () => {
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru' | 'es' | 'ar' | 'ru'>('tr');
   // Sayfa açıldığında Firestore'dan soruları çek
   useEffect(() => {
     import('firebase/firestore').then(({ collection, getDocs }) => {
-      getDocs(collection(db, 'visachatbotQuestions'))
+      getDocs(collection(db, getCollectionName('visachatbotQuestions', selectedLanguage)))
         .then(snapshot => {
           const data = snapshot.docs.map(docSnap => {
             const d = docSnap.data();
@@ -27,7 +31,8 @@ const ContentAdmin: React.FC = () => {
         })
         .catch(() => setQuestions([]));
     });
-  }, [])
+  }, [selectedLanguage]);
+
   const [questions, setQuestions] = useState<ChatbotStep[]>([]);
   const [importError, setImportError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -55,7 +60,7 @@ const ContentAdmin: React.FC = () => {
       setQuestions(imported);
       // Save imported questions to Firestore
       await Promise.all(
-        imported.map(q => setDoc(doc(db, 'visachatbotQuestions', q.id), q))
+        imported.map(q => setDoc(doc(db, getCollectionName('visachatbotQuestions', selectedLanguage), q.id), q))
       );
     } catch (err: any) {
       setImportError('Geçersiz JSON dosyası: ' + (err?.message || 'Bilinmeyen hata'));
@@ -121,7 +126,7 @@ const ContentAdmin: React.FC = () => {
   const handleSave = async () => {
     if (!questions.length) return;
     await Promise.all(
-      questions.map(q => setDoc(doc(db, 'visachatbotQuestions', q.id), q))
+      questions.map(q => setDoc(doc(db, getCollectionName('visachatbotQuestions', selectedLanguage), q.id), q))
     );
     alert('Sorular kaydedildi!');
   };
@@ -138,6 +143,10 @@ const ContentAdmin: React.FC = () => {
   return (
     <div className={styles.adminChatbotBox}>
       <h2 className={styles.adminChatbotTitle} style={{color:'#C42127'}}>Chatbot Soruları Yönetimi</h2>
+
+      {/* Language Selector */}
+      <LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
+
       <div style={{marginBottom: 16, color: 'black', fontSize: 15}}>
         <b>Adım ID:</b> Her sorunun benzersiz anahtarıdır. <br/>
         <b>Soru metni:</b> Kullanıcıya gösterilecek metin.<br/>

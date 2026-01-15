@@ -16,13 +16,14 @@
 }
 /* Login Page Styles */
 .loginWrapper {
-  max-width: 400px;
-  margin: 60px auto;
+  max-width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   padding: 32px 24px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
   border-radius: 18px;
-  background: rgba(255,255,255,0.95);
-  position: relative;
   border: 1.5px solid #e3e8f0;
 }
 
@@ -34,15 +35,11 @@
 }
 
 .loginIconBox {
-  background: linear-gradient(135deg, #307BC4 60%, #5BA3D0 100%);
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
+
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 8px;
-  box-shadow: 0 2px 8px #b6d0ee44;
 }
 
 .loginTitle {
@@ -254,6 +251,26 @@
 
 .adminBox:hover .adminBoxLink {
   gap: 10px;
+}
+
+.adminBoxContainer {
+  position: relative;
+}
+
+.editImageButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  color: black;
+  transition: color 0.2s;
+}
+
+.editImageButton:hover {
+  color: white;
 }
 
 /* RESPONSIVE */
@@ -2644,4 +2661,77 @@
 .link3.active {
   background-color: #ffffff;
   color: #c42127;
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modalHeader h3 {
+  margin: 0;
+  color: #307BC4;
+}
+
+.modalClose {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.fileInput {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+.uploadButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #307BC4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.uploadButton:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
 }

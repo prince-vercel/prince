@@ -13,6 +13,8 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { db, storage } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
 import { MdDelete, MdSave } from 'react-icons/md'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '@/src/lib/localization'
 
 interface Partner {
   id: string
@@ -27,6 +29,7 @@ const ContentPartner = () => {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string>('')
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
 
   const [formData, setFormData] = useState({
     title: '',
@@ -35,11 +38,11 @@ const ContentPartner = () => {
   // Ortakları yükle
   useEffect(() => {
     loadPartners()
-  }, [])
+  }, [selectedLanguage])
 
   const loadPartners = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'medicalcontents/partner/partners'))
+      const querySnapshot = await getDocs(collection(db, getCollectionName('medicalcontents/partner/partners', selectedLanguage)))
       const partnersData: Partner[] = []
       querySnapshot.forEach((doc) => {
         partnersData.push({
@@ -86,7 +89,7 @@ const ContentPartner = () => {
     try {
       const imageUrl = await uploadImage(imageFile)
 
-      await addDoc(collection(db, 'medicalcontents/partner/partners'), {
+      await addDoc(collection(db, getCollectionName('medicalcontents/partner/partners', selectedLanguage)), {
         title: formData.title,
         imageUrl: imageUrl,
         createdAt: new Date(),
@@ -109,7 +112,7 @@ const ContentPartner = () => {
     if (!confirm('Bu ortağı silmek istediğinize emin misiniz?')) return
 
     try {
-      await deleteDoc(doc(db, 'medicalcontents/partner/partners', partnerId))
+      await deleteDoc(doc(db, getCollectionName('medicalcontents/partner/partners', selectedLanguage), partnerId))
       showNotification('success', 'Ortak başarıyla silindi')
       loadPartners()
     } catch (error) {
@@ -159,7 +162,7 @@ const ContentPartner = () => {
           }
         }
       `}</style>
-
+<LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
       {/* Başlık */}
       <h2 style={{ margin: '0 0 30px 0', fontSize: '28px', fontWeight: 'bold' }}>Ortak Yönetimi</h2>
 

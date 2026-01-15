@@ -6,6 +6,8 @@ import { db } from '@/src/lib/firebase'
 import { doc, setDoc, serverTimestamp, getDocs, collection, deleteDoc } from 'firebase/firestore'
 import { MdDelete, MdSave, MdEdit, MdAdd } from 'react-icons/md'
 import styles from '@/src/styles/admin.module.css'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '../../../lib/localization'
 
 interface FAQ {
   id: string
@@ -21,15 +23,16 @@ const ContentFaq = () => {
   const [success, setSuccess] = useState(false)
   const [isEditMode, setIsEditMode] = useState(false)
   const [editingFaqId, setEditingFaqId] = useState<string | null>(null)
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru' | 'es' | 'ar' | 'ru'>('tr')
 
   // Fetch FAQs on component mount
   useEffect(() => {
     fetchFaqs()
-  }, [])
+  }, [selectedLanguage])
 
   const fetchFaqs = async () => {
     try {
-      const faqsRef = collection(db, 'visacontents/faq/list')
+      const faqsRef = collection(db, getCollectionName('visacontents/faq/list', selectedLanguage))
       const snapshot = await getDocs(faqsRef)
       const faqsData = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -52,7 +55,7 @@ const ContentFaq = () => {
       const faqId = editingFaqId || Date.now().toString()
 
       await setDoc(
-        doc(db, 'visacontents/faq/list', faqId),
+        doc(db, getCollectionName('visacontents/faq/list', selectedLanguage), faqId),
         {
           id: faqId,
           question,
@@ -79,7 +82,7 @@ const ContentFaq = () => {
   const deleteFaq = async (id: string) => {
     if (confirm('Bu soruyu silmek istediğinizden emin misiniz?')) {
       try {
-        await deleteDoc(doc(db, 'visacontents/faq/list', id))
+        await deleteDoc(doc(db, getCollectionName('visacontents/faq/list', selectedLanguage), id))
         await fetchFaqs()
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -110,6 +113,8 @@ const ContentFaq = () => {
           ✓ Soru başarıyla kaydedildi
         </div>
       )}
+     {/* Language Selector */}
+      <LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
 
       {/* Header */}
       <div className={styles.contentServicesHeader}>
@@ -121,6 +126,7 @@ const ContentFaq = () => {
         </p>
       </div>
 
+ 
       {/* Form */}
       <div className={styles.contentServicesFormSection}>
         {/* Question */}

@@ -8,6 +8,8 @@ import { doc, setDoc, serverTimestamp, getDocs, collection, deleteDoc } from 'fi
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
 import { MdDelete, MdSave, MdEdit, MdAdd } from 'react-icons/md'
 import styles from '@/src/styles/admin.module.css'
+import LanguageSelector from '../../LanguageSelector'
+import { getCollectionName } from '../../../lib/localization'
 
 interface Testimonial {
   id: string
@@ -27,15 +29,16 @@ const ContentTestimonials = () => {
   const [editingTestimonialId, setEditingTestimonialId] = useState<string | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [uploadingImage, setUploadingImage] = useState(false)
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru' | 'es' | 'ar' | 'ru'>('tr')
 
   // Fetch Testimonials on component mount
   useEffect(() => {
     fetchTestimonials()
-  }, [])
+  }, [selectedLanguage])
 
   const fetchTestimonials = async () => {
     try {
-      const testimonialsRef = collection(db, 'visacontents/testimonials/list')
+      const testimonialsRef = collection(db, getCollectionName('visacontents/testimonials/list', selectedLanguage))
       const snapshot = await getDocs(testimonialsRef)
       const testimonialsData = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -78,7 +81,7 @@ const ContentTestimonials = () => {
       const testimonialId = editingTestimonialId || Date.now().toString()
 
       await setDoc(
-        doc(db, 'visacontents/testimonials/list', testimonialId),
+        doc(db, getCollectionName('visacontents/testimonials/list', selectedLanguage), testimonialId),
         {
           id: testimonialId,
           name,
@@ -116,7 +119,7 @@ const ContentTestimonials = () => {
         }
 
         // Veri sil
-        await deleteDoc(doc(db, 'visacontents/testimonials/list', id))
+        await deleteDoc(doc(db, getCollectionName('visacontents/testimonials/list', selectedLanguage), id))
         await fetchTestimonials()
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -150,6 +153,8 @@ const ContentTestimonials = () => {
           ✓ Yorum başarıyla kaydedildi
         </div>
       )}
+ {/* Language Selector */}
+      <LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
 
       {/* Header */}
       <div className={styles.contentServicesHeader}>
@@ -161,6 +166,7 @@ const ContentTestimonials = () => {
         </p>
       </div>
 
+     
       {/* Form */}
       <div className={styles.contentServicesFormSection}>
         {/* Name */}

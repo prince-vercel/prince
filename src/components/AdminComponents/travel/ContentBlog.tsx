@@ -7,6 +7,8 @@ import { doc, setDoc, serverTimestamp, getDocs, collection, deleteDoc } from 'fi
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
 import { MdDelete, MdSave, MdEdit } from 'react-icons/md'
 import styles from '@/src/styles/admin.module.css'
+import { getCollectionName } from '../../../lib/localization'
+import LanguageSelector from '../../LanguageSelector'
 
 interface Blog {
   id: string
@@ -29,15 +31,16 @@ const ContentBlog = () => {
   const [isEditMode, setIsEditMode] = useState(false)
   const [editingBlogId, setEditingBlogId] = useState<string | null>(null)
   const [uploadingImage, setUploadingImage] = useState(false)
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
 
   // Fetch Blogs on component mount
   useEffect(() => {
     fetchBlogs()
-  }, [])
+  }, [selectedLanguage])
 
   const fetchBlogs = async () => {
     try {
-      const blogsRef = collection(db, 'travelblogs')
+      const blogsRef = collection(db, getCollectionName('travelblogs', selectedLanguage))
       const snapshot = await getDocs(blogsRef)
       const blogsData = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -82,7 +85,7 @@ const ContentBlog = () => {
       const blogId = editingBlogId || Date.now().toString()
 
       await setDoc(
-        doc(db, 'travelblogs', blogId),
+        doc(db, getCollectionName('travelblogs', selectedLanguage), blogId),
         {
           id: blogId,
           title,
@@ -123,7 +126,7 @@ const ContentBlog = () => {
         }
 
         // Veri sil
-        await deleteDoc(doc(db, 'travelblogs', id))
+        await deleteDoc(doc(db, getCollectionName('travelblogs', selectedLanguage), id))
         await fetchBlogs()
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -170,6 +173,9 @@ const ContentBlog = () => {
           {isEditMode ? 'Blog yazısını güncelleyin' : 'Yeni blog yazısı ekleyin'}
         </p>
       </div>
+
+      {/* Language Selector */}
+      <LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
 
       {/* Form */}
       <div className={styles.contentServicesFormSection}>

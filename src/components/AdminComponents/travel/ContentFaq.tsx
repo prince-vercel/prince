@@ -6,6 +6,8 @@ import { db } from '@/src/lib/firebase'
 import { doc, setDoc, serverTimestamp, getDocs, collection, deleteDoc } from 'firebase/firestore'
 import { MdDelete, MdSave, MdEdit, MdAdd } from 'react-icons/md'
 import styles from '@/src/styles/admin.module.css'
+import { getCollectionName } from '../../../lib/localization'
+import LanguageSelector from '../../LanguageSelector'
 
 interface FAQ {
   id: string
@@ -21,15 +23,16 @@ const ContentFaq = () => {
   const [success, setSuccess] = useState(false)
   const [isEditMode, setIsEditMode] = useState(false)
   const [editingFaqId, setEditingFaqId] = useState<string | null>(null)
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
 
   // Fetch FAQs on component mount
   useEffect(() => {
     fetchFaqs()
-  }, [])
+  }, [selectedLanguage])
 
   const fetchFaqs = async () => {
     try {
-      const faqsRef = collection(db, 'travelcontents/faq/list')
+      const faqsRef = collection(db, getCollectionName('travelcontents/faq/list', selectedLanguage))
       const snapshot = await getDocs(faqsRef)
       const faqsData = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -52,7 +55,7 @@ const ContentFaq = () => {
       const faqId = editingFaqId || Date.now().toString()
 
       await setDoc(
-        doc(db, 'travelcontents/faq/list', faqId),
+        doc(db, getCollectionName('travelcontents/faq/list', selectedLanguage), faqId),
         {
           id: faqId,
           question,
@@ -79,7 +82,7 @@ const ContentFaq = () => {
   const deleteFaq = async (id: string) => {
     if (confirm('Bu soruyu silmek istediğinizden emin misiniz?')) {
       try {
-        await deleteDoc(doc(db, 'travelcontents/faq/list', id))
+        await deleteDoc(doc(db, getCollectionName('travelcontents/faq/list', selectedLanguage), id))
         await fetchFaqs()
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -120,6 +123,9 @@ const ContentFaq = () => {
           {isEditMode ? 'Soru ve cevabını güncelleyin' : 'Sık Sorulan Sorular bölümüne yeni soru ekleyin'}
         </p>
       </div>
+
+      {/* Language Selector */}
+      <LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
 
       {/* Form */}
       <div className={styles.contentServicesFormSection}>

@@ -3,10 +3,9 @@
 
 
 import React, { useState } from 'react';
-import { db } from '@/src/lib/firebase';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { collection, getDocs } from 'firebase/firestore';
-import { MdLock, MdEmail } from 'react-icons/md';
+import { MdEmail, MdLock } from 'react-icons/md';
 import styles from '@/src/styles/admin.module.css';
 
 const Login = () => {
@@ -23,26 +22,25 @@ const Login = () => {
     setError('');
     setLoading(true);
     try {
-      // Firestore'dan admin koleksiyonunu çek
-      const querySnapshot = await getDocs(collection(db, 'admin'));
-      let found = false;
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        if (data.email === email && data.password === password) {
-          found = true;
-        }
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
       });
-      if (!found) {
-        setError('Email veya şifre yanlış.');
-        setLoading(false);
-        return;
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Oturum bilgisini localStorage'a kaydet
+        localStorage.setItem('adminSession', email);
+        router.push('/admin');
+      } else {
+        setError(data.message || 'Giriş başarısız');
       }
-      // Oturum bilgisini localStorage'a kaydet
-      localStorage.setItem('adminSession', email);
-      router.push('/admin');
     } catch (err: any) {
       setError('Giriş başarısız: ' + (err.message || 'Bilinmeyen hata'));
-      setLoading(false);
     }
     setLoading(false);
   };
@@ -51,7 +49,7 @@ const Login = () => {
     <div className={styles.loginWrapper}>
       <div className={styles.loginHeader}>
         <div className={styles.loginIconBox}>
-          <MdLock size={32} color="#fff" />
+          <Image src="/assets/logo/logo-mavi.png" alt="Logo" width={100} height={80} />
         </div>
         <h2 className={styles.loginTitle}>Admin Girişi</h2>
       </div>
