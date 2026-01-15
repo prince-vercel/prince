@@ -4,7 +4,7 @@ import { MdHome, MdLogout } from 'react-icons/md'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import logo from '@/assets/logo/logo-white.png'
+const logo = '/assets/logo/logo-white.png'
 import styles from '@/src/styles/admin.module.css'
 
 const MedicalSidebar = () => {
