@@ -3,6 +3,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import '../../i18n'
 
 interface Service {
   title: string
@@ -14,37 +16,38 @@ interface Service {
   hasLink?: boolean // HTML'de 3. kartta link yok
 }
 
-const services: Service[] = [
-  {
-    title: 'Turist Vize Danışmanlığı',
-    description: 'Turist Vize başvuru sürecinizi kolaylaştırarak, seyahat planlarınızı mümkün kılmak için profesyonel rehberlik sunuyoruz.',
-    image: '/visa/uploads/contents/main/1764367355_7e74c8429d5680f5f28d.webp',
-    icon: '/visa/uploads/icons/1764367355_b367f9f58895e09e0ec7.svg',
-    color: '#d4dcff',
-    href: '/visa/blog',
-    hasLink: true
-  },
-  {
-    title: 'Çalışma Vizesi Danışmanlığı',
-    description: 'Yurtdışında kariyer fırsatlarını keşfetmeniz için uzmanlıkla hazırlanmış danışmanlık hizmeti sunuyoruz.',
-    image: '/visa/uploads/contents/main/1764367445_d0670128a7e819c4fb67.webp',
-    icon: '/visa/uploads/icons/1764367445_ae06cd22078c4b2aa2cd.svg',
-    color: '#aacde1',
-    href: '/visa/blog',
-    hasLink: true
-  },
-  {
-    title: 'Yurtdışı Eğitim Danışmanlığı',
-    description: 'Uluslararası eğitim fırsatlarını araştırmanıza ve en uygun olanı bulmanıza yardımcı olmak için danışmanlık sağlıyoruz.',
-    image: '/visa/uploads/contents/main/1765240364_fd866e257cbbd3de11e3.webp',
-    icon: '/visa/uploads/icons/1765240295_f0a93795a132689a07c9.svg',
-    color: '#bcd9a9',
-    href: '/visa/blog',
-    hasLink: false // HTML'de 3. kartta link yok
-  }
-]
-
 export default function ServicesSection() {
+  const { t } = useTranslation()
+
+  const services: Service[] = [
+    {
+      title: t('visa.services.tourist.title'),
+      description: t('visa.services.tourist.description'),
+      image: '/visa/uploads/contents/main/1764367355_7e74c8429d5680f5f28d.webp',
+      icon: '/visa/uploads/icons/1764367355_b367f9f58895e09e0ec7.svg',
+      color: '#d4dcff',
+      href: '/visa/blog',
+      hasLink: true
+    },
+    {
+      title: t('visa.services.work.title'),
+      description: t('visa.services.work.description'),
+      image: '/visa/uploads/contents/main/1764367445_d0670128a7e819c4fb67.webp',
+      icon: '/visa/uploads/icons/1764367445_ae06cd22078c4b2aa2cd.svg',
+      color: '#aacde1',
+      href: '/visa/blog',
+      hasLink: true
+    },
+    {
+      title: t('visa.services.education.title'),
+      description: t('visa.services.education.description'),
+      image: '/visa/uploads/contents/main/1765240364_fd866e257cbbd3de11e3.webp',
+      icon: '/visa/uploads/icons/1765240295_f0a93795a132689a07c9.svg',
+      color: '#bcd9a9',
+      href: '/visa/blog',
+      hasLink: false // HTML'de 3. kartta link yok
+    }
+  ]
   // main.js'teki swiperCardSlider init fonksiyonunu çağır
   useEffect(() => {
     const initSwiper = () => {
@@ -79,8 +82,11 @@ export default function ServicesSection() {
       <div className="container">
         <div className="section-head" data-scroll-animation>
           <span className="heading-2">
-            Keşfetmeniz için tüm seyahat ihtiyaçlarınızı<br />
-            <b>tek bir çatı altında karşılayan Çilek Vize !</b>
+            {t('visa.services.title').split('\n').map((line, i) => (
+              <span key={i}>
+                {i === 0 ? line : <><br /><b>{line}</b></>}
+              </span>
+            ))}
           </span>
         </div>
         <div className="swiper swiper-card-slider">

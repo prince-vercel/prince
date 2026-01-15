@@ -1,7 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
+import '../../i18n'
 
 export default function VisaFooter() {
+    const { t } = useTranslation()
+    const currentYear = new Date().getFullYear()
+
     return (
         <>
             <style>{`
@@ -18,18 +23,19 @@ export default function VisaFooter() {
                                 <div className="col-lg-4" style={{ flex: '0 0 33.333333%', maxWidth: '33.333333%', padding: '0 15px' }}>
                                     <div className="cs_footer_item" style={{ marginBottom: '30px' }}>
                                         <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333', marginBottom: '20px' }}>
-                                            Çilek Vize ile Resmi Belgelerinizi<br />
-                                            Hızlı bir şekilde alın..
+                                            {t('visa.footer.description').split('\n').map((line, i) => (
+                                                <span key={i}>{line}{i === 0 && <br />}</span>
+                                            ))}
                                         </p>
                                         <ul className="cs_contact_widget" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                                             <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }}>
-                                                Muradiye Mahallesi Beşikçiler Cad. No:73A Osmangazi / Bursa
+                                                {t('visa.footer.address')}
                                             </li>
                                             <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }}>
-                                                +90 850 888 70 71
+                                                {t('visa.footer.phone')}
                                             </li>
                                             <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }}>
-                                                info@cilekvize.com
+                                                {t('visa.footer.email')}
                                             </li>
                                         </ul>
                                     </div>
@@ -39,27 +45,27 @@ export default function VisaFooter() {
                                     <ul className="cs_menu_widget cs_mp0" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                                         <li style={{ marginBottom: '12px' }}>
                                             <Link href="/visa" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                Anasayfa
+                                                {t('visa.footer.home')}
                                             </Link>
                                         </li>
                                         <li style={{ marginBottom: '12px' }}>
                                             <Link href="/visa/nasil-vize-alirim" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                Nasıl Vize Alırım?
+                                                {t('visa.footer.howToGetVisa')}
                                             </Link>
                                         </li>
                                         <li style={{ marginBottom: '12px' }}>
                                             <Link href="/visa/blog" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                Blog
+                                                {t('visa.footer.blog')}
                                             </Link>
                                         </li>
                                         <li style={{ marginBottom: '12px' }}>
                                             <Link href="/visa/hakkimizda" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                Hakkımızda
+                                                {t('visa.footer.about')}
                                             </Link>
                                         </li>
                                         <li style={{ marginBottom: '12px' }}>
                                             <Link href="/visa/iletisim" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                İletişim
+                                                {t('visa.footer.contact')}
                                             </Link>
                                         </li>
                                     </ul>
@@ -69,17 +75,17 @@ export default function VisaFooter() {
                                     <ul className="cs_menu_widget cs_mp0" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                                         <li style={{ marginBottom: '12px' }}>
                                             <Link href="/visa/sss" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                Sık Sorulan Sorular
+                                                {t('visa.footer.faq')}
                                             </Link>
                                         </li>
                                         <li style={{ marginBottom: '12px' }}>
                                             <Link href="/visa/gizlilik-politikasi" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                Gizlilik Politikası
+                                                {t('visa.footer.privacy')}
                                             </Link>
                                         </li>
                                         <li style={{ marginBottom: '12px' }}>
                                             <Link href="/visa/kisisel-verilerin-korunma-kanunu" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                KVKK & Aydınlatma
+                                                {t('visa.footer.kvkk')}
                                             </Link>
                                         </li>
                                     </ul>
@@ -88,11 +94,12 @@ export default function VisaFooter() {
                                 <div className="col-lg-4" style={{ flex: '0 0 33.333333%', maxWidth: '33.333333%', padding: '0 15px' }}>
                                     <div className="cs_newsletter cs_style1">
                                         <h2 className="cs_newsletter_title" style={{ fontSize: '42px', fontWeight: 700, marginBottom: '11px', color: '#333' }}>
-                                            Bize Katılın
+                                            {t('visa.footer.newsletter.title')}
                                         </h2>
                                         <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#666', marginBottom: '25px' }}>
-                                            Kampanyalar, yenilikler ve vize içerikleri için e-posta listemize
-                                            kayıt olun.
+                                            {t('visa.footer.newsletter.description').split('\n').map((line, i) => (
+                                                <span key={i}>{line}{i === 0 && <br />}</span>
+                                            ))}
                                         </p>
                                         <form
                                             className="cs_newsletter_form"
@@ -103,7 +110,7 @@ export default function VisaFooter() {
                                                 <input
                                                     type="email"
                                                     className="cs_newsletter_input"
-                                                    placeholder="E-posta adresiniz"
+                                                    placeholder={t('visa.footer.newsletter.placeholder')}
                                                     style={{
                                                         width: '100%',
                                                         border: '2px solid #C42127',
@@ -134,7 +141,7 @@ export default function VisaFooter() {
                                                         transition: 'background 0.3s'
                                                     }}
                                                 >
-                                                    Gönder
+                                                    {t('visa.footer.newsletter.submit')}
                                                 </button>
                                             </div>
                                         </form>
@@ -244,16 +251,12 @@ export default function VisaFooter() {
                                 </div>
 
                                 <div className="cs_copyright" style={{ color: 'white', fontSize: '14px', fontWeight: 400 }}>
-                                    Copyright &copy; {new Date().getFullYear()} Çilek Vize. Tüm hakları saklıdır.
+                                    {t('visa.footer.copyright', { year: currentYear })}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </footer>
-
-                <span className="cs_scrollup" style={{ position: 'fixed', bottom: '30px', right: '30px', width: '50px', height: '50px', backgroundColor: '#C42127', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 999, transition: 'background 0.3s' }}>
-                    <i className="fa-solid fa-arrow-up" style={{ color: 'white', fontSize: '20px' }}></i>
-                </span>
             </div>
         </>
     )

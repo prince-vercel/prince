@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import '../../../styles/visa/UlkeVizeBasvurusu.css';
+import '../../../i18n';
 
 interface NavLink {
     title: string;
@@ -192,6 +194,7 @@ const countriesData: Record<string, CountryData> = {
 };
 
 export default function UlkeVizeBasvurusuPage() {
+    const { t } = useTranslation();
     const router = useRouter();
     const { ulke } = router.query;
     const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
@@ -267,8 +270,8 @@ export default function UlkeVizeBasvurusuPage() {
         return (
             <div className="country-page">
                 <div className="container">
-                    <h1>Ülke bulunamadı</h1>
-                    <Link href="/visa">Ana Sayfaya Dön</Link>
+                    <h1>{t('visa.countryApplication.notFound', 'Ülke bulunamadı')}</h1>
+                    <Link href="/visa">{t('visa.countryApplication.backHome', 'Ana Sayfaya Dön')}</Link>
                 </div>
             </div>
         );
@@ -290,7 +293,7 @@ export default function UlkeVizeBasvurusuPage() {
                         <div className="hero-content">
                             {/* Breadcrumb */}
                             <nav className="breadcrumb-nav">
-                                <Link href="/visa">Ana Sayfa</Link>
+                                <Link href="/visa">{t('visa.common.home')}</Link>
                                 <span className="separator">/</span>
                                 <span className="current">{currentCountry.name}</span>
                             </nav>
@@ -300,7 +303,7 @@ export default function UlkeVizeBasvurusuPage() {
                                 <div className="country-icon">
                                     <img src={currentCountry.icon} alt={currentCountry.name} />
                                 </div>
-                                <h1 className="hero-title">{currentCountry.name} Vize Başvuru Rehberi</h1>
+                                <h1 className="hero-title">{currentCountry.name} {t('visa.countryApplication.guide', 'Vize Başvuru Rehberi')}</h1>
                             </div>
 
                             {/* Excerpt */}
@@ -310,7 +313,7 @@ export default function UlkeVizeBasvurusuPage() {
 
                             {/* CTA Button */}
                             <Link href="/visa/basvuru-yap" className="hero-cta">
-                                <span>Başvurunuzu Başlatın</span>
+                                <span>{t('visa.common.apply')}</span>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <line x1="5" y1="12" x2="19" y2="12" />
                                     <polyline points="12 5 19 12 12 19" />
@@ -391,7 +394,7 @@ export default function UlkeVizeBasvurusuPage() {
                                                 <circle cx="8.5" cy="8.5" r="1.5" />
                                                 <polyline points="21 15 16 10 5 21" />
                                             </svg>
-                                            Galeri
+                                            {t('visa.countryApplication.gallery', 'Galeri')}
                                         </h3>
                                         <div className="gallery-grid">
                                             {currentCountry.gallery.map((image, index) => (
@@ -428,7 +431,7 @@ export default function UlkeVizeBasvurusuPage() {
             <div className={`video-modal ${isVideoModalOpen ? 'active' : ''}`}>
                 <div className="video-modal-overlay" onClick={closeVideoModal}></div>
                 <div className="video-modal-container">
-                    <button className="video-modal-close" onClick={closeVideoModal} aria-label="Kapat">
+                    <button className="video-modal-close" onClick={closeVideoModal} aria-label={t('visa.common.close')}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <line x1="18" y1="6" x2="6" y2="18" />
                             <line x1="6" y1="6" x2="18" y2="18" />
@@ -453,7 +456,7 @@ export default function UlkeVizeBasvurusuPage() {
             <div className={`lightbox-overlay ${isLightboxOpen ? 'active' : ''}`} onClick={closeLightbox}>
                 <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
                     {selectedImage && <img src={selectedImage} alt="Galeri görseli" />}
-                    <button className="lightbox-close" onClick={closeLightbox} aria-label="Kapat">
+                    <button className="lightbox-close" onClick={closeLightbox} aria-label={t('visa.common.close')}>
                         ×
                     </button>
                 </div>

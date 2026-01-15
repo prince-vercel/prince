@@ -1,7 +1,12 @@
+'use client'
+
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import '../../styles/visa/NasilVizeAlirim.css';
+import '../../i18n';
 
 export default function NasilVizeAlirimPage() {
+    const { t } = useTranslation();
     return (
         <div className="static-page">
             {/* Hero Section */}
@@ -18,17 +23,17 @@ export default function NasilVizeAlirimPage() {
                         <div className="hero-content">
                             {/* Breadcrumb */}
                             <nav className="breadcrumb-nav">
-                                <Link href="/visa">Ana Sayfa</Link>
+                                <Link href="/visa">{t('visa.pages.nasilVizeAlirim.breadcrumb')}</Link>
                                 <span className="separator">/</span>
-                                <span className="current">Nasıl Vize Alırım ?</span>
+                                <span className="current">{t('visa.pages.nasilVizeAlirim.title')}</span>
                             </nav>
 
                             {/* Title */}
-                            <h1 className="hero-title">Nasıl Vize Alırım ?</h1>
+                            <h1 className="hero-title">{t('visa.pages.nasilVizeAlirim.title')}</h1>
 
                             {/* CTA Button */}
                             <Link href="/visa/basvuru-yap" className="hero-cta">
-                                <span>Başvurunuzu Başlatın</span>
+                                <span>{t('visa.common.apply')}</span>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <line x1="5" y1="12" x2="19" y2="12" />
                                     <polyline points="12 5 19 12 12 19" />
@@ -41,7 +46,7 @@ export default function NasilVizeAlirimPage() {
                             <picture>
                                 <img
                                     src="/visa/uploads/contents/cover/1766008916_298ef5002edaee39d925.png"
-                                    alt="Nasıl Vize Alırım ?"
+                                    alt={t('visa.pages.nasilVizeAlirim.title')}
                                 />
                             </picture>
                         </div>
@@ -58,47 +63,36 @@ export default function NasilVizeAlirimPage() {
                             <article className="content-article">
                                 {/* Main Content */}
                                 <div className="article-prose">
-                                    <h2>Vize Nedir?</h2>
+                                    <h2>{t('visa.pages.nasilVizeAlirim.whatIsVisa')}</h2>
                                     <p>
-                                        Vize, bir ülkeye giriş yapmak için konsolosluklardan veya giriş noktalarından alınan resmi bir izin belgesidir.
-                                        Farklı amaçlara hizmet eden çeşitli vize türleri bulunmaktadır. Örneğin, çalışma vizesi, seyahat vizesi ve eğitim vizesi gibi
-                                        farklı vize türleri, kişinin seyahat amacına göre değişiklik göstermektedir.
+                                        {t('visa.pages.nasilVizeAlirim.whatIsVisaDesc1')}
                                     </p>
                                     <p>
-                                        Her ülkenin kendi vize politikaları ve gereksinimleri bulunmaktadır. Vize başvurusu yapmadan önce,
-                                        gidilecek ülkenin vize şartlarını ve gerekli belgeleri öğrenmek önemlidir.
+                                        {t('visa.pages.nasilVizeAlirim.whatIsVisaDesc2')}
                                     </p>
 
-                                    <h2>Vize Nasıl Alınır?</h2>
+                                    <h2>{t('visa.pages.nasilVizeAlirim.howToGetVisa')}</h2>
                                     <p>
-                                        Vize başvurusu yapmadan önce, profesyonel bir danışmanlık hizmeti almanızı öneririz.
-                                        Öncelikle hangi vize türüne ihtiyacınız olduğunu belirlemelisiniz. Ardından, doğru belgeleri toplamalı ve
-                                        seyahat amacınızı net bir şekilde belirtmelisiniz. Vize başvuru sürecinde dikkat edilmesi gereken birçok detay bulunmaktadır.
+                                        {t('visa.pages.nasilVizeAlirim.howToGetVisaDesc1')}
                                     </p>
                                     <p>
-                                        Detaylı bilgi için bizimle iletişime geçebilirsiniz. Uzman ekibimiz, vize başvuru sürecinizde size rehberlik edecek ve
-                                        tüm adımları birlikte tamamlayacağız.
+                                        {t('visa.pages.nasilVizeAlirim.howToGetVisaDesc2')}
                                     </p>
 
-                                    <h2>Yurtdışı çalışma için vize başvuruları</h2>
+                                    <h2>{t('visa.pages.nasilVizeAlirim.workVisa')}</h2>
                                     <p>
-                                        Yurtdışında çalışmak, kariyerinizi geliştirmek ve yeni deneyimler kazanmak için harika bir fırsattır.
-                                        Farklı ülkelerde çalışma fırsatları, mesleki gelişiminize katkı sağlayabilir ve yeni bir dil öğrenmenize yardımcı olabilir.
+                                        {t('visa.pages.nasilVizeAlirim.workVisaDesc1')}
                                     </p>
                                     <p>
-                                        Yurtdışında çalışmak için vize başvurusu yapmadan önce, hedef ülkenin çalışma vize şartlarını detaylı bir şekilde araştırmalısınız.
-                                        İyi bir vize danışmanlığı hizmeti almak, başvuru sürecinizi kolaylaştıracaktır. Ayrıca, kültürel adaptasyon için en az bir yıl kalış süresi
-                                        önerilmektedir.
+                                        {t('visa.pages.nasilVizeAlirim.workVisaDesc2')}
                                     </p>
 
-                                    <h2>Seyahat Vizesi Başvuruları</h2>
+                                    <h2>{t('visa.pages.nasilVizeAlirim.travelVisa')}</h2>
                                     <p>
-                                        Seyahat vizesi, turistik amaçlı seyahatler için gerekli olan vize türüdür. Birçok ülke, turistler için farklı vize politikaları uygulamaktadır.
-                                        Bazı ülkeler vize muafiyeti sunarken, bazıları için önceden vize başvurusu yapılması gerekmektedir.
+                                        {t('visa.pages.nasilVizeAlirim.travelVisaDesc1')}
                                     </p>
                                     <p>
-                                        Seyahat vizesi başvurusu yaparken, seyahat amacınızı net bir şekilde belirtmeli ve gerekli tüm belgeleri eksiksiz olarak hazırlamalısınız.
-                                        Pasaport geçerliliği, seyahat sigortası ve konaklama rezervasyonları gibi belgeler genellikle istenmektedir.
+                                        {t('visa.pages.nasilVizeAlirim.travelVisaDesc2')}
                                     </p>
                                 </div>
                             </article>
