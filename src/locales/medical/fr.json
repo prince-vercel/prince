@@ -1,0 +1,390 @@
+{
+    "medical": {
+        "header": {
+            "home": "Page d’accueil",
+            "organisation": "Organisations",
+            "results": "Résultats heureux",
+            "form": "Demande",
+            "blog": "Blog",
+            "about": "À propos de nous",
+            "contact": "Contact",
+            "openMenu": "Ouvrir le menu",
+            "close": "Fermer",
+            "searchPlaceholder": "Rechercher un médecin"
+        },
+        "footer": {
+            "description": "Prince Medical Aesthetics & Health Services",
+            "address": "Dap Vadisi Z Ofis, Merkez, Seçkin Sk. Z ofis, Kat 2, Daire 229, 34406 Kağıthane/İstanbul",
+            "phone": "+90 212 000 00 00",
+            "email": "info@princetourismagency.com",
+            "medicalEmail": "medical@princetourismagency.com",
+            "home": "Page d’accueil",
+            "organisation": "Organisations",
+            "blog": "Blog",
+            "about": "À propos de nous",
+            "contact": "Contact",
+            "faqs": "Questions fréquentes",
+            "privacyPolicy": "Politique de confidentialité",
+            "kvkk": "KVKK & Informations",
+            "newsletter": {
+                "title": "Rejoignez-nous",
+                "description": "Inscrivez-vous à notre liste de diffusion pour recevoir nos campagnes, innovations et contenus de santé.",
+                "placeholder": "Votre adresse e-mail",
+                "submit": "Envoyer"
+            },
+            "copyright": "© Happencode. Tous droits réservés."
+        },
+        "homePage": {
+            "hero": {
+                "title": "Bénéficiez du meilleur traitement avec nous",
+                "subtitle": "Nous vous proposons les meilleurs services médicaux et de santé.",
+                "applyButton": "Postuler",
+                "words": {
+                    "aesthetic": "Esthétique",
+                    "renewal": "Renouveau",
+                    "beauty": "Beauté",
+                    "health": "Santé"
+                }
+            },
+            "departments": {
+                "hairTransplant": "Greffe de cheveux",
+                "dental": "Dentaire",
+                "body": "Corps",
+                "nose": "Nez",
+                "neckFace": "Cou et visage",
+                "hip": "Hanche",
+                "eye": "Œil",
+                "ear": "Oreille",
+                "breast": "Sein",
+                "genital": "Génital"
+            },
+            "processes": {
+                "title": "Processus",
+                "subtitle": "Notre processus de traitement",
+                "steps": {
+                    "step1": {
+                        "title": "Arrivée, transfert VIP et hébergement à l’hôtel",
+                        "location": "Étape 1",
+                        "text": "Votre transformation commence dès votre arrivée à l’aéroport ! Si vous venez de l’étranger, notre transfert VIP spécial vous accueillera et vous conduira en toute sécurité et confort à votre hôtel ou à la clinique."
+                    },
+                    "step2": {
+                        "title": "Examen personnalisé et préparation",
+                        "location": "Étape 2",
+                        "text": "Avant l’intervention, nous réalisons un examen individuel avec nos experts afin de comprendre vos attentes. Nous effectuons les examens nécessaires et établissons le plan de traitement le plus adapté à votre situation."
+                    },
+                    "step3": {
+                        "title": "Soins post-intervention et récupération",
+                        "location": "Étape 3",
+                        "text": "Après la procédure, nous vous accompagnons tout au long de votre rétablissement. Selon votre traitement, vous pourrez vous reposer dans nos salles confortables ou retourner à votre hôtel avec des instructions de soins détaillées."
+                    }
+                }
+            },
+            "languages": {
+                "title": "Nous parlons votre langue !"
+            },
+            "results": {
+                "title": "Résultats heureux",
+                "loading": "Chargement des résultats...",
+                "noResults": "Aucun résultat pour le moment.",
+                "viewAll": "Voir tous les résultats"
+            },
+            "blog": {
+                "title": "Le saviez-vous ?",
+                "loading": "Chargement des articles...",
+                "noBlogs": "Aucun article pour le moment.",
+                "readMore": "Lire la suite"
+            },
+            "partners": {
+                "loading": "Chargement des partenaires...",
+                "noPartners": "Aucun partenaire pour le moment.",
+                "defaultAlt": "Partenaire"
+            },
+            "chatbot": {
+                "startChat": "Démarrer le chat",
+                "close": "Fermer",
+                "loading": "Chargement..."
+            },
+            "errors": {
+                "loadingBlogs": "Erreur lors du chargement des articles :",
+                "loadingResults": "Erreur lors du chargement des résultats :",
+                "loadingPartners": "Erreur lors du chargement des partenaires :"
+            }
+        },
+        "pages": {
+            "breadcrumb": {
+                "home": "Page d’accueil",
+                "contact": "Contact",
+                "blog": "Blog",
+                "about": "À propos de nous",
+                "faqs": "Questions fréquentes",
+                "privacy": "Politique de confidentialité",
+                "kvkk": "KVKK & Informations",
+                "organisation": "Organisations",
+                "results": "Résultats heureux",
+                "form": "Demande"
+            },
+            "contact": {
+                "title": "Nous contacter",
+                "subtitle": "Contactez-nous pour obtenir une réponse rapide.",
+                "emailTitle": "Envoyer un e-mail",
+                "callTitle": "Appelez-nous",
+                "addressTitle": "Adresse",
+                "address": "DAP Building Z Office, Büyükdere St. No: 209, 4. Levent, Istanbul, Turquie",
+                "formTitle": "Contactez-nous !",
+                "nameLabel": "Nom",
+                "emailLabel": "E-mail",
+                "subjectLabel": "Sujet",
+                "messageLabel": "Message",
+                "submitButton": "Envoyer",
+                "successToast": "Votre message a été envoyé avec succès !",
+                "errorToast": "Veuillez remplir tous les champs !",
+                "errorAlert": "Erreur lors de l’envoi du formulaire :"
+            },
+            "about": {
+                "title": "À propos de nous",
+                "subtitle": "Votre santé et votre beauté sont notre priorité.",
+                "whyChooseUs": "Pourquoi nous choisir ?",
+                "description1": "Chez Prince Medical, nous avons été fondés afin d’offrir aux patients internationaux des services de santé de classe mondiale en Turquie, de manière sûre, transparente et confortable. En collaboration avec des médecins experts et des établissements médicaux entièrement équipés, nous garantissons des traitements conformes aux normes de qualité les plus élevées.",
+                "description2": "Grâce à notre expérience en tourisme médical, nous développons des solutions personnalisées en chirurgie esthétique, greffe de cheveux, soins dentaires et bien d’autres domaines. À chaque étape, nous plaçons les besoins de nos patients au cœur du processus, en offrant un service complet de la consultation au suivi post-traitement.",
+                "description3": "Nous rendons le processus de traitement sûr et sans stress grâce à la planification du voyage, l’hébergement, le transfert VIP et une coordination multilingue des patients venant de l’étranger.",
+                "description4": "Chez Prince Medical, notre principe fondamental est de proposer des solutions de santé éthiques, durables et axées sur la satisfaction des patients. Votre santé n’est pas un service, mais une responsabilité.",
+                "counters": {
+                    "happyPatients": "Patients satisfaits",
+                    "expertDoctors": "Médecins experts",
+                    "yearsExperience": "Années d’expérience",
+                    "awards": "Récompenses"
+                },
+                "partners": {
+                    "loading": "Chargement des partenaires...",
+                    "noPartners": "Aucun partenaire pour le moment."
+                }
+            },
+            "blog": {
+                "title": "Blog",
+                "subtitle": "Informations actuelles et conseils sur la santé et la beauté.",
+                "loading": "Chargement des articles...",
+                "noBlogs": "Aucun article pour le moment.",
+                "readMore": "Lire la suite",
+                "error": "Erreur lors du chargement des articles :",
+                "detail": {
+                    "loading": "Chargement de l’article...",
+                    "notFound": "Article non trouvé",
+                    "error": "Erreur lors du chargement de l’article",
+                    "share": "Partager :",
+                    "content": "Contenu de l’article",
+                    "blogManager": "Gestionnaire du blog"
+                }
+            },
+            "faq": {
+                "subtitle": "Les gens demandent souvent",
+                "title": "Questions",
+                "loading": "Chargement des questions...",
+                "noFaqs": "Aucune question ajoutée pour le moment",
+                "error": "Erreur lors de la récupération des FAQ :"
+            },
+            "organisation": {
+                "title": "Nos organisations",
+                "subtitle": "Choisissez l’option qui correspond à vos besoins parmi les hôtels et les hôpitaux.",
+                "filters": {
+                    "all": "Tous",
+                    "hotels": "Hôtels",
+                    "hospitals": "Hôpitaux"
+                },
+                "items": "Éléments",
+                "loading": "Chargement...",
+                "noOrganisations": "Aucune organisation ne correspond à ces critères",
+                "error": "Erreur lors de la récupération des organisations :",
+                "banner": {
+                    "title": "Ne négligez pas votre santé !",
+                    "subtitle": "Prenez rendez-vous dès aujourd’hui avec l’un de nos professionnels de santé expérimentés !"
+                }
+            },
+            "results": {
+                "title": "Résultats heureux",
+                "subtitle": "Résultats de traitements réussis et satisfaction de nos patients.",
+                "filters": {
+                    "all": "Tous",
+                    "dental": "Dentaire",
+                    "genital": "Génital",
+                    "breast": "Sein",
+                    "eye": "Œil",
+                    "hip": "Hanche",
+                    "ear": "Oreille",
+                    "neckFace": "Cou et visage",
+                    "nose": "Nez",
+                    "hairTransplant": "Greffe de cheveux",
+                    "body": "Remodelage corporel et liposuccion"
+                },
+                "items": "Éléments",
+                "loading": "Chargement...",
+                "noResults": "Aucun résultat trouvé dans cette catégorie pour le moment",
+                "error": "Erreur lors de la récupération des résultats :",
+                "testimonials": {
+                    "title": "Témoignages clients",
+                    "loading": "Chargement des témoignages...",
+                    "noTestimonials": "Aucun témoignage ajouté pour le moment",
+                    "error": "Erreur lors de la récupération des témoignages :"
+                }
+            },
+            "form": {
+                "title": "Formulaire de demande",
+                "subtitle": "Créez votre demande de rendez-vous en remplissant le formulaire ci-dessous.",
+                "loading": "Chargement des questions...",
+                "stepTitle": "Informations personnelles",
+                "labels": {
+                    "fullName": "Nom complet",
+                    "birthDate": "Date de naissance",
+                    "gender": "Genre",
+                    "nationality": "Nationalité",
+                    "phone": "Téléphone",
+                    "email": "E-mail"
+                },
+                "genderOptions": {
+                    "female": "Femme",
+                    "male": "Homme",
+                    "preferNotToSay": "Préfère ne pas répondre"
+                },
+                "buttons": {
+                    "previous": "Précédent",
+                    "next": "Suivant",
+                    "submit": "Envoyer le formulaire"
+                },
+                "success": "✓ Votre formulaire a été envoyé avec succès !",
+                "error": "Une erreur s’est produite lors de l’envoi du formulaire. Veuillez réessayer.",
+                "required": "est requis",
+                "errorAlert": "Erreur lors de l’envoi du formulaire :",
+                "privacy": "Vos informations sont confidentielles et ne seront pas partagées avec des tiers.",
+                "summary": {
+                    "title": "Résumé du formulaire",
+                    "empty": "Commencez à saisir les informations..."
+                }
+            },
+            "privacy": {
+                "title": "Politique de confidentialité",
+                "intro": "Chez Prince, nous accordons une grande importance à la protection de la vie privée de nos visiteurs et utilisateurs. Cette politique explique quelles données personnelles sont collectées, comment elles sont utilisées, protégées et quels sont vos droits.",
+                "section1": {
+                    "title": "Informations collectées",
+                    "intro": "Lorsque vous utilisez notre site, les informations suivantes peuvent être collectées :",
+                    "items": [
+                        "Nom et prénom",
+                        "Adresse e-mail",
+                        "Numéro de téléphone",
+                        "Adresse IP",
+                        "Informations sur l’appareil, le navigateur et l’utilisation",
+                        "Données de cookies",
+                        "Informations transmises via les formulaires de contact ou de demande"
+                    ]
+                },
+                "section2": {
+                    "title": "Méthodes de collecte des données personnelles",
+                    "intro": "Vos données personnelles sont collectées par les moyens suivants :",
+                    "items": [
+                        "Lors de la visite du site",
+                        "Lors de la création d’un compte",
+                        "Lors du remplissage des formulaires",
+                        "Lors de l’utilisation de nos services"
+                    ],
+                    "note": "Les données sont collectées par des moyens automatiques ou non automatiques."
+                },
+                "section3": {
+                    "title": "Finalités de l’utilisation des données personnelles",
+                    "intro": "Les données collectées peuvent être utilisées aux fins suivantes :",
+                    "items": [
+                        "Fournir et améliorer les services",
+                        "Répondre aux demandes des utilisateurs",
+                        "Mener des activités de communication",
+                        "Respecter les obligations légales",
+                        "Garantir la sécurité du système",
+                        "Activités de marketing et d’analyse (avec consentement)"
+                    ]
+                },
+                "section4": {
+                    "title": "Partage des données personnelles",
+                    "intro": "Vos données personnelles peuvent être partagées dans les cas suivants :",
+                    "items": [
+                        "Avec les autorités publiques compétentes en cas d’obligation légale",
+                        "Avec des prestataires de services tiers (hébergement, infrastructure, e-mail, etc.)",
+                        "Si vous avez donné votre consentement explicite"
+                    ]
+                },
+                "section5": {
+                    "title": "Stockage et sécurité des données personnelles",
+                    "text": "Vos données personnelles sont conservées pendant les durées prévues par la législation applicable et des mesures techniques et administratives sont mises en place pour prévenir tout accès non autorisé."
+                },
+                "section6": {
+                    "title": "Cookies",
+                    "text": "Des cookies sont utilisés sur notre site afin d’améliorer l’expérience utilisateur. Vous pouvez refuser ou supprimer les cookies via les paramètres de votre navigateur."
+                },
+                "section7": {
+                    "title": "Mises à jour de la politique de confidentialité",
+                    "text": "Cette politique de confidentialité peut être mise à jour si nécessaire. La version en vigueur est toujours publiée sur notre site."
+                },
+                "contact": "Vous pouvez nous contacter à <strong>info@princetourismagency.com</strong> pour toute question."
+            },
+            "kvkk": {
+                "title": "Texte d’information KVKK",
+                "intro": "Conformément à la loi n° 6698 sur la protection des données personnelles (KVKK), Pro Health, en tant que responsable du traitement, traite vos données personnelles dans le cadre décrit ci-dessous.",
+                "section1": {
+                    "title": "Responsable du traitement",
+                    "companyName": "Nom de l’entreprise :",
+                    "email": "E-mail :"
+                },
+                "section2": {
+                    "title": "Données personnelles traitées",
+                    "items": [
+                        "Informations d’identité (nom, prénom)",
+                        "Informations de contact (e-mail, téléphone)",
+                        "Informations de sécurité des transactions (IP, journaux)",
+                        "Informations relatives aux transactions des utilisateurs"
+                    ]
+                },
+                "section3": {
+                    "title": "Finalités du traitement des données personnelles",
+                    "intro": "Vos données personnelles sont traitées aux fins suivantes :",
+                    "items": [
+                        "Exécution des services",
+                        "Réalisation des activités de communication",
+                        "Évaluation des demandes et réclamations",
+                        "Respect des obligations légales",
+                        "Gestion de la sécurité de l’information"
+                    ]
+                },
+                "section4": {
+                    "title": "Transfert des données personnelles",
+                    "text": "Vos données personnelles peuvent être transférées aux institutions et organisations publiques compétentes ainsi qu’aux prestataires de services, conformément aux articles 8 et 9 de la KVKK."
+                },
+                "section5": {
+                    "title": "Méthode de collecte et base légale",
+                    "intro": "Vos données personnelles sont collectées par les moyens suivants :",
+                    "items": [
+                        "Site web",
+                        "Formulaires électroniques",
+                        "Cookies"
+                    ],
+                    "note": "Le traitement est fondé sur les bases légales prévues à l’article 5 de la KVKK."
+                },
+                "section6": {
+                    "title": "Vos droits en vertu de la KVKK",
+                    "intro": "Conformément à l’article 11 de la KVKK, vous disposez des droits suivants :",
+                    "items": [
+                        "Savoir si vos données personnelles sont traitées",
+                        "Demander des informations si elles sont traitées",
+                        "Connaître la finalité du traitement",
+                        "Demander la rectification des données inexactes ou incomplètes",
+                        "Demander la suppression ou la destruction",
+                        "Demander la notification aux tiers",
+                        "S’opposer à une analyse automatisée",
+                        "Demander réparation en cas de préjudice"
+                    ]
+                },
+                "contact": "Vous pouvez soumettre vos demandes via notre adresse e-mail <strong>info@princetourismagency.com</strong>."
+            },
+            "slug": {
+                "loading": "Chargement des traitements...",
+                "notFound": "Liste des traitements introuvable",
+                "error": "Contenu introuvable",
+                "addApplication": "Ajouter une demande"
+            }
+        }
+    }
+}

@@ -906,7 +906,57 @@
       "readPost": "Read Post",
       "all": "All",
       "popular": "Popular Posts",
-      "read": "Read"
+      "read": "Read",
+      "detail": {
+        "notFound": "Blog post not found",
+        "readTime": "read",
+        "share": "Share",
+        "backToList": "Back to blog list"
+      },
+      "posts": {
+        "vize-alirken-dikkat-edilmesi-gerekenler": {
+          "title": "Things to Consider When Getting a Visa",
+          "date": "December 08, 2025",
+          "readTime": "15 min",
+          "content": "<p>There are important points to consider when applying for a visa. In this article, we will discuss the problems you may encounter in the visa application process and their solutions.</p><h2>Pre-Application Preparation</h2><p>It is very important to prepare all necessary documents before applying for a visa. Applications made with missing documents are usually rejected.</p><h2>Accuracy of Documents</h2><p>All your documents must be current and accurate. Details such as having sufficient passport validity and current photos play a critical role in the acceptance of your application.</p><h2>Application Process</h2><p>You need to be careful during the application process and complete all steps completely. Check your information carefully when filling out online application forms.</p>"
+        },
+        "yurtdisinda-calismanin-avantajlari-ve-dezavantajlari": {
+          "title": "Advantages and Disadvantages of Working Abroad",
+          "date": "December 08, 2025",
+          "readTime": "4 min",
+          "content": "<p>Working abroad can be a dream for many people. In this article, we will examine the advantages and disadvantages of working abroad.</p><h2>Advantages</h2><p>One of the biggest advantages of working abroad is the opportunity to experience different cultures. It also usually offers higher salaries and career development opportunities.</p><h2>Disadvantages</h2><p>However, working abroad also has some disadvantages. Being away from family and friends, language barriers and cultural adaptation problems are some of them.</p>"
+        },
+        "kariyerinizi-uluslararasilastirmanin-yollari": {
+          "title": "Ways to Internationalize Your Career",
+          "date": "December 08, 2025",
+          "readTime": "4 min",
+          "content": "<p>There are many ways to develop your career at an international level. In this article, we will examine these ways in detail.</p><h2>Learning Languages</h2><p>One of the most important steps for an international career is learning a foreign language. Learning the language of the target country, especially English, provides great advantages.</p><h2>International Experience</h2><p>Gaining work experience in different countries strengthens your career. This experience contributes to both your personal and professional development.</p>"
+        },
+        "almanya-da-blue-card-nedir-kimler-basvurabilir-ve-nasil-alinir": {
+          "title": "Blue Card in Germany: What is it, Who Can Apply and How to Get it?",
+          "date": "December 08, 2025",
+          "readTime": "5 min",
+          "content": "<p>The Germany Blue Card is a residence and work permit designed for highly qualified foreign workers. In this article, you will find detailed information about the Blue Card.</p><h2>What is Blue Card?</h2><p>The Blue Card is a residence permit valid throughout the European Union and designed for highly qualified workers. It is an ideal option for qualified professionals who want to work in Germany.</p><h2>Who Can Apply?</h2><p>University graduates who have received a job offer in Germany can apply for the Blue Card. In addition, a certain salary threshold must be met.</p><h2>How to Get it?</h2><p>To apply for the Blue Card, you must first receive a job offer in Germany. Then you can apply to the consulate with the necessary documents.</p>"
+        },
+        "hollanda-da-calismak-yasam-kariyer-ve-firsatlar": {
+          "title": "Working in the Netherlands: Life, Career and Opportunities",
+          "date": "December 08, 2025",
+          "readTime": "6 min",
+          "content": "<p>The Netherlands is a country that stands out with its high living standards and job opportunities. In this article, you will find information about working and living in the Netherlands.</p><h2>Living Standards</h2><p>The Netherlands is one of the countries with the highest living standards in the world. It is a leading country in health systems, education and infrastructure.</p><h2>Job Opportunities</h2><p>There are many job opportunities in the Netherlands, especially in technology, finance and logistics sectors. The headquarters of multinational companies are usually located in Amsterdam and Rotterdam.</p>"
+        },
+        "hollanda-mutfagi-peynir-stroopwafel-ve-daha-fazlasi": {
+          "title": "Dutch Cuisine: Cheese, Stroopwafel and More",
+          "date": "December 08, 2025",
+          "readTime": "5 min",
+          "content": "<p>Dutch cuisine is known for its world-famous cheeses and delicious desserts. In this article, we will discover the most important flavors of Dutch cuisine.</p><h2>Cheese</h2><p>The Netherlands is one of the world's largest cheese producers. Cheeses such as Gouda, Edam and Leiden are world-famous.</p><h2>Stroopwafel</h2><p>Stroopwafel is the most famous dessert in the Netherlands. It is made by placing a caramel-like syrup between two thin waffles and is usually served with coffee or tea.</p>"
+        },
+        "online-vize-danismanligi-nedir": {
+          "title": "What is Online Visa Consulting?",
+          "date": "December 08, 2025",
+          "readTime": "2 min",
+          "content": "<p>Online visa consulting is a modern service that allows you to manage your visa application process through digital platforms.</p><h2>Advantages</h2><p>The biggest advantages of online visa consulting are saving time and being able to apply without leaving home. In addition, the entire process can be tracked digitally.</p><h2>How Does It Work?</h2><p>The online visa consulting service helps you fill out your application forms, upload your documents and track your application status.</p>"
+        }
+      }
     },
     "branches": {
       "title": "Our Branches",

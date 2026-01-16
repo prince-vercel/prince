@@ -900,13 +900,63 @@
     "blog": {
       "badge": "Blog Prince",
       "featured": {
-        "title": "Points à considérer lors d’une demande de visa",
+        "title": "Points à considérer lors d'une demande de visa",
         "readTime": "15 min de lecture"
       },
-      "readPost": "Lire l’article",
+      "readPost": "Lire l'article",
       "all": "Tous",
       "popular": "Articles populaires",
-      "read": "Lire"
+      "read": "Lire",
+      "detail": {
+        "notFound": "Article de blog introuvable",
+        "readTime": "lecture",
+        "share": "Partager",
+        "backToList": "Retour à la liste des blogs"
+      },
+      "posts": {
+        "vize-alirken-dikkat-edilmesi-gerekenler": {
+          "title": "Points à considérer lors d'une demande de visa",
+          "date": "08 décembre 2025",
+          "readTime": "15 min",
+          "content": "<p>Il y a des points importants à considérer lors de la demande de visa. Dans cet article, nous discuterons des problèmes que vous pourriez rencontrer dans le processus de demande de visa et leurs solutions.</p><h2>Préparation avant la demande</h2><p>Il est très important de préparer tous les documents nécessaires avant de faire une demande de visa. Les demandes faites avec des documents manquants sont généralement rejetées.</p><h2>Exactitude des documents</h2><p>Tous vos documents doivent être à jour et exacts. Des détails tels qu'avoir une validité de passeport suffisante et des photos récentes jouent un rôle critique dans l'acceptation de votre demande.</p><h2>Processus de demande</h2><p>Vous devez être prudent pendant le processus de demande et compléter toutes les étapes complètement. Vérifiez attentivement vos informations lors du remplissage des formulaires de demande en ligne.</p>"
+        },
+        "yurtdisinda-calismanin-avantajlari-ve-dezavantajlari": {
+          "title": "Avantages et inconvénients de travailler à l'étranger",
+          "date": "08 décembre 2025",
+          "readTime": "4 min",
+          "content": "<p>Travailler à l'étranger peut être un rêve pour beaucoup de gens. Dans cet article, nous examinerons les avantages et les inconvénients de travailler à l'étranger.</p><h2>Avantages</h2><p>L'un des plus grands avantages de travailler à l'étranger est l'opportunité d'expérimenter différentes cultures. Il offre également généralement des salaires plus élevés et des opportunités de développement de carrière.</p><h2>Inconvénients</h2><p>Cependant, travailler à l'étranger a également certains inconvénients. Être loin de la famille et des amis, les barrières linguistiques et les problèmes d'adaptation culturelle en sont quelques-uns.</p>"
+        },
+        "kariyerinizi-uluslararasilastirmanin-yollari": {
+          "title": "Façons d'internationaliser votre carrière",
+          "date": "08 décembre 2025",
+          "readTime": "4 min",
+          "content": "<p>Il existe de nombreuses façons de développer votre carrière au niveau international. Dans cet article, nous examinerons ces façons en détail.</p><h2>Apprendre les langues</h2><p>L'une des étapes les plus importantes pour une carrière internationale est d'apprendre une langue étrangère. Apprendre la langue du pays cible, en particulier l'anglais, offre de grands avantages.</p><h2>Expérience internationale</h2><p>Acquérir une expérience de travail dans différents pays renforce votre carrière. Cette expérience contribue à la fois à votre développement personnel et professionnel.</p>"
+        },
+        "almanya-da-blue-card-nedir-kimler-basvurabilir-ve-nasil-alinir": {
+          "title": "Carte Bleue en Allemagne : Qu'est-ce que c'est, qui peut postuler et comment l'obtenir ?",
+          "date": "08 décembre 2025",
+          "readTime": "5 min",
+          "content": "<p>La Carte Bleue d'Allemagne est un permis de séjour et de travail conçu pour les travailleurs étrangers hautement qualifiés. Dans cet article, vous trouverez des informations détaillées sur la Carte Bleue.</p><h2>Qu'est-ce que la Carte Bleue ?</h2><p>La Carte Bleue est un permis de séjour valable dans toute l'Union européenne et conçu pour les travailleurs hautement qualifiés. C'est une option idéale pour les professionnels qualifiés qui souhaitent travailler en Allemagne.</p><h2>Qui peut postuler ?</h2><p>Les diplômés universitaires qui ont reçu une offre d'emploi en Allemagne peuvent postuler pour la Carte Bleue. De plus, un seuil salarial déterminé doit être respecté.</p><h2>Comment l'obtenir ?</h2><p>Pour postuler à la Carte Bleue, vous devez d'abord recevoir une offre d'emploi en Allemagne. Ensuite, vous pouvez faire une demande au consulat avec les documents nécessaires.</p>"
+        },
+        "hollanda-da-calismak-yasam-kariyer-ve-firsatlar": {
+          "title": "Travailler aux Pays-Bas : Vie, carrière et opportunités",
+          "date": "08 décembre 2025",
+          "readTime": "6 min",
+          "content": "<p>Les Pays-Bas sont un pays qui se distingue par ses normes de vie élevées et ses opportunités d'emploi. Dans cet article, vous trouverez des informations sur le travail et la vie aux Pays-Bas.</p><h2>Normes de vie</h2><p>Les Pays-Bas sont l'un des pays avec les normes de vie les plus élevées au monde. C'est un pays leader dans les systèmes de santé, l'éducation et les infrastructures.</p><h2>Opportunités d'emploi</h2><p>Il existe de nombreuses opportunités d'emploi aux Pays-Bas, en particulier dans les secteurs de la technologie, de la finance et de la logistique. Les sièges des entreprises multinationales sont généralement situés à Amsterdam et Rotterdam.</p>"
+        },
+        "hollanda-mutfagi-peynir-stroopwafel-ve-daha-fazlasi": {
+          "title": "Cuisine néerlandaise : Fromage, Stroopwafel et plus",
+          "date": "08 décembre 2025",
+          "readTime": "5 min",
+          "content": "<p>La cuisine néerlandaise est connue pour ses fromages de renommée mondiale et ses délicieux desserts. Dans cet article, nous découvrirons les saveurs les plus importantes de la cuisine néerlandaise.</p><h2>Fromage</h2><p>Les Pays-Bas sont l'un des plus grands producteurs de fromage au monde. Les fromages comme Gouda, Edam et Leiden sont mondialement célèbres.</p><h2>Stroopwafel</h2><p>Le stroopwafel est le dessert le plus célèbre des Pays-Bas. Il est fait en plaçant un sirop similaire au caramel entre deux gaufres minces et est généralement servi avec du café ou du thé.</p>"
+        },
+        "online-vize-danismanligi-nedir": {
+          "title": "Qu'est-ce que le conseil en visa en ligne ?",
+          "date": "08 décembre 2025",
+          "readTime": "2 min",
+          "content": "<p>Le conseil en visa en ligne est un service moderne qui vous permet de gérer votre processus de demande de visa via des plateformes numériques.</p><h2>Avantages</h2><p>Les plus grands avantages du conseil en visa en ligne sont d'économiser du temps et de pouvoir faire une demande sans quitter la maison. De plus, tout le processus peut être suivi numériquement.</p><h2>Comment ça fonctionne ?</h2><p>Le service de conseil en visa en ligne vous aide à remplir vos formulaires de demande, à télécharger vos documents et à suivre l'état de votre demande.</p>"
+        }
+      }
     },
     "branches": {
       "title": "Nos agences",
