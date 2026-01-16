@@ -45,7 +45,62 @@ const countries: Country[] = [
 
 export default function CountryMarquee() {
   return (
-    <section className="section-marque">
+    <>
+      <style>{`
+        .section-marque {
+          width: 100%;
+          display: flex;
+          flex-wrap: nowrap;
+          overflow: hidden;
+          align-items: flex-start;
+          justify-content: flex-start;
+          gap: 0 3rem;
+          padding: 4rem 0;
+          margin-top: 4rem;
+        }
+        .section-marque .items-huge {
+          gap: 0 3rem;
+          display: flex;
+          flex-wrap: nowrap;
+          animation: sliding 44s linear infinite;
+        }
+        @keyframes sliding {
+          0% {
+            transform: translate3d(0, 0, 0);
+          }
+          100% {
+            transform: translate3d(-100%, 0, 0);
+          }
+        }
+        .flag-box {
+          display: inline-flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          font-size: 1.2rem;
+          line-height: 1.4;
+          color: #231f20;
+          font-weight: 500;
+          gap: 1rem 0;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          user-select: none;
+        }
+        .flag-box img {
+          display: inline-block;
+          border-radius: 0.4rem;
+          min-width: 7.2rem;
+        }
+        .flag-box a {
+          text-decoration: none;
+          color: inherit;
+        }
+        .flag-box a:hover {
+          color: #007bff;
+        }
+      `}</style>
+      <section className="section-marque">
       {/* HTML'deki gibi 3 ayrı items-huge div'i - CSS animasyonu için gerekli */}
       <div className="items-huge">
         {countries.map((country, index) => (
@@ -96,6 +151,7 @@ export default function CountryMarquee() {
         ))}
       </div>
     </section>
+    </>
   )
 }
 
