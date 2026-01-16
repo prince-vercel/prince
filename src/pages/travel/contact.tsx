@@ -7,6 +7,8 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import { getCollectionName } from '../../lib/localization'
+import i18n from '../../i18n'
 import '../../i18n'
 
 
@@ -36,7 +38,8 @@ export default function ContactPage() {
     }
 
     try {
-      await addDoc(collection(db, 'travelcontact'), {
+      const collectionName = getCollectionName('travelcontact', i18n.language)
+      await addDoc(collection(db, collectionName), {
         name: formData.name,
         email: formData.email,
         subject: formData.subject,

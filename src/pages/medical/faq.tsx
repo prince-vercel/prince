@@ -4,6 +4,8 @@ import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import { FAQ } from '@/src/types/types'
 import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
+import { getCollectionName } from '@/src/lib/localization'
+import i18n from '@/src/i18n'
 import '@/src/i18n'
 
 
@@ -20,7 +22,8 @@ export default function FAQPage() {
      const fetchFaqs = async () => {
        try {
          setFaqLoading(true)
-         const faqsRef = collection(db, 'medicalcontents/faq/list')
+         const baseCollection = getCollectionName('medicalcontents', i18n.language)
+         const faqsRef = collection(db, `${baseCollection}/faq/list`)
          const snapshot = await getDocs(faqsRef)
          const faqsData = snapshot.docs.map((doc) => ({
            id: doc.id,
@@ -35,7 +38,7 @@ export default function FAQPage() {
      }
  
      fetchFaqs()
-   }, [])
+   }, [i18n.language])
 
   return (
     <section

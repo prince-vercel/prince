@@ -8,6 +8,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
+import { getCollectionName } from '@/src/lib/localization'
+import i18n from '@/src/i18n'
 import '@/src/i18n'
 
 
@@ -53,13 +55,14 @@ export default function ResultsPage() {
   useEffect(() => {
     fetchAllResults()
     fetchTestimonials()
-  }, [])
+  }, [i18n.language])
 
   // Fetch testimonials from Firebase
   const fetchTestimonials = async () => {
     try {
       setLoadingTestimonials(true)
-      const testimonialsRef = collection(db, 'medicalcontents/testimonials/list')
+      const baseCollection = getCollectionName('medicalcontents', i18n.language)
+      const testimonialsRef = collection(db, `${baseCollection}/testimonials/list`)
       const snapshot = await getDocs(testimonialsRef)
       const testimonialsData = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -89,10 +92,11 @@ export default function ResultsPage() {
     try {
       setLoading(true)
       const allResults: Result[] = []
+      const baseCollection = getCollectionName('medicalcontents', i18n.language)
 
       // Fetch from all medical specialty categories in parallel
       const fetchPromises = Object.keys(medicalSpecialties).map(async (categoryKey) => {
-        const resultsRef = collection(db, `medicalcontents/results/${categoryKey}`)
+        const resultsRef = collection(db, `${baseCollection}/results/${categoryKey}`)
         const snapshot = await getDocs(resultsRef)
         return snapshot.docs.map((doc) => ({
           id: doc.id,

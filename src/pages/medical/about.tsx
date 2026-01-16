@@ -8,6 +8,8 @@ import { collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useSafeTranslation } from "@/src/hooks/useSafeTranslation";
+import { getCollectionName } from "@/src/lib/localization";
+import i18n from "@/src/i18n";
 import "@/src/i18n";
 
 
@@ -32,7 +34,8 @@ export default function AboutPage() {
   useEffect(() => {
     const fetchPartners = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'medicalcontents/partner/partners'))
+        const baseCollection = getCollectionName('medicalcontents', i18n.language)
+        const querySnapshot = await getDocs(collection(db, `${baseCollection}/partner/partners`))
         const partnersData: any[] = []
         querySnapshot.forEach((doc) => {
           partnersData.push({
@@ -50,7 +53,7 @@ export default function AboutPage() {
     }
 
     fetchPartners()
-  }, [])
+  }, [i18n.language])
   useEffect(() => {
     const duration = 2000;
     const steps = 60;

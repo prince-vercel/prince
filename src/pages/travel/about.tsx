@@ -11,6 +11,8 @@ import { useEffect, useRef, useState } from "react"
 import Swiper from "swiper"
 import { Autoplay, Navigation } from "swiper/modules"
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import { getCollectionName } from '../../lib/localization'
+import i18n from '../../i18n'
 import '../../i18n'
 
 
@@ -27,7 +29,8 @@ export default function AboutPage() {
   useEffect(() => {
     const fetchPartners = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'travelcontents/partner/partners'))
+        const baseCollection = getCollectionName('travelcontents', i18n.language)
+        const querySnapshot = await getDocs(collection(db, `${baseCollection}/partner/partners`))
         const partnersData: any[] = []
         querySnapshot.forEach((doc) => {
           partnersData.push({
@@ -46,12 +49,13 @@ export default function AboutPage() {
     }
 
     fetchPartners()
-  }, [isReady, t])
+  }, [isReady, t, i18n.language])
 
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const snapshot = await getDocs(collection(db, 'travelcontents/testimonials/list'))
+        const baseCollection = getCollectionName('travelcontents', i18n.language)
+        const snapshot = await getDocs(collection(db, `${baseCollection}/testimonials/list`))
         const testimonialsData = snapshot.docs.map((doc) => ({
           id: doc.id,
           text: doc.data().text,
@@ -66,7 +70,7 @@ export default function AboutPage() {
     }
 
     fetchTestimonials()
-  }, [isReady, t])
+  }, [isReady, t, i18n.language])
 
   useEffect(() => {
     const swiper = new Swiper('.testimonial-slider-one', {

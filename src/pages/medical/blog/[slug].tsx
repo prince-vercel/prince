@@ -9,6 +9,8 @@ import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import { Blog } from '@/src/types/types'
 import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
+import { getCollectionName } from '@/src/lib/localization'
+import i18n from '@/src/i18n'
 import '@/src/i18n'
 
 
@@ -26,7 +28,8 @@ export default function BlogDetailPage() {
     const fetchBlog = async () => {
       try {
         setLoading(true)
-        const docRef = doc(db, 'medicalblogs', String(slug))
+        const collectionName = getCollectionName('medicalblogs', i18n.language)
+        const docRef = doc(db, collectionName, String(slug))
         const docSnap = await getDoc(docRef)
 
         if (docSnap.exists()) {
@@ -48,7 +51,7 @@ export default function BlogDetailPage() {
     }
 
     fetchBlog()
-  }, [slug])
+  }, [slug, i18n.language])
 
   if (!slug || loading) {
     return (

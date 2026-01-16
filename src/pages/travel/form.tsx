@@ -6,6 +6,8 @@ import { addDoc, collection, getDocs, serverTimestamp } from 'firebase/firestore
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import { getCollectionName } from '../../lib/localization'
+import i18n from '../../i18n'
 import '../../i18n'
 
 interface Question {
@@ -44,7 +46,8 @@ const Form = () => {
       try {
         setLoading(true)
         // Fetch steps
-        const stepsRef = collection(db, 'travelsteps')
+        const stepsCollection = getCollectionName('travelsteps', i18n.language)
+        const stepsRef = collection(db, stepsCollection)
         const stepsSnapshot = await getDocs(stepsRef)
         const stepsData = stepsSnapshot.docs.map(doc => ({
           id: doc.id,
@@ -53,7 +56,8 @@ const Form = () => {
         setSteps(stepsData.sort((a, b) => a.number - b.number))
 
         // Fetch questions
-        const questionsRef = collection(db, 'travelquestions')
+        const questionsCollection = getCollectionName('travelquestions', i18n.language)
+        const questionsRef = collection(db, questionsCollection)
         const questionsSnapshot = await getDocs(questionsRef)
         const questionsData = questionsSnapshot.docs.map(doc => ({
           id: doc.id,
@@ -88,7 +92,7 @@ const Form = () => {
       }
     }
     loadQuestionsAndSteps()
-  }, [])
+  }, [i18n.language])
 
   const requiredQuestions = questions.filter(q => q.required)
   const filledFields = Object.values(formData).filter(val => val !== '').length

@@ -7,6 +7,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { getCollectionName } from '../../../lib/localization'
+import i18n from '../../../i18n'
 
 interface Blog {
   id: string
@@ -29,7 +31,8 @@ export default function BlogDetail() {
 
     const fetchBlog = async () => {
       try {
-        const docSnapshot = await getDoc(doc(db, 'travelblogs', slug as string))
+        const collectionName = getCollectionName('travelblogs', i18n.language)
+        const docSnapshot = await getDoc(doc(db, collectionName, slug as string))
         if (docSnapshot.exists()) {
           setBlog({
             id: docSnapshot.id,
@@ -45,7 +48,7 @@ export default function BlogDetail() {
     }
 
     fetchBlog()
-  }, [slug])
+  }, [slug, i18n.language])
 
   if (loading) {
     return <div className="container py-20 text-center">Yükleniyor...</div>

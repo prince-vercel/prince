@@ -10,6 +10,8 @@ import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import { Blog } from '@/src/types/types'
 import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
+import { getCollectionName } from '@/src/lib/localization'
+import i18n from '@/src/i18n'
 import '@/src/i18n'
 
 
@@ -27,7 +29,8 @@ export default function BlogPage() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'medicalblogs'))
+        const collectionName = getCollectionName('medicalblogs', i18n.language)
+        const querySnapshot = await getDocs(collection(db, collectionName))
         const blogsData: Blog[] = []
         querySnapshot.forEach((doc) => {
           blogsData.push({
@@ -45,7 +48,7 @@ export default function BlogPage() {
     }
 
     fetchBlogs()
-  }, [])
+  }, [i18n.language])
 
   const totalPages = Math.ceil(blogs.length / POSTS_PER_PAGE)
 

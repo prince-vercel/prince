@@ -7,6 +7,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import { getCollectionName } from '../../lib/localization'
+import i18n from '../../i18n'
 import '../../i18n'
 
 interface Blog {
@@ -31,8 +33,8 @@ const BlogList = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'travelblogs'))
-        const blogsData: Blog[] = []
+        const collectionName = getCollectionName('travelblogs', i18n.language)
+        const querySnapshot = await getDocs(collection(db, collectionName))
         querySnapshot.forEach((doc) => {
           blogsData.push({
             id: doc.id,
@@ -50,7 +52,7 @@ const BlogList = () => {
     }
 
     fetchBlogs()
-  }, [])
+  }, [i18n.language])
 
   return (
     <>

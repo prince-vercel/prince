@@ -7,6 +7,8 @@ import { db } from '@/src/lib/firebase'
 import { MedicalFormData } from '@/src/types/types'
 import Toast from '@/src/components/Toast'
 import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
+import { getCollectionName } from '@/src/lib/localization'
+import i18n from '@/src/i18n'
 import '@/src/i18n'
 
 interface Question {
@@ -69,8 +71,8 @@ export default function AppointmentSection() {
     const loadData = async () => {
       try {
         const [questionsSnapshot, stepsSnapshot] = await Promise.all([
-          getDocs(collection(db, 'questions')),
-          getDocs(collection(db, 'steps')),
+          getDocs(collection(db, getCollectionName('questions', i18n.language))),
+          getDocs(collection(db, getCollectionName('steps', i18n.language))),
         ])
 
         const questionsData: Question[] = []
@@ -98,7 +100,7 @@ export default function AppointmentSection() {
       }
     }
     loadData()
-  }, [])
+  }, [i18n.language])
 
   // Form states - Personal Information
   const [fullName, setFullName] = useState('')

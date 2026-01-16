@@ -8,6 +8,8 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { TreatmentItem } from '@/src/types/types'
+import { getCollectionName } from '@/src/lib/localization'
+import i18n from '@/src/i18n'
 
 
 const slugToTurkishTitle = (slug: string) => {
@@ -49,7 +51,8 @@ export default function MedicalDetailPage() {
       setIsLoading(true)
       setError('')
       try {
-        const docRef = doc(db, 'medicalcontents', String(slug))
+        const collectionName = getCollectionName('medicalcontents', i18n.language)
+        const docRef = doc(db, collectionName, String(slug))
         const snapshot = await getDoc(docRef)
 
         if (snapshot.exists()) {
@@ -74,7 +77,7 @@ export default function MedicalDetailPage() {
     }
 
     fetchContent()
-  }, [slug])
+  }, [slug, i18n.language])
 
   return (
     <>

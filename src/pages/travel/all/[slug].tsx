@@ -7,6 +7,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { getCollectionName } from '../../../lib/localization'
+import i18n from '../../../i18n'
 
 
 
@@ -27,7 +29,8 @@ export default function TravelDetailPage() {
 
     const fetchTour = async () => {
       try {
-        const docRef = doc(db, 'traveltours', slug as string)
+        const collectionName = getCollectionName('traveltours', i18n.language)
+        const docRef = doc(db, collectionName, slug as string)
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
           setTour(docSnap.data())
@@ -40,7 +43,7 @@ export default function TravelDetailPage() {
     }
 
     fetchTour()
-  }, [slug])
+  }, [slug, i18n.language])
 
   const handleEnquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault()

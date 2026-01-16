@@ -7,6 +7,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
+import { getCollectionName } from '@/src/lib/localization'
+import i18n from '@/src/i18n'
 import '@/src/i18n'
 
 const ITEMS_PER_PAGE = 3
@@ -22,15 +24,16 @@ export default function OrganisationPage() {
   // Fetch data on mount
   useEffect(() => {
     fetchOrganisations()
-  }, [])
+  }, [i18n.language])
 
   const fetchOrganisations = async () => {
     try {
       setLoading(true)
       const allOrganisations: OrganisationItem[] = []
+      const baseCollection = getCollectionName('medicalcontents', i18n.language)
 
       // Fetch hotels
-      const hotelsRef = collection(db, 'medicalcontents/hotels/list')
+      const hotelsRef = collection(db, `${baseCollection}/hotels/list`)
       const hotelsSnapshot = await getDocs(hotelsRef)
       const hotels = hotelsSnapshot.docs.map((doc) => {
         const data = doc.data() as Hotel
@@ -46,7 +49,7 @@ export default function OrganisationPage() {
       allOrganisations.push(...hotels)
 
       // Fetch hospitals
-      const hospitalsRef = collection(db, 'medicalcontents/hospitals/list')
+      const hospitalsRef = collection(db, `${baseCollection}/hospitals/list`)
       const hospitalsSnapshot = await getDocs(hospitalsRef)
       const hospitals = hospitalsSnapshot.docs.map((doc) => {
         const data = doc.data() as Hospital

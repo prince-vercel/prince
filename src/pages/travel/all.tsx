@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useState } from "react";
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import { getCollectionName } from '../../lib/localization'
+import i18n from '../../i18n'
 import '../../i18n'
 
 export default function PackageList() {
@@ -26,7 +28,8 @@ export default function PackageList() {
   useEffect(() => {
     const fetchTours = async () => {
       try {
-        const q = query(collection(db, 'traveltours'), orderBy('createdAt', 'desc'))
+        const collectionName = getCollectionName('traveltours', i18n.language)
+        const q = query(collection(db, collectionName), orderBy('createdAt', 'desc'))
         const snap = await getDocs(q)
         const toursData = snap.docs.map(doc => ({
           id: doc.id,
@@ -41,7 +44,7 @@ export default function PackageList() {
     }
 
     fetchTours()
-  }, [])
+  }, [i18n.language])
 
   useEffect(() => {
     if (destination && typeof destination === 'string') {

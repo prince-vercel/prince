@@ -5,6 +5,8 @@ import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getCollectionName } from '@/src/lib/localization'
+import i18n from '@/src/i18n'
 
 type HomeImages = {
   medical?: string
@@ -18,7 +20,8 @@ export default function HomePage() {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const snapshot = await getDocs(collection(db, 'home_images'))
+        const collectionName = getCollectionName('home_images', i18n.language)
+        const snapshot = await getDocs(collection(db, collectionName))
         const data: HomeImages = {}
 
         snapshot.forEach((doc) => {
@@ -32,7 +35,7 @@ export default function HomePage() {
     }
 
     fetchImages()
-  }, [])
+  }, [i18n.language])
 
   return (
     <div className="page-wrapper">
