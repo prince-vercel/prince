@@ -54,7 +54,7 @@ export default function FeaturedImageBlock() {
         <div className="featured-image-block">
           <div className="img">
             <Image
-              src="/visa/uploads/contents/main/1764368714_c0efee420e7155ec8653.webp"
+              src="/visa/uploads/contents/main/banner-2.jpeg"
               alt={mounted && i18n.isInitialized ? t('visa.featured.title') : ''}
               width={965}
               height={677}

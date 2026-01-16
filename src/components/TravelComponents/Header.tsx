@@ -30,7 +30,14 @@ export default function Header() {
   // Language change handler
   useEffect(() => {
     if (isReady) {
-      const currentLang = i18n.language === 'en' ? 'EN' : 'TR'
+      const langMap: { [key: string]: string } = {
+        'tr': 'TR',
+        'en': 'EN',
+        'es': 'ES',
+        'fr': 'FR',
+        'ru': 'RU'
+      }
+      const currentLang = langMap[i18n.language] || 'TR'
       setSelectedLanguage(currentLang)
     }
   }, [i18n.language, isReady])
@@ -151,12 +158,75 @@ export default function Header() {
                           color: selectedLanguage === 'EN' ? 'white' : '#333',
                           border: 'none',
                           cursor: 'pointer',
+                          fontSize: '14px'
+                        }}
+                      >
+                        EN
+                      </button>
+                      <button
+                        className={`language-option ${selectedLanguage === 'ES' ? 'active' : ''}`}
+                        onClick={() => {
+                          setSelectedLanguage('ES')
+                          i18n.changeLanguage('es')
+                          setIsLanguageDropdownOpen(false)
+                        }}
+                        style={{
+                          display: 'block',
+                          width: '100%',
+                          padding: '10px 16px',
+                          textAlign: 'left',
+                          background: selectedLanguage === 'ES' ? '#d7b76e' : 'transparent',
+                          color: selectedLanguage === 'ES' ? 'white' : '#333',
+                          border: 'none',
+                          cursor: 'pointer',
+                          fontSize: '14px'
+                        }}
+                      >
+                        ES
+                      </button>
+                      <button
+                        className={`language-option ${selectedLanguage === 'FR' ? 'active' : ''}`}
+                        onClick={() => {
+                          setSelectedLanguage('FR')
+                          i18n.changeLanguage('fr')
+                          setIsLanguageDropdownOpen(false)
+                        }}
+                        style={{
+                          display: 'block',
+                          width: '100%',
+                          padding: '10px 16px',
+                          textAlign: 'left',
+                          background: selectedLanguage === 'FR' ? '#d7b76e' : 'transparent',
+                          color: selectedLanguage === 'FR' ? 'white' : '#333',
+                          border: 'none',
+                          cursor: 'pointer',
+                          fontSize: '14px'
+                        }}
+                      >
+                        FR
+                      </button>
+                      <button
+                        className={`language-option ${selectedLanguage === 'RU' ? 'active' : ''}`}
+                        onClick={() => {
+                          setSelectedLanguage('RU')
+                          i18n.changeLanguage('ru')
+                          setIsLanguageDropdownOpen(false)
+                        }}
+                        style={{
+                          display: 'block',
+                          width: '100%',
+                          padding: '10px 16px',
+                          textAlign: 'left',
+                          background: selectedLanguage === 'RU' ? '#d7b76e' : 'transparent',
+                          color: selectedLanguage === 'RU' ? 'white' : '#333',
+                          border: 'none',
+                          cursor: 'pointer',
                           fontSize: '14px',
                           borderBottomLeftRadius: '8px',
                           borderBottomRightRadius: '8px'
                         }}
                       >
-                        EN
+                        RU
                       </button>
                     </div>
                   )}

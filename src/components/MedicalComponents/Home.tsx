@@ -8,13 +8,13 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { MdAssignment, MdCheckCircle, MdMedicalServices } from 'react-icons/md'
 
+import { getCollectionName } from '@/src/lib/localization'
 import { Blog, Result } from '@/src/types/types'
+import i18n from 'i18next'
 import dynamic from 'next/dynamic'
 import { useEffect as useEffectReact } from 'react'
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
 import '../../i18n'
-import i18n from 'i18next'
-import { getCollectionName } from '@/src/lib/localization'
 import CountryMarquee from '../VisaComponents/CountryMarquee'
 
 const Chatbot = dynamic(() => import('./Chatbot'), { ssr: false })
@@ -138,7 +138,7 @@ export default function HomePage() {
     }
 
     fetchBlogs()
-  }, [isReady, t,i18n.language])
+  }, [isReady, t, i18n.language])
 
   // Firebase'den results'ları çek
   useEffect(() => {
@@ -171,7 +171,7 @@ export default function HomePage() {
     }
 
     fetchResults()
-  }, [isReady, t,i18n.language])
+  }, [isReady, t, i18n.language])
 
 
   // Firebase'den partners'ları çek
@@ -197,7 +197,7 @@ export default function HomePage() {
     }
 
     fetchPartners()
-  }, [isReady, t,i18n.language])
+  }, [isReady, t, i18n.language])
 
 
   return (
@@ -448,14 +448,14 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-<section>
-  <div className="cs_section_heading cs_style_1 text-center " style={{ marginTop: '8vh' }}>
-            <h2 className="cs_section_title cs_fs_72 m-0 " suppressHydrationWarning>
-Dilinizi Konuşuyoruz !
-            </h2>
-          </div>
-  <CountryMarquee/>
-</section>
+      <section>
+        <div className="cs_section_heading cs_style_1 text-center " style={{ marginTop: '8vh' }}>
+          <h2 className="cs_section_title cs_fs_72 m-0 " suppressHydrationWarning>
+            {isReady ? t('medical.homePage.languages.title') : ''}
+          </h2>
+        </div>
+        <CountryMarquee />
+      </section>
       {/* RESULTS */}
       <section>
         <div className="container" style={{ margin: '12vh' }}>

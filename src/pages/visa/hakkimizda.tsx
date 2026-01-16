@@ -21,10 +21,6 @@ export default function HakkimizdaPage() {
                     <div className="gradient"></div>
                 </div>
                 <div className="about-title-section-logo">
-                    <img
-                        src="/visa/uploads/contents/main/1763937997_ffa4d69cc741b45632f5.webp"
-                        alt={t('visa.pages.hakkimizda.heroTitle', 'Evraklarla Uğraşmadan Vize Başvurunuzu Prince ile Tamamlayın!')}
-                    />
                     <h1>{t('visa.pages.hakkimizda.heroTitle', 'Evraklarla Uğraşmadan Vize Başvurunuzu Prince ile Tamamlayın!')}</h1>
                 </div>
             </section>

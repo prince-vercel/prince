@@ -79,6 +79,9 @@
           }
         }
       },
+      "languages": {
+        "title": "Dilinizi Konuşuyoruz !"
+      },
       "results": {
         "title": "Mutlu Sonuçlar",
         "loading": "Sonuçlar yükleniyor...",

@@ -46,14 +46,14 @@
     --space-2xl: 48px;
     --space-3xl: 64px;
 
-    --container-max: 1100px;
+    --container-max: 1400px;
 }
 
 /* Form Layout Wrapper */
 .form-layout-wrapper {
     display: grid;
-    grid-template-columns: 1fr 360px;
-    gap: 40px;
+    grid-template-columns: 1fr 320px;
+    gap: 48px;
     align-items: start;
 }
 
@@ -79,16 +79,28 @@
     box-shadow: var(--shadow-md);
 }
 
+@media (max-width: 1200px) {
+    .visa-app-page {
+        --container-max: 1200px;
+    }
+
+    .form-layout-wrapper {
+        grid-template-columns: 1fr 300px;
+        gap: 32px;
+    }
+}
+
 @media (max-width: 1024px) {
     .form-layout-wrapper {
         grid-template-columns: 1fr;
         gap: 24px;
     }
-    
+
     .form-summary-sidebar {
         position: static;
         max-height: none;
-        order: -1; /* Mobilde üste al */
+        order: -1;
+        /* Mobilde üste al */
     }
 }
 
@@ -255,7 +267,7 @@
 .visa-main-content .container {
     max-width: var(--container-max);
     margin: 0 auto;
-    padding: 0 var(--space-lg);
+    padding: 0 var(--space-xl);
 }
 
 /* ============================================
@@ -402,7 +414,7 @@
    FORM SECTIONS
    ============================================ */
 .form-section {
-    padding: var(--space-xl);
+    padding: var(--space-2xl) var(--space-xl);
     border-bottom: 1px solid var(--color-border-light);
     animation: fadeIn 0.6s ease-out both;
 }
@@ -496,7 +508,8 @@
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-lg);
+    gap: var(--space-xl);
+    align-items: start;
 }
 
 .form-grid.three-cols {
@@ -505,6 +518,26 @@
 
 .form-group {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+}
+
+/* Ensure all form groups align properly */
+.form-grid .form-group {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+/* Radio button group alignment */
+.form-group:has(.radio-cards) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
 }
 
 .form-group.full-width {
@@ -518,12 +551,15 @@
 .select-wrapper,
 .textarea-wrapper {
     position: relative;
+    width: 100%;
+    display: block;
+    margin-top: 28px;
 }
 
 .input-wrapper input,
 .textarea-wrapper textarea {
     width: 100%;
-    padding: 20px 16px 8px;
+    padding: 16px;
     border: 2px solid var(--color-border);
     border-radius: var(--radius-md);
     font-size: 16px;
@@ -532,59 +568,100 @@
     background: var(--color-bg-primary);
     transition: all var(--transition-base);
     outline: none;
+    box-sizing: border-box;
 }
 
 .input-wrapper input {
-    height: 56px;
+    height: 72px;
+    padding: 32px 16px 12px 16px;
+}
+
+.input-wrapper input[type="date"] {
+    height: 72px;
+    padding: 32px 16px 12px 16px;
+}
+
+.input-wrapper input[type="number"] {
+    height: 72px;
+    padding: 32px 16px 12px 16px;
 }
 
 .textarea-wrapper textarea {
     min-height: 120px;
     resize: vertical;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .input-wrapper label,
 .textarea-wrapper label {
     position: absolute;
     left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--color-text-muted);
+    top: 8px;
+    transform: translateY(0);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-primary);
     pointer-events: none;
     transition: all var(--transition-fast);
     background: var(--color-bg-primary);
     padding: 0 4px;
+    z-index: 1;
+}
+
+.textarea-wrapper {
+    margin-top: 28px;
 }
 
 .textarea-wrapper label {
-    top: 20px;
-    transform: none;
+    top: 8px;
+    transform: translateY(0);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-primary);
 }
 
 .input-wrapper input:focus,
 .input-wrapper input:not(:placeholder-shown),
+.input-wrapper input:not([value=""]),
 .textarea-wrapper textarea:focus,
 .textarea-wrapper textarea:not(:placeholder-shown) {
     border-color: var(--color-primary);
 }
 
 .input-wrapper input:focus+label,
-.input-wrapper input:not(:placeholder-shown)+label {
-    top: 0;
+.input-wrapper input:not(:placeholder-shown)+label,
+.input-wrapper input:not([value=""])+label,
+.input-wrapper input[type="date"]:not([value=""])+label,
+.input-wrapper input[type="date"]:focus+label {
+    top: 8px;
     font-size: 12px;
     font-weight: 600;
     color: var(--color-primary);
+    transform: translateY(0);
+}
+
+/* Date input special handling */
+.input-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity var(--transition-base);
+}
+
+.input-wrapper input[type="date"]:focus::-webkit-calendar-picker-indicator {
+    opacity: 1;
 }
 
 .textarea-wrapper textarea:focus+label,
 .textarea-wrapper textarea:not(:placeholder-shown)+label {
-    top: -8px;
+    top: 8px;
     font-size: 12px;
     font-weight: 600;
     color: var(--color-primary);
     background: var(--color-bg-primary);
+    transform: translateY(0);
 }
 
 .input-hint {
@@ -617,12 +694,13 @@ input[type="number"]::-webkit-inner-spin-button {
    ============================================ */
 .select-wrapper {
     position: relative;
+    margin-top: 28px;
 }
 
 .select-wrapper select {
     width: 100%;
-    height: 56px;
-    padding: 20px 40px 8px 16px;
+    height: 72px;
+    padding: 24px 40px 10px 16px;
     border: 2px solid var(--color-border);
     border-radius: var(--radius-md);
     font-size: 16px;
@@ -635,6 +713,7 @@ input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    box-sizing: border-box;
 }
 
 .select-wrapper select:focus {
@@ -644,8 +723,8 @@ input[type="number"]::-webkit-inner-spin-button {
 .select-wrapper label {
     position: absolute;
     left: 16px;
-    top: 0;
-    transform: translateY(-50%);
+    top: 8px;
+    transform: translateY(0);
     font-size: 12px;
     font-weight: 600;
     color: var(--color-primary);
@@ -679,20 +758,41 @@ input[type="number"]::-webkit-inner-spin-button {
    ============================================ */
 .group-label {
     display: block;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
-    color: var(--color-text-secondary);
-    margin-bottom: var(--space-md);
+    color: var(--color-primary);
+    margin-bottom: 0;
+    padding: 0 4px;
+    background: var(--color-bg-primary);
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    z-index: 2;
+    transform: translateY(0);
+    white-space: nowrap;
+    line-height: 1.4;
+    height: auto;
+}
+
+.form-group:has(.group-label) {
+    padding-top: 0;
+}
+
+.form-group:has(.group-label) .radio-cards {
+    margin-top: 28px;
+    padding-top: 0;
 }
 
 .radio-cards {
     display: flex;
     gap: var(--space-md);
+    align-items: stretch;
 }
 
 .radio-card {
     flex: 1;
     cursor: pointer;
+    display: flex;
 }
 
 .radio-card input {
@@ -707,12 +807,15 @@ input[type="number"]::-webkit-inner-spin-button {
     align-items: center;
     justify-content: center;
     gap: var(--space-sm);
-    height: 52px;
+    height: 64px;
+    width: 100%;
     padding: 0 var(--space-lg);
     background: var(--color-bg-primary);
     border: 2px solid var(--color-border);
     border-radius: var(--radius-md);
     transition: all var(--transition-base);
+    margin-top: 0;
+    box-sizing: border-box;
 }
 
 .radio-indicator {
@@ -994,7 +1097,7 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 
     .form-section {
-        padding: var(--space-lg);
+        padding: var(--space-xl) var(--space-lg);
     }
 
     .section-header {

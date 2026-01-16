@@ -46,7 +46,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'ingiltere',
         name: '', // Will be set dynamically with translation
         icon: '/visa/uploads/icons/1764382446_54d42ca992ddf99b4289.svg',
-        heroImage: '/visa/uploads/contents/main/1764382497_103fbb272638992bc7ed.webp',
+        heroImage: '/visa/uploads/contents/main/1764382497_103fbb272638992bc7ed.jpg',
         heroImageMobile: '/visa/uploads/contents/main/mobile/1764382512_91fad356020f88b602c2.webp',
         excerpt: '', // Will be set dynamically with translation
         content: '', // Will be set dynamically with translation
