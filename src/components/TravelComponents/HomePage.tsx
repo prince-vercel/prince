@@ -374,8 +374,8 @@ export default function TravelHomePage() {
 
         <div className="container">
 <section>
-  <div className="cs_section_heading cs_style_1 text-center " style={{ marginTop: '5vh' }}>
-            <h2 className="cs_section_title cs_fs_72 m-0 " suppressHydrationWarning>
+  <div className="cs_section_heading cs_style_1 text-center" >
+            <h2 className="section-title-v1 cs_fs_72 m-0 " suppressHydrationWarning>
 Dilinizi Konuşuyoruz !
             </h2>
           </div>
