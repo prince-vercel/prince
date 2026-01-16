@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import { db } from '@/src/lib/firebase'
-import { doc, setDoc, serverTimestamp, getDoc, getDocs, collection } from 'firebase/firestore'
+import { doc, setDoc, deleteDoc, serverTimestamp, getDoc, getDocs, collection } from 'firebase/firestore'
 import { storage } from '@/src/lib/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { MdAdd, MdDelete, MdSave, MdCloudUpload, MdEdit } from 'react-icons/md'
@@ -183,7 +183,10 @@ const ContentOrganizations = () => {
       const collectionName = getCollectionName('medicalcontents', selectedLanguage) + '/hotels/list'
       const hotelsRef = collection(db, collectionName)
       const snapshot = await getDocs(hotelsRef)
-      const hotelsData = snapshot.docs.map((doc) => doc.data() as Hotel)
+      const hotelsData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Hotel[]
       setHotels(hotelsData)
     } catch (error) {
       console.error('Otel verileri çekilirken hata:', error)
@@ -196,7 +199,10 @@ const ContentOrganizations = () => {
       const collectionName = getCollectionName('medicalcontents', selectedLanguage) + '/hospitals/list'
       const hospitalsRef = collection(db, collectionName)
       const snapshot = await getDocs(hospitalsRef)
-      const hospitalsData = snapshot.docs.map((doc) => doc.data() as Hospital)
+      const hospitalsData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Hospital[]
       setHospitals(hospitalsData)
     } catch (error) {
       console.error('Hastane verileri çekilirken hata:', error)
@@ -207,7 +213,7 @@ const ContentOrganizations = () => {
   const deleteHotel = async (id: string) => {
     if (confirm('Bu oteli silmek istediğinizden emin misiniz?')) {
       try {
-        await setDoc(doc(db, getCollectionName('medicalcontents', selectedLanguage) + '/hotels/list', id), {}, { merge: false })
+        await deleteDoc(doc(db, getCollectionName('medicalcontents', selectedLanguage) + '/hotels/list', id))
         await fetchHotels()
       } catch (error) {
         console.error('Silinirken hata:', error)
@@ -219,7 +225,7 @@ const ContentOrganizations = () => {
   const deleteHospital = async (id: string) => {
     if (confirm('Bu hastaneyi silmek istediğinizden emin misiniz?')) {
       try {
-        await setDoc(doc(db, getCollectionName('medicalcontents', selectedLanguage) + '/hospitals/list', id), {}, { merge: false })
+        await deleteDoc(doc(db, getCollectionName('medicalcontents', selectedLanguage) + '/hospitals/list', id))
         await fetchHospitals()
       } catch (error) {
         console.error('Silinirken hata:', error)
