@@ -35,6 +35,7 @@ const BlogList = () => {
       try {
         const collectionName = getCollectionName('travelblogs', i18n.language)
         const querySnapshot = await getDocs(collection(db, collectionName))
+        const blogsData: Blog[] = []
         querySnapshot.forEach((doc) => {
           blogsData.push({
             id: doc.id,
