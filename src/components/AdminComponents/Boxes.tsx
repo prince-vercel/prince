@@ -6,7 +6,7 @@ import styles from '@/src/styles/admin.module.css'
 import { MdLocalHospital, MdFlightTakeoff, MdVerifiedUser, MdEdit } from 'react-icons/md'
 import ImageManagerModal from '@/src/components/ImageManagerModal'
 
-const boxes = [
+const boxes = [ 
   {
     title: 'Prince Medikal Estetik & Sağlık Hizmetleri',
     desc: 'Sağlık hizmetleri, kuruluşlar ve başvurular',
