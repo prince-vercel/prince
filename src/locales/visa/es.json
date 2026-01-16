@@ -906,7 +906,57 @@
       "readPost": "Leer artículo",
       "all": "Todos",
       "popular": "Artículos populares",
-      "read": "Leer"
+      "read": "Leer",
+      "detail": {
+        "notFound": "Artículo de blog no encontrado",
+        "readTime": "lectura",
+        "share": "Compartir",
+        "backToList": "Volver a la lista de blogs"
+      },
+      "posts": {
+        "vize-alirken-dikkat-edilmesi-gerekenler": {
+          "title": "Aspectos a tener en cuenta al obtener una visa",
+          "date": "08 de diciembre de 2025",
+          "readTime": "15 min",
+          "content": "<p>Hay puntos importantes a considerar al solicitar una visa. En este artículo, discutiremos los problemas que puede encontrar en el proceso de solicitud de visa y sus soluciones.</p><h2>Preparación Pre-Solicitud</h2><p>Es muy importante preparar todos los documentos necesarios antes de solicitar una visa. Las solicitudes realizadas con documentos faltantes generalmente son rechazadas.</p><h2>Precisión de los Documentos</h2><p>Todos sus documentos deben estar actualizados y ser precisos. Los detalles como tener suficiente validez del pasaporte y fotos actuales juegan un papel crítico en la aceptación de su solicitud.</p><h2>Proceso de Solicitud</h2><p>Debe tener cuidado durante el proceso de solicitud y completar todos los pasos completamente. Verifique su información cuidadosamente al completar los formularios de solicitud en línea.</p>"
+        },
+        "yurtdisinda-calismanin-avantajlari-ve-dezavantajlari": {
+          "title": "Ventajas y Desventajas de Trabajar en el Extranjero",
+          "date": "08 de diciembre de 2025",
+          "readTime": "4 min",
+          "content": "<p>Trabajar en el extranjero puede ser un sueño para muchas personas. En este artículo, examinaremos las ventajas y desventajas de trabajar en el extranjero.</p><h2>Ventajas</h2><p>Una de las mayores ventajas de trabajar en el extranjero es la oportunidad de experimentar diferentes culturas. También generalmente ofrece salarios más altos y oportunidades de desarrollo profesional.</p><h2>Desventajas</h2><p>Sin embargo, trabajar en el extranjero también tiene algunas desventajas. Estar lejos de la familia y los amigos, las barreras del idioma y los problemas de adaptación cultural son algunas de ellas.</p>"
+        },
+        "kariyerinizi-uluslararasilastirmanin-yollari": {
+          "title": "Formas de Internacionalizar tu Carrera",
+          "date": "08 de diciembre de 2025",
+          "readTime": "4 min",
+          "content": "<p>Hay muchas formas de desarrollar tu carrera a nivel internacional. En este artículo, examinaremos estas formas en detalle.</p><h2>Aprender Idiomas</h2><p>Uno de los pasos más importantes para una carrera internacional es aprender un idioma extranjero. Aprender el idioma del país objetivo, especialmente el inglés, proporciona grandes ventajas.</p><h2>Experiencia Internacional</h2><p>Ganar experiencia laboral en diferentes países fortalece tu carrera. Esta experiencia contribuye tanto a tu desarrollo personal como profesional.</p>"
+        },
+        "almanya-da-blue-card-nedir-kimler-basvurabilir-ve-nasil-alinir": {
+          "title": "Tarjeta Azul en Alemania: ¿Qué es, quién puede solicitarla y cómo obtenerla?",
+          "date": "08 de diciembre de 2025",
+          "readTime": "5 min",
+          "content": "<p>La Tarjeta Azul de Alemania es un permiso de residencia y trabajo diseñado para trabajadores extranjeros altamente cualificados. En este artículo, encontrará información detallada sobre la Tarjeta Azul.</p><h2>¿Qué es la Tarjeta Azul?</h2><p>La Tarjeta Azul es un permiso de residencia válido en toda la Unión Europea y diseñado para trabajadores altamente cualificados. Es una opción ideal para profesionales cualificados que desean trabajar en Alemania.</p><h2>¿Quién puede solicitarla?</h2><p>Los graduados universitarios que han recibido una oferta de trabajo en Alemania pueden solicitar la Tarjeta Azul. Además, se debe cumplir un umbral salarial determinado.</p><h2>¿Cómo obtenerla?</h2><p>Para solicitar la Tarjeta Azul, primero debe recibir una oferta de trabajo en Alemania. Luego puede solicitar en el consulado con los documentos necesarios.</p>"
+        },
+        "hollanda-da-calismak-yasam-kariyer-ve-firsatlar": {
+          "title": "Trabajar en los Países Bajos: Vida, Carrera y Oportunidades",
+          "date": "08 de diciembre de 2025",
+          "readTime": "6 min",
+          "content": "<p>Los Países Bajos es un país que se destaca por sus altos estándares de vida y oportunidades laborales. En este artículo, encontrará información sobre trabajar y vivir en los Países Bajos.</p><h2>Estándares de Vida</h2><p>Los Países Bajos es uno de los países con los estándares de vida más altos del mundo. Es un país líder en sistemas de salud, educación e infraestructura.</p><h2>Oportunidades Laborales</h2><p>Hay muchas oportunidades laborales en los Países Bajos, especialmente en los sectores de tecnología, finanzas y logística. Las sedes de las empresas multinacionales generalmente se encuentran en Ámsterdam y Rotterdam.</p>"
+        },
+        "hollanda-mutfagi-peynir-stroopwafel-ve-daha-fazlasi": {
+          "title": "Cocina Holandesa: Queso, Stroopwafel y Más",
+          "date": "08 de diciembre de 2025",
+          "readTime": "5 min",
+          "content": "<p>La cocina holandesa es conocida por sus quesos de fama mundial y deliciosos postres. En este artículo, descubriremos los sabores más importantes de la cocina holandesa.</p><h2>Queso</h2><p>Los Países Bajos es uno de los mayores productores de queso del mundo. Quesos como Gouda, Edam y Leiden son mundialmente famosos.</p><h2>Stroopwafel</h2><p>El stroopwafel es el postre más famoso de los Países Bajos. Se hace colocando un jarabe similar al caramelo entre dos gofres delgados y generalmente se sirve con café o té.</p>"
+        },
+        "online-vize-danismanligi-nedir": {
+          "title": "¿Qué es la Consultoría de Visa en Línea?",
+          "date": "08 de diciembre de 2025",
+          "readTime": "2 min",
+          "content": "<p>La consultoría de visa en línea es un servicio moderno que le permite gestionar su proceso de solicitud de visa a través de plataformas digitales.</p><h2>Ventajas</h2><p>Las mayores ventajas de la consultoría de visa en línea son ahorrar tiempo y poder solicitar sin salir de casa. Además, todo el proceso se puede rastrear digitalmente.</p><h2>¿Cómo funciona?</h2><p>El servicio de consultoría de visa en línea le ayuda a completar sus formularios de solicitud, cargar sus documentos y rastrear el estado de su solicitud.</p>"
+        }
+      }
     },
     "branches": {
       "title": "Nuestras sucursales",
