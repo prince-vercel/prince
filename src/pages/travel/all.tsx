@@ -22,6 +22,8 @@ export default function PackageList() {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000])
   const [hoveredCardId, setHoveredCardId] = useState<string | null>(null)
   const [selectedDays, setSelectedDays] = useState<string[]>([])
+  const [selectedStartDate, setSelectedStartDate] = useState<string>('')
+  const [selectedEndDate, setSelectedEndDate] = useState<string>('')
   const [selectedInclusions, setSelectedInclusions] = useState<string[]>([])
   const [showPricedOnly, setShowPricedOnly] = useState(false)
 
@@ -105,6 +107,36 @@ export default function PackageList() {
         selectedDays.length === 0 ||
         selectedDays.some(day => (tour.days || []).includes(day))
 
+      const dateOk = (() => {
+        if (!selectedStartDate && !selectedEndDate) return true
+        
+        const tourStartDate = tour.startDate ? new Date(tour.startDate) : null
+        const tourEndDate = tour.endDate ? new Date(tour.endDate) : null
+        const filterStartDate = selectedStartDate ? new Date(selectedStartDate) : null
+        const filterEndDate = selectedEndDate ? new Date(selectedEndDate) : null
+        
+        // Eğer turda tarih varsa ve filtre tarihi varsa karşılaştır
+        if (tourStartDate && filterStartDate) {
+          if (tourStartDate < filterStartDate) return false
+        }
+        if (tourEndDate && filterEndDate) {
+          if (tourEndDate > filterEndDate) return false
+        }
+        if (tourStartDate && filterEndDate) {
+          if (tourStartDate > filterEndDate) return false
+        }
+        if (tourEndDate && filterStartDate) {
+          if (tourEndDate < filterStartDate) return false
+        }
+        
+        // Eğer turda tarih yoksa ve tarih filtresi varsa, eşleşmez
+        if ((selectedStartDate || selectedEndDate) && !tourStartDate && !tourEndDate) {
+          return false
+        }
+        
+        return true
+      })()
+
       const inclusionsOk =
         selectedInclusions.length === 0 ||
         selectedInclusions.some(inc => {
@@ -116,9 +148,9 @@ export default function PackageList() {
 
       const pricedOk = !showPricedOnly || !tour.price || tour.price === 0
 
-      return destinationOk && durationOk && maxPeopleOk && priceOk && daysOk && inclusionsOk && pricedOk
+      return destinationOk && durationOk && maxPeopleOk && priceOk && daysOk && dateOk && inclusionsOk && pricedOk
     })
-  }, [tours, selectedDestinations, selectedDurations, selectedMaxPeople, priceRange, selectedDays, selectedInclusions, showPricedOnly])
+  }, [tours, selectedDestinations, selectedDurations, selectedMaxPeople, priceRange, selectedDays, selectedStartDate, selectedEndDate, selectedInclusions, showPricedOnly])
 
   const uniqueDestinations = useMemo(() => {
     const defaultDestinations = ["İstanbul", "Ankara", "İzmir", "Antalya", "Bursa"]
@@ -218,7 +250,17 @@ export default function PackageList() {
                     </h4>
 
                     <ul className="flex flex-wrap text-sm font-medium text-dark-2 mt-4 package-feature">
-                      {tour.days ? (
+                      {(tour.startDate || tour.endDate) ? (
+                        <li className="mr-4">
+                          <i className="bi bi-calendar-event text-primary-1 mr-2"></i>
+                          {tour.startDate && tour.endDate ? 
+                            `${new Date(tour.startDate).toLocaleDateString('tr-TR')} - ${new Date(tour.endDate).toLocaleDateString('tr-TR')}` :
+                            tour.startDate ? 
+                              `Başlangıç: ${new Date(tour.startDate).toLocaleDateString('tr-TR')}` :
+                              `Bitiş: ${new Date(tour.endDate).toLocaleDateString('tr-TR')}`
+                          }
+                        </li>
+                      ) : tour.days ? (
                         <li className="mr-4">
                           <i className="bi bi-calendar-event text-primary-1 mr-2"></i>
                           {tour.days.slice(0, 2).join(', ')}
@@ -330,27 +372,34 @@ export default function PackageList() {
 
               <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
 
-              {/* DURATION */}
+              {/* DATE FILTER */}
               <aside>
                 <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.days') : ''}</h5>
-                <select
-                  value={selectedDays[0] || ''}
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      setSelectedDays([e.target.value])
-                    } else {
-                      setSelectedDays([])
-                    }
-                  }}
-                  className="w-full h-12 border border-dark-1 border-opacity-20 outline-0"
-                  style={{ backgroundColor: '#fff', color: '#333' }}
-                >
-                  <option value="" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.allDays') : ''}</option>
-                  {['Her Gün', 'Sabah', 'Akşam', 'Öğleden Sonra', 'Öğleden Önce', 'Tam Gün', 'Hafta Sonu', 'Hafta İçi', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'].map((item, i) => (
-                    <option key={i} value={item}>{item}</option>
-                  ))}
-                </select>
+                 <div className="pt-4 space-y-3">
+                  <div>
+                    <input
+                      type="date"
+                      value={selectedStartDate}
+                      onChange={(e) => setSelectedStartDate(e.target.value)}
+                      className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
+                      style={{ backgroundColor: '#fff', color: '#333' }}
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="date"
+                      value={selectedEndDate}
+                      onChange={(e) => setSelectedEndDate(e.target.value)}
+                      className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
+                      style={{ backgroundColor: '#fff', color: '#333',marginTop: '8px' }}
+                    />
+                  </div>
+                </div>
               </aside>
+
+              <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
+
+             
 
               <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
 

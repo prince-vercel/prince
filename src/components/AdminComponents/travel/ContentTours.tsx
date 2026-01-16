@@ -33,6 +33,8 @@ interface Tour {
   includedInPrice: string
   notIncludedInPrice: string
   days?: string[]
+  startDate?: string
+  endDate?: string
   tourPlan: Array<{ day: number; content: string }>
   faq: Array<{ question: string; answer: string }>
   mainImageUrl?: string
@@ -52,6 +54,8 @@ interface FormData {
   includedInPrice: string
   notIncludedInPrice: string
   days: string[]
+  startDate?: string
+  endDate?: string
   tourPlan: Array<{ day: number; content: string }>
   faq: Array<{ question: string; answer: string }>
   mainImageUrl: string
@@ -81,6 +85,8 @@ const ContentTours = () => {
     includedInPrice: '',
     notIncludedInPrice: '',
     days: ['Her Gün'],
+    startDate: '',
+    endDate: '',
     tourPlan: [{ day: 1, content: '' }],
     faq: [{ question: '', answer: '' }],
     mainImageUrl: '',
@@ -248,6 +254,8 @@ const ContentTours = () => {
         includedInPrice: '',
         notIncludedInPrice: '',
         days: ['Her Gün'],
+        startDate: '',
+        endDate: '',
         tourPlan: [{ day: 1, content: '' }],
         faq: [{ question: '', answer: '' }],
         mainImageUrl: '',
@@ -277,6 +285,8 @@ const ContentTours = () => {
       includedInPrice: tour.includedInPrice,
       notIncludedInPrice: tour.notIncludedInPrice,
       days: tour.days || ['Her Gün'],
+      startDate: tour.startDate || '',
+      endDate: tour.endDate || '',
       tourPlan: tour.tourPlan,
       faq: tour.faq,
       mainImageUrl: tour.mainImageUrl || tour.imageUrl || '',
@@ -335,6 +345,8 @@ const ContentTours = () => {
                   includedInPrice: '',
                   notIncludedInPrice: '',
                   days: ['Her Gün'],
+                  startDate: '',
+                  endDate: '',
                   tourPlan: [{ day: 1, content: '' }],
                   faq: [{ question: '', answer: '' }],
                   mainImageUrl: '',
@@ -360,9 +372,23 @@ const ContentTours = () => {
                         <MdLocationOn style={{ display: 'inline', marginRight: '4px', verticalAlign: 'middle' }} />
                         {tour.location}
                       </p>
-                 
-                
-                   
+                      {(tour.startDate || tour.endDate) && (
+                        <p className={styles.tourCardLocation} style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+                          <MdDateRange style={{ display: 'inline', marginRight: '4px', verticalAlign: 'middle' }} />
+                          {tour.startDate && tour.endDate ? 
+                            `${new Date(tour.startDate || '').toLocaleDateString('tr-TR')} - ${new Date(tour.endDate || '').toLocaleDateString('tr-TR')}` :
+                            tour.startDate ? 
+                              `Başlangıç: ${new Date(tour.startDate || '').toLocaleDateString('tr-TR')}` :
+                              `Bitiş: ${new Date(tour.endDate || '').toLocaleDateString('tr-TR')}`
+                          }
+                        </p>
+                      )}
+                      {!tour.startDate && !tour.endDate && tour.days && tour.days.length > 0 && (
+                        <p className={styles.tourCardLocation} style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+                          <MdDateRange style={{ display: 'inline', marginRight: '4px', verticalAlign: 'middle' }} />
+                          {tour.days.join(', ')}
+                        </p>
+                      )}
                     </div>
                     <div className={styles.tourCardActions}>
                       <button
@@ -701,22 +727,34 @@ const ContentTours = () => {
               />
             </div>
 
-            {/* Gün Seçimi */}
+            {/* Tarih Aralığı */}
             <div className={styles.tourFormGroup}>
-              <label>Gün</label>
-              <select
-                value={formData.days[0] || 'Her Gün'}
-                onChange={e => handleInputChange('days', [e.target.value])}
-                className="w-full h-12 border border-gray-300 px-3 outline-0"
-                style={{ borderRadius: '4px', borderColor: '#ccc' }}
-              >
-                {['Her Gün', 'Sabah', 'Akşam','Öğleden Sonra','Öğleden Önce',  'Tam Gün','Hafta Sonu','Hafta İçi','Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'].map((day, i) => (
-                  <option key={i} value={day}>
-                    {day}
-                  </option>
-                ))}
-              </select>
+              <label>Tarih Aralığı (İsteğe Bağlı)</label>
+              <div className={styles.tourFormRow}>
+                <div className={styles.tourFormGroup}>
+                  <label>Başlangıç Tarihi</label>
+                  <input
+                    type="date"
+                    value={formData.startDate}
+                    onChange={e => handleInputChange('startDate', e.target.value)}
+                    className="w-full h-12 border border-gray-300 px-3 outline-0"
+                    style={{ borderRadius: '4px', borderColor: '#ccc' }}
+                  />
+                </div>
+                <div className={styles.tourFormGroup}>
+                  <label>Bitiş Tarihi</label>
+                  <input
+                    type="date"
+                    value={formData.endDate}
+                    onChange={e => handleInputChange('endDate', e.target.value)}
+                    className="w-full h-12 border border-gray-300 px-3 outline-0"
+                    style={{ borderRadius: '4px', borderColor: '#ccc' }}
+                  />
+                </div>
+              </div>
             </div>
+
+
 
             {/* Tur Planı */}
             <div className={styles.tourFormGroup}>
