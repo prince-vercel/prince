@@ -8,6 +8,8 @@ import { db } from '@/src/lib/firebase'
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import '../../i18n'
 import Chatbot from './Chatbot'
 
 const normalizeText = (text: string) => {
@@ -44,6 +46,7 @@ interface Tour {
 
 export default function TravelHomePage() {
   const router = useRouter()
+  const { t, isReady } = useSafeTranslation()
   const [date, setDate] = useState('')
   const [destination, setDestination] = useState('')
   const dateRef = useRef<HTMLInputElement>(null)
@@ -83,14 +86,15 @@ export default function TravelHomePage() {
         // Düzenlemeye göre sırala
         setPartners(partnersData.sort((a, b) => (a.order || 0) - (b.order || 0)))
       } catch (error) {
-        console.error('Partners yükleme hatası:', error)
+        const errorMsg = isReady ? t('travel.homePage.errors.loadingPartners') : 'Partners yükleme hatası:'
+        console.error(errorMsg, error)
       } finally {
         setLoadingPartners(false)
       }
     }
 
     fetchPartners()
-  }, [])
+  }, [isReady, t])
 
   useEffect(() => {
     const fetchBanners = async () => {
@@ -103,12 +107,13 @@ export default function TravelHomePage() {
         }))
         setBanners(bannersList)
       } catch (error) {
-        console.error('Banner yükleme hatası:', error)
+        const errorMsg = isReady ? t('travel.homePage.errors.loadingBanners') : 'Banner yükleme hatası:'
+        console.error(errorMsg, error)
       }
     }
 
     fetchBanners()
-  }, [])
+  }, [isReady, t])
 
   useEffect(() => {
     const fetchTours = async () => {
@@ -123,12 +128,13 @@ export default function TravelHomePage() {
         const favoriteTours = tours.filter(tour => tour.isFavorite === true).slice(0, 3)
         setPackages(favoriteTours)
       } catch (error) {
-        console.error('Tur yükleme hatası:', error)
+        const errorMsg = isReady ? t('travel.homePage.errors.loadingTours') : 'Tur yükleme hatası:'
+        console.error(errorMsg, error)
       }
     }
 
     fetchTours()
-  }, [])
+  }, [isReady, t])
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -145,12 +151,13 @@ export default function TravelHomePage() {
         })
         setBlogs(blogsData)
       } catch (error) {
-        console.error('Blog yükleme hatası:', error)
+        const errorMsg = isReady ? t('travel.homePage.errors.loadingBlogs') : 'Blog yükleme hatası:'
+        console.error(errorMsg, error)
       }
     }
 
     fetchBlogs()
-  }, [])
+  }, [isReady, t])
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -209,8 +216,8 @@ export default function TravelHomePage() {
                     'linear-gradient(152.97deg, rgba(255,255,255,0.36) 0%, rgba(255,255,255,0.12) 100%)',
                 }}
               >
-                <h3 className="text-white lg:text-2xl text-lg font-bold">
-                  Rota Bul
+                <h3 className="text-white lg:text-2xl text-lg font-bold" suppressHydrationWarning>
+                  {isReady ? t('travel.homePage.search.title') : ''}
                 </h3>
 
                 {/* DESTINATION */}
@@ -221,7 +228,7 @@ export default function TravelHomePage() {
 
                   <input
                     type="text"
-                    placeholder="Nereye gitmek istiyorsunuz?"
+                    placeholder={isReady ? t('travel.homePage.search.destinationPlaceholder') : ''}
                     value={destination}
                     onChange={(e) => setDestination(e.target.value)}
                     className="
@@ -229,6 +236,7 @@ export default function TravelHomePage() {
       h-14 lg:h-17
       pl-12 lg:pl-[60px] pr-3
     "
+                    suppressHydrationWarning
                   />
                 </div>
 
@@ -240,13 +248,14 @@ export default function TravelHomePage() {
 
                   <input
                     type="text"
-                    value={date ? date : 'Tarih Seç'}
+                    value={date ? date : (isReady ? t('travel.homePage.search.datePlaceholder') : '')}
                     readOnly
                     className="
       relative z-0 w-full bg-white outline-0 cursor-pointer
       h-14 lg:h-17
       pl-12 lg:pl-[60px] pr-3
     "
+                    suppressHydrationWarning
                   />
 
                   <input
@@ -271,8 +280,9 @@ export default function TravelHomePage() {
                   type="submit"
                   className="lg:mt-10 mt-6 block text-center bg-primary-1 lg:h-17 h-14 w-full text-white font-medium text-md"
                   style={{ borderRadius: '24px' }}
+                  suppressHydrationWarning
                 >
-                  HEMEN KEŞFET
+                  {isReady ? t('travel.homePage.search.submit') : ''}
                 </button>
               </div>
             </form>
@@ -313,34 +323,34 @@ export default function TravelHomePage() {
       <div className="tour_type_style__one lg:pt-30 pt-24">
         <div className="container">
           <div className="text-center lg:pb-[60px] pb-[40px]">
-            <h5 className="section-sub-title-v1">Tur Kategorileri</h5>
-            <h2 className="section-title-v1">Popüler Tur Türleri</h2>
+            <h5 className="section-sub-title-v1" suppressHydrationWarning>{isReady ? t('travel.homePage.categories.subtitle') : ''}</h5>
+            <h2 className="section-title-v1" suppressHydrationWarning>{isReady ? t('travel.homePage.categories.title') : ''}</h2>
           </div>
 
           <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-base">
 
             <div className="text-center">
-              <img src="/assets/images/icons/t1-3.svg" alt="Macera" className="mx-auto" />
-              <h4 className="mt-4">Şehir İçi Günü Birlik</h4>
-              <p>Şehirde heyecan dolu günü birlik keşif rotaları</p>
+              <img src="/assets/images/icons/t1-3.svg" alt={isReady ? t('travel.homePage.categories.cityDayTrip.alt') : ''} className="mx-auto" suppressHydrationWarning />
+              <h4 className="mt-4" suppressHydrationWarning>{isReady ? t('travel.homePage.categories.cityDayTrip.title') : ''}</h4>
+              <p suppressHydrationWarning>{isReady ? t('travel.homePage.categories.cityDayTrip.description') : ''}</p>
             </div>
 
             <div className="text-center">
-              <img src="/assets/images/icons/t1-2.svg" alt="Gemi" className="mx-auto" />
-              <h4 className="mt-4">Şehir Dışı Günü Birlik</h4>
-              <p>Doğada rahat ve keyifli günü birlik turlar</p>
+              <img src="/assets/images/icons/t1-2.svg" alt={isReady ? t('travel.homePage.categories.outdoorDayTrip.alt') : ''} className="mx-auto" suppressHydrationWarning />
+              <h4 className="mt-4" suppressHydrationWarning>{isReady ? t('travel.homePage.categories.outdoorDayTrip.title') : ''}</h4>
+              <p suppressHydrationWarning>{isReady ? t('travel.homePage.categories.outdoorDayTrip.description') : ''}</p>
             </div>
 
             <div className="text-center">
-              <img src="/assets/images/icons/t1-1.svg" alt="Doğa" className="mx-auto" />
-              <h4 className="mt-4">Konaklama Paketleri</h4>
-              <p>Konaklama dahil tam paket tur hizmetleri</p>
+              <img src="/assets/images/icons/t1-1.svg" alt={isReady ? t('travel.homePage.categories.accommodationPackages.alt') : ''} className="mx-auto" suppressHydrationWarning />
+              <h4 className="mt-4" suppressHydrationWarning>{isReady ? t('travel.homePage.categories.accommodationPackages.title') : ''}</h4>
+              <p suppressHydrationWarning>{isReady ? t('travel.homePage.categories.accommodationPackages.description') : ''}</p>
             </div>
 
             <div className="text-center">
-              <img src="/assets/images/icons/t1-4.svg" alt="Balayı" className="mx-auto" />
-              <h4 className="mt-4">Yurt Dışı Turlar</h4>
-              <p>Uluslararası destinasyonlarda özel ve romantik tatiller</p>
+              <img src="/assets/images/icons/t1-4.svg" alt={isReady ? t('travel.homePage.categories.internationalTours.alt') : ''} className="mx-auto" suppressHydrationWarning />
+              <h4 className="mt-4" suppressHydrationWarning>{isReady ? t('travel.homePage.categories.internationalTours.title') : ''}</h4>
+              <p suppressHydrationWarning>{isReady ? t('travel.homePage.categories.internationalTours.description') : ''}</p>
             </div>
 
           </div>
@@ -362,15 +372,15 @@ export default function TravelHomePage() {
         <div className="container">
 
           <div className="text-center lg:pb-[60px] pb-[40px]">
-            <h5 className="section-sub-title-v1">Turlarımızı Keşfedin</h5>
-            <h2 className="section-title-v1">Yeni ve En Popüler Turlar</h2>
+            <h5 className="section-sub-title-v1" suppressHydrationWarning>{isReady ? t('travel.homePage.packages.subtitle') : ''}</h5>
+            <h2 className="section-title-v1" suppressHydrationWarning>{isReady ? t('travel.homePage.packages.title') : ''}</h2>
           </div>
 
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-base">
 
             {packages.length === 0 ? (
-              <div className="col-span-full text-center py-10 text-gray-500">
-                Tur bulunamadı
+              <div className="col-span-full text-center py-10 text-gray-500" suppressHydrationWarning>
+                {isReady ? t('travel.homePage.packages.noTours') : ''}
               </div>
             ) : (
               packages.map((item, index) => (
@@ -386,11 +396,11 @@ export default function TravelHomePage() {
                         />
                       ) : (
                         <div style={{ width: '100%', height: '100%' }} className="bg-gray-200 flex items-center justify-center">
-                          <span className="text-gray-400">Görsel Yok</span>
+                          <span className="text-gray-400" suppressHydrationWarning>{isReady ? t('travel.homePage.packages.noImage') : ''}</span>
                         </div>
                       )}
                     </a>
-                    {<span className="absolute top-5 right-5 text-sm text-white rounded-full bg-[#219FFF] py-1 px-3">Popüler</span>}
+                    {<span className="absolute top-5 right-5 text-sm text-white rounded-full bg-[#219FFF] py-1 px-3" suppressHydrationWarning>{isReady ? t('travel.homePage.packages.popular') : ''}</span>}
                   </div>
 
                   <h3 className="card-title-alpha group-hover/card:text-primary-1 lg:mt-6 mt-5">
@@ -421,13 +431,13 @@ export default function TravelHomePage() {
                       ) : (
                         <>
                           <i className="bi bi-currency-euro text-primary-1 mr-2"></i>
-                          Fiyat Al
+                          {isReady ? t('travel.homePage.packages.getPrice') : ''}
                         </>
                       )}
                     </li>
                   </ul>
-                  <a href={`/travel/all/${item.id}`} className="package-explore-btn group/btn">
-                    <span className="mr-2">Hemen İncele</span>
+                  <a href={`/travel/all/${item.id}`} className="package-explore-btn group/btn" suppressHydrationWarning>
+                    <span className="mr-2" suppressHydrationWarning>{isReady ? t('travel.homePage.packages.viewDetails') : ''}</span>
                     <svg className="group-hover/btn:translate-x-2 duration-200" width="27" height="14" viewBox="0 0 27 14" fill="none">
                       <path d="M0.217443 6.25H18.4827V7.75H0.217443Z" fill="currentColor" />
                       <path d="M20.7 12.28L25.05 7.93C25.56 7.42 25.56 6.58 25.05 6.07L20.7 1.72"
@@ -451,18 +461,18 @@ export default function TravelHomePage() {
           <div className="cs_brands_track">
             {loadingPartners ? (
               <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                <p>İş ortakları yükleniyor...</p>
+                <p suppressHydrationWarning>{isReady ? t('travel.homePage.packages.loadingPartners') : ''}</p>
               </div>
             ) : partners.length === 0 ? (
               <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                <p>Henüz iş ortağı yok.</p>
+                <p suppressHydrationWarning>{isReady ? t('travel.homePage.packages.noPartners') : ''}</p>
               </div>
             ) : (
               partners.concat(partners).map((partner: any, i: number) => (
                 <div key={i} className="cs_brand cs_center" style={{ marginRight: '40px' }}>
                   <img
                     src={partner.imageUrl}
-                    alt={partner.title || 'Partner'}
+                    alt={partner.title || (isReady ? t('travel.homePage.partners.defaultAlt') : 'Partner')}
                     style={{
                       width: '100px',
                       height: '100px',
@@ -470,6 +480,7 @@ export default function TravelHomePage() {
                       filter: 'grayscale(100%)',
                       opacity: 0.8
                     }}
+                    suppressHydrationWarning
                   />
                 </div>
               ))
@@ -485,15 +496,15 @@ export default function TravelHomePage() {
         <div className="container">
 
           <div className="text-center lg:pb-[60px] pb-[40px]">
-            <h5 className="section-sub-title-v1">Blog & Haberler</h5>
-            <h2 className="section-title-v1">Seyahat İpuçlarıyla Güncel Kalın!</h2>
+            <h5 className="section-sub-title-v1" suppressHydrationWarning>{isReady ? t('travel.homePage.blog.subtitle') : ''}</h5>
+            <h2 className="section-title-v1" suppressHydrationWarning>{isReady ? t('travel.homePage.blog.title') : ''}</h2>
           </div>
 
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-base">
 
             {blogs.length === 0 ? (
-              <div className="col-span-full text-center py-10 text-gray-500">
-                Blog bulunamadı
+              <div className="col-span-full text-center py-10 text-gray-500" suppressHydrationWarning>
+                {isReady ? t('travel.homePage.blog.noBlogs') : ''}
               </div>
             ) : (
               blogs.map((blog, index) => (
@@ -526,8 +537,9 @@ export default function TravelHomePage() {
                     <a
                       href={`/travel/blog/${blog.id}`}
                       className="group inline-flex items-center mt-4 lg:text-md text-base text-dark-1 font-medium hover:text-primary-1 duration-200"
+                      suppressHydrationWarning
                     >
-                      <span className="mr-2">Devamını Oku</span>
+                      <span className="mr-2" suppressHydrationWarning>{isReady ? t('travel.homePage.blog.readMore') : ''}</span>
                       <svg
                         className="group-hover:translate-x-2 duration-200"
                         width="27"
@@ -595,7 +607,7 @@ export default function TravelHomePage() {
       {chatbotQuestions.length > 0 && (
         <>
           {!showChatbot && (
-            <button className="chatbot-fab" onClick={() => setShowChatbot(true)} title="Sohbet Başlat">
+            <button className="chatbot-fab" onClick={() => setShowChatbot(true)} title={isReady ? t('travel.homePage.chatbot.startChat') : ''} suppressHydrationWarning>
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M21 15.5C21 16.3284 20.3284 17 19.5 17H7.41421L4.70711 19.7071C4.07714 20.3371 3 19.8906 3 19.0001V5.5C3 4.67157 3.67157 4 4.5 4H19.5C20.3284 4 21 4.67157 21 5.5V15.5Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="#d7b76e" />
                 <circle cx="8" cy="10" r="1" fill="white" />
@@ -607,7 +619,7 @@ export default function TravelHomePage() {
           {showChatbot && (
             <div style={{ position: 'fixed', bottom: 32, right: 32, zIndex: 10001 }}>
               <div style={{ position: 'relative' }}>
-                <button className="chatbot-close-btn" onClick={() => setShowChatbot(false)} title="Kapat">✕</button>
+                <button className="chatbot-close-btn" onClick={() => setShowChatbot(false)} title={isReady ? t('travel.homePage.chatbot.close') : ''} suppressHydrationWarning>✕</button>
                 <Chatbot />
               </div>
             </div>

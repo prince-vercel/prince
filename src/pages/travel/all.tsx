@@ -5,9 +5,12 @@ import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useState } from "react";
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import '../../i18n'
 
 export default function PackageList() {
   const router = useRouter()
+  const { t, isReady } = useSafeTranslation()
   const { destination } = router.query
   const [tours, setTours] = useState<any[]>([])
   const [loadingTours, setLoadingTours] = useState(true)
@@ -156,13 +159,13 @@ export default function PackageList() {
         <div className="container relative z-2 pb-10">
           <ol className="breadcrumb2" style={{ color: 'white' }}>
             <li className="breadcrumb-item2">
-              <Link href="/travel">Anasayfa</Link>
+              <Link href="/travel" suppressHydrationWarning>{isReady ? t('travel.pages.breadcrumb.home') : ''}</Link>
             </li>
-            <li className="breadcrumb-item2"> Seyahatler</li>
+            <li className="breadcrumb-item2" suppressHydrationWarning> {isReady ? t('travel.pages.all.breadcrumb') : ''}</li>
           </ol>
 
-          <h2 className="l:text-[54px] mt-2 lg:text-4xl md:text-2xl text-[30px] text-white font-medium max-w-[640px]">
-            Tüm Seyahatlerimiz
+          <h2 className="l:text-[54px] mt-2 lg:text-4xl md:text-2xl text-[30px] text-white font-medium max-w-[640px]" suppressHydrationWarning>
+            {isReady ? t('travel.pages.all.title') : ''}
           </h2>
         </div>
       </div>
@@ -176,11 +179,11 @@ export default function PackageList() {
             <div className="lg:col-span-8 col-span-12 grid md:grid-cols-2 grid-cols-1 gap-base">
               {loadingTours ? (
                 <div className="col-span-2 text-center py-20">
-                  <p className="text-lg text-gray-500">Turlar yükleniyor...</p>
+                  <p className="text-lg text-gray-500" suppressHydrationWarning>{isReady ? t('travel.pages.all.results.loading') : ''}</p>
                 </div>
               ) : filteredPackages.length === 0 ? (
                 <div className="col-span-2 text-center py-20">
-                  <p className="text-lg text-gray-500">Tur bulunamadı</p>
+                  <p className="text-lg text-gray-500" suppressHydrationWarning>{isReady ? t('travel.pages.all.results.noTours') : ''}</p>
                 </div>
               ) : (
                 filteredPackages.map((tour) => (
@@ -201,7 +204,7 @@ export default function PackageList() {
                           />
                         ) : (
                           <div style={{ width: '100%', height: '100%' }} className="bg-gray-200 flex items-center justify-center">
-                            <span className="text-gray-400">Görsel Yok</span>
+                            <span className="text-gray-400" suppressHydrationWarning>{isReady ? t('travel.pages.all.results.noImage') : ''}</span>
                           </div>
                         )}
                       </a>
@@ -235,14 +238,14 @@ export default function PackageList() {
                         ) : (
                           <>
                             <i className="bi bi-currency-euro text-primary-1 mr-2"></i>
-                            Fiyat Al
+                            {isReady ? t('travel.pages.all.results.getPrice') : ''}
                           </>
                         )}
                       </li>
                     </ul>
 
-                    <a href={`/travel/all/${tour.id}`} className="package-explore-btn" style={{ color: hoveredCardId === tour.id ? '#d7b76e' : 'black' }}>
-                      Şimdi Keşfet
+                    <a href={`/travel/all/${tour.id}`} className="package-explore-btn" style={{ color: hoveredCardId === tour.id ? '#d7b76e' : 'black' }} suppressHydrationWarning>
+                      {isReady ? t('travel.pages.all.filters.exploreNow') : ''}
                     </a>
                   </div>
                 ))
@@ -252,36 +255,38 @@ export default function PackageList() {
             {/* ===== FILTER SIDEBAR (AYNI STİL, SADECE BAĞLI) ===== */}
             <div className="lg:col-span-4 col-span-12">
               <div className="pb-[10px] mb-8 border-b border-dark-1 border-opacity-10">
-                <h4 className="text-lg font-semibold text-dark-1">Filtrele</h4>
+                <h4 className="text-lg font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.title') : ''}</h4>
               </div>
 
               {/* PRICE FILTER */}
               <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">
-                  Fiyat Aralığı (€):
+                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>
+                  {isReady ? t('travel.pages.all.filters.priceRange') : ''}
                 </h5>
 
                 <div className="pt-4 flex gap-3 items-center">
                   <input
                     type="number"
-                    placeholder="Min"
+                    placeholder={isReady ? t('travel.pages.all.filters.priceRangeMin') : ''}
                     value={priceRange[0]}
                     onChange={(e) =>
                       setPriceRange([Number(e.target.value), priceRange[1]])
                     }
                     className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
+                    suppressHydrationWarning
                   />
 
                   <span className="text-dark-2">–</span>
 
                   <input
                     type="number"
-                    placeholder="Max"
+                    placeholder={isReady ? t('travel.pages.all.filters.priceRangeMax') : ''}
                     value={priceRange[1]}
                     onChange={(e) =>
                       setPriceRange([priceRange[0], Number(e.target.value)])
                     }
                     className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
+                    suppressHydrationWarning
                   />
                 </div>
 
@@ -292,7 +297,7 @@ export default function PackageList() {
                     checked={showPricedOnly}
                     onChange={() => setShowPricedOnly(!showPricedOnly)}
                   />
-                  <label htmlFor="priced-only">Fiyat Al</label>
+                  <label htmlFor="priced-only" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.showPricedOnly') : ''}</label>
                 </div>
               </aside>
 
@@ -300,7 +305,7 @@ export default function PackageList() {
 
               {/* DESTINATIONS */}
               <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Şehir</h5>
+                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.destination') : ''}</h5>
                 <select
                   value={selectedDestinations[0] || ''}
                   onChange={(e) => {
@@ -313,7 +318,7 @@ export default function PackageList() {
                   className="w-full  h-12 border border-dark-1 border-opacity-20  outline-0"
                   style={{ backgroundColor: '#fff', color: '#333' }}
                 >
-                  <option value="">Tüm Şehirler</option>
+                  <option value="" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.allDestinations') : ''}</option>
                   {uniqueDestinations.map((item, i) => (
                     <option key={i} value={item}>{item}</option>
                   ))}
@@ -324,7 +329,7 @@ export default function PackageList() {
 
               {/* DURATION */}
               <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Gün</h5>
+                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.days') : ''}</h5>
                 <select
                   value={selectedDays[0] || ''}
                   onChange={(e) => {
@@ -337,7 +342,7 @@ export default function PackageList() {
                   className="w-full h-12 border border-dark-1 border-opacity-20 outline-0"
                   style={{ backgroundColor: '#fff', color: '#333' }}
                 >
-                  <option value="">Tüm Günler</option>
+                  <option value="" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.allDays') : ''}</option>
                   {['Her Gün', 'Sabah', 'Akşam', 'Öğleden Sonra', 'Öğleden Önce', 'Tam Gün', 'Hafta Sonu', 'Hafta İçi', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'].map((item, i) => (
                     <option key={i} value={item}>{item}</option>
                   ))}
@@ -348,7 +353,7 @@ export default function PackageList() {
 
               {/* INCLUSIONS */}
               <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1">Dahil Olanlar</h5>
+                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.inclusions') : ''}</h5>
                 <ul className="pt-4">
                   {uniqueInclusions.map((item, i) => (
                     <li key={i} className="pt-3 first:pt-0">

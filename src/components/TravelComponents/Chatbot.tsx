@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/src/lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
 
 interface ChatStep {
   id: string;
@@ -46,7 +46,7 @@ const Chatbot: React.FC = () => {
               {idx === history.length - 1 && step.options && (
                 <div className="options">
                   {step.options.map(opt => (
-                    <button key={opt.next}  style={{backgroundColor:'#d7b76e'}} onClick={() => handleOption(opt.next)} className="optionBtn">
+                    <button key={opt.next} style={{ backgroundColor: '#d7b76e' }} onClick={() => handleOption(opt.next)} className="optionBtn">
                       {opt.label}
                     </button>
                   ))}

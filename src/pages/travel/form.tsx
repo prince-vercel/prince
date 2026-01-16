@@ -1,10 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { addDoc, collection, serverTimestamp, getDocs } from 'firebase/firestore'
-import { db } from '@/src/lib/firebase'
 import Toast from '@/src/components/Toast'
+import { db } from '@/src/lib/firebase'
+import { addDoc, collection, getDocs, serverTimestamp } from 'firebase/firestore'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import '../../i18n'
 
 interface Question {
   id: string
@@ -27,6 +29,7 @@ interface StepName {
 }
 
 const Form = () => {
+  const { t, isReady } = useSafeTranslation()
   const [step, setStep] = useState(0)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
@@ -79,7 +82,8 @@ const Form = () => {
 
         setLoading(false)
       } catch (error) {
-        console.error('Sorular yüklenirken hata:', error)
+        const errorMsg = isReady ? t('travel.pages.form.errors.loadingQuestions') : 'Sorular yüklenirken hata:'
+        console.error(errorMsg, error)
         setLoading(false)
       }
     }
@@ -123,15 +127,16 @@ const Form = () => {
 
       setTimeout(() => setSuccess(false), 3000)
     } catch (error) {
-      console.error('Form gönderme hatası:', error)
-      alert('Form gönderilirken bir hata oluştu!')
+      const errorMsg = isReady ? t('travel.pages.form.errors.submitError') : 'Form gönderme hatası:'
+      console.error(errorMsg, error)
+      alert(isReady ? t('travel.pages.form.errorAlert') : 'Form gönderilirken bir hata oluştu!')
     }
   }
 
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
-        <p>Sorular yükleniyor...</p>
+        <p suppressHydrationWarning>{isReady ? t('travel.pages.form.loading') : ''}</p>
       </div>
     )
   }
@@ -141,9 +146,9 @@ const Form = () => {
 
       <ol className="breadcrumb2" style={{ color: 'black', marginLeft: '10%' }}>
         <li className="breadcrumb-item2">
-          <Link href="/travel">Anasayfa</Link>
+          <Link href="/travel" suppressHydrationWarning>{isReady ? t('travel.pages.breadcrumb.home') : ''}</Link>
         </li>
-        <li className="breadcrumb-item2"> Seyahatler</li>
+        <li className="breadcrumb-item2" suppressHydrationWarning> {isReady ? t('travel.pages.form.breadcrumb') : ''}</li>
       </ol>
 
       <div className="lg:p-25 p-25">
@@ -151,15 +156,23 @@ const Form = () => {
 
           {/* TITLE */}
           <div className="text-center mb-8 mt-5">
-            <h1 className="text-3xl lg:text-5xl font-extrabold text-dark-1 tracking-tight">
-              Mükemmel <span className="text-primary-1">Tatili</span> Planla
+            <h1 className="text-3xl lg:text-5xl font-extrabold text-dark-1 tracking-tight" suppressHydrationWarning>
+              {isReady ? (() => {
+                const title = t('travel.pages.form.title')
+                const parts = title.split('Tatili')
+                return (
+                  <>
+                    {parts[0]}<span className="text-primary-1">Tatili</span>{parts[1]}
+                  </>
+                )
+              })() : ''}
             </h1>
-            <p className="text-base lg:text-lg text-dark-3 max-w-2xl mx-auto">
-              Kişiselleştirilmiş seyahat deneyimi için hemen rezervasyon yapın!
+            <p className="text-base lg:text-lg text-dark-3 max-w-2xl mx-auto" suppressHydrationWarning>
+              {isReady ? t('travel.pages.form.subtitle') : ''}
             </p>
           </div>
 
-        
+
           <div className="flex items-center justify-between pb-10 pt-10 overflow-x-auto">
             {steps.map((s, index) => (
               <div key={s.id}>
@@ -177,7 +190,7 @@ const Form = () => {
             ))}
           </div>
 
-        <div className="grid grid-cols-12 gap-8 lg:gap-12">
+          <div className="grid grid-cols-12 gap-8 lg:gap-12">
 
 
 
@@ -194,7 +207,7 @@ const Form = () => {
                     return (
                       <div
                         key={question.id}
-                        className={(question.type === 'text' && question.questionText.toLowerCase().includes('özel')) ? 'col-span-2' : 'col-span-2 lg:col-span-1'}
+                        className={(question.type === 'text' && (question.questionText.toLowerCase().includes('özel') || question.questionText.toLowerCase().includes('special'))) ? 'col-span-2' : 'col-span-2 lg:col-span-1'}
                       >
                         <label className="flex items-center gap-2 text-dark-2 font-medium mb-2">
                           {isRequired && <span className="text-red-500">*</span>}
@@ -229,7 +242,7 @@ const Form = () => {
                             onChange={handleInputChange}
                             className="input_style__primary w-full"
                           >
-                            <option value="">Seçiniz</option>
+                            <option value="" suppressHydrationWarning>{isReady ? t('travel.pages.form.selectPlaceholder') : ''}</option>
                             {question.options.map((option) => (
                               <option key={option} value={option}>
                                 {option}
@@ -262,12 +275,12 @@ const Form = () => {
                               const selectedValues = formData[question.id]?.split(',').filter(v => v) || []
                               const isSelected = selectedValues.includes(opt)
                               return (
-                                <label 
-                                  key={opt} 
-                                  style={{ 
-                                    display: 'flex', 
-                                    alignItems: 'center', 
-                                    gap: '8px', 
+                                <label
+                                  key={opt}
+                                  style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
                                     cursor: 'pointer',
                                     padding: '8px 12px',
                                     border: `2px solid ${isSelected ? '#d7b76e' : '#ddd'}`,
@@ -308,8 +321,9 @@ const Form = () => {
                   <button
                     onClick={() => setStep(step - 1)}
                     className="btn_primary__v1 outlined"
+                    suppressHydrationWarning
                   >
-                    Geri
+                    {isReady ? t('travel.pages.form.previous') : ''}
                   </button>
                 )}
 
@@ -317,109 +331,110 @@ const Form = () => {
                   <button
                     onClick={() => setStep(step + 1)}
                     className="btn_primary__v1"
+                    suppressHydrationWarning
                   >
-                    Devam Et
+                    {isReady ? t('travel.pages.form.next') : ''}
                   </button>
                 ) : (
-                  <button onClick={handleSubmit} className="btn_primary__v1">
-                    Formu Gönder
+                  <button onClick={handleSubmit} className="btn_primary__v1" suppressHydrationWarning>
+                    {isReady ? t('travel.pages.form.submit') : ''}
                   </button>
                 )}
               </div>
 
               {/* SUCCESS TOAST NOTIFICATION */}
-              {success && <Toast type="success" message="Başarıyla gönderildi!" />}
+              {success && <Toast type="success" message={isReady ? t('travel.pages.form.success') : ''} />}
 
               {/* ERROR TOAST NOTIFICATION */}
-              {error && <Toast type="error" message="Lütfen gerekli alanları doldurunuz!" />}
+              {error && <Toast type="error" message={isReady ? t('travel.pages.form.error') : ''} />}
 
               {/* TRUST */}
               <div className="mt-4 flex items-center gap-2 text-sm text-dark-3">
                 <i className="bi bi-shield-lock text-primary-1"></i>
-                <span>Bilgileriniz gizlidir ve üçüncü kişilerle paylaşılmaz.</span>
+                <span suppressHydrationWarning>{isReady ? t('travel.pages.form.privacy') : ''}</span>
               </div>
             </div>
 
             {/* STICKY SUMMARY */}
-<div className="lg:col-span-4 col-span-12 hidden lg:block">
-  <div className="sticky top-20 max-w-[360px] border-2 border-primary-1 rounded-lg p-6 bg-gradient-to-br from-white">
-    <div className="flex items-center justify-between gap-4 mb-6">
-      <h5 className="font-bold text-dark-1 text-lg flex items-center gap-2">
-        <i className="bi bi-clipboard-check text-primary-1"></i>
-        Form Özeti
-      </h5>
-      {/* PROGRESS */}
-      <div className="flex justify-center">
-        <div className="relative w-20 h-20 flex items-center justify-center flex-shrink-0">
-          <svg className="transform -rotate-90" width="80" height="80" viewBox="0 0 96 96">
-            <circle
-              cx="48"
-              cy="48"
-              r="40"
-              fill="none"
-              stroke="#e5e7eb"
-              strokeWidth="6"
-            />
-            <circle
-              cx="48"
-              cy="48"
-              r="40"
-              fill="none"
-              stroke="url(#progressGradient)"
-              strokeWidth="6"
-              strokeDasharray={`${(progressPercent / 100) * 2 * Math.PI * 40} ${2 * Math.PI * 40}`}
-              strokeLinecap="round"
-              className="transition-all duration-500"
-            />
-            <defs>
-              <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#f2e2bdff" />
-                <stop offset="100%" stopColor="#d7b76e" />
-              </linearGradient>
-            </defs>
-          </svg>
-          <div className="absolute flex flex-col items-center justify-center">
-            <span className="text-sm font-bold text-primary-1">{progressPercent}</span>
-            <span className="text-xs text-dark-3 font-medium">%</span>
-          </div>
-        </div>
-      </div>
-    </div>
+            <div className="lg:col-span-4 col-span-12 hidden lg:block">
+              <div className="sticky top-20 max-w-[360px] border-2 border-primary-1 rounded-lg p-6 bg-gradient-to-br from-white">
+                <div className="flex items-center justify-between gap-4 mb-6">
+                  <h5 className="font-bold text-dark-1 text-lg flex items-center gap-2" suppressHydrationWarning>
+                    <i className="bi bi-clipboard-check text-primary-1"></i>
+                    {isReady ? t('travel.pages.form.summary.title') : ''}
+                  </h5>
+                  {/* PROGRESS */}
+                  <div className="flex justify-center">
+                    <div className="relative w-20 h-20 flex items-center justify-center flex-shrink-0">
+                      <svg className="transform -rotate-90" width="80" height="80" viewBox="0 0 96 96">
+                        <circle
+                          cx="48"
+                          cy="48"
+                          r="40"
+                          fill="none"
+                          stroke="#e5e7eb"
+                          strokeWidth="6"
+                        />
+                        <circle
+                          cx="48"
+                          cy="48"
+                          r="40"
+                          fill="none"
+                          stroke="url(#progressGradient)"
+                          strokeWidth="6"
+                          strokeDasharray={`${(progressPercent / 100) * 2 * Math.PI * 40} ${2 * Math.PI * 40}`}
+                          strokeLinecap="round"
+                          className="transition-all duration-500"
+                        />
+                        <defs>
+                          <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor="#f2e2bdff" />
+                            <stop offset="100%" stopColor="#d7b76e" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                      <div className="absolute flex flex-col items-center justify-center">
+                        <span className="text-sm font-bold text-primary-1">{progressPercent}</span>
+                        <span className="text-xs text-dark-3 font-medium">%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-    <ul className="text-sm text-dark-2 space-y-3 border-l-4 border-primary-1 pl-4">
-      {Object.entries(formData)
-        .filter(([_, value]) => value && value.trim() !== '')
-        .map(([key, value]) => {
-          const question = questions.find(q => q.id === key);
-          const label = question ? question.questionText : key;
-          let displayValue = value;
-          // Checkboxlar için okunabilir gösterim ve label düzeltme
-          if (question && question.type === 'checkbox') {
-            const selected = value.split(',').filter(v => v);
-            // Eğer option label'ı varsa onu göster
-            displayValue = selected.length > 0
-              ? selected.map(opt => {
-                  // Eğer options içinde label varsa onu göster
-                  const optionLabel = question.options.find(o => o === opt) || opt;
-                  return optionLabel;
-                }).join(', ')
-              : '';
-          }
-          // Kısaltılmış gösterim (ör: requests)
-          if (key === 'requests' && value.length > 30) {
-            displayValue = value.substring(0, 30) + '...';
-          }
-          return (
-            <li key={key} className="flex items-center gap-2">
-              <i className="bi bi-check2-circle text-gray-400 text-base"></i>
-              <span><strong>{label}:</strong> {displayValue}</span>
-            </li>
-          );
-        })}
-      {Object.values(formData).every(val => !val || val.trim() === '') && (
-        <li className="text-dark-3 italic">Bilgileri doldurmaya başlayın...</li>
-      )}
-    </ul>
+                <ul className="text-sm text-dark-2 space-y-3 border-l-4 border-primary-1 pl-4">
+                  {Object.entries(formData)
+                    .filter(([_, value]) => value && value.trim() !== '')
+                    .map(([key, value]) => {
+                      const question = questions.find(q => q.id === key);
+                      const label = question ? question.questionText : key;
+                      let displayValue = value;
+                      // Checkboxlar için okunabilir gösterim ve label düzeltme
+                      if (question && question.type === 'checkbox') {
+                        const selected = value.split(',').filter(v => v);
+                        // Eğer option label'ı varsa onu göster
+                        displayValue = selected.length > 0
+                          ? selected.map(opt => {
+                            // Eğer options içinde label varsa onu göster
+                            const optionLabel = question.options.find(o => o === opt) || opt;
+                            return optionLabel;
+                          }).join(', ')
+                          : '';
+                      }
+                      // Kısaltılmış gösterim (ör: requests)
+                      if (key === 'requests' && value.length > 30) {
+                        displayValue = value.substring(0, 30) + '...';
+                      }
+                      return (
+                        <li key={key} className="flex items-center gap-2">
+                          <i className="bi bi-check2-circle text-gray-400 text-base"></i>
+                          <span><strong>{label}:</strong> {displayValue}</span>
+                        </li>
+                      );
+                    })}
+                  {Object.values(formData).every(val => !val || val.trim() === '') && (
+                    <li className="text-dark-3 italic" suppressHydrationWarning>{isReady ? t('travel.pages.form.summary.empty') : ''}</li>
+                  )}
+                </ul>
               </div>
             </div>
 

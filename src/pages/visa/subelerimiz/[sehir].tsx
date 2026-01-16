@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import '../../../styles/visa/Subelerimiz.css';
 import '../../../i18n';
+import '../../../styles/visa/Subelerimiz.css';
 
 // Mock Data - Şehirlere göre şube bilgileri
 interface BranchData {
@@ -29,22 +29,22 @@ const branchesData: Record<string, BranchData> = {
         address: 'Muradiye, Beşikçiler Cd. No:73A, 16000 Osmangazi/Bursa (Eski THY ofisi)',
         addressShort: 'Muradiye, Beşikçiler Cd. No:73A, 16000 Osmangazi/B...',
         mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3047.69341484524!2d29.041219400000003!3d40.1936359!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0c12cd2dc90db%3A0x6a83fde658118ea0!2zw4dpbGVrIFZpemUgRGFuxLHFn21hbmzEsWs!5e0!3m2!1str!2str!4v1765631710788!5m2!1str!2str',
-        content: `<p>Türkiye'nin en büyük ve en güvenilir vize danışmanlık firmalarından biri olan <strong>Çilek Vize</strong>, <strong>Bursa Genel Merkezi</strong> ile vize başvuru sürecinde sizlere en hızlı ve güvenilir hizmeti sunmaktadır. 40'tan fazla uzman personeli ile dünya genelindeki tüm ülkelerin vize başvurularında profesyonel danışmanlık sağlayarak, vize işlemlerinizin eksiksiz ve sorunsuz tamamlanmasını garanti ediyoruz.</p>
+        content: `<p>Türkiye'nin en büyük ve en güvenilir vize danışmanlık firmalarından biri olan <strong>Prince</strong>, <strong>Bursa Genel Merkezi</strong> ile vize başvuru sürecinde sizlere en hızlı ve güvenilir hizmeti sunmaktadır. 40'tan fazla uzman personeli ile dünya genelindeki tüm ülkelerin vize başvurularında profesyonel danışmanlık sağlayarak, vize işlemlerinizin eksiksiz ve sorunsuz tamamlanmasını garanti ediyoruz.</p>
         <h3><strong>Bursa Genel Merkezimizle Profesyonel ve Güvenilir Hizmet</strong></h3>
-        <p>Bursa'daki genel merkezimiz, vize danışmanlık sektöründe uzun yıllara dayanan deneyimi ve alanında uzman ekibiyle vize başvuru sürecinizde size rehberlik eder. Çilek Vize olarak, <strong>turistik, ticari, öğrenci, aile birleşimi, yatırımcı, çalışma ve tır şoförü vizesi</strong> gibi tüm vize türlerinde hizmet veriyoruz. ABD, Kanada, İngiltere, Schengen ülkeleri, Avustralya, Çin, Dubai ve daha birçok ülkeye yönelik vize başvurularınızda en güncel prosedürlere uygun olarak danışmanlık sağlıyoruz.</p>
+        <p>Bursa'daki genel merkezimiz, vize danışmanlık sektöründe uzun yıllara dayanan deneyimi ve alanında uzman ekibiyle vize başvuru sürecinizde size rehberlik eder. Prince olarak, <strong>turistik, ticari, öğrenci, aile birleşimi, yatırımcı, çalışma ve tır şoförü vizesi</strong> gibi tüm vize türlerinde hizmet veriyoruz. ABD, Kanada, İngiltere, Schengen ülkeleri, Avustralya, Çin, Dubai ve daha birçok ülkeye yönelik vize başvurularınızda en güncel prosedürlere uygun olarak danışmanlık sağlıyoruz.</p>
         <h3><strong>Türkiye'nin Her Yerinden Online Destek ve Call Center Hizmeti</strong></h3>
         <p>Vize başvurusu sürecini en hızlı ve kolay hale getirmek için <strong>online destek hizmetimizle Türkiye'nin her noktasından</strong> başvuru yapabilirsiniz. <strong>0850 888 70 71</strong> numaralı çağrı merkezimiz aracılığıyla tüm danışanlarımıza destek sunuyoruz. Vize süreciyle ilgili sorularınızı uzman ekibimize danışabilir, gerekli belgeler ve başvuru aşamaları hakkında detaylı bilgi alabilirsiniz. Call center hizmetimiz sayesinde, Bursa dışındaki danışanlarımız da vize işlemlerini <strong>uzaktan ve eksiksiz</strong> bir şekilde tamamlayabilir.</p>
         <h3><strong>Bursa Genel Merkezimize Bekliyoruz</strong></h3>
         <p>Yüz yüze danışmanlık hizmeti almak ve vize sürecinizi birebir görüşmelerle planlamak isteyen danışanlarımızı Bursa'daki genel merkezimize bekliyoruz. Deneyimli ekibimiz, <strong>kişiye özel danışmanlık hizmeti sunarak vize başvurularınızı sorunsuz bir şekilde sonuçlandırmanız için sizinle birlikte çalışıyor.</strong></p>
-        <h3><strong>Neden Çilek Vize?</strong></h3>
+        <h3><strong>Neden Prince?</strong></h3>
         <p><strong>40'tan fazla uzman personel</strong> ile en kapsamlı vize danışmanlığı</p>
         <p><strong>Tüm vize türlerinde ve tüm ülkelerde profesyonel destek</strong></p>
         <p><strong>Türkiye'nin her yerinden online başvuru ve destek hizmeti</strong></p>
         <p><strong>Yüz yüze görüşme imkânı ile güvenilir ve birebir danışmanlık</strong></p>
         <p><strong>Call center desteği (0850 888 70 71)</strong></p>
         <h3><strong>Hemen Bilgi Alın!</strong></h3>
-        <h3>&nbsp;<strong>Çilek Vize Bursa Genel Merkezi</strong>&nbsp;-&nbsp; <strong>0850 888 70 71</strong></h3>
-        <p>Vize işlemlerinizde en güvenilir rehberiniz olan Çilek Vize ile <strong>hızlı, kolay ve güvenilir</strong> bir başvuru süreci yaşayın. Profesyonel ekibimizle <strong>hayallerinize bir adım daha yaklaşın!</strong></p>`
+        <h3>&nbsp;<strong>Prince Bursa Genel Merkezi</strong>&nbsp;-&nbsp; <strong>0850 888 70 71</strong></h3>
+        <p>Vize işlemlerinizde en güvenilir rehberiniz olan Prince ile <strong>hızlı, kolay ve güvenilir</strong> bir başvuru süreci yaşayın. Profesyonel ekibimizle <strong>hayallerinize bir adım daha yaklaşın!</strong></p>`
     },
     ankara: {
         id: 1,
@@ -55,10 +55,10 @@ const branchesData: Record<string, BranchData> = {
         address: 'Kızılay, Atatürk Bulvarı No:123, 06420 Çankaya/Ankara',
         addressShort: 'Kızılay, Atatürk Bulvarı No:123, 06420 Çankaya/A...',
         mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3059.1234567890!2d32.8597!3d39.9334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d347d520732db1%3A0x626e1e1e1e1e1e1e!2sAnkara!5e0!3m2!1str!2str!4v1234567890!5m2!1str!2str',
-        content: `<p>Çilek Vize <strong>Ankara Şubesi</strong> ile başkentteki danışanlarımıza profesyonel vize danışmanlık hizmeti sunuyoruz. Deneyimli ekibimiz ve modern ofisimizle tüm vize işlemlerinizde yanınızdayız.</p>
+        content: `<p>Prince <strong>Ankara Şubesi</strong> ile başkentteki danışanlarımıza profesyonel vize danışmanlık hizmeti sunuyoruz. Deneyimli ekibimiz ve modern ofisimizle tüm vize işlemlerinizde yanınızdayız.</p>
         <h3><strong>Ankara Şubemizle Güvenilir Hizmet</strong></h3>
         <p>Ankara'daki şubemiz, merkezi konumu ve uzman personeli ile vize başvuru sürecinizde size rehberlik eder. Tüm vize türlerinde profesyonel destek sağlıyoruz.</p>
-        <h3><strong>Neden Çilek Vize Ankara?</strong></h3>
+        <h3><strong>Neden Prince Ankara?</strong></h3>
         <p><strong>Merkezi konum</strong> - Kızılay'da kolay ulaşım</p>
         <p><strong>Uzman ekip</strong> - Deneyimli danışmanlarımız</p>
         <p><strong>Hızlı işlem</strong> - Kısa sürede sonuç</p>`
@@ -72,10 +72,10 @@ const branchesData: Record<string, BranchData> = {
         address: 'Alsancak, Kordon Boyu No:456, 35220 Konak/İzmir',
         addressShort: 'Alsancak, Kordon Boyu No:456, 35220 Konak/İ...',
         mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3125.1234567890!2d27.1428!3d38.4237!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b95c5e1e1e1e1e%3A0x626e1e1e1e1e1e1e!2sİzmir!5e0!3m2!1str!2str!4v1234567890!5m2!1str!2str',
-        content: `<p>Çilek Vize <strong>İzmir Şubesi</strong> ile Ege Bölgesi'ndeki danışanlarımıza hizmet veriyoruz. Deniz kenarındaki konumumuz ve uzman ekibimizle vize işlemlerinizde yanınızdayız.</p>
+        content: `<p>Prince <strong>İzmir Şubesi</strong> ile Ege Bölgesi'ndeki danışanlarımıza hizmet veriyoruz. Deniz kenarındaki konumumuz ve uzman ekibimizle vize işlemlerinizde yanınızdayız.</p>
         <h3><strong>İzmir Şubemizle Profesyonel Destek</strong></h3>
         <p>İzmir'deki şubemiz, modern ofisimiz ve deneyimli personelimiz ile tüm vize başvurularınızda size yardımcı oluyor.</p>
-        <h3><strong>Neden Çilek Vize İzmir?</strong></h3>
+        <h3><strong>Neden Prince İzmir?</strong></h3>
         <p><strong>Ege'nin merkezi</strong> - Alsancak'ta konum</p>
         <p><strong>Uzman danışmanlar</strong> - Profesyonel ekip</p>
         <p><strong>Hızlı çözüm</strong> - Etkili işlem süreci</p>`
@@ -89,10 +89,10 @@ const branchesData: Record<string, BranchData> = {
         address: 'Mecidiyeköy, Büyükdere Cad. No:789, 34394 Şişli/İstanbul',
         addressShort: 'Mecidiyeköy, Büyükdere Cad. No:789, 34394 Şişli/İ...',
         mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.1234567890!2d28.9857!3d41.0691!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab7650656bd63%3A0x8ca059b11077e81f!2sMecidiyeköy!5e0!3m2!1str!2str!4v1234567890!5m2!1str!2str',
-        content: `<p>Çilek Vize <strong>İstanbul Mecidiyeköy Şubesi</strong> ile metropoldeki danışanlarımıza hizmet veriyoruz. İş merkezlerine yakın konumumuz ve uzman ekibimizle vize işlemlerinizde yanınızdayız.</p>
+        content: `<p>Prince <strong>İstanbul Mecidiyeköy Şubesi</strong> ile metropoldeki danışanlarımıza hizmet veriyoruz. İş merkezlerine yakın konumumuz ve uzman ekibimizle vize işlemlerinizde yanınızdayız.</p>
         <h3><strong>İstanbul Mecidiyeköy Şubemizle Güvenilir Hizmet</strong></h3>
         <p>Mecidiyeköy'deki şubemiz, merkezi konumu ve deneyimli personeli ile tüm vize başvurularınızda size yardımcı oluyor.</p>
-        <h3><strong>Neden Çilek Vize İstanbul?</strong></h3>
+        <h3><strong>Neden Prince İstanbul?</strong></h3>
         <p><strong>Merkezi konum</strong> - Mecidiyeköy'de kolay ulaşım</p>
         <p><strong>Uzman ekip</strong> - Profesyonel danışmanlar</p>
         <p><strong>Hızlı işlem</strong> - Etkili çözüm süreci</p>`
@@ -106,10 +106,10 @@ const branchesData: Record<string, BranchData> = {
         address: 'Akdeniz, Atatürk Cad. No:321, 33110 Akdeniz/Mersin',
         addressShort: 'Akdeniz, Atatürk Cad. No:321, 33110 Akdeniz/M...',
         mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3204.1234567890!2d34.6415!3d36.8009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1527f4e1e1e1e1e%3A0x626e1e1e1e1e1e1e!2sMersin!5e0!3m2!1str!2str!4v1234567890!5m2!1str!2str',
-        content: `<p>Çilek Vize <strong>Mersin Şubesi</strong> ile Akdeniz Bölgesi'ndeki danışanlarımıza hizmet veriyoruz. Deneyimli ekibimiz ve modern ofisimizle vize işlemlerinizde yanınızdayız.</p>
+        content: `<p>Prince <strong>Mersin Şubesi</strong> ile Akdeniz Bölgesi'ndeki danışanlarımıza hizmet veriyoruz. Deneyimli ekibimiz ve modern ofisimizle vize işlemlerinizde yanınızdayız.</p>
         <h3><strong>Mersin Şubemizle Profesyonel Destek</strong></h3>
         <p>Mersin'deki şubemiz, uzman personeli ve merkezi konumu ile tüm vize başvurularınızda size yardımcı oluyor.</p>
-        <h3><strong>Neden Çilek Vize Mersin?</strong></h3>
+        <h3><strong>Neden Prince Mersin?</strong></h3>
         <p><strong>Akdeniz'in merkezi</strong> - Merkezi konum</p>
         <p><strong>Uzman danışmanlar</strong> - Deneyimli ekip</p>
         <p><strong>Hızlı çözüm</strong> - Etkili işlem süreci</p>`
@@ -325,7 +325,7 @@ export default function SubelerimizPage() {
                             </div>
 
                             <h1 className="hero-title-v2">
-                                <span className="title-accent">Çilek Vize</span>
+                                <span className="title-accent">Prince</span>
                                 <span className="title-main">{currentBranch.name}</span>
                             </h1>
 

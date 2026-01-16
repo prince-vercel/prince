@@ -3,10 +3,13 @@ import React, { useState, useEffect } from 'react'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import { FAQ } from '@/src/types/types'
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import '../../i18n'
 
 
 
 export default function FAQPage() {
+  const { t, isReady } = useSafeTranslation()
   const [activeId, setActiveId] = useState<string | null>(null);
   const [faqs, setFaqs] = useState<FAQ[]>([]);
 
@@ -48,8 +51,8 @@ export default function FAQPage() {
 
       <div className="container">
         <div className="text-center lg:pb-[60px] pb-[40px]">
-          <h5 className="section-sub-title-v1">En Sık Sorulan Sorular</h5>
-          <h2 className="section-title-v1">Sıkça Sorulan Sorular</h2>
+          <h5 className="section-sub-title-v1" suppressHydrationWarning>{isReady ? t('travel.pages.faqs.subtitle') : ''}</h5>
+          <h2 className="section-title-v1" suppressHydrationWarning>{isReady ? t('travel.pages.faqs.title') : ''}</h2>
         </div>
 
         <div className="accordion gap-base grid lg:grid-cols-2 grid-cols-1">

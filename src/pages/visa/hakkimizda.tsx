@@ -13,7 +13,7 @@ export default function HakkimizdaPage() {
                 <div className="image">
                     <img
                         src="/visa/uploads/contents/cover/1763937127_70e331bafdcc4c55539d.webp"
-                        alt={t('visa.pages.hakkimizda.heroTitle', 'Evraklarla Uğraşmadan Vize Başvurunuzu Çilek Vize ile Tamamlayın!')}
+                        alt={t('visa.pages.hakkimizda.heroTitle', 'Evraklarla Uğraşmadan Vize Başvurunuzu Prince ile Tamamlayın!')}
                         width={1728}
                         height={462}
                         fetchPriority="high"
@@ -23,9 +23,9 @@ export default function HakkimizdaPage() {
                 <div className="about-title-section-logo">
                     <img
                         src="/visa/uploads/contents/main/1763937997_ffa4d69cc741b45632f5.webp"
-                        alt={t('visa.pages.hakkimizda.heroTitle', 'Evraklarla Uğraşmadan Vize Başvurunuzu Çilek Vize ile Tamamlayın!')}
+                        alt={t('visa.pages.hakkimizda.heroTitle', 'Evraklarla Uğraşmadan Vize Başvurunuzu Prince ile Tamamlayın!')}
                     />
-                    <h1>{t('visa.pages.hakkimizda.heroTitle', 'Evraklarla Uğraşmadan Vize Başvurunuzu Çilek Vize ile Tamamlayın!')}</h1>
+                    <h1>{t('visa.pages.hakkimizda.heroTitle', 'Evraklarla Uğraşmadan Vize Başvurunuzu Prince ile Tamamlayın!')}</h1>
                 </div>
             </section>
 
@@ -34,8 +34,8 @@ export default function HakkimizdaPage() {
                 <div className="container">
                     <div className="content">
                         <div className="heading-3 colorfull">
-                            <p>{t('visa.pages.hakkimizda.content.intro', 'Günümüz dünyasında, uluslararası seyahat ve göçmenlik süreçleri giderek daha karmaşık hale gelmektedir. İş, eğitim, turizm veya aile birleşimi gibi nedenlerle yurt dışına çıkmak isteyen bireyler, vize başvuruları sırasında karşılaştıkları karmaşık prosedürler ve belgeler nedeniyle çoğu zaman zorlanmaktadır. Vize başvuru sürecindeki bu zorlukları aşmak ve başvurularının başarı şansını artırmak isteyen kişiler için profesyonel vize danışmanlık hizmetleri büyük bir önem taşımaktadır. İşte bu noktada, Çilek Vize olarak biz devreye giriyoruz.')}</p>
-                            <p><strong>{t('visa.pages.hakkimizda.content.mission.title', 'Firmamızın Amacı ve Misyonu')}</strong><br />{t('visa.pages.hakkimizda.content.mission.text', 'Çilek Vize, uluslararası vize başvurularında bireylere ve kurumlara profesyonel danışmanlık hizmeti sunan, alanında uzmanlaşmış bir firmadır. Misyonumuz, müşterilerimizin vize başvuru süreçlerini en hızlı, en doğru ve en etkili şekilde yönetmelerini sağlamaktır. Bu kapsamda, her müşterimizin ihtiyaçlarına özel çözümler sunuyor ve başvurularının başarıya ulaşması için titizlikle çalışıyoruz.')}</p>
+                            <p>{t('visa.pages.hakkimizda.content.intro', 'Günümüz dünyasında, uluslararası seyahat ve göçmenlik süreçleri giderek daha karmaşık hale gelmektedir. İş, eğitim, turizm veya aile birleşimi gibi nedenlerle yurt dışına çıkmak isteyen bireyler, vize başvuruları sırasında karşılaştıkları karmaşık prosedürler ve belgeler nedeniyle çoğu zaman zorlanmaktadır. Vize başvuru sürecindeki bu zorlukları aşmak ve başvurularının başarı şansını artırmak isteyen kişiler için profesyonel vize danışmanlık hizmetleri büyük bir önem taşımaktadır. İşte bu noktada, Prince olarak biz devreye giriyoruz.')}</p>
+                            <p><strong>{t('visa.pages.hakkimizda.content.mission.title', 'Firmamızın Amacı ve Misyonu')}</strong><br />{t('visa.pages.hakkimizda.content.mission.text', 'Prince, uluslararası vize başvurularında bireylere ve kurumlara profesyonel danışmanlık hizmeti sunan, alanında uzmanlaşmış bir firmadır. Misyonumuz, müşterilerimizin vize başvuru süreçlerini en hızlı, en doğru ve en etkili şekilde yönetmelerini sağlamaktır. Bu kapsamda, her müşterimizin ihtiyaçlarına özel çözümler sunuyor ve başvurularının başarıya ulaşması için titizlikle çalışıyoruz.')}</p>
                             <p><strong>{t('visa.pages.hakkimizda.content.services.title', 'Hizmetlerimiz;')}</strong><br />{t('visa.pages.hakkimizda.content.services.subtitle', '1. Vize Türleri ve Başvuru Süreçleri:')}</p>
                             <p><strong>{t('visa.pages.hakkimizda.content.services.tourist.title', 'Turist Vizeleri:')}</strong> {t('visa.pages.hakkimizda.content.services.tourist.text', 'Turistik amaçlarla yurt dışına seyahat etmek isteyen müşterilerimize, başvurulacak ülkenin vize gereklilikleri, seyahat sağlık sigortası, rezervasyonlar ve gerekli belgeler hakkında kapsamlı bilgi sağlıyoruz. Başvuru sürecini baştan sona yöneterek, müşterilerimizin sorunsuz bir şekilde vizelerini almasını sağlıyoruz.')}</p>
                             <p><strong>{t('visa.pages.hakkimizda.content.services.education.title', 'Eğitim Vizeleri:')}</strong> {t('visa.pages.hakkimizda.content.services.education.text', 'Yurt dışında eğitim almak isteyen öğrenciler için başvurulacak okul ve ülkenin gereksinimlerine uygun olarak, eğitim vizesi başvuru sürecini yönetiyoruz. Belgelerin doğru şekilde hazırlanmasından, okul kabul mektubu ve mali yeterlilik belgelerine kadar tüm detayları gözden geçiriyoruz.')}</p>
@@ -50,12 +50,12 @@ export default function HakkimizdaPage() {
                             <p><strong>{t('visa.pages.hakkimizda.content.rejection.alternatives.title', 'Alternatif Çözümler:')}</strong> {t('visa.pages.hakkimizda.content.rejection.alternatives.text', 'Vize reddi sonrası alternatif seyahat veya göç seçenekleri sunarak, müşterilerimizin hedeflerine ulaşmalarını sağlıyoruz.')}</p>
                             <p>{t('visa.pages.hakkimizda.content.personalized.title', '4. Kişiselleştirilmiş Danışmanlık:')}</p>
                             <p>{t('visa.pages.hakkimizda.content.personalized.text', 'Her müşterimizin ihtiyaçları farklıdır ve bu nedenle sunduğumuz hizmetler de kişiselleştirilmiştir. Müşterilerimizin hedeflerine, seyahat planlarına ve kişisel durumlarına uygun olarak özel çözümler sunuyoruz. Onların vize başvuru süreçlerini en verimli şekilde yönetmeleri için yanlarında oluyoruz.')}</p>
-                            <p><strong>{t('visa.pages.hakkimizda.content.team.title', 'Uzman Ekibimiz')}</strong><br />{t('visa.pages.hakkimizda.content.team.text', 'Çilek Vize olarak, alanında uzman ve deneyimli bir ekip ile çalışıyoruz. Ekibimiz, uluslararası vize başvuruları konusunda geniş bir bilgi birikimine ve deneyime sahiptir. Her biri, konsolosluk prosedürleri, yasal gereklilikler ve uluslararası göç politikaları konusunda derinlemesine bilgi sahibidir. Müşterilerimize en güncel ve doğru bilgileri sunarak, onların vize başvuru süreçlerini başarıya ulaştırmayı hedefliyoruz.')}</p>
-                            <p><strong>{t('visa.pages.hakkimizda.content.why.title', 'Neden Çilek Vize ?')}</strong><br /><strong>{t('visa.pages.hakkimizda.content.why.reliability.title', 'Güvenilirlik:')}</strong> {t('visa.pages.hakkimizda.content.why.reliability.text', 'Yılların deneyimi ile müşterilerimize en güvenilir ve etkili danışmanlık hizmetlerini sunuyoruz. Tüm süreçlerde şeffaflığı ve dürüstlüğü ilke ediniyoruz.')}</p>
+                            <p><strong>{t('visa.pages.hakkimizda.content.team.title', 'Uzman Ekibimiz')}</strong><br />{t('visa.pages.hakkimizda.content.team.text', 'Prince olarak, alanında uzman ve deneyimli bir ekip ile çalışıyoruz. Ekibimiz, uluslararası vize başvuruları konusunda geniş bir bilgi birikimine ve deneyime sahiptir. Her biri, konsolosluk prosedürleri, yasal gereklilikler ve uluslararası göç politikaları konusunda derinlemesine bilgi sahibidir. Müşterilerimize en güncel ve doğru bilgileri sunarak, onların vize başvuru süreçlerini başarıya ulaştırmayı hedefliyoruz.')}</p>
+                            <p><strong>{t('visa.pages.hakkimizda.content.why.title', 'Neden Prince ?')}</strong><br /><strong>{t('visa.pages.hakkimizda.content.why.reliability.title', 'Güvenilirlik:')}</strong> {t('visa.pages.hakkimizda.content.why.reliability.text', 'Yılların deneyimi ile müşterilerimize en güvenilir ve etkili danışmanlık hizmetlerini sunuyoruz. Tüm süreçlerde şeffaflığı ve dürüstlüğü ilke ediniyoruz.')}</p>
                             <p><strong>{t('visa.pages.hakkimizda.content.why.success.title', 'Başarı Oranı:')}</strong> {t('visa.pages.hakkimizda.content.why.success.text', 'Yüksek başarı oranımız, hizmet kalitemizin bir göstergesidir. Müşterilerimizin vize başvurularını en yüksek standartlarda yöneterek, başarılı sonuçlar elde ediyoruz.')}</p>
                             <p><strong>{t('visa.pages.hakkimizda.content.why.personal.title', 'Kişiye Özel Hizmet:')}</strong> {t('visa.pages.hakkimizda.content.why.personal.text', 'Her müşteri bizim için özeldir ve her birinin ihtiyaçlarına özel çözümler sunarız. Danışmanlık sürecimizi, müşterilerimizin kişisel durumlarına ve hedeflerine uygun şekilde tasarlıyoruz.')}</p>
                             <p><strong>{t('visa.pages.hakkimizda.content.why.support.title', 'Destek ve Rehberlik:')}</strong> {t('visa.pages.hakkimizda.content.why.support.text', 'Başvuruların her aşamasında müşterilerimize tam destek sağlıyoruz. Gerekli tüm belgeleri hazırlamaktan, konsolosluk görüşmelerine kadar her adımda yanlarındayız.')}</p>
-                            <p><br />{t('visa.pages.hakkimizda.content.conclusion', 'Çilek Vize olarak, uluslararası seyahat ve yurt dışı çalışma süreçlerinde müşterilerimizin en güvenilir yol arkadaşı olmayı amaçlıyoruz. Vize başvurularının karmaşık yapısını, deneyimimiz ve uzmanlığımızla basitleştiriyor ve müşterilerimize sorunsuz bir süreç sunuyoruz. Her müşterimizin hayatını kolaylaştırmak ve hedeflerine ulaşmalarını sağlamak için burada olmaktan gurur duyuyoruz. Müşterilerimizin memnuniyeti, başarımızın en büyük ödülüdür.')}</p>
+                            <p><br />{t('visa.pages.hakkimizda.content.conclusion', 'Prince olarak, uluslararası seyahat ve yurt dışı çalışma süreçlerinde müşterilerimizin en güvenilir yol arkadaşı olmayı amaçlıyoruz. Vize başvurularının karmaşık yapısını, deneyimimiz ve uzmanlığımızla basitleştiriyor ve müşterilerimize sorunsuz bir süreç sunuyoruz. Her müşterimizin hayatını kolaylaştırmak ve hedeflerine ulaşmalarını sağlamak için burada olmaktan gurur duyuyoruz. Müşterilerimizin memnuniyeti, başarımızın en büyük ödülüdür.')}</p>
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@ export default function HakkimizdaPage() {
                         <div className="box-list">
                             <div className="properties-box featured">
                                 <div className="icon">
-                                    <span className="heading-5">{t('visa.comparison.withCilekVize', 'Çilek Vize İle')}</span>
+                                    <span className="heading-5">{t('visa.comparison.withCilekVize', 'Prince İle')}</span>
                                 </div>
                                 <div className="item">
                                     <div className="icon">
@@ -141,7 +141,7 @@ export default function HakkimizdaPage() {
                             </div>
                             <div className="properties-box">
                                 <div className="icon">
-                                    <span className="heading-5">{t('visa.comparison.withoutCilekVize', 'Çilek Vize Olmadan')}</span>
+                                    <span className="heading-5">{t('visa.comparison.withoutCilekVize', 'Prince Olmadan')}</span>
                                 </div>
                                 <div className="item">
                                     <div className="icon">

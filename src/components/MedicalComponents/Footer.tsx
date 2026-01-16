@@ -1,6 +1,10 @@
 import Link from "next/link"
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import '../../i18n'
 
 export default function Footer() {
+  const { t, isReady } = useSafeTranslation()
+  const currentYear = new Date().getFullYear()
   return (
     <>
       <footer className="cs_footer cs_style_1 cs_heading_color">
@@ -10,44 +14,42 @@ export default function Footer() {
 
               <div className="col-lg-4">
                 <div className="cs_footer_item">
-                  <p>
-                    Prince Medical Aesthetics & Health Services <br />
-                 
+                  <p suppressHydrationWarning>
+                    {isReady ? t('medical.footer.description') : ''} <br />
                   </p>
 
                   <ul className="cs_contact_widget">
-                    <li>Dap Vadisi Z Ofis, Merkez, Seçkin Sk. Z ofis, Kat 2, Daire 229, 34406 Kağıthane/İstanbul</li>
-                    <li>+90 212 000 00 00</li>
-                    <li>info@princetourismagency.com</li>
-                    <li>medical@princetourismagency.com</li>
+                    <li suppressHydrationWarning>{isReady ? t('medical.footer.address') : ''}</li>
+                    <li suppressHydrationWarning>{isReady ? t('medical.footer.phone') : ''}</li>
+                    <li suppressHydrationWarning>{isReady ? t('medical.footer.email') : ''}</li>
+                    <li suppressHydrationWarning>{isReady ? t('medical.footer.medicalEmail') : ''}</li>
                   </ul>
                 </div>
               </div>
 
               <div className="col-lg-2">
                 <ul className="cs_menu_widget cs_mp0">
-                  <li><Link href="/medical">Anasayfa</Link></li>
-                  <li><Link href="/medical/organisation">Kurumlar</Link></li>
-                  <li><Link href="/medical/blog">Blog</Link></li>
-                  <li><Link href="/medical/about">Hakkımızda</Link></li>
-                  <li><Link href="/medical/contact">İletişim</Link></li>
+                  <li><Link href="/medical" suppressHydrationWarning>{isReady ? t('medical.footer.home') : ''}</Link></li>
+                  <li><Link href="/medical/organisation" suppressHydrationWarning>{isReady ? t('medical.footer.organisation') : ''}</Link></li>
+                  <li><Link href="/medical/blog" suppressHydrationWarning>{isReady ? t('medical.footer.blog') : ''}</Link></li>
+                  <li><Link href="/medical/about" suppressHydrationWarning>{isReady ? t('medical.footer.about') : ''}</Link></li>
+                  <li><Link href="/medical/contact" suppressHydrationWarning>{isReady ? t('medical.footer.contact') : ''}</Link></li>
                 </ul>
               </div>
 
               <div className="col-lg-2">
                 <ul className="cs_menu_widget cs_mp0">
-                  <li><Link href="/medical/faq">Sık Sorulan Sorular</Link></li>
-                  <li><Link href="/medical/privacy">Gizlilik Politikası</Link></li>
-                  <li><Link href="/medical/kvkk">KVKK & Aydınlatma</Link></li>
+                  <li><Link href="/medical/faq" suppressHydrationWarning>{isReady ? t('medical.footer.faqs') : ''}</Link></li>
+                  <li><Link href="/medical/privacy" suppressHydrationWarning>{isReady ? t('medical.footer.privacyPolicy') : ''}</Link></li>
+                  <li><Link href="/medical/kvkk" suppressHydrationWarning>{isReady ? t('medical.footer.kvkk') : ''}</Link></li>
                 </ul>
               </div>
 
               <div className="col-lg-4">
                 <div className="cs_newsletter cs_style1">
-                  <h2 className="cs_newsletter_title">Bize Katılın</h2>
-                  <p>
-                    Kampanyalar, yenilikler ve sağlık içerikleri için e-posta listemize
-                    kayıt olun.
+                  <h2 className="cs_newsletter_title" suppressHydrationWarning>{isReady ? t('medical.footer.newsletter.title') : ''}</h2>
+                  <p suppressHydrationWarning>
+                    {isReady ? t('medical.footer.newsletter.description') : ''}
                   </p>
 
                   <form
@@ -57,10 +59,11 @@ export default function Footer() {
                     <input
                       type="email"
                       className="cs_newsletter_input"
-                      placeholder="E-posta adresiniz"
+                      placeholder={isReady ? t('medical.footer.newsletter.placeholder') : ''}
+                      suppressHydrationWarning
                     />
-                    <button className="cs_btn cs_style_1">
-                      <span>Gönder</span>
+                    <button className="cs_btn cs_style_1" suppressHydrationWarning>
+                      <span>{isReady ? t('medical.footer.newsletter.submit') : ''}</span>
                     </button>
                   </form>
                 </div>
@@ -80,8 +83,8 @@ export default function Footer() {
 
               </div>
 
-              <div className="cs_copyright">
-                © Happencode. Tüm hakları saklıdır.
+              <div className="cs_copyright" suppressHydrationWarning>
+                {isReady ? t('medical.footer.copyright', { year: currentYear }) : ''}
               </div>
             </div>
           </div>

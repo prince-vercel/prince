@@ -1,0 +1,387 @@
+{
+    "medical": {
+        "header": {
+            "home": "Homepage",
+            "organisation": "Organizations",
+            "results": "Happy Results",
+            "form": "Application",
+            "blog": "Blog",
+            "about": "About Us",
+            "contact": "Contact",
+            "openMenu": "Open menu",
+            "close": "Close",
+            "searchPlaceholder": "Search Doctor"
+        },
+        "footer": {
+            "description": "Prince Medical Aesthetics & Health Services",
+            "address": "Dap Vadisi Z Ofis, Merkez, Seçkin Sk. Z ofis, Kat 2, Daire 229, 34406 Kağıthane/İstanbul",
+            "phone": "+90 212 000 00 00",
+            "email": "info@princetourismagency.com",
+            "medicalEmail": "medical@princetourismagency.com",
+            "home": "Homepage",
+            "organisation": "Organizations",
+            "blog": "Blog",
+            "about": "About Us",
+            "contact": "Contact",
+            "faqs": "Frequently Asked Questions",
+            "privacyPolicy": "Privacy Policy",
+            "kvkk": "KVKK & Clarification",
+            "newsletter": {
+                "title": "Join Us",
+                "description": "Sign up for our email list for campaigns, innovations, and health content.",
+                "placeholder": "Your email address",
+                "submit": "Send"
+            },
+            "copyright": "© Happencode. All rights reserved."
+        },
+        "homePage": {
+            "hero": {
+                "title": "Get the Best Treatment with Us",
+                "subtitle": "We offer you the best medical and health services.",
+                "applyButton": "Apply",
+                "words": {
+                    "aesthetic": "Aesthetic",
+                    "renewal": "Renewal",
+                    "beauty": "Beauty",
+                    "health": "Health"
+                }
+            },
+            "departments": {
+                "hairTransplant": "Hair Transplant",
+                "dental": "Dental",
+                "body": "Body",
+                "nose": "Nose",
+                "neckFace": "Neck and Face",
+                "hip": "Hip",
+                "eye": "Eye",
+                "ear": "Ear",
+                "breast": "Breast",
+                "genital": "Genital"
+            },
+            "processes": {
+                "title": "Processes",
+                "subtitle": "Our Treatment Process",
+                "steps": {
+                    "step1": {
+                        "title": "Arrival & VIP Transfer and Hotel Accommodation",
+                        "location": "Step 1",
+                        "text": "Your transformation begins the moment you land at the airport! If you're coming from abroad, our special VIP transfer will pick you up and take you safely and comfortably to your hotel or clinic."
+                    },
+                    "step2": {
+                        "title": "Personalized Examination and Preparation",
+                        "location": "Step 2",
+                        "text": "Before the procedure, we conduct a one-on-one examination with our experts to listen to your expectations. We perform the necessary tests and create the most suitable treatment plan for you."
+                    },
+                    "step3": {
+                        "title": "Post-Procedure Care and Recovery",
+                        "location": "Step 3",
+                        "text": "After the procedure is completed, we are with you during your recovery process. Depending on your treatment, you can spend time in our comfortable rest rooms or return to your hotel and receive detailed care instructions."
+                    }
+                }
+            },
+            "results": {
+                "title": "Happy Results",
+                "loading": "Loading results...",
+                "noResults": "No results yet.",
+                "viewAll": "View All Results"
+            },
+            "blog": {
+                "title": "Did You Know?",
+                "loading": "Loading blogs...",
+                "noBlogs": "No blogs yet.",
+                "readMore": "Read More"
+            },
+            "partners": {
+                "loading": "Loading partners...",
+                "noPartners": "No partners yet.",
+                "defaultAlt": "Partner"
+            },
+            "chatbot": {
+                "startChat": "Start Chat",
+                "close": "Close",
+                "loading": "Loading..."
+            },
+            "errors": {
+                "loadingBlogs": "Error loading blogs:",
+                "loadingResults": "Error loading results:",
+                "loadingPartners": "Error loading partners:"
+            }
+        },
+        "pages": {
+            "breadcrumb": {
+                "home": "Homepage",
+                "contact": "Contact",
+                "blog": "Blog",
+                "about": "About Us",
+                "faqs": "Frequently Asked Questions",
+                "privacy": "Privacy Policy",
+                "kvkk": "KVKK & Clarification",
+                "organisation": "Organizations",
+                "results": "Happy Results",
+                "form": "Application"
+            },
+            "contact": {
+                "title": "Contact Us",
+                "subtitle": "Contact us for the fastest response.",
+                "emailTitle": "Send Email",
+                "callTitle": "Call Us",
+                "addressTitle": "Address",
+                "address": "DAP Building Z Office, Büyükdere St. No: 209, 4. Levent, Istanbul, Turkey",
+                "formTitle": "Reach Out to Us!",
+                "nameLabel": "Name",
+                "emailLabel": "Email",
+                "subjectLabel": "Subject",
+                "messageLabel": "Message",
+                "submitButton": "Send",
+                "successToast": "Your message has been sent successfully!",
+                "errorToast": "Please fill in all fields!",
+                "errorAlert": "Form submission error:"
+            },
+            "about": {
+                "title": "About Us",
+                "subtitle": "Your health and beauty are our priority.",
+                "whyChooseUs": "Why Should You Choose Us?",
+                "description1": "As Prince Medical, we were established to provide Turkey's world-class healthcare services to international patients in a safe, transparent, and comfortable manner. By collaborating with expert doctors and fully equipped healthcare institutions, we offer our patients treatment processes at the highest quality standards.",
+                "description2": "With our experience in medical tourism; we develop personalized solutions in aesthetic surgery, hair transplantation, dental treatments, and many other branches. At every stage of the treatment process, we prioritize our patients' needs; providing end-to-end services from consultation to post-treatment.",
+                "description3": "We make the treatment process stress-free and safe by offering travel planning, accommodation, VIP transfer, and multilingual patient coordination services for our guests coming from abroad.",
+                "description4": "As Prince Medical, our fundamental principle is to produce ethical, patient satisfaction-oriented, and sustainable healthcare solutions. Your health is not a service for us, but a responsibility.",
+                "counters": {
+                    "happyPatients": "Happy Patients",
+                    "expertDoctors": "Expert Doctors",
+                    "yearsExperience": "Years Experience",
+                    "awards": "Awards"
+                },
+                "partners": {
+                    "loading": "Loading partners...",
+                    "noPartners": "No partners yet."
+                }
+            },
+            "blog": {
+                "title": "Blog",
+                "subtitle": "Current information and tips about health and beauty.",
+                "loading": "Loading blogs...",
+                "noBlogs": "No blogs yet.",
+                "readMore": "Read More",
+                "error": "Error loading blogs:",
+                "detail": {
+                    "loading": "Loading blog...",
+                    "notFound": "Blog not found",
+                    "error": "Error loading blog",
+                    "share": "Share:",
+                    "content": "Blog Content",
+                    "blogManager": "Blog Manager"
+                }
+            },
+            "faq": {
+                "subtitle": "People Usually",
+                "title": "Ask",
+                "loading": "Loading questions...",
+                "noFaqs": "No questions added yet",
+                "error": "Error fetching FAQ data:"
+            },
+            "organisation": {
+                "title": "Our Organizations",
+                "subtitle": "Choose the one that suits your needs from hotels and hospitals.",
+                "filters": {
+                    "all": "All",
+                    "hotels": "Hotels",
+                    "hospitals": "Hospitals"
+                },
+                "items": "Items",
+                "loading": "Loading...",
+                "noOrganisations": "No organization found matching these criteria",
+                "error": "Error fetching organizations:",
+                "banner": {
+                    "title": "Don't Leave Your Health Behind!",
+                    "subtitle": "Book an appointment with one of our experienced medical professionals today!"
+                }
+            },
+            "results": {
+                "title": "Happy Results",
+                "subtitle": "Successful treatment results and satisfaction of our patients.",
+                "filters": {
+                    "all": "All",
+                    "dental": "Dental",
+                    "genital": "Genital",
+                    "breast": "Breast",
+                    "eye": "Eye",
+                    "hip": "Hip",
+                    "ear": "Ear",
+                    "neckFace": "Neck and Face",
+                    "nose": "Nose",
+                    "hairTransplant": "Hair Transplant",
+                    "body": "Body Shaping and Liposuction"
+                },
+                "items": "Items",
+                "loading": "Loading...",
+                "noResults": "No results found in this category yet",
+                "error": "Error fetching results:",
+                "testimonials": {
+                    "title": "Customer Testimonials",
+                    "loading": "Loading testimonials...",
+                    "noTestimonials": "No testimonials added yet",
+                    "error": "Error fetching testimonials:"
+                }
+            },
+            "form": {
+                "title": "Application Form",
+                "subtitle": "Create your appointment request by filling out the form below.",
+                "loading": "Loading questions...",
+                "stepTitle": "Personal Information",
+                "labels": {
+                    "fullName": "Full Name",
+                    "birthDate": "Date of Birth",
+                    "gender": "Gender",
+                    "nationality": "Nationality",
+                    "phone": "Phone",
+                    "email": "Email"
+                },
+                "genderOptions": {
+                    "female": "Female",
+                    "male": "Male",
+                    "preferNotToSay": "Prefer Not to Say"
+                },
+                "buttons": {
+                    "previous": "Previous",
+                    "next": "Next",
+                    "submit": "Submit Form"
+                },
+                "success": "✓ You have successfully submitted the form!",
+                "error": "An error occurred while submitting the form. Please try again.",
+                "required": "is required",
+                "errorAlert": "Form submission error:",
+                "privacy": "Your information is confidential and will not be shared with third parties.",
+                "summary": {
+                    "title": "Form Summary",
+                    "empty": "Start filling in the information..."
+                }
+            },
+            "privacy": {
+                "title": "Privacy Policy",
+                "intro": "As Prince, we attach great importance to protecting the privacy of our visitors and users. This Privacy Policy explains what personal data is collected when you visit our website, how it is used, protected, and your rights.",
+                "section1": {
+                    "title": "Information Collected",
+                    "intro": "When you use our website, the following information may be collected:",
+                    "items": [
+                        "Name, surname",
+                        "Email address",
+                        "Phone number",
+                        "IP address",
+                        "Device, browser and usage information",
+                        "Cookie data",
+                        "Information transmitted through contact or application forms"
+                    ]
+                },
+                "section2": {
+                    "title": "Method of Collecting Personal Data",
+                    "intro": "Your personal data is collected through the following methods:",
+                    "items": [
+                        "When you visit our website",
+                        "When you create a membership",
+                        "When you fill out contact forms",
+                        "When you use our services"
+                    ],
+                    "note": "Data is collected through automatic or non-automatic methods."
+                },
+                "section3": {
+                    "title": "Purposes of Using Personal Data",
+                    "intro": "Collected data may be used for the following purposes:",
+                    "items": [
+                        "Providing and improving services",
+                        "Meeting user requests",
+                        "Conducting communication activities",
+                        "Fulfilling legal obligations",
+                        "Ensuring system security",
+                        "Marketing and analysis activities (if consent is given)"
+                    ]
+                },
+                "section4": {
+                    "title": "Sharing of Personal Data",
+                    "intro": "Your personal data may be shared in the following cases:",
+                    "items": [
+                        "With authorized public institutions in case of legal obligations",
+                        "With third parties from whom services are received (hosting, infrastructure, email services, etc.)",
+                        "If you have given explicit consent"
+                    ]
+                },
+                "section5": {
+                    "title": "Storage and Security of Personal Data",
+                    "text": "Your personal data is stored for the periods specified in the relevant legislation and necessary technical and administrative measures are taken against unauthorized access."
+                },
+                "section6": {
+                    "title": "Cookies",
+                    "text": "Cookies are used on our website to improve user experience. You can reject or delete cookies from your browser settings."
+                },
+                "section7": {
+                    "title": "Privacy Policy Updates",
+                    "text": "This Privacy Policy may be updated when necessary. The current text is always published on our website."
+                },
+                "contact": "You can write to us at <strong>info@princetourismagency.com</strong> for your questions."
+            },
+            "kvkk": {
+                "title": "KVKK Disclosure Text",
+                "intro": "In accordance with Law No. 6698 on the Protection of Personal Data (KVKK), Pro Health, as the data controller, processes your personal data within the scope described below.",
+                "section1": {
+                    "title": "Data Controller",
+                    "companyName": "Company Name:",
+                    "email": "Email:"
+                },
+                "section2": {
+                    "title": "Personal Data Processed",
+                    "items": [
+                        "Identity information (name, surname)",
+                        "Contact information (email, phone)",
+                        "Transaction security information (IP, log records)",
+                        "User transaction information"
+                    ]
+                },
+                "section3": {
+                    "title": "Purposes of Processing Personal Data",
+                    "intro": "Your personal data is processed for the following purposes:",
+                    "items": [
+                        "Execution of services",
+                        "Conducting communication activities",
+                        "Evaluation of requests and complaints",
+                        "Fulfillment of legal obligations",
+                        "Execution of information security processes"
+                    ]
+                },
+                "section4": {
+                    "title": "Transfer of Personal Data",
+                    "text": "Your personal data may be transferred to authorized public institutions and organizations and third parties from whom services are received, in accordance with Articles 8 and 9 of the KVKK."
+                },
+                "section5": {
+                    "title": "Method of Collecting Personal Data and Legal Basis",
+                    "intro": "Your personal data is collected through the following methods:",
+                    "items": [
+                        "Website",
+                        "Electronic forms",
+                        "Cookies"
+                    ],
+                    "note": "Your personal data is processed based on the legal reasons specified in Article 5 of the KVKK."
+                },
+                "section6": {
+                    "title": "Your Rights Under KVKK",
+                    "intro": "In accordance with Article 11 of the KVKK, you have the following rights:",
+                    "items": [
+                        "Learning whether your personal data is processed",
+                        "Requesting information if processed",
+                        "Learning the purpose of processing",
+                        "Requesting correction if incorrectly or incompletely processed",
+                        "Requesting deletion or destruction",
+                        "Requesting notification of transactions to third parties",
+                        "Objecting to analysis with automated systems",
+                        "Requesting compensation in case of damage"
+                    ]
+                },
+                "contact": "You can submit your applications through our email address <strong>info@princetourismagency.com</strong>."
+            },
+            "slug": {
+                "loading": "Loading treatments...",
+                "notFound": "Treatment list not found",
+                "error": "Content not found",
+                "addApplication": "Add Application"
+            }
+        }
+    }
+}

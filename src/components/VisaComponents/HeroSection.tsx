@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../../i18n'
 
@@ -22,60 +22,81 @@ interface Testimonial {
 
 export default function HeroSection() {
     const { t, i18n } = useTranslation()
+    const [mounted, setMounted] = useState(false)
+
+    // Client-side mount kontrolü
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     const testimonials: Testimonial[] = useMemo(() => {
+        if (!mounted || !i18n.isInitialized) {
+            return []
+        }
         const testimonialsData = t('visa.hero.testimonials', { returnObjects: true }) as Array<{ name: string; text: string }>
         return testimonialsData.map((testimonial) => ({
             name: testimonial.name,
             rating: 5,
             text: testimonial.text
         }))
-    }, [t, i18n.language])
+    }, [t, i18n.language, i18n.isInitialized, mounted])
 
-    const heroSlides: HeroSlide[] = [
-        {
-            title: t('visa.hero.slides.0.title'),
-            description: t('visa.hero.slides.0.description'),
-            image: "/visa/uploads/contents/cover/1764381535_6294c9264c4a93d44ae9.webp",
-            imageMobile: "/visa/uploads/contents/cover/1764381535_b4318e2017f6811445cd.webp",
-            link: "/visa/basvuru-yap"
-        },
-        {
-            title: t('visa.hero.slides.1.title'),
-            description: t('visa.hero.slides.1.description'),
-            image: "/visa/uploads/contents/cover/1764381549_c671a3b0a4d6c5cbbea9.webp",
-            imageMobile: "/visa/uploads/contents/cover/1764381549_e09624fd32620c2f858b.webp",
-            link: "/visa/basvuru-yap"
-        },
-        {
-            title: t('visa.hero.slides.2.title'),
-            description: t('visa.hero.slides.2.description'),
-            image: "/visa/uploads/contents/cover/1764381565_9f81c057ad3c5d43cf5d.webp",
-            imageMobile: "/visa/uploads/contents/cover/1764381565_34ec4e3668e3930ba4dd.webp",
-            link: "/visa/basvuru-yap"
-        },
-        {
-            title: t('visa.hero.slides.3.title'),
-            description: t('visa.hero.slides.3.description'),
-            image: "/visa/uploads/contents/cover/1764381570_b38602b721c8da36bf95.webp",
-            imageMobile: "/visa/uploads/contents/cover/1764381570_7e2cba976ef69da4c4fe.webp",
-            link: "/visa/basvuru-yap"
-        },
-        {
-            title: t('visa.hero.slides.4.title'),
-            description: t('visa.hero.slides.4.description'),
-            image: "/visa/uploads/contents/cover/1764381559_98a3fffebc2824556323.webp",
-            imageMobile: "/visa/uploads/contents/cover/1764381559_f6be6ce09e0f316edc7d.webp",
-            link: "/visa/basvuru-yap"
-        },
-        {
-            title: t('visa.hero.slides.5.title'),
-            description: t('visa.hero.slides.5.description'),
-            image: "/visa/uploads/contents/cover/1764381554_9a8d717e6e834d6c08be.webp",
-            imageMobile: "/visa/uploads/contents/cover/1764381554_127578092fa42c96188a.webp",
-            link: "/visa/basvuru-yap"
+    const heroSlides: HeroSlide[] = useMemo(() => {
+        if (!mounted || !i18n.isInitialized) {
+            return [
+                { title: '', description: '', image: '', link: '/visa/basvuru-yap' },
+                { title: '', description: '', image: '', link: '/visa/basvuru-yap' },
+                { title: '', description: '', image: '', link: '/visa/basvuru-yap' },
+                { title: '', description: '', image: '', link: '/visa/basvuru-yap' },
+                { title: '', description: '', image: '', link: '/visa/basvuru-yap' },
+                { title: '', description: '', image: '', link: '/visa/basvuru-yap' }
+            ]
         }
-    ]
+        return [
+            {
+                title: t('visa.hero.slides.0.title'),
+                description: t('visa.hero.slides.0.description'),
+                image: "/visa/uploads/contents/cover/1764381535_6294c9264c4a93d44ae9.webp",
+                imageMobile: "/visa/uploads/contents/cover/1764381535_b4318e2017f6811445cd.webp",
+                link: "/visa/basvuru-yap"
+            },
+            {
+                title: t('visa.hero.slides.1.title'),
+                description: t('visa.hero.slides.1.description'),
+                image: "/visa/uploads/contents/cover/1764381549_c671a3b0a4d6c5cbbea9.webp",
+                imageMobile: "/visa/uploads/contents/cover/1764381549_e09624fd32620c2f858b.webp",
+                link: "/visa/basvuru-yap"
+            },
+            {
+                title: t('visa.hero.slides.2.title'),
+                description: t('visa.hero.slides.2.description'),
+                image: "/visa/uploads/contents/cover/1764381565_9f81c057ad3c5d43cf5d.webp",
+                imageMobile: "/visa/uploads/contents/cover/1764381565_34ec4e3668e3930ba4dd.webp",
+                link: "/visa/basvuru-yap"
+            },
+            {
+                title: t('visa.hero.slides.3.title'),
+                description: t('visa.hero.slides.3.description'),
+                image: "/visa/uploads/contents/cover/1764381570_b38602b721c8da36bf95.webp",
+                imageMobile: "/visa/uploads/contents/cover/1764381570_7e2cba976ef69da4c4fe.webp",
+                link: "/visa/basvuru-yap"
+            },
+            {
+                title: t('visa.hero.slides.4.title'),
+                description: t('visa.hero.slides.4.description'),
+                image: "/visa/uploads/contents/cover/1764381559_98a3fffebc2824556323.webp",
+                imageMobile: "/visa/uploads/contents/cover/1764381559_f6be6ce09e0f316edc7d.webp",
+                link: "/visa/basvuru-yap"
+            },
+            {
+                title: t('visa.hero.slides.5.title'),
+                description: t('visa.hero.slides.5.description'),
+                image: "/visa/uploads/contents/cover/1764381554_9a8d717e6e834d6c08be.webp",
+                imageMobile: "/visa/uploads/contents/cover/1764381554_127578092fa42c96188a.webp",
+                link: "/visa/basvuru-yap"
+            }
+        ]
+    }, [t, i18n.language, i18n.isInitialized, mounted])
 
     // main.js'teki heroSlider ve swiperVerticalCardSliders init fonksiyonlarını çağır
     useEffect(() => {
@@ -123,16 +144,17 @@ export default function HeroSection() {
                                 <div className="hero-slide-card">
                                     <div className="content">
                                         <span className="body"></span>
-                                        <strong className="heading-1">{slide.title}</strong>
+                                        <strong className="heading-1" suppressHydrationWarning>{slide.title}</strong>
                                         <div className="body-lg">
-                                            <p>{slide.description}</p>
+                                            <p suppressHydrationWarning>{slide.description}</p>
                                         </div>
                                         <Link
-                                            title={t('visa.hero.slides.0.cta')}
+                                            title={mounted && i18n.isInitialized ? t('visa.hero.slides.0.cta') : ''}
                                             href={slide.link}
                                             className="btn btn-primary btn-has-icon"
+                                            suppressHydrationWarning
                                         >
-                                            {t('visa.hero.slides.0.cta')}
+                                            {mounted && i18n.isInitialized ? t('visa.hero.slides.0.cta') : ''}
                                             <span className="icon">
                                                 <Image
                                                     src="/visa/assets/img/icon/target-link.svg"
@@ -151,7 +173,7 @@ export default function HeroSection() {
                                             )}
                                             <Image
                                                 src={slide.image}
-                                                alt={slide.title}
+                                                alt={slide.title || ''}
                                                 width={833}
                                                 height={811}
                                                 priority={index === 0}
@@ -174,7 +196,7 @@ export default function HeroSection() {
                                     <div className="short-card">
                                         <div className="content-huge">
                                             <div className="title-huge">
-                                                <span className="body-lg">{testimonial.name}</span>
+                                                <span className="body-lg" suppressHydrationWarning>{testimonial.name}</span>
                                                 <div className="rating-huge">
                                                     {Array.from({ length: testimonial.rating }).map((_, i) => (
                                                         <Image
@@ -182,7 +204,7 @@ export default function HeroSection() {
                                                             src="/visa/assets/img/icon/star-filled.svg"
                                                             width={14}
                                                             height={12}
-                                                            alt={`${testimonial.name} rating`}
+                                                            alt={testimonial.name ? `${testimonial.name} rating` : 'Rating'}
                                                             loading="lazy"
                                                             decoding="async"
                                                         />
@@ -190,10 +212,10 @@ export default function HeroSection() {
                                                 </div>
                                             </div>
                                             <div className="body-sm">
-                                                <p>{testimonial.text}</p>
+                                                <p suppressHydrationWarning>{testimonial.text}</p>
                                                 <div className="d-flex justify-content-end">
-                                                    <button className="read-more btn btn-primary" style={{ display: 'none' }}>
-                                                        {t('visa.hero.readMore')}
+                                                    <button className="read-more btn btn-primary" style={{ display: 'none' }} suppressHydrationWarning>
+                                                        {mounted && i18n.isInitialized ? t('visa.hero.readMore') : ''}
                                                     </button>
                                                 </div>
                                             </div>

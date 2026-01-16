@@ -4,11 +4,24 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import '../../i18n'
+import i18n from '../../i18n'
 
 export default function Header() {
+  const { t, isReady } = useSafeTranslation()
   const pathname = usePathname()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
+  const [selectedLanguage, setSelectedLanguage] = useState('TR')
+
+  useEffect(() => {
+    if (isReady) {
+      const currentLang = i18n.language === 'en' ? 'EN' : 'TR'
+      setSelectedLanguage(currentLang)
+    }
+  }, [isReady, i18n.language])
 
   useEffect(() => {
     // Sidebar ve search'ü kapat
@@ -34,54 +47,142 @@ export default function Header() {
   return (
     <>
       {/* HEADER */}
-      <header className="cs_site_header cs_style1 cs_sticky_header cs_heading_color">
-        <div className="cs_main_header">
-          <div className="container">
-            <div className="cs_main_header_in">
+      <header className="cs_site_header cs_style1 cs_sticky_header cs_heading_color" style={{ width: '100%' }}>
+        <div className="cs_main_header" style={{ width: '100%' }}>
+          <div className="cs_main_header_in" style={{ width: '100%', maxWidth: '100%', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-              {/* LEFT */}
-              <div className="cs_main_header_left">
-                <Link href="/" className="cs_site_branding">
-                  <Image src="/assets/logo/logo-mavi.png" alt="Logo" width={110} height={35} />
-                </Link>
-
-                <nav className="cs_nav">
-                  <ul className="cs_nav_list">
-                    <li><Link href="/medical" className="font-semibold">Anasayfa</Link></li>
-                    <li><Link href="/medical/organisation" className="font-semibold">Kurumlar</Link></li>
-                    <li><Link href="/medical/results" className="font-semibold">Mutlu Sonuçlar</Link></li>
-                    <li><Link href="/medical/form" className="font-semibold">Başvuru</Link></li>
-                    <li><Link href="/medical/blog" className="font-semibold">Blog</Link></li>
-                    <li><Link href="/medical/about" className="font-semibold">Hakkımızda</Link></li>
-                    <li><Link href="/medical/contact" className="font-semibold">İletişim</Link></li>
-                  </ul>
-                </nav>
-              </div>
-
-              {/* RIGHT */}
-              <div className="cs_main_header_right">
-                {/* SOCIALS – DESKTOP */}
-                <div className="cs_social_links cs_social_desktop">
-                  <a href="#"><i className="fa-brands fa-facebook-f"></i></a>
-                  <a href="#"><i className="fa-brands fa-youtube"></i></a>
-                  <a href="#"><i className="fa-brands fa-instagram"></i></a>
-                </div>
-
-                <div className="cs_toolbox">
-
-                  <button
-                    type="button"
-                    className="cs_toolbox_btn cs_sidebar_toggle_btn"
-                    onClick={() => setIsSidebarOpen(true)}
-                    aria-label="Open menu"
-                  >
-                    <i className="fa-solid fa-bars"></i>
-                  </button>
-
-                </div>
-              </div>
-
+            {/* LEFT - Logo */}
+            <div className="cs_main_header_left" style={{ flex: '0 0 auto' }}>
+              <Link href="/" className="cs_site_branding">
+                <Image src="/assets/logo/logo-mavi.png" alt="Logo" width={110} height={35} />
+              </Link>
             </div>
+
+            {/* CENTER - Navigation */}
+            <nav className="cs_nav" style={{ flex: '1', display: 'flex', justifyContent: 'center' }}>
+              <ul className="cs_nav_list" style={{ display: 'flex', margin: 0, padding: 0 }}>
+                <li><Link href="/medical" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.home') : ''}</Link></li>
+                <li><Link href="/medical/organisation" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.organisation') : ''}</Link></li>
+                <li><Link href="/medical/results" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.results') : ''}</Link></li>
+                <li><Link href="/medical/form" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.form') : ''}</Link></li>
+                <li><Link href="/medical/blog" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.blog') : ''}</Link></li>
+                <li><Link href="/medical/about" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.about') : ''}</Link></li>
+                <li><Link href="/medical/contact" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.contact') : ''}</Link></li>
+              </ul>
+            </nav>
+
+            {/* RIGHT - Language Dropdown & Socials */}
+            <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', gap: '20px' }}>
+              {/* Language Dropdown */}
+              <div className="language-selector" style={{ position: 'relative' }}>
+                <button
+                  className={`language-selector-btn ${isLanguageDropdownOpen ? 'active' : ''}`}
+                  onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+                  onBlur={() => {
+                    setTimeout(() => setIsLanguageDropdownOpen(false), 200)
+                  }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '8px 16px',
+                    border: '1px solid #307BC4',
+                    borderRadius: '8px',
+                    background: 'transparent',
+                    color: '#307BC4',
+                    cursor: 'pointer',
+                    fontSize: '14px',
+                    fontWeight: 500
+                  }}
+                >
+                  <span suppressHydrationWarning>{selectedLanguage}</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                {isLanguageDropdownOpen && (
+                  <div className="language-dropdown" style={{
+                    position: 'absolute',
+                    top: '100%',
+                    right: 0,
+                    marginTop: '8px',
+                    background: 'white',
+                    border: '1px solid #307BC4',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                    zIndex: 1000,
+                    minWidth: '100px'
+                  }}>
+                    <button
+                      className={`language-option ${selectedLanguage === 'TR' ? 'active' : ''}`}
+                      onClick={() => {
+                        setSelectedLanguage('TR')
+                        i18n.changeLanguage('tr')
+                        setIsLanguageDropdownOpen(false)
+                      }}
+                      style={{
+                        display: 'block',
+                        width: '100%',
+                        padding: '10px 16px',
+                        textAlign: 'left',
+                        background: selectedLanguage === 'TR' ? '#307BC4' : 'transparent',
+                        color: selectedLanguage === 'TR' ? 'white' : '#333',
+                        border: 'none',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        borderTopLeftRadius: '8px',
+                        borderTopRightRadius: '8px'
+                      }}
+                    >
+                      TR
+                    </button>
+                    <button
+                      className={`language-option ${selectedLanguage === 'EN' ? 'active' : ''}`}
+                      onClick={() => {
+                        setSelectedLanguage('EN')
+                        i18n.changeLanguage('en')
+                        setIsLanguageDropdownOpen(false)
+                      }}
+                      style={{
+                        display: 'block',
+                        width: '100%',
+                        padding: '10px 16px',
+                        textAlign: 'left',
+                        background: selectedLanguage === 'EN' ? '#307BC4' : 'transparent',
+                        color: selectedLanguage === 'EN' ? 'white' : '#333',
+                        border: 'none',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        borderBottomLeftRadius: '8px',
+                        borderBottomRightRadius: '8px'
+                      }}
+                    >
+                      EN
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* SOCIALS – DESKTOP */}
+              <div className="cs_social_links cs_social_desktop">
+                <a href="#"><i className="fa-brands fa-facebook-f" style={{ color: '#307BC4' }}></i></a>
+                <a href="#"><i className="fa-brands fa-youtube" style={{ color: '#307BC4' }}></i></a>
+                <a href="#"><i className="fa-brands fa-instagram" style={{ color: '#307BC4' }}></i></a>
+              </div>
+
+              {/* MOBILE MENU TOGGLE */}
+              <div className="cs_toolbox">
+                <button
+                  type="button"
+                  className="cs_toolbox_btn cs_sidebar_toggle_btn"
+                  onClick={() => setIsSidebarOpen(true)}
+                  aria-label="Open menu"
+                >
+                  <i className="fa-solid fa-bars"></i>
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
       </header>

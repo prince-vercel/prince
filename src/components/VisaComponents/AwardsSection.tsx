@@ -2,7 +2,7 @@
 
 import Head from 'next/head'
 import { useEffect, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
 import '../../i18n'
 import '../../styles/visa/AwardsSection.css'
 
@@ -13,16 +13,17 @@ interface Award {
 }
 
 export default function AwardsSection() {
-  const { t, i18n } = useTranslation()
+  const { t, isReady } = useSafeTranslation()
 
   const awards: Award[] = useMemo(() => {
+    if (!isReady) return []
     const awardsData = t('visa.awards.list', { returnObjects: true }) as Array<{ title: string; image: string }>
     return awardsData.map((award) => ({
       title: award.title,
       image: award.image,
       status: 'approved' as const
     }))
-  }, [t, i18n.language])
+  }, [t, isReady])
 
   // HTML'deki script'leri başlat: Swiper ve LightGallery
   useEffect(() => {
@@ -144,8 +145,12 @@ export default function AwardsSection() {
                 <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
               </svg>
             </div>
-            <h2 className="awards-title">{t('visa.awards.title')}</h2>
-            <p className="awards-subtitle">{t('visa.awards.subtitle')}</p>
+            <h2 className="awards-title" suppressHydrationWarning>
+              {isReady ? t('visa.awards.title') : ''}
+            </h2>
+            <p className="awards-subtitle" suppressHydrationWarning>
+              {isReady ? t('visa.awards.subtitle') : ''}
+            </p>
           </div>
 
           <div className="awards-swiper-wrapper">
@@ -154,16 +159,17 @@ export default function AwardsSection() {
                 {awards.map((award, index) => (
                   <div key={index} className="swiper-slide">
                     <a
-                      title={award.title}
+                      title={award.title || ''}
                       href={award.image}
                       className="award-card"
                       data-lg-size="1600-2400"
-                      data-sub-html={`<h4>${award.title}</h4>`}
+                      data-sub-html={award.title ? `<h4>${award.title}</h4>` : ''}
+                      suppressHydrationWarning
                     >
                       <div className="award-image-wrapper">
                         <img
                           src={award.image}
-                          alt={award.title}
+                          alt={award.title || ''}
                           loading="lazy"
                           decoding="async"
                         />
@@ -180,27 +186,37 @@ export default function AwardsSection() {
                       </div>
                       <div className="award-content">
                         <div className="award-title-section">
-                          <h3 className="award-title-text">{award.title.toUpperCase()}</h3>
-                          <div className="award-congrats">{t('visa.awards.congrats')}</div>
-                          <p className="award-thanks">{t('visa.awards.thanks')}</p>
-                          <p className="award-description">
-                            {t('visa.awards.description')}
+                          <h3 className="award-title-text" suppressHydrationWarning>
+                            {award.title ? award.title.toUpperCase() : ''}
+                          </h3>
+                          <div className="award-congrats" suppressHydrationWarning>
+                            {isReady ? t('visa.awards.congrats') : ''}
+                          </div>
+                          <p className="award-thanks" suppressHydrationWarning>
+                            {isReady ? t('visa.awards.thanks') : ''}
+                          </p>
+                          <p className="award-description" suppressHydrationWarning>
+                            {isReady ? t('visa.awards.description') : ''}
                           </p>
                           <div className="award-brand">
                             <svg className="award-brand-icon" viewBox="0 0 24 24" fill="currentColor">
                               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                             </svg>
-                            <span className="award-brand-text">{t('visa.awards.brand')}</span>
+                            <span className="award-brand-text" suppressHydrationWarning>
+                              {isReady ? t('visa.awards.brand') : ''}
+                            </span>
                           </div>
                         </div>
                         <div className="award-info">
-                          <span className="award-badge">
+                          <span className="award-badge" suppressHydrationWarning>
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                               <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            {t('visa.awards.approved')}
+                            {isReady ? t('visa.awards.approved') : ''}
                           </span>
-                          <h3 className="award-name">{award.title}</h3>
+                          <h3 className="award-name" suppressHydrationWarning>
+                            {award.title}
+                          </h3>
                         </div>
                       </div>
                     </a>
@@ -209,12 +225,20 @@ export default function AwardsSection() {
               </div>
             </div>
 
-            <button className="awards-nav awards-nav-prev" aria-label={t('visa.awards.prev')}>
+            <button
+              className="awards-nav awards-nav-prev"
+              aria-label={isReady ? t('visa.awards.prev') : ''}
+              suppressHydrationWarning
+            >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="15 18 9 12 15 6" />
               </svg>
             </button>
-            <button className="awards-nav awards-nav-next" aria-label={t('visa.awards.next')}>
+            <button
+              className="awards-nav awards-nav-next"
+              aria-label={isReady ? t('visa.awards.next') : ''}
+              suppressHydrationWarning
+            >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="9 18 15 12 9 6" />
               </svg>

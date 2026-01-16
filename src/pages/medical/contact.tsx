@@ -6,8 +6,11 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
+import '@/src/i18n'
 
 export default function ContactPage() {
+  const { t, isReady } = useSafeTranslation()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [subject, setSubject] = useState('')
@@ -40,7 +43,7 @@ export default function ContactPage() {
       setMessage('')
       setTimeout(() => setSuccess(false), 3000)
     } catch (err) {
-      console.error('Form gönderme hatası:', err)
+      console.error(isReady ? t('medical.pages.contact.errorAlert') : 'Form gönderme hatası:', err)
       setError(true)
       setTimeout(() => setError(false), 3000)
     }
@@ -55,17 +58,17 @@ export default function ContactPage() {
           <div className="container" style={{ marginBottom: '30px', marginTop: '10px', position: 'relative', zIndex: 2 }}>
             <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
               <li className="breadcrumb-item2" style={{ color: '#fff' }}>
-                <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
+                <Link href="/medical" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.home') : ''}</Link>
               </li>
-              <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>İletişim</li>
+              <li className="breadcrumb-item2 active" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.contact') : ''}</li>
             </ol>
 
             <div className="cs_banner_text">
-              <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }}>
-                Bize Ulaşın
+              <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }} suppressHydrationWarning>
+                {isReady ? t('medical.pages.contact.title') : ''}
               </h2>
-              <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
-                En hızlı yanıt için bize ulaşın.
+              <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }} suppressHydrationWarning>
+                {isReady ? t('medical.pages.contact.subtitle') : ''}
               </p>
             </div>
           </div>
@@ -86,8 +89,8 @@ export default function ContactPage() {
                   <i className="bi bi-envelope-at"></i>
                 </div>
                 <div>
-                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold">
-                    E-posta Gönder
+                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold" suppressHydrationWarning>
+                    {isReady ? t('medical.pages.contact.emailTitle') : ''}
                   </h4>
                   <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
                     <li>
@@ -117,8 +120,8 @@ export default function ContactPage() {
                   <i className="bi bi-telephone-forward"></i>
                 </div>
                 <div>
-                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold">
-                    Bizi Arayın
+                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold" suppressHydrationWarning>
+                    {isReady ? t('medical.pages.contact.callTitle') : ''}
                   </h4>
                   <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
                     <li>
@@ -148,12 +151,12 @@ export default function ContactPage() {
                   <i className="bi bi-geo-alt"></i>
                 </div>
                 <div>
-                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold">
-                    Adres
+                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold" suppressHydrationWarning>
+                    {isReady ? t('medical.pages.contact.addressTitle') : ''}
                   </h4>
                   <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
-                    <li>
-                      DAP Yapı Z Ofis, Büyükdere Cad. No: 209, 4. Levent, İstanbul, Türkiye
+                    <li suppressHydrationWarning>
+                      {isReady ? t('medical.pages.contact.address') : ''}
                     </li>
                   </ul>
                 </div>
@@ -176,10 +179,10 @@ export default function ContactPage() {
             onSubmit={handleSubmit}
           >
             <div className="row">
-              <h2 className="section-title-v1">
-                Bize Ulaşın!
+              <h2 className="section-title-v1" suppressHydrationWarning>
+                {isReady ? t('medical.pages.contact.formTitle') : ''}
               </h2>              <div className="col-lg-6">
-                <label className="cs_input_label">Ad <span style={{ color: 'red' }}>*</span></label>
+                <label className="cs_input_label" suppressHydrationWarning>{isReady ? t('medical.pages.contact.nameLabel') : ''} <span style={{ color: 'red' }}>*</span></label>
                 <input
                   className="cs_form_field"
                   value={name}
@@ -189,7 +192,7 @@ export default function ContactPage() {
               </div>
 
               <div className="col-lg-6">
-                <label className="cs_input_label">E-posta <span style={{ color: 'red' }}>*</span></label>
+                <label className="cs_input_label" suppressHydrationWarning>{isReady ? t('medical.pages.contact.emailLabel') : ''} <span style={{ color: 'red' }}>*</span></label>
                 <input
                   className="cs_form_field"
                   type="email"
@@ -200,7 +203,7 @@ export default function ContactPage() {
               </div>
 
               <div className="col-lg-12">
-                <label className="cs_input_label">Konu <span style={{ color: 'red' }}>*</span></label>
+                <label className="cs_input_label" suppressHydrationWarning>{isReady ? t('medical.pages.contact.subjectLabel') : ''} <span style={{ color: 'red' }}>*</span></label>
                 <input
                   className="cs_form_field"
                   value={subject}
@@ -210,7 +213,7 @@ export default function ContactPage() {
               </div>
 
               <div className="col-lg-12">
-                <label className="cs_input_label">Mesaj <span style={{ color: 'red' }}>*</span></label>
+                <label className="cs_input_label" suppressHydrationWarning>{isReady ? t('medical.pages.contact.messageLabel') : ''} <span style={{ color: 'red' }}>*</span></label>
                 <textarea
                   className="cs_form_field"
                   rows={6}
@@ -222,17 +225,17 @@ export default function ContactPage() {
 
               <div className="col-lg-12 mt-4">
                 <button className="cs_btn cs_style_1" type="submit">
-                  <span>Gönder</span>
+                  <span suppressHydrationWarning>{isReady ? t('medical.pages.contact.submitButton') : ''}</span>
                 </button>
               </div>
             </div>
           </form>
 
           {/* SUCCESS TOAST NOTIFICATION */}
-          {success && <Toast type="success" message="Mesajınız başarıyla gönderildi!" top="80px" />}
+          {success && <Toast type="success" message={isReady ? t('medical.pages.contact.successToast') : ''} top="80px" />}
 
           {/* ERROR TOAST NOTIFICATION */}
-          {error && <Toast type="error" message="Lütfen tüm alanları doldurunuz!" top="80px" />}
+          {error && <Toast type="error" message={isReady ? t('medical.pages.contact.errorToast') : ''} top="80px" />}
         </div>
       </section>
 

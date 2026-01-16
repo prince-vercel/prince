@@ -1,0 +1,407 @@
+{
+  "travel": {
+    "header": {
+      "home": "Home",
+      "tours": "Tours",
+      "reservation": "Reservation",
+      "blog": "Blog",
+      "about": "About",
+      "contact": "Contact",
+      "openMenu": "Open menu"
+    },
+    "footer": {
+      "description": "Prince Medical Aesthetics & Health Services",
+      "address": "Kağıthane / İstanbul",
+      "phone": "+90 212 000 00 00",
+      "email": "medical@princetourismagency.com",
+      "home": "Home",
+      "tours": "Tours",
+      "blog": "Blog",
+      "about": "About",
+      "contact": "Contact",
+      "faq": "Frequently Asked Questions",
+      "privacy": "Privacy Policy",
+      "kvkk": "KVKK & Disclosure",
+      "newsletter": {
+        "title": "Join Us",
+        "description": "Subscribe to our email list for campaigns, updates and health content.",
+        "placeholder": "Your email address",
+        "submit": "Send"
+      },
+      "copyright": "© Happencode. All rights reserved."
+    },
+    "homePage": {
+      "search": {
+        "title": "Find Route",
+        "destinationPlaceholder": "Where do you want to go?",
+        "datePlaceholder": "Select Date",
+        "submit": "EXPLORE NOW"
+      },
+      "categories": {
+        "subtitle": "Tour Categories",
+        "title": "Popular Tour Types",
+        "cityDayTrip": {
+          "title": "City Day Trip",
+          "description": "Exciting day trip discovery routes in the city",
+          "alt": "Adventure"
+        },
+        "outdoorDayTrip": {
+          "title": "Outdoor Day Trip",
+          "description": "Comfortable and enjoyable day trips in nature",
+          "alt": "Ship"
+        },
+        "accommodationPackages": {
+          "title": "Accommodation Packages",
+          "description": "Full package tour services including accommodation",
+          "alt": "Nature"
+        },
+        "internationalTours": {
+          "title": "International Tours",
+          "description": "Special and romantic holidays in international destinations",
+          "alt": "Honeymoon"
+        }
+      },
+      "packages": {
+        "subtitle": "Discover Our Tours",
+        "title": "New and Most Popular Tours",
+        "noTours": "No tours found",
+        "popular": "Popular",
+        "noImage": "No Image",
+        "getPrice": "Get Price",
+        "viewDetails": "View Details",
+        "loadingPartners": "Loading partners...",
+        "noPartners": "No partners yet."
+      },
+      "partners": {
+        "defaultAlt": "Partner"
+      },
+      "blog": {
+        "subtitle": "Blog & News",
+        "title": "Stay Up to Date with Travel Tips!",
+        "noBlogs": "No blogs found",
+        "readMore": "Read More"
+      },
+      "chatbot": {
+        "startChat": "Start Chat",
+        "close": "Close",
+        "loading": "Loading..."
+      },
+      "errors": {
+        "loadingPartners": "Error loading partners:",
+        "loadingBanners": "Error loading banners:",
+        "loadingTours": "Error loading tours:",
+        "loadingBlogs": "Error loading blogs:"
+      }
+    },
+    "pages": {
+      "breadcrumb": {
+        "home": "Home"
+      },
+      "contact": {
+        "title": "Contact Us",
+        "breadcrumb": "Contact",
+        "email": {
+          "title": "Send Email",
+          "address": "info@princetourismagency.com"
+        },
+        "phone": {
+          "title": "Call Us",
+          "number": "+90 212 000 00 00"
+        },
+        "address": {
+          "title": "Visit Us",
+          "location": "Kağıthane / İstanbul"
+        },
+        "form": {
+          "title": "Get in Touch",
+          "subtitle": "Contact Us!",
+          "name": "Your Name",
+          "email": "Your Email Address",
+          "subject": "Subject",
+          "message": "Your Message",
+          "submit": "Send",
+          "success": "Your message has been sent successfully!",
+          "error": "An error occurred. Please try again.",
+          "required": "Please fill in all fields."
+        }
+      },
+      "blog": {
+        "title": "Blog Posts",
+        "breadcrumb": "Blog",
+        "view": "View",
+        "loading": "Loading blogs...",
+        "noBlogs": "No blog posts found yet.",
+        "errors": {
+          "loading": "Error loading blogs:"
+        }
+      },
+      "faqs": {
+        "subtitle": "Most Frequently Asked Questions",
+        "title": "Frequently Asked Questions"
+      },
+      "privacy": {
+        "title": "Privacy Policy",
+        "intro": "As Prince, we attach great importance to protecting the privacy of our visitors and users. This Privacy Policy explains what personal data is collected when you visit our website, how it is used, protected, and your rights.",
+        "sections": {
+          "collectedInfo": {
+            "title": "1. Collected Information",
+            "description": "The following information may be collected when you use our website:",
+            "items": [
+              "Name, surname",
+              "Email address",
+              "Phone number",
+              "IP address",
+              "Device, browser and usage information",
+              "Cookie data",
+              "Information transmitted through contact or application forms"
+            ]
+          },
+          "collectionMethod": {
+            "title": "2. Method of Collecting Personal Data",
+            "description": "Your personal data is collected through the following methods:",
+            "items": [
+              "When you visit our website",
+              "When you create a membership",
+              "When you fill out contact forms",
+              "When you use our services"
+            ],
+            "note": "Data is collected through automatic or non-automatic methods."
+          },
+          "usagePurpose": {
+            "title": "3. Purposes of Using Personal Data",
+            "description": "Collected data may be used for the following purposes:",
+            "items": [
+              "Providing and improving services",
+              "Meeting user requests",
+              "Conducting communication activities",
+              "Fulfilling legal obligations",
+              "Ensuring system security",
+              "Marketing and analysis activities (if consent is given)"
+            ]
+          },
+          "sharing": {
+            "title": "4. Sharing of Personal Data",
+            "description": "Your personal data may be shared in the following cases:",
+            "items": [
+              "With authorized public institutions in case of legal obligations",
+              "With third parties from whom services are received (hosting, infrastructure, email services, etc.)",
+              "If you have given explicit consent"
+            ]
+          },
+          "storage": {
+            "title": "5. Storage and Security of Personal Data",
+            "description": "Your personal data is stored for the periods specified in the relevant legislation and necessary technical and administrative measures are taken against unauthorized access."
+          },
+          "cookies": {
+            "title": "6. Cookies",
+            "description": "Cookies are used on our website to improve user experience. You can reject or delete cookies from your browser settings."
+          },
+          "updates": {
+            "title": "7. Privacy Policy Updates",
+            "description": "This Privacy Policy may be updated when necessary. The current text is always published on our website."
+          }
+        },
+        "contactEmail": "You can write to our email address <strong>info@princetourismagency.com</strong> for your questions."
+      },
+      "kvkk": {
+        "title": "KVKK Disclosure Text",
+        "intro": "In accordance with the Personal Data Protection Law No. 6698 (KVKK), Pro Health, as the data controller, processes your personal data within the scope described below.",
+        "sections": {
+          "dataController": {
+            "title": "1. Data Controller",
+            "companyName": "Company Name:",
+            "companyNameValue": "prince",
+            "email": "Email:",
+            "emailValue": "info@princetourismagency.com"
+          },
+          "processedData": {
+            "title": "2. Processed Personal Data",
+            "items": [
+              "Identity information (name, surname)",
+              "Contact information (email, phone)",
+              "Transaction security information (IP, log records)",
+              "User transaction information"
+            ]
+          },
+          "processingPurpose": {
+            "title": "3. Purposes of Processing Personal Data",
+            "description": "Your personal data is processed for the following purposes:",
+            "items": [
+              "Execution of services",
+              "Conducting communication activities",
+              "Evaluation of requests and complaints",
+              "Fulfillment of legal obligations",
+              "Execution of information security processes"
+            ]
+          },
+          "transfer": {
+            "title": "4. Transfer of Personal Data",
+            "description": "Your personal data may be transferred to authorized public institutions and organizations and third parties from whom services are received, in accordance with Articles 8 and 9 of the KVKK."
+          },
+          "collectionMethod": {
+            "title": "5. Method of Collecting Personal Data and Legal Reason",
+            "description": "Your personal data is collected through the following methods:",
+            "items": [
+              "Website",
+              "Electronic forms",
+              "Cookies"
+            ],
+            "note": "Your personal data is processed based on the legal reasons specified in Article 5 of the KVKK."
+          },
+          "rights": {
+            "title": "6. Your Rights Under KVKK",
+            "description": "In accordance with Article 11 of the KVKK, you have the following rights:",
+            "items": [
+              "Learning whether your personal data is processed",
+              "Requesting information if processed",
+              "Learning the purpose of processing",
+              "Requesting correction if processed incorrectly or incompletely",
+              "Requesting deletion or destruction",
+              "Requesting notification of transactions to third parties",
+              "Objecting to analysis by automatic systems",
+              "Requesting compensation in case of damage"
+            ]
+          }
+        },
+        "contactEmail": "You can submit your applications through our email address <strong>info@princetourismagency.com</strong>."
+      },
+      "all": {
+        "title": "All Our Tours",
+        "breadcrumb": "Tours",
+        "filters": {
+          "title": "Filter",
+          "destination": "City",
+          "allDestinations": "All Cities",
+          "duration": "Duration",
+          "maxPeople": "Max People",
+          "priceRange": "Price Range (€):",
+          "priceRangeMin": "Min",
+          "priceRangeMax": "Max",
+          "days": "Day",
+          "allDays": "All Days",
+          "inclusions": "Inclusions",
+          "showPricedOnly": "Get Price",
+          "clearFilters": "Clear Filters",
+          "exploreNow": "Explore Now"
+        },
+        "results": {
+          "noTours": "No tours found",
+          "loading": "Loading tours...",
+          "viewDetails": "View Details",
+          "noImage": "No Image",
+          "getPrice": "Get Price"
+        }
+      },
+      "form": {
+        "title": "Plan Your Perfect Vacation",
+        "subtitle": "Book now for a personalized travel experience!",
+        "breadcrumb": "Tours",
+        "loading": "Loading questions...",
+        "selectPlaceholder": "Select",
+        "datePlaceholder": "dd.mm.yyyy",
+        "previous": "Previous",
+        "next": "Continue",
+        "submit": "Submit Form",
+        "success": "Successfully submitted!",
+        "error": "Please fill in the required fields!",
+        "errorAlert": "An error occurred while submitting the form!",
+        "privacy": "Your information is confidential and will not be shared with third parties.",
+        "errors": {
+          "loadingQuestions": "Error loading questions:",
+          "submitError": "Form submission error:"
+        },
+        "summary": {
+          "title": "Form Summary",
+          "empty": "Start filling in the information..."
+        },
+        "steps": {
+          "step1": "Personal Information",
+          "step2": "Travel Details",
+          "step3": "Additional Information",
+          "vize_bilgileri": "Visa Information",
+          "kisisel_bilgiler": "Personal Information",
+          "vize_gecmisi": "Visa History",
+          "is_ve_finansal_bilgiler": "Work and Financial Information",
+          "ek_bilgiler": "Additional Information"
+        },
+        "questions": {
+          "ad_soyad": "Full Name",
+          "deneme": "Test",
+          "basvuru_ulkesi": "Application Country",
+          "dogum_tarihi": "Date of Birth",
+          "vize_turu": "Visa Type",
+          "seyahat_konusu": "Travel Purpose",
+          "cinsiyet": "Gender",
+          "seyahat_tarihi": "Travel Date",
+          "uyruk": "Nationality",
+          "ucak_bileti_var_mi": "Do you have a flight ticket?",
+          "telefon_whatsapp": "Phone (WhatsApp)",
+          "e_posta": "Email"
+        },
+        "options": {
+          "evet": "Yes",
+          "hayır": "No",
+          "yes": "Yes",
+          "no": "No",
+          "kadin": "Female",
+          "erkek": "Male",
+          "belirtmek_istemiyorum": "Prefer not to say",
+          "1": "1 Person",
+          "2": "2 People",
+          "3": "3 People",
+          "4": "4 People",
+          "5+": "5+ People",
+          "var": "Available",
+          "yok": "Not Available"
+        }
+      },
+      "about": {
+        "title": "The Best Travel Route",
+        "breadcrumb": "About Us",
+        "subtitle": "About Us",
+        "heading": "We Are Professional Planners for Your Holidays",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed do eiusmod tem por incididunt ut labore et dolore magna aliqua.",
+        "contactExpert": "Talk Directly to Our Destination Experts at +1 546 378 654",
+        "features": [
+          "All places and activities are carefully selected by us.",
+          "We are an award-winning agency",
+          "Trusted by more than 80,000 customers"
+        ],
+        "moreInfo": "More Information",
+        "featuredPackages": {
+          "subtitle": "Featured Packages",
+          "title": "Check Out Our Featured Packages",
+          "startingFrom": "Starting from $1,200",
+          "packageTitle": "Summer Return X MEXICO",
+          "packageDescription": "Join us to discover Afro-Latin culture and celebrate Colombia's Independence Weekend!",
+          "packageDetails": "Duis id interdum ex, eu accumsan massa. Fusce vel nibh diam. Nulla ultrices ex at erat pharetra.",
+          "inclusions": [
+            "Professional Tour Guide",
+            "Transportation cost for carrying new materials/parts",
+            "Transportation cost for carrying new materials/parts"
+          ],
+          "bookNow": "Book Now"
+        },
+        "partners": {
+          "loading": "Loading partners...",
+          "noPartners": "No partners yet."
+        },
+        "testimonials": {
+          "subtitle": "Testimonials",
+          "title": "What Our Travelers Say"
+        },
+        "errors": {
+          "loadingPartners": "Error loading partners:",
+          "loadingTestimonials": "Error loading testimonials:"
+        }
+      }
+    },
+    "common": {
+      "close": "Close",
+      "loading": "Loading...",
+      "error": "An error occurred",
+      "success": "Success",
+      "search": "Search"
+    }
+  }
+}

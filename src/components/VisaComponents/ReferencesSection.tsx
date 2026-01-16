@@ -1,8 +1,8 @@
 'use client'
 
-import { useTranslation } from 'react-i18next'
-import '../../styles/visa/ReferencesSection.css'
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
 import '../../i18n'
+import '../../styles/visa/ReferencesSection.css'
 
 const references = [
   '/visa/uploads/contents/gallery/1764377449_cddfbf00a022a210eddf.svg',
@@ -17,8 +17,8 @@ const references = [
 ]
 
 export default function ReferencesSection() {
-  const { t } = useTranslation()
-  
+  const { t, isReady } = useSafeTranslation()
+
   // HTML'deki gibi: İlk track'te normal sırada 2 kopya, ikinci track'te ters sırada 2 kopya
   const track1Items = [...references, ...references]
   // İkinci track için ters sırada kopya oluştur (references'ı mutate etmemek için)
@@ -38,8 +38,12 @@ export default function ReferencesSection() {
                 <path d="M16 3.13a4 4 0 0 1 0 7.75" />
               </svg>
             </div>
-            <h2 className="references-title">{t('visa.references.title')}</h2>
-            <p className="references-subtitle">{t('visa.references.subtitle')}</p>
+            <h2 className="references-title" suppressHydrationWarning>
+              {isReady ? t('visa.references.title') : ''}
+            </h2>
+            <p className="references-subtitle" suppressHydrationWarning>
+              {isReady ? t('visa.references.subtitle') : ''}
+            </p>
           </div>
         </div>
 

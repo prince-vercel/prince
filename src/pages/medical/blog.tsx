@@ -9,12 +9,15 @@ import { useRouter } from 'next/router'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import { Blog } from '@/src/types/types'
+import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
+import '@/src/i18n'
 
 
 
 const POSTS_PER_PAGE = 6
 
 export default function BlogPage() {
+  const { t, isReady } = useSafeTranslation()
   const router = useRouter()
   const [blogs, setBlogs] = useState<Blog[]>([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -35,7 +38,7 @@ export default function BlogPage() {
         })
         setBlogs(blogsData.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()))
       } catch (error) {
-        console.error('Blog yükleme hatası:', error)
+        console.error(isReady ? t('medical.pages.blog.error') : 'Blog yükleme hatası:', error)
       } finally {
         setLoading(false)
       }
@@ -59,17 +62,17 @@ export default function BlogPage() {
         <div className="container" style={{ marginBottom: '20px', marginTop: '-45px' }}>
           <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
             <li className="breadcrumb-item2" style={{ color: '#fff' }}>
-              <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
+              <Link href="/medical" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.home') : ''}</Link>
             </li>
-            <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>Blog</li>
+            <li className="breadcrumb-item2 active" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.blog') : ''}</li>
           </ol>
 
           <div className="cs_banner_text">
-            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }}>
-              Blog
+            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }} suppressHydrationWarning>
+              {isReady ? t('medical.pages.blog.title') : ''}
             </h2>
-            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
-              Sağlık ve güzellik hakkında güncel bilgiler ve ipuçları.
+            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }} suppressHydrationWarning>
+              {isReady ? t('medical.pages.blog.subtitle') : ''}
             </p>
           </div>
         </div>
@@ -80,11 +83,11 @@ export default function BlogPage() {
         <div className="row cs_row_gap_50">
           {loading ? (
             <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
-              <p>Bloglar yükleniyor...</p>
+              <p suppressHydrationWarning>{isReady ? t('medical.pages.blog.loading') : ''}</p>
             </div>
           ) : paginatedPosts.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
-              <p>Henüz blog yok.</p>
+              <p suppressHydrationWarning>{isReady ? t('medical.pages.blog.noBlogs') : ''}</p>
             </div>
           ) : (
             paginatedPosts.map((post) => (
@@ -140,7 +143,7 @@ export default function BlogPage() {
                         }}
                         className="cs_post_btn"
                       >
-                        Devamını Oku
+                        <span suppressHydrationWarning>{isReady ? t('medical.pages.blog.readMore') : ''}</span>
                       </a>
                     </div>
                   </div>

@@ -6,9 +6,12 @@ import { db } from '@/src/lib/firebase'
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import Link from 'next/link'
 import { useState } from 'react'
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import '../../i18n'
 
 
 export default function ContactPage() {
+  const { t, isReady } = useSafeTranslation()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -68,14 +71,14 @@ export default function ContactPage() {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb2" style={{ color: 'white' }}>
               <li className="breadcrumb-item2">
-                <Link href="/travel">Anasayfa</Link>
+                <Link href="/travel" suppressHydrationWarning>{isReady ? t('travel.pages.breadcrumb.home') : ''}</Link>
               </li>
-              <li className="breadcrumb-item2"> İletişim</li>
+              <li className="breadcrumb-item2" suppressHydrationWarning> {isReady ? t('travel.pages.contact.breadcrumb') : ''}</li>
             </ol>
           </nav>
 
-          <h2 className="l:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
-            Bizimle İletişime Geçin
+          <h2 className="l:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]" suppressHydrationWarning>
+            {isReady ? t('travel.pages.contact.title') : ''}
           </h2>
         </div>
       </div>
@@ -92,24 +95,26 @@ export default function ContactPage() {
                   <i className="bi bi-envelope-at"></i>
                 </div>
                 <div>
-                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold">
-                    E-posta Gönder
+                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold" suppressHydrationWarning>
+                    {isReady ? t('travel.pages.contact.email.title') : ''}
                   </h4>
                   <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
                     <li>
                       <a
-                        href="mailto:info@princetourismagency.com"
+                        href={`mailto:${isReady ? t('travel.pages.contact.email.address') : ''}`}
                         className="hover:text-primary-1 duration-200"
+                        suppressHydrationWarning
                       >
-                        info@princetourismagency.com
+                        {isReady ? t('travel.pages.contact.email.address') : ''}
                       </a>
                     </li>
                     <li>
                       <a
-                        href="mailto:info@princetourismagency.com"
+                        href={`mailto:${isReady ? t('travel.pages.contact.email.address') : ''}`}
                         className="hover:text-primary-1 duration-200"
+                        suppressHydrationWarning
                       >
-                        info@princetourismagency.com
+                        {isReady ? t('travel.pages.contact.email.address') : ''}
                       </a>
                     </li>
                   </ul>
@@ -126,24 +131,26 @@ export default function ContactPage() {
                   <i className="bi bi-telephone-forward"></i>
                 </div>
                 <div>
-                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold">
-                    Bizi Arayın
+                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold" suppressHydrationWarning>
+                    {isReady ? t('travel.pages.contact.phone.title') : ''}
                   </h4>
                   <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
                     <li>
                       <a
-                        href="tel:+770434501097"
+                        href={`tel:${isReady ? t('travel.pages.contact.phone.number') : ''}`}
                         className="hover:text-primary-1 duration-200"
+                        suppressHydrationWarning
                       >
-                        +7704345017
+                        {isReady ? t('travel.pages.contact.phone.number') : ''}
                       </a>
                     </li>
                     <li>
                       <a
-                        href="tel:+866-398-5917"
+                        href={`tel:${isReady ? t('travel.pages.contact.phone.number') : ''}`}
                         className="hover:text-primary-1 duration-200"
+                        suppressHydrationWarning
                       >
-                        +866-398-5917
+                        {isReady ? t('travel.pages.contact.phone.number') : ''}
                       </a>
                     </li>
                   </ul>
@@ -160,12 +167,12 @@ export default function ContactPage() {
                   <i className="bi bi-geo-alt"></i>
                 </div>
                 <div>
-                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold">
-                    Adres
+                  <h4 className="text-dark-1 lg:text-2md text-md font-semibold" suppressHydrationWarning>
+                    {isReady ? t('travel.pages.contact.address.title') : ''}
                   </h4>
                   <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
-                    <li>
-                      DAP Yapı Z Ofis, Büyükdere Cad. No: 209, 4. Levent, İstanbul, Türkiye
+                    <li suppressHydrationWarning>
+                      {isReady ? t('travel.pages.contact.address.location') : ''}
                     </li>
                   </ul>
                 </div>
@@ -185,9 +192,9 @@ export default function ContactPage() {
           </div>
           <div className="lg:pt-20 pt-15">
             <div className="text-center lg:pb-[60px] pb-[40px]">
-              <h5 className="section-sub-title-v1">İletişim Kurun</h5>
-              <h2 className="section-title-v1">
-                Bize Ulaşın!
+              <h5 className="section-sub-title-v1" suppressHydrationWarning>{isReady ? t('travel.pages.contact.form.title') : ''}</h5>
+              <h2 className="section-title-v1" suppressHydrationWarning>
+                {isReady ? t('travel.pages.contact.form.subtitle') : ''}
               </h2>
             </div>
 
@@ -198,33 +205,36 @@ export default function ContactPage() {
                     <input
                       type="text"
                       name="name"
-                      placeholder="Adınız *"
+                      placeholder={isReady ? t('travel.pages.contact.form.name') : ''}
                       value={formData.name}
                       onChange={handleInputChange}
                       className="input_style__primary"
                       required
+                      suppressHydrationWarning
                     />
                   </div>
                   <div className="lg:col-span-1 col-span-2">
                     <input
                       type="email"
                       name="email"
-                      placeholder="E-postanız *"
+                      placeholder={isReady ? t('travel.pages.contact.form.email') : ''}
                       value={formData.email}
                       onChange={handleInputChange}
                       className="input_style__primary"
                       required
+                      suppressHydrationWarning
                     />
                   </div>
                   <div className="col-span-2">
                     <input
                       type="text"
                       name="subject"
-                      placeholder="Konunuz *"
+                      placeholder={isReady ? t('travel.pages.contact.form.subject') : ''}
                       value={formData.subject}
                       onChange={handleInputChange}
                       className="input_style__primary"
                       required
+                      suppressHydrationWarning
                     />
                   </div>
                   <div className="col-span-2">
@@ -232,15 +242,16 @@ export default function ContactPage() {
                       rows={6}
                       name="message"
                       className="input_style__primary"
-                      placeholder="Mesajınız *"
+                      placeholder={isReady ? t('travel.pages.contact.form.message') : ''}
                       value={formData.message}
                       onChange={handleInputChange}
                       required
+                      suppressHydrationWarning
                     ></textarea>
                   </div>
                   <div className="col-span-2">
-                    <button type="submit" className="btn_primary__v1">
-                      Gönder
+                    <button type="submit" className="btn_primary__v1" suppressHydrationWarning>
+                      {isReady ? t('travel.pages.contact.form.submit') : ''}
                       <i className="bi bi-chevron-right ml-2"></i>
                     </button>
                   </div>
@@ -248,10 +259,10 @@ export default function ContactPage() {
               </form>
 
               {/* SUCCESS TOAST NOTIFICATION */}
-              {success && <Toast type="success" message="Mesajınız başarıyla gönderildi!" top="120px" />}
+              {success && <Toast type="success" message={isReady ? t('travel.pages.contact.form.success') : ''} top="120px" />}
 
               {/* ERROR TOAST NOTIFICATION */}
-              {error && <Toast type="error" message="Lütfen tüm alanları doldurunuz!" top="120px" />}
+              {error && <Toast type="error" message={isReady ? t('travel.pages.contact.form.required') : ''} top="120px" />}
             </div>
           </div>
         </div>

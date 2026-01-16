@@ -330,7 +330,7 @@ export default function IletisimPage() {
                             </div>
                             <Image
                                 src="/visa/assets/img/contact-logo.png"
-                                alt="Çilek Vize Logo"
+                                alt="Prince Logo"
                                 width={150}
                                 height={50}
                                 style={{ height: '50px', width: 'auto' }}

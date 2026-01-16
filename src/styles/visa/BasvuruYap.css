@@ -443,7 +443,7 @@
 
 .section-header {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: var(--space-md);
     margin-bottom: var(--space-xl);
 }
@@ -472,6 +472,9 @@
 
 .section-title-wrapper {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .section-title {

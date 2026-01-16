@@ -7,6 +7,8 @@ import { collection, getDocs } from 'firebase/firestore'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
+import '@/src/i18n'
 
 
 
@@ -16,22 +18,24 @@ import { useEffect, useRef, useState } from 'react'
 const GALLERY_PER_PAGE = 9
 
 
-const medicalSpecialties = {
-  dis: 'Diş',
-  genital: 'Genital',
-  gogus: 'Göğüs',
-  goz: 'Göz',
-  kalca: 'Kalça',
-  kulak: 'Kulak',
-  'boyun-ve-yuz': 'Boyun ve Yüz',
-  burun: 'Burun',
-  'sac-ekimi': 'Saç Ekimi',
-  'vucut-sekillendirme-liposuction': 'Vücut Şekillendirme ve Liposuction',
-}
-
 export default function ResultsPage() {
+  const { t, isReady } = useSafeTranslation()
+  
+  const medicalSpecialties = {
+    dis: isReady ? t('medical.pages.results.filters.dental') : 'Diş',
+    genital: isReady ? t('medical.pages.results.filters.genital') : 'Genital',
+    gogus: isReady ? t('medical.pages.results.filters.breast') : 'Göğüs',
+    goz: isReady ? t('medical.pages.results.filters.eye') : 'Göz',
+    kalca: isReady ? t('medical.pages.results.filters.hip') : 'Kalça',
+    kulak: isReady ? t('medical.pages.results.filters.ear') : 'Kulak',
+    'boyun-ve-yuz': isReady ? t('medical.pages.results.filters.neckFace') : 'Boyun ve Yüz',
+    burun: isReady ? t('medical.pages.results.filters.nose') : 'Burun',
+    'sac-ekimi': isReady ? t('medical.pages.results.filters.hairTransplant') : 'Saç Ekimi',
+    'vucut-sekillendirme-liposuction': isReady ? t('medical.pages.results.filters.body') : 'Vücut Şekillendirme ve Liposuction',
+  }
+
   const categoryMap: Record<string, string> = {
-    all: 'Tümü',
+    all: isReady ? t('medical.pages.results.filters.all') : 'Tümü',
     ...medicalSpecialties,
   }
 
@@ -63,7 +67,7 @@ export default function ResultsPage() {
       })) as any[]
       setTestimonials(testimonialsData)
     } catch (error) {
-      console.error('Yorum verileri çekilirken hata:', error)
+      console.error(isReady ? t('medical.pages.results.testimonials.error') : 'Yorum verileri çekilirken hata:', error)
     } finally {
       setLoadingTestimonials(false)
     }
@@ -102,7 +106,7 @@ export default function ResultsPage() {
 
       setResults(allResults)
     } catch (error) {
-      console.error('Sonuçlar çekilirken hata:', error)
+      console.error(isReady ? t('medical.pages.results.error') : 'Sonuçlar çekilirken hata:', error)
     } finally {
       setLoading(false)
     }
@@ -138,17 +142,17 @@ export default function ResultsPage() {
         <div className="container" style={{ marginBottom: '20px', marginTop: '-45px' }}>
           <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
             <li className="breadcrumb-item2" style={{ color: '#fff' }}>
-              <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
+              <Link href="/medical" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.home') : ''}</Link>
             </li>
-            <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>Mutlu Sonuçlar</li>
+            <li className="breadcrumb-item2 active" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.results') : ''}</li>
           </ol>
 
           <div className="cs_banner_text">
-            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }}>
-              Mutlu Sonuçlar
+            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }} suppressHydrationWarning>
+              {isReady ? t('medical.pages.results.title') : ''}
             </h2>
-            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
-              Hastalarımızın başarılı tedavi sonuçları ve memnuniyetleri.
+            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }} suppressHydrationWarning>
+              {isReady ? t('medical.pages.results.subtitle') : ''}
             </p>
           </div>
         </div>
@@ -239,7 +243,7 @@ export default function ResultsPage() {
             </div>
 
             <div className="cs_view_box">
-              <span> {filteredGallery.length} Öğe </span>
+              <span suppressHydrationWarning> {filteredGallery.length} {isReady ? t('medical.pages.results.items') : 'Öğe'} </span>
             </div>
           </div>
 
@@ -247,11 +251,11 @@ export default function ResultsPage() {
 
           {loading ? (
             <div style={{ textAlign: 'center', padding: '40px' }}>
-              <p>Yükleniyor...</p>
+              <p suppressHydrationWarning>{isReady ? t('medical.pages.results.loading') : ''}</p>
             </div>
           ) : filteredGallery.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '40px' }}>
-              <p>Bu kategoride henüz sonuç bulunamadı</p>
+              <p suppressHydrationWarning>{isReady ? t('medical.pages.results.noResults') : ''}</p>
             </div>
           ) : (
             <>
@@ -306,9 +310,9 @@ export default function ResultsPage() {
         <div className="row" style={{ marginTop: 80 }}>
           <div className="col-lg-5">
             <div className="cs_section_heading cs_style_1">
-              <h3 className="cs_section_subtitle cs_accent_color cs_fs_32">HASTALARIMIZ NE DIYOR</h3>
-              <h2 className="cs_section_title cs_fs_72">
-                Sağlık ve İyileşme Hikayelerini Keşfedin
+              <h3 className="cs_section_subtitle cs_accent_color cs_fs_32" suppressHydrationWarning>{isReady ? t('medical.pages.results.testimonials.title') : ''}</h3>
+              <h2 className="cs_section_title cs_fs_72" suppressHydrationWarning>
+                {isReady ? t('medical.pages.results.testimonials.title') : ''}
               </h2>
             </div>
           </div>
@@ -340,11 +344,11 @@ export default function ResultsPage() {
               <div className="row" style={{ marginTop: 30 }}>
                 {loadingTestimonials ? (
                   <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                    <p>Yorum verileri yükleniyor...</p>
+                    <p suppressHydrationWarning>{isReady ? t('medical.pages.results.testimonials.loading') : ''}</p>
                   </div>
                 ) : testimonials.length === 0 ? (
                   <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                    <p>Henüz yorum eklenmemiş</p>
+                    <p suppressHydrationWarning>{isReady ? t('medical.pages.results.testimonials.noTestimonials') : ''}</p>
                   </div>
                 ) : (
                   visibleTestimonials.map((item, i) => (

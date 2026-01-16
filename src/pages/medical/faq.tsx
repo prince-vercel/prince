@@ -3,10 +3,13 @@ import React, { useState, useEffect } from 'react'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import { FAQ } from '@/src/types/types'
+import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
+import '@/src/i18n'
 
 
 
 export default function FAQPage() {
+  const { t, isReady } = useSafeTranslation()
   const [activeFaq, setActiveFaq] = useState<number | null>(2);
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [faqLoading, setFaqLoading] = useState(true);
@@ -23,9 +26,9 @@ export default function FAQPage() {
            id: doc.id,
            ...doc.data(),
          })) as FAQ[]
-         setFaqs(faqsData)
-       } catch (error) {
-         console.error('FAQ verileri çekilirken hata:', error)
+        setFaqs(faqsData)
+      } catch (error) {
+        console.error(isReady ? t('medical.pages.faq.error') : 'FAQ verileri çekilirken hata:', error)
        } finally {
          setFaqLoading(false)
        }
@@ -44,13 +47,13 @@ export default function FAQPage() {
      <div className="container">
        <div className="row">
          <div className="col-xxl-4">
-           <div className="cs_section_heading cs_style_1">
-             <h3 className="cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_fs_32">
-               İnsanlar Genellikle
-             </h3>
-             <div className="cs_height_5"></div>
-             <h2 className="cs_section_title cs_fs_72 m-0">Soruyorlar</h2>
-           </div>
+          <div className="cs_section_heading cs_style_1">
+            <h3 className="cs_section_subtitle text-uppercase cs_accent_color cs_semibold m-0 cs_fs_32" suppressHydrationWarning>
+              {isReady ? t('medical.pages.faq.subtitle') : ''}
+            </h3>
+            <div className="cs_height_5"></div>
+            <h2 className="cs_section_title cs_fs_72 m-0" suppressHydrationWarning>{isReady ? t('medical.pages.faq.title') : ''}</h2>
+          </div>
            <div className="cs_height_70 cs_height_lg_50"></div>
          </div>
        </div>
@@ -58,14 +61,14 @@ export default function FAQPage() {
        <div className="row">
          <div className="col-xxl-8 offset-xxl-4">
            <div className="cs_accordians cs_style1 cs_type_1 cs_heading_color">
-             {faqLoading ? (
-               <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
-                 <p>Sorular yükleniyor...</p>
-               </div>
-             ) : faqs.length === 0 ? (
-               <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
-                 <p>Henüz soru eklenmemiş</p>
-               </div>
+            {faqLoading ? (
+              <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
+                <p suppressHydrationWarning>{isReady ? t('medical.pages.faq.loading') : ''}</p>
+              </div>
+            ) : faqs.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '40px', width: '100%' }}>
+                <p suppressHydrationWarning>{isReady ? t('medical.pages.faq.noFaqs') : ''}</p>
+              </div>
              ) : (
                faqs.map((item, i) => {
                  const isActive = activeFaq === i;

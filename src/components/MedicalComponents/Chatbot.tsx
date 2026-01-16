@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/src/lib/firebase';
+import { useSafeTranslation } from '../../hooks/useSafeTranslation';
+import '../../i18n';
 
 interface ChatStep {
   id: string;
@@ -10,6 +12,7 @@ interface ChatStep {
 }
 
 const Chatbot: React.FC = () => {
+  const { t, isReady } = useSafeTranslation();
   const [questions, setQuestions] = useState<ChatStep[]>([]);
   const [loading, setLoading] = useState(true);
   const [history, setHistory] = useState<string[]>(['start']);
@@ -32,7 +35,13 @@ const Chatbot: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="chatbotBox"><div className="chatWindow">Yükleniyor...</div></div>;
+    return (
+      <div className="chatbotBox">
+        <div className="chatWindow" suppressHydrationWarning>
+          {isReady ? t('medical.homePage.chatbot.loading') : ''}
+        </div>
+      </div>
+    );
   }
 
   return (

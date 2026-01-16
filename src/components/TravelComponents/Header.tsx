@@ -4,11 +4,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import '../../i18n'
 
 export default function Header() {
   const pathname = usePathname()
+  const { t, isReady, i18n } = useSafeTranslation()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
+  const [selectedLanguage, setSelectedLanguage] = useState('TR')
 
   useEffect(() => {
     // Sidebar ve search'ü kapat
@@ -21,6 +26,14 @@ export default function Header() {
     document.documentElement.scrollTop = 0
     document.body.scrollTop = 0
   }, [pathname])
+
+  // Language change handler
+  useEffect(() => {
+    if (isReady) {
+      const currentLang = i18n.language === 'en' ? 'EN' : 'TR'
+      setSelectedLanguage(currentLang)
+    }
+  }, [i18n.language, isReady])
 
   // Sidebar açıkken body scroll'unu engelle
   useEffect(() => {
@@ -47,27 +60,118 @@ export default function Header() {
 
                 <nav className="cs_nav">
                   <ul className="cs_nav_list">
-                    <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel' ? '#d7b76e' : 'inherit' }}>Anasayfa</Link></li>
-                    <li><Link href="/travel/all" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/all' ? '#d7b76e' : 'inherit' }}>Seyahatler</Link></li>
-                    <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/form' ? '#d7b76e' : 'inherit' }}>Rezervasyon</Link></li>
-                    <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/blog' ? '#d7b76e' : 'inherit' }}>Blog</Link></li>
-                    <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/about' ? '#d7b76e' : 'inherit' }}>Hakkımızda</Link></li>
-                    <li><Link href="/travel/contact" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/contact' ? '#d7b76e' : 'inherit' }}>İletişim</Link></li>
+                    <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.home') : ''}</Link></li>
+                    <li><Link href="/travel/all" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/all' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.tours') : ''}</Link></li>
+                    <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/form' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.reservation') : ''}</Link></li>
+                    <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/blog' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.blog') : ''}</Link></li>
+                    <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/about' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.about') : ''}</Link></li>
+                    <li><Link href="/travel/contact" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/contact' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.contact') : ''}</Link></li>
                   </ul>
                 </nav>
               </div>
 
               {/* RIGHT */}
-              <div className="cs_social_links cs_social_desktop">
-                <a href="#">
-                  <i className="fa-brands fa-facebook-f" style={{ color: '#d7b76e' }}></i>
-                </a>
-                <a href="#">
-                  <i className="fa-brands fa-instagram" style={{ color: '#d7b76e' }}></i>
-                </a>
-                <a href="#">
-                  <i className="fa-brands fa-whatsapp" style={{ color: '#d7b76e' }}></i>
-                </a>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                {/* Language Dropdown */}
+                <div className="language-selector" style={{ position: 'relative' }}>
+                  <button
+                    className={`language-selector-btn ${isLanguageDropdownOpen ? 'active' : ''}`}
+                    onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+                    onBlur={() => {
+                      setTimeout(() => setIsLanguageDropdownOpen(false), 200)
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '8px 16px',
+                      border: '1px solid #d7b76e',
+                      borderRadius: '8px',
+                      background: 'transparent',
+                      color: '#d7b76e',
+                      cursor: 'pointer',
+                      fontSize: '14px',
+                      fontWeight: 500
+                    }}
+                  >
+                    <span suppressHydrationWarning>{selectedLanguage}</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+                  {isLanguageDropdownOpen && (
+                    <div className="language-dropdown" style={{
+                      position: 'absolute',
+                      top: '100%',
+                      right: 0,
+                      marginTop: '8px',
+                      background: 'white',
+                      border: '1px solid #d7b76e',
+                      borderRadius: '8px',
+                      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                      zIndex: 1000,
+                      minWidth: '100px'
+                    }}>
+                      <button
+                        className={`language-option ${selectedLanguage === 'TR' ? 'active' : ''}`}
+                        onClick={() => {
+                          setSelectedLanguage('TR')
+                          i18n.changeLanguage('tr')
+                          setIsLanguageDropdownOpen(false)
+                        }}
+                        style={{
+                          display: 'block',
+                          width: '100%',
+                          padding: '10px 16px',
+                          textAlign: 'left',
+                          background: selectedLanguage === 'TR' ? '#d7b76e' : 'transparent',
+                          color: selectedLanguage === 'TR' ? 'white' : '#333',
+                          border: 'none',
+                          cursor: 'pointer',
+                          fontSize: '14px',
+                          borderTopLeftRadius: '8px',
+                          borderTopRightRadius: '8px'
+                        }}
+                      >
+                        TR
+                      </button>
+                      <button
+                        className={`language-option ${selectedLanguage === 'EN' ? 'active' : ''}`}
+                        onClick={() => {
+                          setSelectedLanguage('EN')
+                          i18n.changeLanguage('en')
+                          setIsLanguageDropdownOpen(false)
+                        }}
+                        style={{
+                          display: 'block',
+                          width: '100%',
+                          padding: '10px 16px',
+                          textAlign: 'left',
+                          background: selectedLanguage === 'EN' ? '#d7b76e' : 'transparent',
+                          color: selectedLanguage === 'EN' ? 'white' : '#333',
+                          border: 'none',
+                          cursor: 'pointer',
+                          fontSize: '14px',
+                          borderBottomLeftRadius: '8px',
+                          borderBottomRightRadius: '8px'
+                        }}
+                      >
+                        EN
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <div className="cs_social_links cs_social_desktop">
+                  <a href="#">
+                    <i className="fa-brands fa-facebook-f" style={{ color: '#d7b76e' }}></i>
+                  </a>
+                  <a href="#">
+                    <i className="fa-brands fa-instagram" style={{ color: '#d7b76e' }}></i>
+                  </a>
+                  <a href="#">
+                    <i className="fa-brands fa-whatsapp" style={{ color: '#d7b76e' }}></i>
+                  </a>
+                </div>
               </div>
               <div className="cs_main_header_right">
 
@@ -77,7 +181,7 @@ export default function Header() {
                     type="button"
                     className="cs_toolbox_btn cs_sidebar_toggle_btn"
                     onClick={() => setIsSidebarOpen(true)}
-                    aria-label="Open menu"
+                    aria-label={isReady ? t('travel.header.openMenu') : 'Open menu'}
                   >
                     <i className="fa-solid fa-bars"></i>
                   </button>
@@ -101,12 +205,12 @@ export default function Header() {
 
           {/* MOBILE MENU */}
           <ul className="cs_mobile_menu">
-            <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Anasayfa</Link></li>
-            <li><Link href="/travel/all" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Seyahatler</Link></li>
-            <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Rezervasyon</Link></li>
-            <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Blog</Link></li>
-            <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>Hakkımızda</Link></li>
-            <li><Link href="/travel/contact" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)}>İletişim</Link></li>
+            <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.home') : ''}</Link></li>
+            <li><Link href="/travel/all" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.tours') : ''}</Link></li>
+            <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.reservation') : ''}</Link></li>
+            <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.blog') : ''}</Link></li>
+            <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.about') : ''}</Link></li>
+            <li><Link href="/travel/contact" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.contact') : ''}</Link></li>
           </ul>
 
           {/* SOCIALS – MOBILE (EN ALTTA) */}
@@ -124,7 +228,7 @@ export default function Header() {
           <div className="container">
             <div className="cs_header_search_box">
               <form onSubmit={(e) => e.preventDefault()}>
-                <input type="text" placeholder="Doktor Ara" />
+                <input type="text" placeholder={isReady ? t('travel.common.search') : 'Search'} suppressHydrationWarning />
                 <button type="submit" />
               </form>
               <button className="cs_close" onClick={() => setIsSearchOpen(false)}>

@@ -342,7 +342,7 @@ export default function BasvuruYapPage() {
                             <span>{t('visa.pages.basvuruYap.badge')}</span>
                         </div>
                         <h1 className="hero-title">
-                            <span className="title-accent">Çilek Vize</span>
+                            <span className="title-accent">Prince</span>
                             <span className="title-main">{t('visa.pages.basvuruYap.title')}</span>
                         </h1>
                         <p className="hero-subtitle">
@@ -1003,7 +1003,7 @@ export default function BasvuruYapPage() {
                                                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                                                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                                             </svg>
-                                            Bilgileriniz gizli tutulacak ve sadece vize değerlendirmesi için kullanılacaktır.
+                                            {t('visa.pages.basvuruYap.summary.privacyNote')}
                                         </p>
 
                                         <button type="submit" className={`submit-btn ${isLoading ? 'loading' : ''}`} disabled={isLoading}>
@@ -1047,7 +1047,7 @@ export default function BasvuruYapPage() {
                                             <path d="M9 11l3 3L22 4" />
                                             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
                                         </svg>
-                                        Form Özeti
+                                        {t('visa.pages.basvuruYap.summary.title')}
                                     </h5>
                                     {/* Progress Circle */}
                                     <div style={{ position: 'relative', width: '80px', height: '80px', flexShrink: 0 }}>
@@ -1113,7 +1113,7 @@ export default function BasvuruYapPage() {
                                     ))}
                                     {getFilledFields().length === 0 && (
                                         <li style={{ color: '#999', fontStyle: 'italic' }}>
-                                            Bilgileri doldurmaya başlayın...
+                                            {t('visa.pages.basvuruYap.summary.startFilling')}
                                         </li>
                                     )}
                                 </ul>

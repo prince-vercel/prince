@@ -8,9 +8,12 @@ import { useRouter } from 'next/router'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import { Blog } from '@/src/types/types'
+import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
+import '@/src/i18n'
 
 
 export default function BlogDetailPage() {
+  const { t, isReady } = useSafeTranslation()
   const router = useRouter()
   const { slug } = router.query
   const [blog, setBlog] = useState<Blog | null>(null)
@@ -34,11 +37,11 @@ export default function BlogDetailPage() {
           } as Blog
           setBlog(blogData)
         } else {
-          setError('Blog bulunamadı')
+          setError(isReady ? t('medical.pages.blog.detail.notFound') : 'Blog bulunamadı')
         }
       } catch (err) {
-        console.error('Blog yükleme hatası:', err)
-        setError('Blog yüklenirken hata oluştu')
+        console.error(isReady ? t('medical.pages.blog.error') : 'Blog yükleme hatası:', err)
+        setError(isReady ? t('medical.pages.blog.detail.error') : 'Blog yüklenirken hata oluştu')
       } finally {
         setLoading(false)
       }
@@ -49,16 +52,16 @@ export default function BlogDetailPage() {
 
   if (!slug || loading) {
     return (
-      <div style={{ textAlign: 'center', padding: '40px' }}>
-        {loading ? 'Blog yükleniyor...' : 'Yükleniyor...'}
+      <div style={{ textAlign: 'center', padding: '40px' }} suppressHydrationWarning>
+        {loading ? (isReady ? t('medical.pages.blog.detail.loading') : 'Blog yükleniyor...') : (isReady ? t('medical.pages.blog.detail.loading') : 'Yükleniyor...')}
       </div>
     )
   }
 
   if (error || !blog) {
     return (
-      <div style={{ textAlign: 'center', padding: '40px', color: 'red' }}>
-        {error || 'Blog bulunamadı'}
+      <div style={{ textAlign: 'center', padding: '40px', color: 'red' }} suppressHydrationWarning>
+        {error || (isReady ? t('medical.pages.blog.detail.notFound') : 'Blog bulunamadı')}
       </div>
     )
   }
@@ -68,10 +71,10 @@ export default function BlogDetailPage() {
       <div className="container">
         <ol className="breadcrumb2">
           <li className="breadcrumb-item2">
-            <Link href="/medical">Anasayfa</Link>
+            <Link href="/medical" suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.home') : ''}</Link>
           </li>
           <li className="breadcrumb-item2">
-            <Link href="/medical/blog">Blog</Link>
+            <Link href="/medical/blog" suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.blog') : ''}</Link>
           </li>
           <li className="breadcrumb-item2 active">
             {blog.title}
@@ -88,13 +91,13 @@ export default function BlogDetailPage() {
 
         <div className="cs_blog_details_info" style={{margin:'15px'}}>
           <div className="cs_blog_details_info_left">
-            <div className="cs_blog_details_date">
-              {blog.createdAt?.toLocaleDateString('tr-TR')} | Blog Yöneticisi
+            <div className="cs_blog_details_date" suppressHydrationWarning>
+              {blog.createdAt?.toLocaleDateString('tr-TR')} | {isReady ? t('medical.pages.blog.detail.blogManager') : 'Blog Yöneticisi'}
             </div>
           </div>
 
           <div className="cs_social_links_wrap">
-            <h2>Paylaş:</h2>
+            <h2 suppressHydrationWarning>{isReady ? t('medical.pages.blog.detail.share') : 'Paylaş:'}</h2>
             <div className="cs_social_links">
               <a href="#"><i className="fa-brands fa-facebook-f" /></a>
               <a href="#"><i className="fa-brands fa-linkedin-in" /></a>
@@ -118,7 +121,7 @@ export default function BlogDetailPage() {
         <div className="row" style={{marginTop:'50px'}}>
           <div className="col-lg-8">
             <div className="cs_blog_details">
-              <h2>Blog İçeriği</h2>
+              <h2 suppressHydrationWarning>{isReady ? t('medical.pages.blog.detail.content') : 'Blog İçeriği'}</h2>
 
               <p>
                 {blog.description}

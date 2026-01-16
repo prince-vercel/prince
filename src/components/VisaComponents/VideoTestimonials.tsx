@@ -15,8 +15,8 @@ interface VideoTestimonial {
 
 const videoTestimonials: VideoTestimonial[] = [
     {
-        title: "🎄 2025'e Özel Çilek Vize Yılbaşı Ağacı! 🍓 KARTONGİLLER 🎅🤶",
-        description: "Yeni yıl ruhunu ofisimize taşıdık ve biraz da yaratıcılığımızı konuşturduk! ✨ İşte Çilek Vize ailesi olarak bir araya gelip kendimizden bir yılbaşı ağacı yaptığımız bu eğlenceli proje! 🎄 2025 yılına girerken dileğimiz, hayallerinize giden tüm yolların açık olması!",
+        title: "🎄 2025'e Özel Prince Yılbaşı Ağacı! 🍓 KARTONGİLLER 🎅🤶",
+        description: "Yeni yıl ruhunu ofisimize taşıdık ve biraz da yaratıcılığımızı konuşturduk! ✨ İşte Prince ailesi olarak bir araya gelip kendimizden bir yılbaşı ağacı yaptığımız bu eğlenceli proje! 🎄 2025 yılına girerken dileğimiz, hayallerinize giden tüm yolların açık olması!",
         thumbnail: '/visa/uploads/contents/testimonial/2024e15014_1676518cc370b6.webp',
         youtubeId: 'h6UFJ-IbG78',
         rating: 5
@@ -30,13 +30,13 @@ const videoTestimonials: VideoTestimonial[] = [
     },
     {
         title: '🎉 ÇEKİLİŞ ZAMANI! 🎉',
-        description: 'Çilek Vize  ve Lider İnsan Kaynakları iş birliğiyle 3 şanslı kişiye ÜCRETSİZ VİZE DANIŞMANLIĞI hediye ediyoruz!',
+        description: 'Prince  ve Lider İnsan Kaynakları iş birliğiyle 3 şanslı kişiye ÜCRETSİZ VİZE DANIŞMANLIĞI hediye ediyoruz!',
         thumbnail: '/visa/uploads/contents/testimonial/2024cc8fc2_16765224c1874a.webp',
         youtubeId: 'm0F02YsgE5Y',
         rating: 5
     },
     {
-        title: 'Rusya Vizesi Çilek Vize ile Artık Çok Daha Kolay! 🍓',
+        title: 'Rusya Vizesi Prince ile Artık Çok Daha Kolay! 🍓',
         description: 'Sadece 1 haftada Rusya vizenizi alıyoruz! Hızlı, güvenilir ve profesyonel hizmetimizle sizi gereksiz bekleyişlerden kurtarıyoruz. ✈️',
         thumbnail: '/visa/uploads/contents/testimonial/2024f09d35_16765162916091.webp',
         youtubeId: '3M2w5Q9onos',
@@ -46,7 +46,7 @@ const videoTestimonials: VideoTestimonial[] = [
 
 export default function VideoTestimonials() {
     const { t } = useTranslation()
-    
+
     // main.js'teki swiperVerticalCardSliders ve iframeModal init fonksiyonlarını çağır
     useEffect(() => {
         const initSliders = () => {

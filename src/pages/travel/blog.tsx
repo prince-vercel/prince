@@ -6,6 +6,8 @@ import { collection, getDocs } from 'firebase/firestore'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import '../../i18n'
 
 interface Blog {
   id: string
@@ -20,6 +22,7 @@ const BLOGS_PER_PAGE = 6
 
 
 const BlogList = () => {
+  const { t, isReady } = useSafeTranslation()
   const [blogs, setBlogs] = useState<Blog[]>([])
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(true)
@@ -39,7 +42,8 @@ const BlogList = () => {
         })
         setBlogs(blogsData.sort((a, b) => (b.createdAt?.getTime() ?? 0) - (a.createdAt?.getTime() ?? 0)))
       } catch (error) {
-        console.error('Blog yükleme hatası:', error)
+        const errorMsg = isReady ? t('travel.pages.blog.errors.loading') : 'Blog yükleme hatası:'
+        console.error(errorMsg, error)
       } finally {
         setLoading(false)
       }
@@ -65,14 +69,14 @@ const BlogList = () => {
           <nav>
             <ol className="breadcrumb2" style={{ color: 'white' }}>
               <li className="breadcrumb-item2">
-                <Link href="/travel">Anasayfa</Link>
+                <Link href="/travel" suppressHydrationWarning>{isReady ? t('travel.pages.breadcrumb.home') : ''}</Link>
               </li>
-              <li className="breadcrumb-item2"> Blog</li>
+              <li className="breadcrumb-item2" suppressHydrationWarning> {isReady ? t('travel.pages.blog.breadcrumb') : ''}</li>
             </ol>
           </nav>
 
-          <h2 className="l:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
-            Blog Yazıları
+          <h2 className="l:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]" suppressHydrationWarning>
+            {isReady ? t('travel.pages.blog.title') : ''}
           </h2>
         </div>
       </div>
@@ -85,9 +89,13 @@ const BlogList = () => {
 
             <div className="col-span-12">
               {loading ? (
-                <div style={{ textAlign: 'center', padding: '40px', width: '100%', height: '300px' }} />
+                <div style={{ textAlign: 'center', padding: '40px', width: '100%', height: '300px' }} suppressHydrationWarning>
+                  {isReady ? t('travel.pages.blog.loading') : ''}
+                </div>
               ) : blogs.length === 0 ? (
-                <div style={{ textAlign: 'center', padding: '40px', width: '100%', height: '300px' }} />
+                <div style={{ textAlign: 'center', padding: '40px', width: '100%', height: '300px' }} suppressHydrationWarning>
+                  {isReady ? t('travel.pages.blog.noBlogs') : ''}
+                </div>
               ) : (
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-24 md:gap-x-32 gap-y-16">
@@ -110,8 +118,9 @@ const BlogList = () => {
                           <Link
                             href={`/travel/blog/${blog.id}`}
                             className="group inline-flex items-center mt-1 text-dark-1 font-medium hover:text-primary-1 duration-200"
+                            suppressHydrationWarning
                           >
-                            İncele
+                            {isReady ? t('travel.pages.blog.view') : ''}
                           </Link>
                         </div>
                       </div>

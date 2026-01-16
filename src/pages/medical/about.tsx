@@ -7,17 +7,20 @@ import { db } from "@/src/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { useSafeTranslation } from "@/src/hooks/useSafeTranslation";
+import "@/src/i18n";
 
 
 export default function AboutPage() {
+  const { t, isReady } = useSafeTranslation()
   const counters = useMemo(
     () => [
-      { end: 25000, label: "Mutlu Hastalar", suffix: "+" },
-      { end: 120, label: "Uzman Doktor", suffix: "+" },
-      { end: 15, label: "Yıl Deneyim", suffix: "+" },
-      { end: 50, label: "Ödüller", suffix: "+" },
+      { end: 25000, label: isReady ? t('medical.pages.about.counters.happyPatients') : "Mutlu Hastalar", suffix: "+" },
+      { end: 120, label: isReady ? t('medical.pages.about.counters.expertDoctors') : "Uzman Doktor", suffix: "+" },
+      { end: 15, label: isReady ? t('medical.pages.about.counters.yearsExperience') : "Yıl Deneyim", suffix: "+" },
+      { end: 50, label: isReady ? t('medical.pages.about.counters.awards') : "Ödüller", suffix: "+" },
     ],
-    []
+    [t, isReady]
   );
 
   const [partners, setPartners] = useState<any[]>([])
@@ -40,7 +43,7 @@ export default function AboutPage() {
         // Düzenlemeye göre sırala
         setPartners(partnersData.sort((a, b) => (a.order || 0) - (b.order || 0)))
       } catch (error) {
-        console.error('Partners yükleme hatası:', error)
+        console.error(isReady ? t('medical.homePage.errors.loadingPartners') : 'Partners yükleme hatası:', error)
       } finally {
         setLoadingPartners(false)
       }
@@ -74,17 +77,17 @@ export default function AboutPage() {
         <div className="container" style={{ marginBottom: '20px', marginTop: '-45px' }}>
           <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
             <li className="breadcrumb-item2" style={{ color: '#fff' }}>
-              <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
+              <Link href="/medical" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.home') : ''}</Link>
             </li>
-            <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>Hakkımızda</li>
+            <li className="breadcrumb-item2 active" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.about') : ''}</li>
           </ol>
 
           <div className="cs_banner_text">
-            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }}>
-              Hakkımızda
+            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }} suppressHydrationWarning>
+              {isReady ? t('medical.pages.about.title') : ''}
             </h2>
-            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
-              Sağlığınız ve güzelliğiniz bizim önceliğimiz.
+            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }} suppressHydrationWarning>
+              {isReady ? t('medical.pages.about.subtitle') : ''}
             </p>
           </div>
         </div>
@@ -107,8 +110,8 @@ export default function AboutPage() {
 
             <div className="col-xl-7">
               <div className="cs_section_heading cs_style_1">
-                <h2 className="cs_section_title cs_fs_72 m-0 " style={{ fontWeight: 'bold' }}>
-                  Neden Bizi Seçmelisiniz ?
+                <h2 className="cs_section_title cs_fs_72 m-0 " style={{ fontWeight: 'bold' }} suppressHydrationWarning>
+                  {isReady ? t('medical.pages.about.whyChooseUs') : ''}
                 </h2>
               </div>
 
@@ -126,12 +129,8 @@ export default function AboutPage() {
                       />
                     </div>
 
-                    <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }}>
-                      Prince Medical olarak, uluslararası hastalara Türkiye’nin dünya standartlarındaki
-                      sağlık hizmetlerini güvenli, şeffaf ve konforlu bir şekilde sunmak amacıyla kurulduk.
-                      Alanında uzman doktorlar ve tam donanımlı sağlık kuruluşlarıyla iş birliği yaparak,
-                      hastalarımıza en yüksek kalite standartlarında tedavi süreçleri sunuyoruz.
-
+                    <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }} suppressHydrationWarning>
+                      {isReady ? t('medical.pages.about.description1') : ''}
                     </p>
                   </div>
                   <div className="cs_height_85 cs_height_xl_60 cs_height_lg_35"></div>
@@ -147,8 +146,8 @@ export default function AboutPage() {
                         height={32}
                       />
                     </div>
-                    <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }}>
-                      Medical turizm alanındaki deneyimimizle; estetik cerrahi, saç ekimi, diş tedavileri ve birçok branşta kişiye özel çözümler geliştiriyoruz. Tedavi sürecinin her aşamasında, hastalarımızın ihtiyaçlarını önceliklendiriyor; danışmanlıktan tedavi sonrasına kadar uçtan uca hizmet sağlıyoruz.
+                    <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }} suppressHydrationWarning>
+                      {isReady ? t('medical.pages.about.description2') : ''}
                     </p>
                   </div>
                   <div className="cs_height_85 cs_height_xl_60 cs_height_lg_35"></div>
@@ -158,8 +157,8 @@ export default function AboutPage() {
                     <div className="cs_iconbox_icon cs_center cs_accent_bg rounded-circle">
                       <Image src="/assets/img/icons/patient.svg" alt="" width={32} height={32} />
                     </div>
-                    <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }}>
-                      Yurt dışından gelen misafirlerimiz için seyahat planlaması, konaklama, VIP transfer ve çok dilli hasta koordinasyonu hizmetleri sunarak, tedavi sürecini stressiz ve güvenli hale getiriyoruz.
+                    <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }} suppressHydrationWarning>
+                      {isReady ? t('medical.pages.about.description3') : ''}
                     </p>
                   </div>
                   <div className="cs_height_85 cs_height_xl_60 cs_height_lg_35"></div>
@@ -175,8 +174,8 @@ export default function AboutPage() {
                         height={32}
                       />
                     </div>
-                    <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }}>
-                      Prince Medical olarak temel prensibimiz; etik değerlere bağlı, hasta memnuniyetini esas alan ve sürdürülebilir sağlık çözümleri üretmektir. Sağlığınız bizim için bir hizmet değil, bir sorumluluktur.
+                    <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }} suppressHydrationWarning>
+                      {isReady ? t('medical.pages.about.description4') : ''}
                     </p>
                   </div>
                 </div>
@@ -224,11 +223,11 @@ export default function AboutPage() {
             <div className="cs_brands_track">
               {loadingPartners ? (
                 <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                  <p>İş ortakları yükleniyor...</p>
+                  <p suppressHydrationWarning>{isReady ? t('medical.pages.about.partners.loading') : ''}</p>
                 </div>
               ) : partners.length === 0 ? (
                 <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                  <p>Henüz iş ortağı yok.</p>
+                  <p suppressHydrationWarning>{isReady ? t('medical.pages.about.partners.noPartners') : ''}</p>
                 </div>
               ) : (
                 partners.concat(partners).map((partner, i) => (

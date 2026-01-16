@@ -1,0 +1,407 @@
+{
+  "travel": {
+    "header": {
+      "home": "Anasayfa",
+      "tours": "Seyahatler",
+      "reservation": "Rezervasyon",
+      "blog": "Blog",
+      "about": "Hakkımızda",
+      "contact": "İletişim",
+      "openMenu": "Menüyü aç"
+    },
+    "footer": {
+      "description": "Prince Medical Aesthetics & Health Services",
+      "address": "Kağıthane / İstanbul",
+      "phone": "+90 212 000 00 00",
+      "email": "medical@princetourismagency.com",
+      "home": "Anasayfa",
+      "tours": "Seyahatlar",
+      "blog": "Blog",
+      "about": "Hakkımızda",
+      "contact": "İletişim",
+      "faq": "Sık Sorulan Sorular",
+      "privacy": "Gizlilik Politikası",
+      "kvkk": "KVKK & Aydınlatma",
+      "newsletter": {
+        "title": "Bize Katılın",
+        "description": "Kampanyalar, yenilikler ve sağlık içerikleri için e-posta listemize kayıt olun.",
+        "placeholder": "E-posta adresiniz",
+        "submit": "Gönder"
+      },
+      "copyright": "© Happencode. Tüm hakları saklıdır."
+    },
+    "homePage": {
+      "search": {
+        "title": "Rota Bul",
+        "destinationPlaceholder": "Nereye gitmek istiyorsunuz?",
+        "datePlaceholder": "Tarih Seç",
+        "submit": "HEMEN KEŞFET"
+      },
+      "categories": {
+        "subtitle": "Tur Kategorileri",
+        "title": "Popüler Tur Türleri",
+        "cityDayTrip": {
+          "title": "Şehir İçi Günü Birlik",
+          "description": "Şehirde heyecan dolu günü birlik keşif rotaları",
+          "alt": "Macera"
+        },
+        "outdoorDayTrip": {
+          "title": "Şehir Dışı Günü Birlik",
+          "description": "Doğada rahat ve keyifli günü birlik turlar",
+          "alt": "Gemi"
+        },
+        "accommodationPackages": {
+          "title": "Konaklama Paketleri",
+          "description": "Konaklama dahil tam paket tur hizmetleri",
+          "alt": "Doğa"
+        },
+        "internationalTours": {
+          "title": "Yurt Dışı Turlar",
+          "description": "Uluslararası destinasyonlarda özel ve romantik tatiller",
+          "alt": "Balayı"
+        }
+      },
+      "packages": {
+        "subtitle": "Turlarımızı Keşfedin",
+        "title": "Yeni ve En Popüler Turlar",
+        "noTours": "Tur bulunamadı",
+        "popular": "Popüler",
+        "noImage": "Görsel Yok",
+        "getPrice": "Fiyat Al",
+        "viewDetails": "Hemen İncele",
+        "loadingPartners": "İş ortakları yükleniyor...",
+        "noPartners": "Henüz iş ortağı yok."
+      },
+      "partners": {
+        "defaultAlt": "Partner"
+      },
+      "blog": {
+        "subtitle": "Blog & Haberler",
+        "title": "Seyahat İpuçlarıyla Güncel Kalın!",
+        "noBlogs": "Blog bulunamadı",
+        "readMore": "Devamını Oku"
+      },
+      "chatbot": {
+        "startChat": "Sohbet Başlat",
+        "close": "Kapat",
+        "loading": "Yükleniyor..."
+      },
+      "errors": {
+        "loadingPartners": "Partners yükleme hatası:",
+        "loadingBanners": "Banner yükleme hatası:",
+        "loadingTours": "Tur yükleme hatası:",
+        "loadingBlogs": "Blog yükleme hatası:"
+      }
+    },
+    "pages": {
+      "breadcrumb": {
+        "home": "Anasayfa"
+      },
+      "contact": {
+        "title": "Bizimle İletişime Geçin",
+        "breadcrumb": "İletişim",
+        "email": {
+          "title": "E-posta Gönder",
+          "address": "info@princetourismagency.com"
+        },
+        "phone": {
+          "title": "Bizi Arayın",
+          "number": "+90 212 000 00 00"
+        },
+        "address": {
+          "title": "Bizi Ziyaret Edin",
+          "location": "Kağıthane / İstanbul"
+        },
+        "form": {
+          "title": "İletişim Kurun",
+          "subtitle": "Bize Ulaşın!",
+          "name": "Adınız",
+          "email": "E-posta Adresiniz",
+          "subject": "Konu",
+          "message": "Mesajınız",
+          "submit": "Gönder",
+          "success": "Mesajınız başarıyla gönderildi!",
+          "error": "Bir hata oluştu. Lütfen tekrar deneyin.",
+          "required": "Lütfen tüm alanları doldurunuz!"
+        }
+      },
+      "blog": {
+        "title": "Blog Yazıları",
+        "breadcrumb": "Blog",
+        "view": "İncele",
+        "loading": "Bloglar yükleniyor...",
+        "noBlogs": "Henüz blog yazısı bulunmamaktadır.",
+        "errors": {
+          "loading": "Blog yükleme hatası:"
+        }
+      },
+      "faqs": {
+        "subtitle": "En Sık Sorulan Sorular",
+        "title": "Sıkça Sorulan Sorular"
+      },
+      "privacy": {
+        "title": "Gizlilik Politikası",
+        "intro": "Prince olarak, ziyaretçilerimizin ve kullanıcılarımızın gizliliğini korumaya büyük önem veriyoruz. Bu Gizlilik Politikası, web sitemizi ziyaret ettiğinizde hangi kişisel verilerin toplandığını, nasıl kullanıldığını, korunduğunu ve haklarınızı açıklamaktadır.",
+        "sections": {
+          "collectedInfo": {
+            "title": "1. Toplanan Bilgiler",
+            "description": "Web sitemizi kullandığınızda aşağıdaki bilgiler toplanabilir:",
+            "items": [
+              "Ad, soyad",
+              "E-posta adresi",
+              "Telefon numarası",
+              "IP adresi",
+              "Cihaz, tarayıcı ve kullanım bilgileri",
+              "Çerez (cookie) verileri",
+              "İletişim veya başvuru formları aracılığıyla iletilen bilgiler"
+            ]
+          },
+          "collectionMethod": {
+            "title": "2. Kişisel Verilerin Toplanma Yöntemi",
+            "description": "Kişisel verileriniz aşağıdaki yollarla toplanmaktadır:",
+            "items": [
+              "Web sitemizi ziyaret ettiğinizde",
+              "Üyelik oluşturduğunuzda",
+              "İletişim formlarını doldurduğunuzda",
+              "Hizmetlerimizden yararlandığınızda"
+            ],
+            "note": "Veriler otomatik veya otomatik olmayan yollarla toplanmaktadır."
+          },
+          "usagePurpose": {
+            "title": "3. Kişisel Verilerin Kullanım Amaçları",
+            "description": "Toplanan veriler aşağıdaki amaçlarla kullanılabilir:",
+            "items": [
+              "Hizmetlerin sunulması ve geliştirilmesi",
+              "Kullanıcı taleplerinin karşılanması",
+              "İletişim faaliyetlerinin yürütülmesi",
+              "Yasal yükümlülüklerin yerine getirilmesi",
+              "Sistem güvenliğinin sağlanması",
+              "Pazarlama ve analiz faaliyetleri (izin verilmesi halinde)"
+            ]
+          },
+          "sharing": {
+            "title": "4. Kişisel Verilerin Paylaşılması",
+            "description": "Kişisel verileriniz aşağıdaki durumlarda paylaşılabilir:",
+            "items": [
+              "Yasal zorunluluklar halinde yetkili kamu kurumlarıyla",
+              "Hizmet alınan üçüncü taraflarla (hosting, altyapı, e-posta hizmetleri vb.)",
+              "Açık rızanız bulunması halinde"
+            ]
+          },
+          "storage": {
+            "title": "5. Kişisel Verilerin Saklanması ve Güvenliği",
+            "description": "Kişisel verileriniz, ilgili mevzuatta öngörülen süreler boyunca saklanmakta ve yetkisiz erişime karşı gerekli teknik ve idari tedbirler alınmaktadır."
+          },
+          "cookies": {
+            "title": "6. Çerezler (Cookies)",
+            "description": "Web sitemizde kullanıcı deneyimini iyileştirmek amacıyla çerezler kullanılmaktadır. Tarayıcı ayarlarınızdan çerezleri reddedebilir veya silebilirsiniz."
+          },
+          "updates": {
+            "title": "7. Gizlilik Politikası Güncellemeleri",
+            "description": "Bu Gizlilik Politikası gerektiğinde güncellenebilir. Güncel metin her zaman web sitemizde yayınlanır."
+          }
+        },
+        "contactEmail": "Sorularınız için <strong>info@princetourismagency.com</strong> e-posta adresimize yazabilirsiniz."
+      },
+      "kvkk": {
+        "title": "KVKK Aydınlatma Metni",
+        "intro": "6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) uyarınca, veri sorumlusu sıfatıyla Pro Health, kişisel verilerinizi aşağıda açıklanan kapsamda işlemektedir.",
+        "sections": {
+          "dataController": {
+            "title": "1. Veri Sorumlusu",
+            "companyName": "Firma Adı:",
+            "companyNameValue": "prince",
+            "email": "E-posta:",
+            "emailValue": "info@princetourismagency.com"
+          },
+          "processedData": {
+            "title": "2. İşlenen Kişisel Veriler",
+            "items": [
+              "Kimlik bilgileri (ad, soyad)",
+              "İletişim bilgileri (e-posta, telefon)",
+              "İşlem güvenliği bilgileri (IP, log kayıtları)",
+              "Kullanıcı işlem bilgileri"
+            ]
+          },
+          "processingPurpose": {
+            "title": "3. Kişisel Verilerin İşlenme Amaçları",
+            "description": "Kişisel verileriniz aşağıdaki amaçlarla işlenmektedir:",
+            "items": [
+              "Hizmetlerin yürütülmesi",
+              "İletişim faaliyetlerinin gerçekleştirilmesi",
+              "Talep ve şikayetlerin değerlendirilmesi",
+              "Hukuki yükümlülüklerin yerine getirilmesi",
+              "Bilgi güvenliği süreçlerinin yürütülmesi"
+            ]
+          },
+          "transfer": {
+            "title": "4. Kişisel Verilerin Aktarılması",
+            "description": "Kişisel verileriniz yetkili kamu kurum ve kuruluşlarına ile hizmet alınan üçüncü kişilere, KVKKnın 8. ve 9. maddelerine uygun olarak aktarılabilir."
+          },
+          "collectionMethod": {
+            "title": "5. Kişisel Verilerin Toplanma Yöntemi ve Hukuki Sebebi",
+            "description": "Kişisel verileriniz aşağıdaki yollarla toplanmaktadır:",
+            "items": [
+              "Web sitesi",
+              "Elektronik formlar",
+              "Çerezler"
+            ],
+            "note": "Kişisel verileriniz KVKKnın 5. maddesinde belirtilen hukuki sebeplere dayanılarak işlenmektedir."
+          },
+          "rights": {
+            "title": "6. KVKK Kapsamındaki Haklarınız",
+            "description": "KVKKnın 11. maddesi uyarınca aşağıdaki haklara sahipsiniz:",
+            "items": [
+              "Kişisel verilerinizin işlenip işlenmediğini öğrenme",
+              "İşlenmişse buna ilişkin bilgi talep etme",
+              "İşlenme amacını öğrenme",
+              "Yanlış veya eksik işlenmişse düzeltilmesini isteme",
+              "Silinmesini veya yok edilmesini isteme",
+              "İşlemlerin üçüncü kişilere bildirilmesini isteme",
+              "Otomatik sistemler ile analiz edilmesine itiraz etme",
+              "Zarara uğramanız halinde tazminat talep etme"
+            ]
+          }
+        },
+        "contactEmail": "Başvurularınızı <strong>info@princetourismagency.com</strong> e-posta adresimiz üzerinden iletebilirsiniz."
+      },
+      "all": {
+        "title": "Tüm Seyahatlerimiz",
+        "breadcrumb": "Seyahatler",
+        "filters": {
+          "title": "Filtrele",
+          "destination": "Şehir",
+          "allDestinations": "Tüm Şehirler",
+          "duration": "Süre",
+          "maxPeople": "Maksimum Kişi",
+          "priceRange": "Fiyat Aralığı (€):",
+          "priceRangeMin": "Min",
+          "priceRangeMax": "Max",
+          "days": "Gün",
+          "allDays": "Tüm Günler",
+          "inclusions": "Dahil Olanlar",
+          "showPricedOnly": "Fiyat Al",
+          "clearFilters": "Filtreleri Temizle",
+          "exploreNow": "Şimdi Keşfet"
+        },
+        "results": {
+          "noTours": "Tur bulunamadı",
+          "loading": "Turlar yükleniyor...",
+          "viewDetails": "Detayları Gör",
+          "noImage": "Görsel Yok",
+          "getPrice": "Fiyat Al"
+        }
+      },
+      "form": {
+        "title": "Mükemmel Tatili Planla",
+        "subtitle": "Kişiselleştirilmiş seyahat deneyimi için hemen rezervasyon yapın!",
+        "breadcrumb": "Seyahatler",
+        "loading": "Sorular yükleniyor...",
+        "selectPlaceholder": "Seçiniz",
+        "datePlaceholder": "gg.aa.yyyy",
+        "previous": "Geri",
+        "next": "Devam Et",
+        "submit": "Formu Gönder",
+        "success": "Başarıyla gönderildi!",
+        "error": "Lütfen gerekli alanları doldurunuz!",
+        "errorAlert": "Form gönderilirken bir hata oluştu!",
+        "privacy": "Bilgileriniz gizlidir ve üçüncü kişilerle paylaşılmaz.",
+        "errors": {
+          "loadingQuestions": "Sorular yüklenirken hata:",
+          "submitError": "Form gönderme hatası:"
+        },
+        "summary": {
+          "title": "Form Özeti",
+          "empty": "Bilgileri doldurmaya başlayın..."
+        },
+        "steps": {
+          "step1": "Kişisel Bilgiler",
+          "step2": "Seyahat Detayları",
+          "step3": "Ek Bilgiler",
+          "vize_bilgileri": "Vize Bilgileri",
+          "kisisel_bilgiler": "Kişisel Bilgiler",
+          "vize_gecmisi": "Vize Geçmişi",
+          "is_ve_finansal_bilgiler": "İş ve Finansal Bilgiler",
+          "ek_bilgiler": "Ek Bilgiler"
+        },
+        "questions": {
+          "ad_soyad": "Ad Soyad",
+          "deneme": "Deneme",
+          "basvuru_ulkesi": "Başvuru Ülkesi",
+          "dogum_tarihi": "Doğum Tarihi",
+          "vize_turu": "Vize Türü",
+          "seyahat_konusu": "Seyahat Konusu",
+          "cinsiyet": "Cinsiyet",
+          "seyahat_tarihi": "Seyahat Tarihi",
+          "uyruk": "Uyruk",
+          "ucak_bileti_var_mi": "Uçak Bileti Var mı?",
+          "telefon_whatsapp": "Telefon (WhatsApp)",
+          "e_posta": "E-posta"
+        },
+        "options": {
+          "evet": "Evet",
+          "hayır": "Hayır",
+          "yes": "Evet",
+          "no": "Hayır",
+          "kadin": "Kadın",
+          "erkek": "Erkek",
+          "belirtmek_istemiyorum": "Belirtmek İstemiyorum",
+          "1": "1 Kişi",
+          "2": "2 Kişi",
+          "3": "3 Kişi",
+          "4": "4 Kişi",
+          "5+": "5+ Kişi",
+          "var": "Var",
+          "yok": "Yok"
+        }
+      },
+      "about": {
+        "title": "En İyi Seyahat Yolu",
+        "breadcrumb": "Hakkımızda",
+        "subtitle": "Hakkımızda",
+        "heading": "Tatilleriniz için Profesyonel Planlayıcılarız",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed do eiusmod tem por incididunt ut labore et dolore magna aliqua.",
+        "contactExpert": "Destinasyon Uzmanlarımızla Doğrudan +1 546 378 654'ten Konuşun",
+        "features": [
+          "Tüm yerler ve aktiviteler tarafımızdan dikkatle seçilmiştir.",
+          "Ödül kazanan bir ajansız",
+          "80.000'den fazla müşteri tarafından güvenilir"
+        ],
+        "moreInfo": "Daha Fazla Bilgi",
+        "featuredPackages": {
+          "subtitle": "Öne Çıkan Paketler",
+          "title": "Öne Çıkan Paketlerimize Göz Atın",
+          "startingFrom": "$1.200'den başlayan",
+          "packageTitle": "Yaz Dönüşü X MEKSİKA",
+          "packageDescription": "Afro-Latin kültürünü keşfetmek ve Kolombiya'nın Bağımsızlık Hafta Sonu'nu kutlamak için bize katılın!",
+          "packageDetails": "Duis id interdum ex, eu accumsan massa. Fusce vel nibh diam. Nulla ultrices ex at erat pharetra.",
+          "inclusions": [
+            "Profesyonel Tur Rehberi",
+            "Yeni malzeme/parça taşımak için nakliye maliyeti",
+            "Yeni malzeme/parça taşımak için nakliye maliyeti"
+          ],
+          "bookNow": "Şimdi Rezervasyon Yap"
+        },
+        "partners": {
+          "loading": "İş ortakları yükleniyor...",
+          "noPartners": "Henüz iş ortağı yok."
+        },
+        "testimonials": {
+          "subtitle": "Yorumlar",
+          "title": "Yolcularımız Neler Söylüyor"
+        },
+        "errors": {
+          "loadingPartners": "Partners yükleme hatası:",
+          "loadingTestimonials": "Yorum verileri çekilirken hata:"
+        }
+      }
+    },
+    "common": {
+      "close": "Kapat",
+      "loading": "Yükleniyor...",
+      "error": "Bir hata oluştu",
+      "success": "Başarılı",
+      "search": "Ara"
+    }
+  }
+}

@@ -1,13 +1,19 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import '../../../styles/visa/UlkeVizeBasvurusu.css';
 import '../../../i18n';
+import '../../../styles/visa/UlkeVizeBasvurusu.css';
 
 interface NavLink {
     title: string;
     href: string;
+    key?: string;
+}
+
+interface NavContent {
+    title: string;
+    content: string;
 }
 
 interface Video {
@@ -38,51 +44,20 @@ interface CountryData {
 const countriesData: Record<string, CountryData> = {
     ingiltere: {
         slug: 'ingiltere',
-        name: 'İngiltere',
+        name: '', // Will be set dynamically with translation
         icon: '/visa/uploads/icons/1764382446_54d42ca992ddf99b4289.svg',
         heroImage: '/visa/uploads/contents/main/1764382497_103fbb272638992bc7ed.webp',
         heroImageMobile: '/visa/uploads/contents/main/mobile/1764382512_91fad356020f88b602c2.webp',
-        excerpt: 'İngiltere\'ye turist olarak gitmek isteyenler için alınması gereken vizeye "Standart Ziyaretçi Vizesi" (Standard Visitor Visa) denir. Bu vize, turistik geziler, aile veya arkadaş ziyareti, iş görüşmeleri veya kısa süreli eğitim programları gibi amaçlarla İngiltere\'yi ziyaret etmek isteyen kişiler için uygundur.',
-        content: `<p>İngiltere, Birleşik Krallık'ın (United Kingdom - UK) dört ülkesinden biridir ve Avrupa'nın batısında yer alır. Zengin tarihi, kültürü ve ekonomisiyle dünya genelinde önemli bir yere sahiptir. İşte İngiltere hakkında genel bilgiler:</p>
-        <h3><strong>Coğrafya</strong></h3>
-        <ul>
-            <li><strong>Konum:</strong> İngiltere, Büyük Britanya Adası'nın güneydoğusunda yer alır ve kuzeyde İskoçya, batıda Galler ile komşudur. Ayrıca, İrlanda Denizi, Kelt Denizi, Kuzey Denizi ve İngiliz Kanalı ile çevrilidir.</li>
-            <li><strong>Başkent:</strong> Londra, hem İngiltere'nin hem de Birleşik Krallık'ın başkentidir. Dünya çapında finans, kültür ve tarih açısından önemli bir merkezdir.</li>
-            <li><strong>İklim:</strong> Ilıman okyanusal iklim görülür. Kışlar genellikle soğuk, yazlar ise ılıktır. Yıl boyunca yağışlıdır.</li>
-        </ul>
-        <h3><strong>Tarih</strong></h3>
-        <ul>
-            <li><strong>Tarih Öncesi ve Antik Dönem:</strong> Stonehenge gibi anıtlar, İngiltere'nin tarih öncesi çağlardan beri yerleşim gördüğünü gösterir. Roma İmparatorluğu döneminde İngiltere, Britannia adıyla bilinir.</li>
-            <li><strong>Orta Çağ:</strong> 1066'da Normanlar'ın İngiltere'yi fethi, ülkenin tarihinde önemli bir dönüm noktasıdır.</li>
-            <li><strong>Modern Dönem:</strong> 16. ve 17. yüzyıllarda İngiltere, denizcilikte ve sömürgecilikte öncü bir rol üstlenmiştir. Sanayi Devrimi de 18. yüzyılda burada başlamıştır.</li>
-        </ul>
-        <h3><strong>Kültür</strong></h3>
-        <ul>
-            <li><strong>Dil:</strong> Resmi dil İngilizce'dir ve dünya çapında en yaygın konuşulan dillerden biridir.</li>
-            <li><strong>Sanat ve Edebiyat:</strong> William Shakespeare, Charles Dickens, J.K. Rowling gibi dünyaca ünlü yazarlar İngiltere'dendir. Londra, birçok sanat galerisine ve tiyatroya ev sahipliği yapar.</li>
-            <li><strong>Müzik:</strong> The Beatles, Rolling Stones gibi gruplar İngiltere'den çıkmıştır ve dünya müziğine büyük etkisi olmuştur.</li>
-            <li><strong>Spor:</strong> Futbol, İngiltere'de en popüler spordur. Premier League, dünyanın en prestijli futbol liglerinden biridir. Ayrıca kriket ve rugby de oldukça popülerdir.</li>
-        </ul>
-        <h3><strong>Ekonomi</strong></h3>
-        <ul>
-            <li><strong>Genel Bakış:</strong> İngiltere, dünyanın en büyük ekonomilerinden birine sahiptir. Londra, uluslararası finans merkezi olarak tanınır.</li>
-            <li><strong>Endüstriler:</strong> Finans, teknoloji, otomotiv, havacılık ve ilaç sanayisi öne çıkan sektörler arasındadır.</li>
-            <li><strong>Para Birimi:</strong> İngiliz Sterlini (GBP).</li>
-        </ul>
-        <h3><strong>Yönetim</strong></h3>
-        <ul>
-            <li><strong>Hükümet:</strong> İngiltere, anayasal monarşi ve parlamenter demokrasi ile yönetilir. Kraliçe veya kral devletin başıdır, ancak politik gücü sınırlıdır.</li>
-            <li><strong>Parlamento:</strong> İngiltere'nin yasama organı olan Parlamento, iki meclisten oluşur: Avam Kamarası ve Lordlar Kamarası.</li>
-        </ul>
-        <p>İngiltere, tarihi mirası, kültürel zenginliği ve ekonomik gücü ile dünya çapında önemli bir ülke olmaya devam etmektedir. Her yıl milyonlarca turist, Londra'nın ikonik yapıları, tarihi kaleleri ve güzel kırsal alanlarını görmek için İngiltere'yi ziyaret etmektedir.</p>`,
+        excerpt: '', // Will be set dynamically with translation
+        content: '', // Will be set dynamically with translation
         navLinks: [
-            { title: 'İngiltere Genel Bilgi', href: '/visa/vize-basvurusu/ingiltere' },
-            { title: 'İngiltere Turist Vizesi', href: '/visa/ingiltere-turist-vizesi' },
-            { title: 'İngiltere Eğitim Vizesi', href: '/visa/ingiltere-egitim-vizesi' },
-            { title: 'İngiltere Yatırımcı Vizesi', href: '/visa/ingiltere-yatirimci-vizesi' },
-            { title: 'İngiltere Diğer Vize Türleri', href: '/visa/ingiltere-diger-vize-turleri' },
-            { title: 'İngiltere Çalışma Vizesi', href: '/visa/ingiltere-calisma-vizesi' },
-            { title: 'İngiltere Aile Birleşimi Vizesi', href: '/visa/ingiltere-aile-birlesimi-vizesi' },
+            { title: '', href: '/visa/vize-basvurusu/ingiltere', key: 'generalInfo' },
+            { title: '', href: '/visa/ingiltere-turist-vizesi', key: 'touristVisa' },
+            { title: '', href: '/visa/ingiltere-egitim-vizesi', key: 'educationVisa' },
+            { title: '', href: '/visa/ingiltere-yatirimci-vizesi', key: 'investorVisa' },
+            { title: '', href: '/visa/ingiltere-diger-vize-turleri', key: 'otherVisas' },
+            { title: '', href: '/visa/ingiltere-calisma-vizesi', key: 'workVisa' },
+            { title: '', href: '/visa/ingiltere-aile-birlesimi-vizesi', key: 'familyVisa' },
         ],
         videos: [
             {
@@ -108,101 +83,131 @@ const countriesData: Record<string, CountryData> = {
     },
     almanya: {
         slug: 'almanya',
-        name: 'Almanya',
+        name: '', // Will be set dynamically with translation
         icon: '/visa/uploads/icons/almanya.svg',
         heroImage: '/visa/uploads/contents/main/almanya.webp',
-        excerpt: 'Almanya\'ya seyahat etmek isteyen Türk vatandaşları için Schengen vizesi gereklidir. Almanya, Avrupa\'nın en güçlü ekonomilerinden biri olup, zengin kültürel mirası ve modern şehirleriyle dikkat çeker.',
-        content: `<p>Almanya, Orta Avrupa'da yer alan federal bir cumhuriyettir. Avrupa Birliği'nin en büyük ekonomisine sahip olan Almanya, teknoloji, otomotiv ve mühendislik alanlarında dünya lideridir.</p>
-        <h3><strong>Coğrafya</strong></h3>
-        <ul>
-            <li><strong>Konum:</strong> Orta Avrupa'da yer alır ve dokuz ülke ile sınır komşusudur.</li>
-            <li><strong>Başkent:</strong> Berlin, hem Almanya'nın başkenti hem de en büyük şehridir.</li>
-            <li><strong>İklim:</strong> Ilıman okyanusal iklim görülür.</li>
-        </ul>
-        <h3><strong>Ekonomi</strong></h3>
-        <ul>
-            <li><strong>Genel Bakış:</strong> Almanya, dünyanın dördüncü büyük ekonomisidir.</li>
-            <li><strong>Endüstriler:</strong> Otomotiv, makine, kimya ve teknoloji sektörleri öne çıkar.</li>
-            <li><strong>Para Birimi:</strong> Euro (EUR).</li>
-        </ul>`,
+        excerpt: '', // Will be set dynamically with translation
+        content: '', // Will be set dynamically with translation
         navLinks: [
-            { title: 'Almanya Genel Bilgi', href: '/visa/vize-basvurusu/almanya' },
-            { title: 'Almanya Schengen Vizesi', href: '/visa/almanya-schengen-vizesi' },
-            { title: 'Almanya Çalışma Vizesi', href: '/visa/almanya-calisma-vizesi' },
+            { title: '', href: '/visa/vize-basvurusu/almanya', key: 'generalInfo' },
+            { title: '', href: '/visa/almanya-schengen-vizesi', key: 'schengenVisa' },
+            { title: '', href: '/visa/almanya-calisma-vizesi', key: 'workVisa' },
         ],
         videos: [],
         gallery: []
     },
     fransa: {
         slug: 'fransa',
-        name: 'Fransa',
+        name: '', // Will be set dynamically with translation
         icon: '/visa/uploads/icons/fransa.svg',
         heroImage: '/visa/uploads/contents/main/fransa.webp',
-        excerpt: 'Fransa\'ya seyahat için Schengen vizesi gereklidir. Fransa, dünyanın en çok ziyaret edilen ülkelerinden biri olup, zengin tarihi, kültürü ve mutfağıyla ünlüdür.',
-        content: `<p>Fransa, Batı Avrupa'da yer alan bir ülkedir. Başkenti Paris, dünyanın en romantik şehirlerinden biri olarak bilinir.</p>
-        <h3><strong>Kültür</strong></h3>
-        <ul>
-            <li><strong>Sanat:</strong> Louvre Müzesi, dünyanın en büyük sanat müzelerinden biridir.</li>
-            <li><strong>Mutfak:</strong> Fransız mutfağı, UNESCO'nun İnsanlığın Somut Olmayan Kültürel Mirası listesindedir.</li>
-        </ul>`,
+        excerpt: '', // Will be set dynamically with translation
+        content: '', // Will be set dynamically with translation
         navLinks: [
-            { title: 'Fransa Genel Bilgi', href: '/visa/vize-basvurusu/fransa' },
-            { title: 'Fransa Schengen Vizesi', href: '/visa/fransa-schengen-vizesi' },
+            { title: '', href: '/visa/vize-basvurusu/fransa', key: 'generalInfo' },
+            { title: '', href: '/visa/fransa-schengen-vizesi', key: 'schengenVisa' },
         ],
         videos: [],
         gallery: []
     },
     kanada: {
         slug: 'kanada',
-        name: 'Kanada',
+        name: '', // Will be set dynamically with translation
         icon: '/visa/uploads/icons/kanada.svg',
         heroImage: '/visa/uploads/contents/main/kanada.webp',
-        excerpt: 'Kanada\'ya seyahat için vize gereklidir. Kanada, dünyanın en büyük ikinci ülkesi olup, doğal güzellikleri, yüksek yaşam standartları ve çok kültürlü yapısıyla tanınır.',
-        content: `<p>Kanada, Kuzey Amerika'da yer alan bir ülkedir. İki resmi dili vardır: İngilizce ve Fransızca.</p>
-        <h3><strong>Coğrafya</strong></h3>
-        <ul>
-            <li><strong>Konum:</strong> Kuzey Amerika'nın kuzeyinde yer alır.</li>
-            <li><strong>Başkent:</strong> Ottawa</li>
-            <li><strong>İklim:</strong> Çeşitli iklim bölgeleri görülür.</li>
-        </ul>`,
+        excerpt: '', // Will be set dynamically with translation
+        content: '', // Will be set dynamically with translation
         navLinks: [
-            { title: 'Kanada Genel Bilgi', href: '/visa/vize-basvurusu/kanada' },
-            { title: 'Kanada Turist Vizesi', href: '/visa/kanada-turist-vizesi' },
+            { title: '', href: '/visa/vize-basvurusu/kanada', key: 'generalInfo' },
+            { title: '', href: '/visa/kanada-turist-vizesi', key: 'touristVisa' },
         ],
         videos: [],
         gallery: []
     },
     abd: {
         slug: 'abd',
-        name: 'ABD',
+        name: '', // Will be set dynamically with translation
         icon: '/visa/uploads/icons/abd.svg',
         heroImage: '/visa/uploads/contents/main/abd.webp',
-        excerpt: 'Amerika Birleşik Devletleri\'ne seyahat için vize gereklidir. ABD, dünyanın en büyük ekonomisine sahip olup, çeşitli kültürleri ve fırsatları barındırır.',
-        content: `<p>Amerika Birleşik Devletleri, Kuzey Amerika'da yer alan federal bir cumhuriyettir.</p>
-        <h3><strong>Ekonomi</strong></h3>
-        <ul>
-            <li><strong>Genel Bakış:</strong> Dünyanın en büyük ekonomisi</li>
-            <li><strong>Para Birimi:</strong> Amerikan Doları (USD)</li>
-        </ul>`,
+        excerpt: '', // Will be set dynamically with translation
+        content: '', // Will be set dynamically with translation
         navLinks: [
-            { title: 'ABD Genel Bilgi', href: '/visa/vize-basvurusu/abd' },
-            { title: 'ABD Turist Vizesi', href: '/visa/abd-turist-vizesi' },
+            { title: '', href: '/visa/vize-basvurusu/abd', key: 'generalInfo' },
+            { title: '', href: '/visa/abd-turist-vizesi', key: 'touristVisa' },
         ],
         videos: [],
         gallery: []
     }
 };
 
+// Get localized content for each nav link type
+const getNavContent = (countrySlug: string, navKey: string, t: any): NavContent => {
+    const title = t(`visa.pages.countryApplication.navLinks.${countrySlug}.${navKey}`, '');
+    const comingSoon = t('visa.pages.countryApplication.contentComingSoon', 'Content will be added soon.');
+    const content = t(`visa.pages.countryApplication.navContent.${countrySlug}.${navKey}`, `<p>${comingSoon}</p>`);
+
+    return {
+        title: title || '',
+        content: content
+    };
+};
+
 export default function UlkeVizeBasvurusuPage() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const router = useRouter();
     const { ulke } = router.query;
     const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
     const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const [selectedNavKey, setSelectedNavKey] = useState<string>('generalInfo');
 
-    const currentCountry = ulke && typeof ulke === 'string' ? countriesData[ulke] : null;
+    const countrySlug = ulke && typeof ulke === 'string' ? ulke : null;
+    const countryData = countrySlug ? countriesData[countrySlug] : null;
+
+    // Get content for selected nav link
+    const selectedNavContent = useMemo(() => {
+        if (!countrySlug || !selectedNavKey) return null;
+        return getNavContent(countrySlug, selectedNavKey, t);
+    }, [countrySlug, selectedNavKey, t, i18n.language]);
+
+    // Set localized country name, nav links, excerpt and content
+    const currentCountry = useMemo(() => {
+        if (!countryData || !countrySlug) return null;
+
+        // Helper function to get translation with proper fallback
+        const getTranslation = (key: string, fallback: string = '') => {
+            if (!i18n.isInitialized) {
+                return fallback;
+            }
+
+            // Use t() with fallback as second parameter (react-i18next syntax)
+            const translation = t(key, fallback);
+
+            // If translation returns the key itself, it means translation not found - use fallback
+            if (translation === key) {
+                return fallback || '';
+            }
+
+            return translation || fallback || '';
+        };
+
+        return {
+            ...countryData,
+            name: getTranslation(`visa.pages.countryApplication.countries.${countrySlug}`, countrySlug),
+            excerpt: getTranslation(`visa.pages.countryApplication.content.${countrySlug}.excerpt`, countryData.excerpt || ''),
+            content: getTranslation(`visa.pages.countryApplication.content.${countrySlug}.content`, countryData.content || ''),
+            navLinks: countryData.navLinks.map(link => {
+                if (!link.key) return link;
+                const translationKey = `visa.pages.countryApplication.navLinks.${countrySlug}.${link.key}`;
+                const translatedTitle = getTranslation(translationKey, '');
+                return {
+                    ...link,
+                    title: translatedTitle || ''
+                };
+            })
+        };
+    }, [countryData, countrySlug, t, i18n.language, i18n.isInitialized]);
 
     // Scroll animation for shapes
     useEffect(() => {
@@ -270,8 +275,8 @@ export default function UlkeVizeBasvurusuPage() {
         return (
             <div className="country-page">
                 <div className="container">
-                    <h1>{t('visa.countryApplication.notFound', 'Ülke bulunamadı')}</h1>
-                    <Link href="/visa">{t('visa.countryApplication.backHome', 'Ana Sayfaya Dön')}</Link>
+                    <h1>{t('visa.pages.countryApplication.notFound', 'Ülke bulunamadı')}</h1>
+                    <Link href="/visa">{t('visa.pages.countryApplication.backHome', 'Ana Sayfaya Dön')}</Link>
                 </div>
             </div>
         );
@@ -303,7 +308,7 @@ export default function UlkeVizeBasvurusuPage() {
                                 <div className="country-icon">
                                     <img src={currentCountry.icon} alt={currentCountry.name} />
                                 </div>
-                                <h1 className="hero-title">{currentCountry.name} {t('visa.countryApplication.guide', 'Vize Başvuru Rehberi')}</h1>
+                                <h1 className="hero-title">{currentCountry.name} {t('visa.pages.countryApplication.guide', 'Vize Başvuru Rehberi')}</h1>
                             </div>
 
                             {/* Excerpt */}
@@ -352,22 +357,23 @@ export default function UlkeVizeBasvurusuPage() {
                                                     <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                                                 </svg>
                                             </div>
-                                            <h3>{currentCountry.name} Vize Başvurusu</h3>
+                                            <h3>{currentCountry.name} {t('visa.pages.countryApplication.visaApplication')}</h3>
                                         </div>
                                         <nav className="nav-links">
                                             {currentCountry.navLinks.map((link, index) => {
-                                                const isActive = router.asPath === link.href;
+                                                const isActive = link.key === selectedNavKey;
                                                 return (
-                                                    <Link
+                                                    <button
                                                         key={index}
-                                                        href={link.href}
+                                                        type="button"
+                                                        onClick={() => link.key && setSelectedNavKey(link.key)}
                                                         className={`nav-item ${isActive ? 'active' : ''}`}
                                                     >
                                                         <span className="nav-text">{link.title}</span>
                                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                             <polyline points="9 18 15 12 9 6" />
                                                         </svg>
-                                                    </Link>
+                                                    </button>
                                                 );
                                             })}
                                         </nav>
@@ -379,10 +385,17 @@ export default function UlkeVizeBasvurusuPage() {
                         {/* Sağ İçerik Alanı */}
                         <main className="country-content">
                             <article className="content-article">
+                                {/* Nav Content Title */}
+                                {selectedNavContent && (
+                                    <h2 className="nav-content-title">{selectedNavContent.title}</h2>
+                                )}
+
                                 {/* Main Content */}
                                 <div
                                     className="article-prose"
-                                    dangerouslySetInnerHTML={{ __html: currentCountry.content }}
+                                    dangerouslySetInnerHTML={{
+                                        __html: selectedNavContent?.content || currentCountry.content
+                                    }}
                                 />
 
                                 {/* Gallery */}
@@ -394,7 +407,7 @@ export default function UlkeVizeBasvurusuPage() {
                                                 <circle cx="8.5" cy="8.5" r="1.5" />
                                                 <polyline points="21 15 16 10 5 21" />
                                             </svg>
-                                            {t('visa.countryApplication.gallery', 'Galeri')}
+                                            {t('visa.pages.countryApplication.gallery', 'Galeri')}
                                         </h3>
                                         <div className="gallery-grid">
                                             {currentCountry.gallery.map((image, index) => (
@@ -455,7 +468,7 @@ export default function UlkeVizeBasvurusuPage() {
             {/* Lightbox */}
             <div className={`lightbox-overlay ${isLightboxOpen ? 'active' : ''}`} onClick={closeLightbox}>
                 <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-                    {selectedImage && <img src={selectedImage} alt="Galeri görseli" />}
+                    {selectedImage && <img src={selectedImage} alt={t('visa.pages.countryApplication.galleryImageAlt')} />}
                     <button className="lightbox-close" onClick={closeLightbox} aria-label={t('visa.common.close')}>
                         ×
                     </button>

@@ -11,11 +11,14 @@ import { MdAssignment, MdCheckCircle, MdMedicalServices } from 'react-icons/md'
 import { Blog, Result } from '@/src/types/types'
 import dynamic from 'next/dynamic'
 import { useEffect as useEffectReact } from 'react'
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import '../../i18n'
 
 const Chatbot = dynamic(() => import('./Chatbot'), { ssr: false })
 
 
 export default function HomePage() {
+  const { t, isReady } = useSafeTranslation()
   const [activeTab, setActiveTab] = useState(2)
   const [blogs, setBlogs] = useState<Blog[]>([])
   const [loadingBlogs, setLoadingBlogs] = useState(true)
@@ -57,42 +60,47 @@ export default function HomePage() {
   }
   const reviews = [
     {
-      name: 'Varış & VIP Transfer ve Otel Konaklaması',
-      location: '1. Adım',
+      name: isReady ? t('medical.homePage.processes.steps.step1.title') : 'Varış & VIP Transfer ve Otel Konaklaması',
+      location: isReady ? t('medical.homePage.processes.steps.step1.location') : '1. Adım',
       icon: <MdAssignment size={80} color="#307BC4" />,
       image: '/assets/img/home_1/airplane-mode.png',
-      text: 'Dönüşümünüz havaalanına indiğiniz an başlıyor! Yurt dışından geliyorsanız özel VIP transferimiz sizi karşılayarak otelinize veya kliniğimize güvenli ve konforlu bir şekilde ulaştırır.'
+      text: isReady ? t('medical.homePage.processes.steps.step1.text') : 'Dönüşümünüz havaalanına indiğiniz an başlıyor! Yurt dışından geliyorsanız özel VIP transferimiz sizi karşılayarak otelinize veya kliniğimize güvenli ve konforlu bir şekilde ulaştırır.'
     },
     {
-      name: 'Kişiye Özel Muayene ve Hazırlık',
-      location: '2. Adım',
+      name: isReady ? t('medical.homePage.processes.steps.step2.title') : 'Kişiye Özel Muayene ve Hazırlık',
+      location: isReady ? t('medical.homePage.processes.steps.step2.location') : '2. Adım',
       icon: <MdMedicalServices size={80} color="#307BC4" />,
       image: '/assets/img/home_1/health-screening.png',
-      text: 'İşlem öncesinde uzmanlarımızla birebir muayene yaparak beklentilerinizi dinliyoruz. Gerekli testleri gerçekleştirip size en uygun tedavi planını oluşturuyoruz.'
+      text: isReady ? t('medical.homePage.processes.steps.step2.text') : 'İşlem öncesinde uzmanlarımızla birebir muayene yaparak beklentilerinizi dinliyoruz. Gerekli testleri gerçekleştirip size en uygun tedavi planını oluşturuyoruz.'
     },
     {
-      name: 'İşlem Sonrası Bakım ve İyileşme',
-      location: '3. Adım',
+      name: isReady ? t('medical.homePage.processes.steps.step3.title') : 'İşlem Sonrası Bakım ve İyileşme',
+      location: isReady ? t('medical.homePage.processes.steps.step3.location') : '3. Adım',
       icon: <MdCheckCircle size={80} color="#307BC4" />,
       image: '/assets/img/home_1/slumber.png',
-      text: 'İşlem tamamlandıktan sonra iyileşme sürecinizde yanınızdayız. Tedavinize bağlı olarak, konforlu dinlenme odalarımızda vakit geçirebilir veya otelinize dönerek detaylı bakım talimatlarını alabilirsiniz.'
+      text: isReady ? t('medical.homePage.processes.steps.step3.text') : 'İşlem tamamlandıktan sonra iyileşme sürecinizde yanınızdayız. Tedavinize bağlı olarak, konforlu dinlenme odalarımızda vakit geçirebilir veya otelinize dönerek detaylı bakım talimatlarını alabilirsiniz.'
     }
   ]
 
   const departments = [
-    { icon: '/assets/img/home_1/hair.png', title: 'Saç Ekimi', slug: 'sac-ekimi' },
-    { icon: '/assets/img/home_1/tooth.png', title: 'Diş', slug: 'dis' },
-    { icon: '/assets/img/home_1/stretch-marks.png', title: 'Vücut', slug: 'vucut-sekillendirme-liposuction' },
-    { icon: '/assets/img/home_1/healthcare.png', title: 'Burun', slug: 'burun-estetigi' },
-    { icon: '/assets/img/home_1/face.png', title: 'Boyun ve Yüz', slug: 'boyun-ve-yuz' },
-    { icon: '/assets/img/home_1/hip.png', title: 'Kalça', slug: 'kalca' },
-    { icon: '/assets/img/home_1/visibility.png', title: 'Göz', slug: 'goz' },
-    { icon: '/assets/img/home_1/ear.png', title: 'Kulak', slug: 'kulak' },
-    { icon: '/assets/img/home_1/breast (1).png', title: 'Göğüs', slug: 'gogus' },
-    { icon: '/assets/img/home_1/department_icon_3.svg', title: 'Genital', slug: 'genital' },
+    { icon: '/assets/img/home_1/hair.png', title: isReady ? t('medical.homePage.departments.hairTransplant') : 'Saç Ekimi', slug: 'sac-ekimi' },
+    { icon: '/assets/img/home_1/tooth.png', title: isReady ? t('medical.homePage.departments.dental') : 'Diş', slug: 'dis' },
+    { icon: '/assets/img/home_1/stretch-marks.png', title: isReady ? t('medical.homePage.departments.body') : 'Vücut', slug: 'vucut-sekillendirme-liposuction' },
+    { icon: '/assets/img/home_1/healthcare.png', title: isReady ? t('medical.homePage.departments.nose') : 'Burun', slug: 'burun-estetigi' },
+    { icon: '/assets/img/home_1/face.png', title: isReady ? t('medical.homePage.departments.neckFace') : 'Boyun ve Yüz', slug: 'boyun-ve-yuz' },
+    { icon: '/assets/img/home_1/hip.png', title: isReady ? t('medical.homePage.departments.hip') : 'Kalça', slug: 'kalca' },
+    { icon: '/assets/img/home_1/visibility.png', title: isReady ? t('medical.homePage.departments.eye') : 'Göz', slug: 'goz' },
+    { icon: '/assets/img/home_1/ear.png', title: isReady ? t('medical.homePage.departments.ear') : 'Kulak', slug: 'kulak' },
+    { icon: '/assets/img/home_1/breast (1).png', title: isReady ? t('medical.homePage.departments.breast') : 'Göğüs', slug: 'gogus' },
+    { icon: '/assets/img/home_1/department_icon_3.svg', title: isReady ? t('medical.homePage.departments.genital') : 'Genital', slug: 'genital' },
 
   ]
-  const words = ['Estetik', 'Yenilenme', 'Güzellik', 'Sağlık']
+  const words = [
+    isReady ? t('medical.homePage.hero.words.aesthetic') : 'Estetik',
+    isReady ? t('medical.homePage.hero.words.renewal') : 'Yenilenme',
+    isReady ? t('medical.homePage.hero.words.beauty') : 'Güzellik',
+    isReady ? t('medical.homePage.hero.words.health') : 'Sağlık'
+  ]
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
@@ -119,14 +127,15 @@ export default function HomePage() {
         // Son 3 blogı göster
         setBlogs(blogsData.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()).slice(0, 3))
       } catch (error) {
-        console.error('Blog yükleme hatası:', error)
+        const errorMsg = isReady ? t('medical.homePage.errors.loadingBlogs') : 'Blog yükleme hatası:'
+        console.error(errorMsg, error)
       } finally {
         setLoadingBlogs(false)
       }
     }
 
     fetchBlogs()
-  }, [])
+  }, [isReady, t])
 
   // Firebase'den results'ları çek
   useEffect(() => {
@@ -151,14 +160,15 @@ export default function HomePage() {
         // Son 3 sonucu göster
         setResults(allResults.slice(0, 3))
       } catch (error) {
-        console.error('Results yükleme hatası:', error)
+        const errorMsg = isReady ? t('medical.homePage.errors.loadingResults') : 'Results yükleme hatası:'
+        console.error(errorMsg, error)
       } finally {
         setLoadingResults(false)
       }
     }
 
     fetchResults()
-  }, [])
+  }, [isReady, t])
 
 
   // Firebase'den partners'ları çek
@@ -176,14 +186,15 @@ export default function HomePage() {
         // Düzenlemeye göre sırala
         setPartners(partnersData.sort((a, b) => (a.order || 0) - (b.order || 0)))
       } catch (error) {
-        console.error('Partners yükleme hatası:', error)
+        const errorMsg = isReady ? t('medical.homePage.errors.loadingPartners') : 'Partners yükleme hatası:'
+        console.error(errorMsg, error)
       } finally {
         setLoadingPartners(false)
       }
     }
 
     fetchPartners()
-  }, [])
+  }, [isReady, t])
 
 
   return (
@@ -224,14 +235,15 @@ export default function HomePage() {
               {/* LEFT CONTENT */}
               <div className="col-lg-6">
                 <div className="cs_hero_text">
-                  <h1 className="cs_hero_title cs_white_color cs_fs_84">
-                    En İyi Tedaviyi Bizimle Alın{' '}
+                  <h1 className="cs_hero_title cs_white_color cs_fs_84" suppressHydrationWarning>
+                    {isReady ? t('medical.homePage.hero.title') : ''}{' '}
                     <span className="cd-headline slide cs_accent_color">
                       <span className="cd-words-wrapper">
                         {words.map((word, i) => (
                           <b
                             key={word}
                             className={i === activeIndex ? 'is-visible' : 'is-hidden'}
+                            suppressHydrationWarning
                           >
                             {word}
                           </b>
@@ -240,11 +252,11 @@ export default function HomePage() {
                     </span>
                   </h1>
 
-                  <p className="cs_hero_subtitle cs_fs_20 cs_heading_color">
-                    Size en iyi tıbbi ve sağlık hizmetlerini sunuyoruz.
+                  <p className="cs_hero_subtitle cs_fs_20 cs_heading_color" suppressHydrationWarning>
+                    {isReady ? t('medical.homePage.hero.subtitle') : ''}
                   </p>
-                  <Link href="/medical/form" className="cs_btn cs_style_1" style={{ marginTop: '20px' }}>
-                    <span>Başvuru Yap</span>
+                  <Link href="/medical/form" className="cs_btn cs_style_1" style={{ marginTop: '20px' }} suppressHydrationWarning>
+                    <span>{isReady ? t('medical.homePage.hero.applyButton') : ''}</span>
                   </Link>
 
 
@@ -376,10 +388,10 @@ export default function HomePage() {
       <section>
         <div className="container" style={{ marginTop: '12vh' }}>
           <div className="cs_section_heading cs_style_1 text-center">
-            <h2 className="cs_section_title cs_fs_72 m-0">Süreçler</h2>
+            <h2 className="cs_section_title cs_fs_72 m-0" suppressHydrationWarning>{isReady ? t('medical.homePage.processes.title') : ''}</h2>
             <div className="cs_height_5"></div>
-            <h3 className="cs_section_subtitle cs_accent_color cs_semibold m-0 cs_fs_32">
-              Tedavi Sürecimiz
+            <h3 className="cs_section_subtitle cs_accent_color cs_semibold m-0 cs_fs_32" suppressHydrationWarning>
+              {isReady ? t('medical.homePage.processes.subtitle') : ''}
             </h3>
           </div>
 
@@ -439,8 +451,8 @@ export default function HomePage() {
         <div className="container" style={{ margin: '12vh' }}>
           {/* HEADING */}
           <div className="cs_section_heading cs_style_1 text-center " style={{ marginTop: '5vh' }}>
-            <h2 className="cs_section_title cs_fs_72 m-0 " >
-              Mutlu Sonuçlar
+            <h2 className="cs_section_title cs_fs_72 m-0 " suppressHydrationWarning>
+              {isReady ? t('medical.homePage.results.title') : ''}
             </h2>
           </div>
           <div className="cs_height_72 cs_height_lg_50"></div>
@@ -449,11 +461,11 @@ export default function HomePage() {
           <div className="row cs_gap_y_40">
             {loadingResults ? (
               <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                <p>Sonuçlar yükleniyor...</p>
+                <p suppressHydrationWarning>{isReady ? t('medical.homePage.results.loading') : ''}</p>
               </div>
             ) : results.length === 0 ? (
               <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                <p>Henüz sonuç yok.</p>
+                <p suppressHydrationWarning>{isReady ? t('medical.homePage.results.noResults') : ''}</p>
               </div>
             ) : (
               results.map((item) => (
@@ -486,8 +498,8 @@ export default function HomePage() {
           </div>
 
           <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            <Link href="/medical/results" className="cs_text_btn_2">
-              <span className="cs_text_btn_text">Tüm Sonuçları Gör</span>
+            <Link href="/medical/results" className="cs_text_btn_2" suppressHydrationWarning>
+              <span className="cs_text_btn_text" suppressHydrationWarning>{isReady ? t('medical.homePage.results.viewAll') : ''}</span>
               <span className="cs_text_btn_icon">
                 <i className="fa-solid fa-arrow-right"></i>
               </span>
@@ -503,8 +515,8 @@ export default function HomePage() {
         <div className="container">
           {/* HEADING */}
           <div className="cs_section_heading cs_style_1 text-center " style={{ marginTop: '5vh' }}>
-            <h2 className="cs_section_title cs_fs_72 m-0 " >
-              Biliyor muydunuz?
+            <h2 className="cs_section_title cs_fs_72 m-0 " suppressHydrationWarning>
+              {isReady ? t('medical.homePage.blog.title') : ''}
             </h2>
           </div>
           <div className="cs_height_72 cs_height_lg_50"></div>
@@ -513,11 +525,11 @@ export default function HomePage() {
           <div className="row gy-4">
             {loadingBlogs ? (
               <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                <p>Bloglar yükleniyor...</p>
+                <p suppressHydrationWarning>{isReady ? t('medical.homePage.blog.loading') : ''}</p>
               </div>
             ) : blogs.length === 0 ? (
               <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                <p>Henüz blog yok.</p>
+                <p suppressHydrationWarning>{isReady ? t('medical.homePage.blog.noBlogs') : ''}</p>
               </div>
             ) : (
               blogs.map((post) => (
@@ -559,8 +571,8 @@ export default function HomePage() {
                       </div>
 
                       <div className="cs_heading_color cs_medium">
-                        <Link href={`/medical/blog/${post.id}`} className="cs_post_btn">
-                          Devamını Oku
+                        <Link href={`/medical/blog/${post.id}`} className="cs_post_btn" suppressHydrationWarning>
+                          {isReady ? t('medical.homePage.blog.readMore') : ''}
                         </Link>
                       </div>
                     </div>
@@ -581,18 +593,18 @@ export default function HomePage() {
             <div className="cs_brands_track">
               {loadingPartners ? (
                 <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                  <p>İş ortakları yükleniyor...</p>
+                  <p suppressHydrationWarning>{isReady ? t('medical.homePage.partners.loading') : ''}</p>
                 </div>
               ) : partners.length === 0 ? (
                 <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                  <p>Henüz iş ortağı yok.</p>
+                  <p suppressHydrationWarning>{isReady ? t('medical.homePage.partners.noPartners') : ''}</p>
                 </div>
               ) : (
                 partners.concat(partners).map((partner, i) => (
                   <div key={i} className="cs_brand cs_center" style={{ marginRight: '40px' }}>
                     <Image
                       src={partner.imageUrl}
-                      alt={partner.title || 'Partner'}
+                      alt={partner.title || (isReady ? t('medical.homePage.partners.defaultAlt') : 'Partner')}
                       width={90}
                       height={45}
                       style={{
@@ -600,6 +612,7 @@ export default function HomePage() {
                         filter: 'grayscale(100%)',
                         opacity: 0.8
                       }}
+                      suppressHydrationWarning
                     />
                   </div>
                 ))
@@ -654,7 +667,7 @@ export default function HomePage() {
       {chatbotQuestions.length > 0 && (
         <>
           {!showChatbot && (
-            <button className="chatbot-fab" onClick={() => setShowChatbot(true)} title="Sohbet Başlat">
+            <button className="chatbot-fab" onClick={() => setShowChatbot(true)} title={isReady ? t('medical.homePage.chatbot.startChat') : ''} suppressHydrationWarning>
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M21 15.5C21 16.3284 20.3284 17 19.5 17H7.41421L4.70711 19.7071C4.07714 20.3371 3 19.8906 3 19.0001V5.5C3 4.67157 3.67157 4 4.5 4H19.5C20.3284 4 21 4.67157 21 5.5V15.5Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="#307bc4" />
                 <circle cx="8" cy="10" r="1" fill="white" />
@@ -666,7 +679,7 @@ export default function HomePage() {
           {showChatbot && (
             <div style={{ position: 'fixed', bottom: 32, right: 32, zIndex: 10001 }}>
               <div style={{ position: 'relative' }}>
-                <button className="chatbot-close-btn" onClick={() => setShowChatbot(false)} title="Kapat">✕</button>
+                <button className="chatbot-close-btn" onClick={() => setShowChatbot(false)} title={isReady ? t('medical.homePage.chatbot.close') : ''} suppressHydrationWarning>✕</button>
                 <Chatbot />
               </div>
             </div>

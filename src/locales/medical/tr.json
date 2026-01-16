@@ -1,0 +1,387 @@
+{
+  "medical": {
+    "header": {
+      "home": "Anasayfa",
+      "organisation": "Kurumlar",
+      "results": "Mutlu Sonuçlar",
+      "form": "Başvuru",
+      "blog": "Blog",
+      "about": "Hakkımızda",
+      "contact": "İletişim",
+      "openMenu": "Menüyü Aç",
+      "close": "Kapat",
+      "searchPlaceholder": "Doktor Ara"
+    },
+    "footer": {
+      "description": "Prince Medical Aesthetics & Health Services",
+      "address": "Dap Vadisi Z Ofis, Merkez, Seçkin Sk. Z ofis, Kat 2, Daire 229, 34406 Kağıthane/İstanbul",
+      "phone": "+90 212 000 00 00",
+      "email": "info@princetourismagency.com",
+      "medicalEmail": "medical@princetourismagency.com",
+      "home": "Anasayfa",
+      "organisation": "Kurumlar",
+      "blog": "Blog",
+      "about": "Hakkımızda",
+      "contact": "İletişim",
+      "faqs": "Sık Sorulan Sorular",
+      "privacyPolicy": "Gizlilik Politikası",
+      "kvkk": "KVKK & Aydınlatma",
+      "newsletter": {
+        "title": "Bize Katılın",
+        "description": "Kampanyalar, yenilikler ve sağlık içerikleri için e-posta listemize kayıt olun.",
+        "placeholder": "E-posta adresiniz",
+        "submit": "Gönder"
+      },
+      "copyright": "© Happencode. Tüm hakları saklıdır."
+    },
+    "homePage": {
+      "hero": {
+        "title": "En İyi Tedaviyi Bizimle Alın",
+        "subtitle": "Size en iyi tıbbi ve sağlık hizmetlerini sunuyoruz.",
+        "applyButton": "Başvuru Yap",
+        "words": {
+          "aesthetic": "Estetik",
+          "renewal": "Yenilenme",
+          "beauty": "Güzellik",
+          "health": "Sağlık"
+        }
+      },
+      "departments": {
+        "hairTransplant": "Saç Ekimi",
+        "dental": "Diş",
+        "body": "Vücut",
+        "nose": "Burun",
+        "neckFace": "Boyun ve Yüz",
+        "hip": "Kalça",
+        "eye": "Göz",
+        "ear": "Kulak",
+        "breast": "Göğüs",
+        "genital": "Genital"
+      },
+      "processes": {
+        "title": "Süreçler",
+        "subtitle": "Tedavi Sürecimiz",
+        "steps": {
+          "step1": {
+            "title": "Varış & VIP Transfer ve Otel Konaklaması",
+            "location": "1. Adım",
+            "text": "Dönüşümünüz havaalanına indiğiniz an başlıyor! Yurt dışından geliyorsanız özel VIP transferimiz sizi karşılayarak otelinize veya kliniğimize güvenli ve konforlu bir şekilde ulaştırır."
+          },
+          "step2": {
+            "title": "Kişiye Özel Muayene ve Hazırlık",
+            "location": "2. Adım",
+            "text": "İşlem öncesinde uzmanlarımızla birebir muayene yaparak beklentilerinizi dinliyoruz. Gerekli testleri gerçekleştirip size en uygun tedavi planını oluşturuyoruz."
+          },
+          "step3": {
+            "title": "İşlem Sonrası Bakım ve İyileşme",
+            "location": "3. Adım",
+            "text": "İşlem tamamlandıktan sonra iyileşme sürecinizde yanınızdayız. Tedavinize bağlı olarak, konforlu dinlenme odalarımızda vakit geçirebilir veya otelinize dönerek detaylı bakım talimatlarını alabilirsiniz."
+          }
+        }
+      },
+      "results": {
+        "title": "Mutlu Sonuçlar",
+        "loading": "Sonuçlar yükleniyor...",
+        "noResults": "Henüz sonuç yok.",
+        "viewAll": "Tüm Sonuçları Gör"
+      },
+      "blog": {
+        "title": "Biliyor muydunuz?",
+        "loading": "Bloglar yükleniyor...",
+        "noBlogs": "Henüz blog yok.",
+        "readMore": "Devamını Oku"
+      },
+      "partners": {
+        "loading": "İş ortakları yükleniyor...",
+        "noPartners": "Henüz iş ortağı yok.",
+        "defaultAlt": "Partner"
+      },
+      "chatbot": {
+        "startChat": "Sohbet Başlat",
+        "close": "Kapat",
+        "loading": "Yükleniyor..."
+      },
+      "errors": {
+        "loadingBlogs": "Blog yükleme hatası:",
+        "loadingResults": "Results yükleme hatası:",
+        "loadingPartners": "Partners yükleme hatası:"
+      }
+    },
+    "pages": {
+      "breadcrumb": {
+        "home": "Anasayfa",
+        "contact": "İletişim",
+        "blog": "Blog",
+        "about": "Hakkımızda",
+        "faqs": "Sık Sorulan Sorular",
+        "privacy": "Gizlilik Politikası",
+        "kvkk": "KVKK & Aydınlatma",
+        "organisation": "Kurumlar",
+        "results": "Mutlu Sonuçlar",
+        "form": "Başvuru"
+      },
+      "contact": {
+        "title": "Bize Ulaşın",
+        "subtitle": "En hızlı yanıt için bize ulaşın.",
+        "emailTitle": "E-posta Gönder",
+        "callTitle": "Bizi Arayın",
+        "addressTitle": "Adres",
+        "address": "DAP Yapı Z Ofis, Büyükdere Cad. No: 209, 4. Levent, İstanbul, Türkiye",
+        "formTitle": "Bize Ulaşın!",
+        "nameLabel": "Ad",
+        "emailLabel": "E-posta",
+        "subjectLabel": "Konu",
+        "messageLabel": "Mesaj",
+        "submitButton": "Gönder",
+        "successToast": "Mesajınız başarıyla gönderildi!",
+        "errorToast": "Lütfen tüm alanları doldurunuz!",
+        "errorAlert": "Form gönderme hatası:"
+      },
+      "about": {
+        "title": "Hakkımızda",
+        "subtitle": "Sağlığınız ve güzelliğiniz bizim önceliğimiz.",
+        "whyChooseUs": "Neden Bizi Seçmelisiniz ?",
+        "description1": "Prince Medical olarak, uluslararası hastalara Türkiye'nin dünya standartlarındaki sağlık hizmetlerini güvenli, şeffaf ve konforlu bir şekilde sunmak amacıyla kurulduk. Alanında uzman doktorlar ve tam donanımlı sağlık kuruluşlarıyla iş birliği yaparak, hastalarımıza en yüksek kalite standartlarında tedavi süreçleri sunuyoruz.",
+        "description2": "Medical turizm alanındaki deneyimimizle; estetik cerrahi, saç ekimi, diş tedavileri ve birçok branşta kişiye özel çözümler geliştiriyoruz. Tedavi sürecinin her aşamasında, hastalarımızın ihtiyaçlarını önceliklendiriyor; danışmanlıktan tedavi sonrasına kadar uçtan uca hizmet sağlıyoruz.",
+        "description3": "Yurt dışından gelen misafirlerimiz için seyahat planlaması, konaklama, VIP transfer ve çok dilli hasta koordinasyonu hizmetleri sunarak, tedavi sürecini stressiz ve güvenli hale getiriyoruz.",
+        "description4": "Prince Medical olarak temel prensibimiz; etik değerlere bağlı, hasta memnuniyetini esas alan ve sürdürülebilir sağlık çözümleri üretmektir. Sağlığınız bizim için bir hizmet değil, bir sorumluluktur.",
+        "counters": {
+          "happyPatients": "Mutlu Hastalar",
+          "expertDoctors": "Uzman Doktor",
+          "yearsExperience": "Yıl Deneyim",
+          "awards": "Ödüller"
+        },
+        "partners": {
+          "loading": "İş ortakları yükleniyor...",
+          "noPartners": "Henüz iş ortağı yok."
+        }
+      },
+      "blog": {
+        "title": "Blog",
+        "subtitle": "Sağlık ve güzellik hakkında güncel bilgiler ve ipuçları.",
+        "loading": "Bloglar yükleniyor...",
+        "noBlogs": "Henüz blog yok.",
+        "readMore": "Devamını Oku",
+        "error": "Blog yükleme hatası:",
+        "detail": {
+          "loading": "Blog yükleniyor...",
+          "notFound": "Blog bulunamadı",
+          "error": "Blog yüklenirken hata oluştu",
+          "share": "Paylaş:",
+          "content": "Blog İçeriği",
+          "blogManager": "Blog Yöneticisi"
+        }
+      },
+      "faq": {
+        "subtitle": "İnsanlar Genellikle",
+        "title": "Soruyorlar",
+        "loading": "Sorular yükleniyor...",
+        "noFaqs": "Henüz soru eklenmemiş",
+        "error": "FAQ verileri çekilirken hata:"
+      },
+      "organisation": {
+        "title": "Kurumlarımız",
+        "subtitle": "Oteller ve hastaneler arasından ihtiyacınıza uygun olanı seçin.",
+        "filters": {
+          "all": "Tümü",
+          "hotels": "Oteller",
+          "hospitals": "Hastaneler"
+        },
+        "items": "Öğe",
+        "loading": "Yükleniyor...",
+        "noOrganisations": "Bu kriterlere uygun kurum bulunamadı",
+        "error": "Kurumlar çekilirken hata:",
+        "banner": {
+          "title": "Sağlığınızı Geri Planda Bırakmayın!",
+          "subtitle": "Bugün deneyimli tıbbi profesyonellerimizden biriyle randevu alın!"
+        }
+      },
+      "results": {
+        "title": "Mutlu Sonuçlar",
+        "subtitle": "Hastalarımızın başarılı tedavi sonuçları ve memnuniyetleri.",
+        "filters": {
+          "all": "Tümü",
+          "dental": "Diş",
+          "genital": "Genital",
+          "breast": "Göğüs",
+          "eye": "Göz",
+          "hip": "Kalça",
+          "ear": "Kulak",
+          "neckFace": "Boyun ve Yüz",
+          "nose": "Burun",
+          "hairTransplant": "Saç Ekimi",
+          "body": "Vücut Şekillendirme ve Liposuction"
+        },
+        "items": "Öğe",
+        "loading": "Yükleniyor...",
+        "noResults": "Bu kategoride henüz sonuç bulunamadı",
+        "error": "Sonuçlar çekilirken hata:",
+        "testimonials": {
+          "title": "Müşteri Yorumları",
+          "loading": "Yorum verileri yükleniyor...",
+          "noTestimonials": "Henüz yorum eklenmemiş",
+          "error": "Yorum verileri çekilirken hata:"
+        }
+      },
+      "form": {
+        "title": "Başvuru Formu",
+        "subtitle": "Aşağıdaki formu doldurarak randevu talebinizi oluşturunuz.",
+        "loading": "Sorular yükleniyor...",
+        "stepTitle": "Kişisel Bilgiler",
+        "labels": {
+          "fullName": "Ad Soyad",
+          "birthDate": "Doğum Tarihi",
+          "gender": "Cinsiyet",
+          "nationality": "Uyruk",
+          "phone": "Telefon",
+          "email": "E-posta"
+        },
+        "genderOptions": {
+          "female": "Kadın",
+          "male": "Erkek",
+          "preferNotToSay": "Belirtmek İstemiyorum"
+        },
+        "buttons": {
+          "previous": "Geri",
+          "next": "İleri",
+          "submit": "Formu Gönder"
+        },
+        "success": "✓ Formu başarıyla gönderdin!",
+        "error": "Form gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
+        "required": "zorunludur",
+        "errorAlert": "Form gönderme hatası:",
+        "privacy": "Bilgileriniz gizlidir ve üçüncü kişilerle paylaşılmaz.",
+        "summary": {
+          "title": "Form Özeti",
+          "empty": "Bilgileri doldurmaya başlayın..."
+        }
+      },
+      "privacy": {
+        "title": "Gizlilik Politikası",
+        "intro": "Prince olarak, ziyaretçilerimizin ve kullanıcılarımızın gizliliğini korumaya büyük önem veriyoruz. Bu Gizlilik Politikası, web sitemizi ziyaret ettiğinizde hangi kişisel verilerin toplandığını, nasıl kullanıldığını, korunduğunu ve haklarınızı açıklamaktadır.",
+        "section1": {
+          "title": "Toplanan Bilgiler",
+          "intro": "Web sitemizi kullandığınızda aşağıdaki bilgiler toplanabilir:",
+          "items": [
+            "Ad, soyad",
+            "E-posta adresi",
+            "Telefon numarası",
+            "IP adresi",
+            "Cihaz, tarayıcı ve kullanım bilgileri",
+            "Çerez (cookie) verileri",
+            "İletişim veya başvuru formları aracılığıyla iletilen bilgiler"
+          ]
+        },
+        "section2": {
+          "title": "Kişisel Verilerin Toplanma Yöntemi",
+          "intro": "Kişisel verileriniz aşağıdaki yollarla toplanmaktadır:",
+          "items": [
+            "Web sitemizi ziyaret ettiğinizde",
+            "Üyelik oluşturduğunuzda",
+            "İletişim formlarını doldurduğunuzda",
+            "Hizmetlerimizden yararlandığınızda"
+          ],
+          "note": "Veriler otomatik veya otomatik olmayan yollarla toplanmaktadır."
+        },
+        "section3": {
+          "title": "Kişisel Verilerin Kullanım Amaçları",
+          "intro": "Toplanan veriler aşağıdaki amaçlarla kullanılabilir:",
+          "items": [
+            "Hizmetlerin sunulması ve geliştirilmesi",
+            "Kullanıcı taleplerinin karşılanması",
+            "İletişim faaliyetlerinin yürütülmesi",
+            "Yasal yükümlülüklerin yerine getirilmesi",
+            "Sistem güvenliğinin sağlanması",
+            "Pazarlama ve analiz faaliyetleri (izin verilmesi halinde)"
+          ]
+        },
+        "section4": {
+          "title": "Kişisel Verilerin Paylaşılması",
+          "intro": "Kişisel verileriniz aşağıdaki durumlarda paylaşılabilir:",
+          "items": [
+            "Yasal zorunluluklar halinde yetkili kamu kurumlarıyla",
+            "Hizmet alınan üçüncü taraflarla (hosting, altyapı, e-posta hizmetleri vb.)",
+            "Açık rızanız bulunması halinde"
+          ]
+        },
+        "section5": {
+          "title": "Kişisel Verilerin Saklanması ve Güvenliği",
+          "text": "Kişisel verileriniz, ilgili mevzuatta öngörülen süreler boyunca saklanmakta ve yetkisiz erişime karşı gerekli teknik ve idari tedbirler alınmaktadır."
+        },
+        "section6": {
+          "title": "Çerezler (Cookies)",
+          "text": "Web sitemizde kullanıcı deneyimini iyileştirmek amacıyla çerezler kullanılmaktadır. Tarayıcı ayarlarınızdan çerezleri reddedebilir veya silebilirsiniz."
+        },
+        "section7": {
+          "title": "Gizlilik Politikası Güncellemeleri",
+          "text": "Bu Gizlilik Politikası gerektiğinde güncellenebilir. Güncel metin her zaman web sitemizde yayınlanır."
+        },
+        "contact": "Sorularınız için <strong>info@princetourismagency.com</strong> e-posta adresimize yazabilirsiniz."
+      },
+      "kvkk": {
+        "title": "KVKK Aydınlatma Metni",
+        "intro": "6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) uyarınca, veri sorumlusu sıfatıyla Pro Health, kişisel verilerinizi aşağıda açıklanan kapsamda işlemektedir.",
+        "section1": {
+          "title": "Veri Sorumlusu",
+          "companyName": "Firma Adı:",
+          "email": "E-posta:"
+        },
+        "section2": {
+          "title": "İşlenen Kişisel Veriler",
+          "items": [
+            "Kimlik bilgileri (ad, soyad)",
+            "İletişim bilgileri (e-posta, telefon)",
+            "İşlem güvenliği bilgileri (IP, log kayıtları)",
+            "Kullanıcı işlem bilgileri"
+          ]
+        },
+        "section3": {
+          "title": "Kişisel Verilerin İşlenme Amaçları",
+          "intro": "Kişisel verileriniz aşağıdaki amaçlarla işlenmektedir:",
+          "items": [
+            "Hizmetlerin yürütülmesi",
+            "İletişim faaliyetlerinin gerçekleştirilmesi",
+            "Talep ve şikayetlerin değerlendirilmesi",
+            "Hukuki yükümlülüklerin yerine getirilmesi",
+            "Bilgi güvenliği süreçlerinin yürütülmesi"
+          ]
+        },
+        "section4": {
+          "title": "Kişisel Verilerin Aktarılması",
+          "text": "Kişisel verileriniz yetkili kamu kurum ve kuruluşlarına ile hizmet alınan üçüncü kişilere, KVKKnın 8. ve 9. maddelerine uygun olarak aktarılabilir."
+        },
+        "section5": {
+          "title": "Kişisel Verilerin Toplanma Yöntemi ve Hukuki Sebebi",
+          "intro": "Kişisel verileriniz aşağıdaki yollarla toplanmaktadır:",
+          "items": [
+            "Web sitesi",
+            "Elektronik formlar",
+            "Çerezler"
+          ],
+          "note": "Kişisel verileriniz KVKKnın 5. maddesinde belirtilen hukuki sebeplere dayanılarak işlenmektedir."
+        },
+        "section6": {
+          "title": "KVKK Kapsamındaki Haklarınız",
+          "intro": "KVKKnın 11. maddesi uyarınca aşağıdaki haklara sahipsiniz:",
+          "items": [
+            "Kişisel verilerinizin işlenip işlenmediğini öğrenme",
+            "İşlenmişse buna ilişkin bilgi talep etme",
+            "İşlenme amacını öğrenme",
+            "Yanlış veya eksik işlenmişse düzeltilmesini isteme",
+            "Silinmesini veya yok edilmesini isteme",
+            "İşlemlerin üçüncü kişilere bildirilmesini isteme",
+            "Otomatik sistemler ile analiz edilmesine itiraz etme",
+            "Zarara uğramanız halinde tazminat talep etme"
+          ]
+        },
+        "contact": "Başvurularınızı <strong>info@princetourismagency.com</strong> e-posta adresimiz üzerinden iletebilirsiniz."
+      },
+      "slug": {
+        "loading": "Tedaviler yükleniyor...",
+        "notFound": "Tedavi listesi bulunamadı",
+        "error": "İçerik bulunamadı",
+        "addApplication": "Başvuru Ekle"
+      }
+    }
+  }
+}

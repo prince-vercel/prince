@@ -6,11 +6,14 @@ import { collection, getDocs } from 'firebase/firestore'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
+import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
+import '@/src/i18n'
 
 const ITEMS_PER_PAGE = 3
 
 
 export default function OrganisationPage() {
+  const { t, isReady } = useSafeTranslation()
   const [activeFilter, setActiveFilter] = useState<'Tümü' | 'Oteller' | 'Hastaneler'>('Tümü')
   const [currentPage, setCurrentPage] = useState(1)
   const [organisations, setOrganisations] = useState<OrganisationItem[]>([])
@@ -60,7 +63,7 @@ export default function OrganisationPage() {
 
       setOrganisations(allOrganisations)
     } catch (error) {
-      console.error('Kurumlar çekilirken hata:', error)
+      console.error(isReady ? t('medical.pages.organisation.error') : 'Kurumlar çekilirken hata:', error)
     } finally {
       setLoading(false)
     }
@@ -69,12 +72,13 @@ export default function OrganisationPage() {
   const filteredItems = useMemo(() => {
     let list = organisations
 
-    if (activeFilter !== 'Tümü') {
+    const allFilter = isReady ? t('medical.pages.organisation.filters.all') : 'Tümü'
+    if (activeFilter !== allFilter) {
       list = list.filter(item => item.type === activeFilter)
     }
 
     return list
-  }, [activeFilter, organisations])
+  }, [activeFilter, organisations, t, isReady])
 
   const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE)
 
@@ -91,17 +95,17 @@ export default function OrganisationPage() {
         <div className="container" style={{ marginBottom: '20px', marginTop: '-45px' }}>
           <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
             <li className="breadcrumb-item2" style={{ color: '#fff' }}>
-              <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
+              <Link href="/medical" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.home') : ''}</Link>
             </li>
-            <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>Kurumlar</li>
+            <li className="breadcrumb-item2 active" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.organisation') : ''}</li>
           </ol>
 
           <div className="cs_banner_text">
-            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }}>
-              Kurumlarımız
+            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }} suppressHydrationWarning>
+              {isReady ? t('medical.pages.organisation.title') : ''}
             </h2>
-            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
-              Oteller ve hastaneler arasından ihtiyacınıza uygun olanı seçin.
+            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }} suppressHydrationWarning>
+              {isReady ? t('medical.pages.organisation.subtitle') : ''}
             </p>
           </div>
         </div>
@@ -113,7 +117,11 @@ export default function OrganisationPage() {
         <div className="cs_doctors_heading">
           <div className="cs_isotop_filter cs_style1 mb-5 mt-3">
             <ul className="cs_mp0">
-              {(['Tümü', 'Oteller', 'Hastaneler'] as const).map(key => (
+              {([
+                { key: 'Tümü' as const, tr: 'medical.pages.organisation.filters.all' },
+                { key: 'Oteller' as const, tr: 'medical.pages.organisation.filters.hotels' },
+                { key: 'Hastaneler' as const, tr: 'medical.pages.organisation.filters.hospitals' }
+              ]).map(({ key, tr }) => (
                 <li key={key} className={activeFilter === key ? 'active' : ''}>
                   <button
                     onClick={() => {
@@ -130,8 +138,9 @@ export default function OrganisationPage() {
                           : 'transparent',
                       color: activeFilter === key ? '#fff' : 'inherit',
                     }}
+                    suppressHydrationWarning
                   >
-                    {key}
+                    {isReady ? t(tr) : key}
                   </button>
                 </li>
               ))}
@@ -139,7 +148,7 @@ export default function OrganisationPage() {
           </div>
 
           <div className="cs_view_box">
-            <span>{filteredItems.length} Öğe</span>
+            <span suppressHydrationWarning>{filteredItems.length} {isReady ? t('medical.pages.organisation.items') : 'Öğe'}</span>
           </div>
         </div>
 
@@ -148,11 +157,11 @@ export default function OrganisationPage() {
         <div className="row cs_gap_y_40">
           {loading ? (
             <div style={{ width: '100%', textAlign: 'center', padding: '40px' }}>
-              <p>Yükleniyor...</p>
+              <p suppressHydrationWarning>{isReady ? t('medical.pages.organisation.loading') : ''}</p>
             </div>
           ) : paginatedItems.length === 0 ? (
             <div style={{ width: '100%', textAlign: 'center', padding: '40px' }}>
-              <p>Bu kriterlere uygun kurum bulunamadı</p>
+              <p suppressHydrationWarning>{isReady ? t('medical.pages.organisation.noOrganisations') : ''}</p>
             </div>
           ) : (
             paginatedItems.map((item) => (
@@ -206,13 +215,12 @@ export default function OrganisationPage() {
               />
             </div>
 
-            <h2 className="cs_banner_title cs_fs_72">
-              Sağlığınızı Geri <br /> Planda Bırakmayın!
+            <h2 className="cs_banner_title cs_fs_72" suppressHydrationWarning>
+              {isReady ? t('medical.pages.organisation.banner.title') : ''}
             </h2>
 
-            <p className="cs_banner_subtitle cs_fs_20 cs_medium m-0">
-              Bugün deneyimli tıbbi profesyonellerimizden <br />
-              biriyle randevu alın!
+            <p className="cs_banner_subtitle cs_fs_20 cs_medium m-0" suppressHydrationWarning>
+              {isReady ? t('medical.pages.organisation.banner.subtitle') : ''}
             </p>
           </div>
         </div>

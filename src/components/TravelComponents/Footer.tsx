@@ -1,6 +1,9 @@
 import Link from "next/link"
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import '../../i18n'
 
 export default function Footer() {
+  const { t, isReady } = useSafeTranslation()
   return (
     <>
       <style>{`
@@ -16,43 +19,42 @@ export default function Footer() {
 
              <div className="col-lg-4">
                 <div className="cs_footer_item">
-                  <p>
-                    Prince Medical Aesthetics & Health Services <br />
+                  <p suppressHydrationWarning>
+                    {isReady ? t('travel.footer.description') : ''} <br />
                  
                   </p>
 
                   <ul className="cs_contact_widget">
-                    <li>Kağıthane / İstanbul</li>
-                    <li>+90 212 000 00 00</li>
-                    <li>medical@princetourismagency.com</li>
+                    <li suppressHydrationWarning>{isReady ? t('travel.footer.address') : ''}</li>
+                    <li suppressHydrationWarning>{isReady ? t('travel.footer.phone') : ''}</li>
+                    <li suppressHydrationWarning>{isReady ? t('travel.footer.email') : ''}</li>
                   </ul>
                 </div>
               </div>
 
               <div className="col-lg-2">
                 <ul className="cs_menu_widget cs_mp0">
-                  <li><Link href="/travel">Anasayfa</Link></li>
-                  <li><Link href="/travel/all">Seyahatlar</Link></li>
-                  <li><Link href="/travel/blog">Blog</Link></li>
-                  <li><Link href="/travel/about">Hakkımızda</Link></li>
-                  <li><Link href="/travel/contact">İletişim</Link></li>
+                  <li><Link href="/travel" suppressHydrationWarning>{isReady ? t('travel.footer.home') : ''}</Link></li>
+                  <li><Link href="/travel/all" suppressHydrationWarning>{isReady ? t('travel.footer.tours') : ''}</Link></li>
+                  <li><Link href="/travel/blog" suppressHydrationWarning>{isReady ? t('travel.footer.blog') : ''}</Link></li>
+                  <li><Link href="/travel/about" suppressHydrationWarning>{isReady ? t('travel.footer.about') : ''}</Link></li>
+                  <li><Link href="/travel/contact" suppressHydrationWarning>{isReady ? t('travel.footer.contact') : ''}</Link></li>
                 </ul>
               </div>
 
               <div className="col-lg-2">
                 <ul className="cs_menu_widget cs_mp0">
-                  <li><Link href="/travel/faqs">Sık Sorulan Sorular</Link></li>
-                  <li><Link href="/travel/privacy">Gizlilik Politikası</Link></li>
-                  <li><Link href="/travel/kvkk">KVKK & Aydınlatma</Link></li>
+                  <li><Link href="/travel/faqs" suppressHydrationWarning>{isReady ? t('travel.footer.faq') : ''}</Link></li>
+                  <li><Link href="/travel/privacy" suppressHydrationWarning>{isReady ? t('travel.footer.privacy') : ''}</Link></li>
+                  <li><Link href="/travel/kvkk" suppressHydrationWarning>{isReady ? t('travel.footer.kvkk') : ''}</Link></li>
                 </ul>
               </div>
 
               <div className="col-lg-4">
                 <div className="cs_newsletter cs_style1">
-                  <h2 className="cs_newsletter_title">Bize Katılın</h2>
-                  <p>
-                    Kampanyalar, yenilikler ve sağlık içerikleri için e-posta listemize
-                    kayıt olun.
+                  <h2 className="cs_newsletter_title" suppressHydrationWarning>{isReady ? t('travel.footer.newsletter.title') : ''}</h2>
+                  <p suppressHydrationWarning>
+                    {isReady ? t('travel.footer.newsletter.description') : ''}
                   </p>
 <form
   className="cs_newsletter_form"
@@ -67,7 +69,7 @@ export default function Footer() {
     <input
       type="email"
       className="cs_newsletter_input"
-      placeholder="E-posta adresiniz"
+      placeholder={isReady ? t('travel.footer.newsletter.placeholder') : ''}
       style={{
         width: '100%',
         border: '2px solid #d7b76e',
@@ -75,6 +77,7 @@ export default function Footer() {
         padding: '12px 140px 12px 20px',
         outline: 'none'
       }}
+      suppressHydrationWarning
     />
 
     <button
@@ -93,8 +96,9 @@ export default function Footer() {
         cursor: 'pointer',
         whiteSpace: 'nowrap'
       }}
+      suppressHydrationWarning
     >
-      Gönder
+      {isReady ? t('travel.footer.newsletter.submit') : ''}
     </button>
   </div>
 </form>
@@ -116,8 +120,8 @@ export default function Footer() {
                 <Link href="#"><i className="fa-brands fa-whatsapp" style={{ color: 'white' }}></i></Link>
               </div>
 
-              <div className="cs_copyright">
-                © Happencode. Tüm hakları saklıdır.
+              <div className="cs_copyright" suppressHydrationWarning>
+                {isReady ? t('travel.footer.copyright') : ''}
               </div>
             </div>
           </div>

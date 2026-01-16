@@ -6,6 +6,8 @@ import { collection, addDoc, serverTimestamp, getDocs } from 'firebase/firestore
 import { db } from '@/src/lib/firebase'
 import { MedicalFormData } from '@/src/types/types'
 import Toast from '@/src/components/Toast'
+import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
+import '@/src/i18n'
 
 interface Question {
   id: string
@@ -54,6 +56,7 @@ const StepIndicator = ({ currentStep, totalSteps }: { currentStep: number; total
 )
 
 export default function AppointmentSection() {
+  const { t, isReady } = useSafeTranslation()
   const [currentStep, setCurrentStep] = useState(1)
   const totalSteps = 7
   const [questions, setQuestions] = useState<Question[]>([])
@@ -89,7 +92,7 @@ export default function AppointmentSection() {
         })
         setSteps(stepsData.sort((a, b) => a.number - b.number))
       } catch (error) {
-        console.error('Veriler yüklenirken hata:', error)
+        console.error(isReady ? t('medical.pages.form.errorAlert') : 'Veriler yüklenirken hata:', error)
       } finally {
         setLoadingQuestions(false)
       }
@@ -199,7 +202,7 @@ export default function AppointmentSection() {
         const value = formValues[question.id]
         if (!value || (Array.isArray(value) && value.length === 0) || (typeof value === 'string' && !value.trim())) {
           setCurrentStep(step)
-          setErrorMessage(`${getStepName(step)}: "${question.questionText}" zorunludur`)
+          setErrorMessage(`${getStepName(step)}: "${question.questionText}" ${isReady ? t('medical.pages.form.required') : 'zorunludur'}`)
           setShowError(true)
           setTimeout(() => setShowError(false), 3000)
           return
@@ -221,8 +224,8 @@ export default function AppointmentSection() {
       setCurrentStep(1)
       setFormValues({})
     } catch (error) {
-      console.error('Form gönderirken hata oluştu:', error)
-      setErrorMessage('Form gönderilirken bir hata oluştu. Lütfen tekrar deneyin.')
+      console.error(isReady ? t('medical.pages.form.errorAlert') : 'Form gönderirken hata oluştu:', error)
+      setErrorMessage(isReady ? t('medical.pages.form.error') : 'Form gönderilirken bir hata oluştu. Lütfen tekrar deneyin.')
       setShowError(true)
       setTimeout(() => setShowError(false), 3000)
     }
@@ -488,7 +491,7 @@ export default function AppointmentSection() {
       <section className="cs_appointment_section_1 cs_bg_filed">
         <div className="container">
           <div style={{ padding: '60px 20px', textAlign: 'center' }}>
-            <p>Sorular yükleniyor...</p>
+            <p suppressHydrationWarning>{isReady ? t('medical.pages.form.loading') : ''}</p>
           </div>
         </div>
       </section>
@@ -498,7 +501,7 @@ export default function AppointmentSection() {
   return (
     <>
       {showSuccess && (
-        <Toast type="success" message="✓ Formu başarıyla gönderdin!" />
+        <Toast type="success" message={isReady ? t('medical.pages.form.success') : ''} />
       )}
 
       {showError && (
@@ -508,17 +511,17 @@ export default function AppointmentSection() {
         <div className="container" style={{ marginBottom: '20px', marginTop: '-45px' }}>
           <ol className="breadcrumb2" style={{ color: '#fff', marginLeft: '0' }}>
             <li className="breadcrumb-item2" style={{ color: '#fff' }}>
-              <Link href="/medical" style={{ color: '#fff' }}>Anasayfa</Link>
+              <Link href="/medical" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.home') : ''}</Link>
             </li>
-            <li className="breadcrumb-item2 active" style={{ color: '#fff' }}>Başvuru</li>
+            <li className="breadcrumb-item2 active" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.form') : ''}</li>
           </ol>
 
           <div className="cs_banner_text">
-            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }}>
-              Başvuru Formu
+            <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }} suppressHydrationWarning>
+              {isReady ? t('medical.pages.form.title') : ''}
             </h2>
-            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }}>
-              Aşağıdaki formu doldurarak randevu talebinizi oluşturunuz.
+            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }} suppressHydrationWarning>
+              {isReady ? t('medical.pages.form.subtitle') : ''}
             </p>
           </div>
         </div>
@@ -558,10 +561,10 @@ export default function AppointmentSection() {
                 {currentStep === 1 && (
                   <>
                     <div className="col-12">
-                      <h3 className="medical-step-title">Kişisel Bilgiler</h3>
+                      <h3 className="medical-step-title" suppressHydrationWarning>{isReady ? t('medical.pages.form.stepTitle') : ''}</h3>
                     </div>
                 <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color">Ad Soyad <span style={{ color: '#ff0000' }}>*</span></label>
+                  <label className="cs_input_label cs_heading_color" suppressHydrationWarning>{isReady ? t('medical.pages.form.labels.fullName') : ''} <span style={{ color: '#ff0000' }}>*</span></label>
                   <input 
                     type="text" 
                     className="cs_form_field" 
@@ -573,7 +576,7 @@ export default function AppointmentSection() {
                 </div>
                 
                 <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color">Doğum Tarihi <span style={{ color: '#ff0000' }}>*</span></label>
+                  <label className="cs_input_label cs_heading_color" suppressHydrationWarning>{isReady ? t('medical.pages.form.labels.birthDate') : ''} <span style={{ color: '#ff0000' }}>*</span></label>
                   <input 
                     type="date" 
                     className="cs_form_field" 
@@ -586,11 +589,11 @@ export default function AppointmentSection() {
                 
                 <div className="col-lg-6">
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Cinsiyet <span style={{ color: '#ff0000' }}>*</span></label>
+                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }} suppressHydrationWarning>{isReady ? t('medical.pages.form.labels.gender') : ''} <span style={{ color: '#ff0000' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Kadın" selected={gender === 'Kadın'} onClick={() => setGender('Kadın')} />
-                      <CheckboxOption label="Erkek" selected={gender === 'Erkek'} onClick={() => setGender('Erkek')} />
-                      <CheckboxOption label="Belirtmek İstemiyorum" selected={gender === 'Belirtmek İstemiyorum'} onClick={() => setGender('Belirtmek İstemiyorum')} />
+                      <CheckboxOption label={isReady ? t('medical.pages.form.genderOptions.female') : 'Kadın'} selected={gender === 'Kadın'} onClick={() => setGender('Kadın')} />
+                      <CheckboxOption label={isReady ? t('medical.pages.form.genderOptions.male') : 'Erkek'} selected={gender === 'Erkek'} onClick={() => setGender('Erkek')} />
+                      <CheckboxOption label={isReady ? t('medical.pages.form.genderOptions.preferNotToSay') : 'Belirtmek İstemiyorum'} selected={gender === 'Belirtmek İstemiyorum'} onClick={() => setGender('Belirtmek İstemiyorum')} />
                     </div>
                   </div>
                   <div className="cs_height_42"></div>
@@ -1058,7 +1061,7 @@ export default function AppointmentSection() {
                     onClick={handlePreviousStep}
                     className="cs_btn cs_style_1 medical-form-btn-secondary"
                   >
-                    <span>← Geri</span>
+                    <span suppressHydrationWarning>← {isReady ? t('medical.pages.form.buttons.previous') : 'Geri'}</span>
                   </button>
                 )}
                 
@@ -1068,7 +1071,7 @@ export default function AppointmentSection() {
                     onClick={handleNextStep}
                     className={`cs_btn cs_style_1 ${currentStep === 1 ? 'medical-form-btn-push-right' : 'medical-form-btn-push-left'}`}
                   >
-                    <span>İleri →</span>
+                    <span suppressHydrationWarning>{isReady ? t('medical.pages.form.buttons.next') : 'İleri'} →</span>
                   </button>
                 ) : (
                   <button 
@@ -1076,7 +1079,7 @@ export default function AppointmentSection() {
                     onClick={handleSubmitButton}
                     className="cs_btn cs_style_1 medical-form-btn-push-right"
                   >
-                    <span>✓ Formu Gönder</span>
+                    <span suppressHydrationWarning>✓ {isReady ? t('medical.pages.form.buttons.submit') : 'Formu Gönder'}</span>
                   </button>
                 )}
               </div>
@@ -1085,7 +1088,7 @@ export default function AppointmentSection() {
                 </form>
                   <div className="mt-4 flex items-center gap-2 text-sm text-dark-3">
                 <i className="bi bi-shield-lock"></i>
-                <span>Bilgileriniz gizlidir ve üçüncü kişilerle paylaşılmaz.</span>
+                <span suppressHydrationWarning>{isReady ? t('medical.pages.form.privacy') : 'Bilgileriniz gizlidir ve üçüncü kişilerle paylaşılmaz.'}</span>
               </div>
               </div>
 
@@ -1093,9 +1096,9 @@ export default function AppointmentSection() {
               <div className="col-lg-4 hidden lg:block">
                 <div className="sticky top-20 border-2 border-gray-300 rounded-lg p-6 bg-white shadow-md">
                   <div className="flex items-center justify-between gap-4 mb-6">
-                    <h5 className="font-bold text-lg flex items-center gap-2">
+                    <h5 className="font-bold text-lg flex items-center gap-2" suppressHydrationWarning>
                       <i className="bi bi-clipboard-check" style={{ color: '#307BC4' }}></i>
-                      Form Özeti
+                      {isReady ? t('medical.pages.form.summary.title') : 'Form Özeti'}
                     </h5>
                     {/* PROGRESS CIRCLE */}
                     <div className="flex justify-center">
@@ -1150,7 +1153,7 @@ export default function AppointmentSection() {
                       )
                     })}
                     {Object.keys(formValues).length === 0 && (
-                      <li className="text-gray-500 italic text-xs">Bilgileri doldurmaya başlayın...</li>
+                      <li className="text-gray-500 italic text-xs" suppressHydrationWarning>{isReady ? t('medical.pages.form.summary.empty') : 'Bilgileri doldurmaya başlayın...'}</li>
                     )}
                   </ul>
                 </div>

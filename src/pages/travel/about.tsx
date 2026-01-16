@@ -10,10 +10,13 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from "react"
 import Swiper from "swiper"
 import { Autoplay, Navigation } from "swiper/modules"
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
+import '../../i18n'
 
 
 
 export default function AboutPage() {
+  const { t, isReady } = useSafeTranslation()
   const swiperRef = useRef<Swiper | null>(null)
   const [partners, setPartners] = useState<any[]>([])
   const [loadingPartners, setLoadingPartners] = useState(true)
@@ -35,14 +38,15 @@ export default function AboutPage() {
         // Düzenlemeye göre sırala
         setPartners(partnersData.sort((a, b) => (a.order || 0) - (b.order || 0)))
       } catch (error) {
-        console.error('Partners yükleme hatası:', error)
+        const errorMsg = isReady ? t('travel.pages.about.errors.loadingPartners') : 'Partners yükleme hatası:'
+        console.error(errorMsg, error)
       } finally {
         setLoadingPartners(false)
       }
     }
 
     fetchPartners()
-  }, [])
+  }, [isReady, t])
 
   useEffect(() => {
     const fetchTestimonials = async () => {
@@ -56,12 +60,13 @@ export default function AboutPage() {
         }))
         setTestimonials(testimonialsData)
       } catch (error) {
-        console.error('Yorum verileri çekilirken hata:', error)
+        const errorMsg = isReady ? t('travel.pages.about.errors.loadingTestimonials') : 'Yorum verileri çekilirken hata:'
+        console.error(errorMsg, error)
       }
     }
 
     fetchTestimonials()
-  }, [])
+  }, [isReady, t])
 
   useEffect(() => {
     const swiper = new Swiper('.testimonial-slider-one', {
@@ -120,14 +125,14 @@ export default function AboutPage() {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb2" style={{ color: 'white' }}>
               <li className="breadcrumb-item2">
-                <Link href="/travel">Anasayfa</Link>
+                <Link href="/travel" suppressHydrationWarning>{isReady ? t('travel.pages.breadcrumb.home') : ''}</Link>
               </li>
-              <li className="breadcrumb-item2"> Hakkımızda</li>
+              <li className="breadcrumb-item2" suppressHydrationWarning> {isReady ? t('travel.pages.about.breadcrumb') : ''}</li>
             </ol>
           </nav>
 
-          <h2 className="l:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
-            En İyi Seyahat Yolu
+          <h2 className="l:text-[54px] pb-5 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]" suppressHydrationWarning>
+            {isReady ? t('travel.pages.about.title') : ''}
           </h2>
         </div>
       </div>
@@ -146,27 +151,22 @@ export default function AboutPage() {
             </div>
 
             <div>
-              <h5 className="section-sub-title-v1">Hakkımızda</h5>
-              <h2 className="section-title-v1 max-w-xl">
-                Tatilleriniz için Profesyonel Planlayıcılarız
+              <h5 className="section-sub-title-v1" suppressHydrationWarning>{isReady ? t('travel.pages.about.subtitle') : ''}</h5>
+              <h2 className="section-title-v1 max-w-xl" suppressHydrationWarning>
+                {isReady ? t('travel.pages.about.heading') : ''}
               </h2>
 
               <div className="mt-7 xl:pl-24 lg:pl-20 relative before:content-[''] before:left-0 before:top-4 before:bg-[#d9d9d9] before:w-[10%] before:h-[1px] lg:before:absolute">
-                <p className="regular-text-v1">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed do
-                  eiusmod tem por incididunt ut labore et dolore magna aliqua.
+                <p className="regular-text-v1" suppressHydrationWarning>
+                  {isReady ? t('travel.pages.about.description') : ''}
                 </p>
-                <h5 className="font-sans text-dark-1 text-md font-medium mt-4">
-                  Destinasyon Uzmanlarımızla Doğrudan +1 546 378 654&apos;ten Konuşun
+                <h5 className="font-sans text-dark-1 text-md font-medium mt-4" suppressHydrationWarning>
+                  {isReady ? t('travel.pages.about.contactExpert') : ''}
                 </h5>
               </div>
 
               <ul className="pt-6 lg:text-md text-base">
-                {[
-                  'Tüm yerler ve aktiviteler tarafımızdan dikkatle seçilmiştir.',
-                  'Ödül kazanan bir ajansız',
-                  '80.000&apos;den fazla müşteri tarafından güvenilir',
-                ].map((item, i) => (
+                {(isReady ? t('travel.pages.about.features', { returnObjects: true }) as string[] : []).map((item, i) => (
                   <li
                     key={i}
                     className="flex items-center font-sans text-dark-3 mt-4"
@@ -174,14 +174,14 @@ export default function AboutPage() {
                     <div className="text-primary-1 flex-shrink-0 text-2md">
                       <i className="bi bi-check-circle"></i>
                     </div>
-                    <span className="ml-3">{item}</span>
+                    <span className="ml-3" suppressHydrationWarning>{item}</span>
                   </li>
                 ))}
               </ul>
 
               <div className="mt-10">
-                <a href="package-details.html" className="btn_primary__v1">
-                  Daha Fazla Bilgi
+                <a href="package-details.html" className="btn_primary__v1" suppressHydrationWarning>
+                  {isReady ? t('travel.pages.about.moreInfo') : ''}
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path
                       d="M7.42505 16.5999L12.8584 11.1666C13.5 10.5249 13.5 9.4749 12.8584 8.83324L7.42505 3.3999"
@@ -207,8 +207,8 @@ export default function AboutPage() {
 
         <div className="container">
           <div className="text-center lg:pb-[60px] pb-[40px]">
-            <h5 className="section-sub-title-v1">Öne Çıkan Paketler</h5>
-            <h2 className="section-title-v1">Öne Çıkan Paketlerimize Göz Atın</h2>
+            <h5 className="section-sub-title-v1" suppressHydrationWarning>{isReady ? t('travel.pages.about.featuredPackages.subtitle') : ''}</h5>
+            <h2 className="section-title-v1" suppressHydrationWarning>{isReady ? t('travel.pages.about.featuredPackages.title') : ''}</h2>
           </div>
         </div>
 
@@ -216,52 +216,36 @@ export default function AboutPage() {
           {/* FIRST PACKAGE */}
           <div className="flex 2xl:gap-x-12 gap-base lg:items-center col-span-10 2xl:ml-right-container lg:flex-row flex-col">
             <div className="xl:max-w-xl lg:max-w-lg shrink-0 order-2 lg:order-1 wow fadeInLeft">
-              <h5 className="text-2md text-primary-1 leading-1.5 font-sans font-bold">
-                $1.200&apos;den başlayan
+              <h5 className="text-2md text-primary-1 leading-1.5 font-sans font-bold" suppressHydrationWarning>
+                {isReady ? t('travel.pages.about.featuredPackages.startingFrom') : ''}
               </h5>
 
-              <h3 className="font-serif font-medium lg:text-xl text-lg leading-1.35 mt-2 text-dark-1">
-                Yaz Dönüşü X MEKSİKA
+              <h3 className="font-serif font-medium lg:text-xl text-lg leading-1.35 mt-2 text-dark-1" suppressHydrationWarning>
+                {isReady ? t('travel.pages.about.featuredPackages.packageTitle') : ''}
               </h3>
 
-              <p className="text-dark-2 leading-1.7 font-medium mt-5">
-                Afro-Latin kültürünü keşfetmek ve Kolombiya&apos;nın Bağımsızlık Hafta Sonu&apos;nu kutlamak için bize katılın!
+              <p className="text-dark-2 leading-1.7 font-medium mt-5" suppressHydrationWarning>
+                {isReady ? t('travel.pages.about.featuredPackages.packageDescription') : ''}
               </p>
 
-              <p className="regular-text-v1 mt-[14px]">
-                Duis id interdum ex, eu accumsan massa. Fusce vel nibh diam. Nulla ultrices ex at erat pharetra.
+              <p className="regular-text-v1 mt-[14px]" suppressHydrationWarning>
+                {isReady ? t('travel.pages.about.featuredPackages.packageDetails') : ''}
               </p>
 
               <ul className="pt-2 lg:text-md text-base">
-                <li className="flex items-center font-sans text-dark-3 mt-4">
-                  <div className="text-primary-1 text-2md flex-shrink-0">
-                    <i className="bi bi-check-circle"></i>
-                  </div>
-                  <span className="ml-3">Profesyonel Tur Rehberi</span>
-                </li>
-
-                <li className="flex items-center font-sans text-dark-3 mt-4">
-                  <div className="text-primary-1 text-2md flex-shrink-0">
-                    <i className="bi bi-check-circle"></i>
-                  </div>
-                  <span className="ml-3">
-                    Yeni malzeme/parça taşımak için nakliye maliyeti
-                  </span>
-                </li>
-
-                <li className="flex items-center font-sans text-dark-3 mt-4">
-                  <div className="text-primary-1 text-2md flex-shrink-0">
-                    <i className="bi bi-check-circle"></i>
-                  </div>
-                  <span className="ml-3">
-                    Yeni malzeme/parça taşımak için nakliye maliyeti
-                  </span>
-                </li>
+                {(isReady ? t('travel.pages.about.featuredPackages.inclusions', { returnObjects: true }) as string[] : []).map((item, i) => (
+                  <li key={i} className="flex items-center font-sans text-dark-3 mt-4">
+                    <div className="text-primary-1 text-2md flex-shrink-0">
+                      <i className="bi bi-check-circle"></i>
+                    </div>
+                    <span className="ml-3" suppressHydrationWarning>{item}</span>
+                  </li>
+                ))}
               </ul>
 
               <div className="mt-12">
-                <a href="package-details.html" className="btn_primary__v1">
-                  Şimdi Rezervasyon Yap
+                <a href="package-details.html" className="btn_primary__v1" suppressHydrationWarning>
+                  {isReady ? t('travel.pages.about.featuredPackages.bookNow') : ''}
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path
                       d="M7.42505 16.5999L12.8584 11.1666C13.5 10.5249 13.5 9.4749 12.8584 8.83324L7.42505 3.3999"
@@ -292,11 +276,11 @@ export default function AboutPage() {
           <div className="cs_brands_track">
             {loadingPartners ? (
               <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                <p>İş ortakları yükleniyor...</p>
+                <p suppressHydrationWarning>{isReady ? t('travel.pages.about.partners.loading') : ''}</p>
               </div>
             ) : partners.length === 0 ? (
               <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
-                <p>Henüz iş ortağı yok.</p>
+                <p suppressHydrationWarning>{isReady ? t('travel.pages.about.partners.noPartners') : ''}</p>
               </div>
             ) : (
               partners.concat(partners).map((partner: any, i: number) => (
@@ -323,8 +307,8 @@ export default function AboutPage() {
         <div className="container relative " >
 
           <div className="text-center lg:pb-[60px] pb-[40px]">
-            <h5 className="section-sub-title-v1">Yorumlar</h5>
-            <h2 className="section-title-v1">Yolcularımız Neler Söylüyor</h2>
+            <h5 className="section-sub-title-v1" suppressHydrationWarning>{isReady ? t('travel.pages.about.testimonials.subtitle') : ''}</h5>
+            <h2 className="section-title-v1" suppressHydrationWarning>{isReady ? t('travel.pages.about.testimonials.title') : ''}</h2>
           </div>
 
           <div className="swiper testimonial-slider-one relative px-12 lg:px-20">

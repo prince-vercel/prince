@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { useTranslation } from 'react-i18next'
+import { useSafeTranslation } from '../../hooks/useSafeTranslation'
 import '../../i18n'
 
 export default function VisaFooter() {
-    const { t } = useTranslation()
+    const { t, isReady } = useSafeTranslation()
     const currentYear = new Date().getFullYear()
 
     return (
@@ -22,20 +22,20 @@ export default function VisaFooter() {
                             <div className="row" style={{ display: 'flex', flexWrap: 'wrap', margin: '0 -15px' }}>
                                 <div className="col-lg-4" style={{ flex: '0 0 33.333333%', maxWidth: '33.333333%', padding: '0 15px' }}>
                                     <div className="cs_footer_item" style={{ marginBottom: '30px' }}>
-                                        <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333', marginBottom: '20px' }}>
-                                            {t('visa.footer.description').split('\n').map((line, i) => (
+                                        <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333', marginBottom: '20px' }} suppressHydrationWarning>
+                                            {isReady ? t('visa.footer.description').split('\n').map((line: string, i: number) => (
                                                 <span key={i}>{line}{i === 0 && <br />}</span>
-                                            ))}
+                                            )) : ''}
                                         </p>
                                         <ul className="cs_contact_widget" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                                            <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }}>
-                                                {t('visa.footer.address')}
+                                            <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }} suppressHydrationWarning>
+                                                {isReady ? t('visa.footer.address') : ''}
                                             </li>
-                                            <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }}>
-                                                {t('visa.footer.phone')}
+                                            <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }} suppressHydrationWarning>
+                                                {isReady ? t('visa.footer.phone') : ''}
                                             </li>
-                                            <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }}>
-                                                {t('visa.footer.email')}
+                                            <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }} suppressHydrationWarning>
+                                                {isReady ? t('visa.footer.email') : ''}
                                             </li>
                                         </ul>
                                     </div>
@@ -44,28 +44,28 @@ export default function VisaFooter() {
                                 <div className="col-lg-2" style={{ flex: '0 0 16.666667%', maxWidth: '16.666667%', padding: '0 15px' }}>
                                     <ul className="cs_menu_widget cs_mp0" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                                         <li style={{ marginBottom: '12px' }}>
-                                            <Link href="/visa" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                {t('visa.footer.home')}
+                                            <Link href="/visa" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }} suppressHydrationWarning>
+                                                {isReady ? t('visa.footer.home') : ''}
                                             </Link>
                                         </li>
                                         <li style={{ marginBottom: '12px' }}>
-                                            <Link href="/visa/nasil-vize-alirim" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                {t('visa.footer.howToGetVisa')}
+                                            <Link href="/visa/nasil-vize-alirim" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }} suppressHydrationWarning>
+                                                {isReady ? t('visa.footer.howToGetVisa') : ''}
                                             </Link>
                                         </li>
                                         <li style={{ marginBottom: '12px' }}>
-                                            <Link href="/visa/blog" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                {t('visa.footer.blog')}
+                                            <Link href="/visa/blog" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }} suppressHydrationWarning>
+                                                {isReady ? t('visa.footer.blog') : ''}
                                             </Link>
                                         </li>
                                         <li style={{ marginBottom: '12px' }}>
-                                            <Link href="/visa/hakkimizda" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                {t('visa.footer.about')}
+                                            <Link href="/visa/hakkimizda" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }} suppressHydrationWarning>
+                                                {isReady ? t('visa.footer.about') : ''}
                                             </Link>
                                         </li>
                                         <li style={{ marginBottom: '12px' }}>
-                                            <Link href="/visa/iletisim" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                {t('visa.footer.contact')}
+                                            <Link href="/visa/iletisim" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }} suppressHydrationWarning>
+                                                {isReady ? t('visa.footer.contact') : ''}
                                             </Link>
                                         </li>
                                     </ul>
@@ -74,18 +74,18 @@ export default function VisaFooter() {
                                 <div className="col-lg-2" style={{ flex: '0 0 16.666667%', maxWidth: '16.666667%', padding: '0 15px' }}>
                                     <ul className="cs_menu_widget cs_mp0" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                                         <li style={{ marginBottom: '12px' }}>
-                                            <Link href="/visa/sss" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                {t('visa.footer.faq')}
+                                            <Link href="/visa/sss" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }} suppressHydrationWarning>
+                                                {isReady ? t('visa.footer.faq') : ''}
                                             </Link>
                                         </li>
                                         <li style={{ marginBottom: '12px' }}>
-                                            <Link href="/visa/gizlilik-politikasi" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                {t('visa.footer.privacy')}
+                                            <Link href="/visa/gizlilik-politikasi" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }} suppressHydrationWarning>
+                                                {isReady ? t('visa.footer.privacy') : ''}
                                             </Link>
                                         </li>
                                         <li style={{ marginBottom: '12px' }}>
-                                            <Link href="/visa/kisisel-verilerin-korunma-kanunu" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }}>
-                                                {t('visa.footer.kvkk')}
+                                            <Link href="/visa/kisisel-verilerin-korunma-kanunu" style={{ fontSize: '16px', color: '#333', textDecoration: 'none', transition: 'color 0.3s' }} suppressHydrationWarning>
+                                                {isReady ? t('visa.footer.kvkk') : ''}
                                             </Link>
                                         </li>
                                     </ul>
@@ -93,13 +93,13 @@ export default function VisaFooter() {
 
                                 <div className="col-lg-4" style={{ flex: '0 0 33.333333%', maxWidth: '33.333333%', padding: '0 15px' }}>
                                     <div className="cs_newsletter cs_style1">
-                                        <h2 className="cs_newsletter_title" style={{ fontSize: '42px', fontWeight: 700, marginBottom: '11px', color: '#333' }}>
-                                            {t('visa.footer.newsletter.title')}
+                                        <h2 className="cs_newsletter_title" style={{ fontSize: '42px', fontWeight: 700, marginBottom: '11px', color: '#333' }} suppressHydrationWarning>
+                                            {isReady ? t('visa.footer.newsletter.title') : ''}
                                         </h2>
-                                        <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#666', marginBottom: '25px' }}>
-                                            {t('visa.footer.newsletter.description').split('\n').map((line, i) => (
+                                        <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#666', marginBottom: '25px' }} suppressHydrationWarning>
+                                            {isReady ? t('visa.footer.newsletter.description').split('\n').map((line: string, i: number) => (
                                                 <span key={i}>{line}{i === 0 && <br />}</span>
-                                            ))}
+                                            )) : ''}
                                         </p>
                                         <form
                                             className="cs_newsletter_form"
@@ -110,7 +110,7 @@ export default function VisaFooter() {
                                                 <input
                                                     type="email"
                                                     className="cs_newsletter_input"
-                                                    placeholder={t('visa.footer.newsletter.placeholder')}
+                                                    placeholder={isReady ? t('visa.footer.newsletter.placeholder') : ''}
                                                     style={{
                                                         width: '100%',
                                                         border: '2px solid #C42127',
@@ -140,8 +140,9 @@ export default function VisaFooter() {
                                                         fontSize: '16px',
                                                         transition: 'background 0.3s'
                                                     }}
+                                                    suppressHydrationWarning
                                                 >
-                                                    {t('visa.footer.newsletter.submit')}
+                                                    {isReady ? t('visa.footer.newsletter.submit') : ''}
                                                 </button>
                                             </div>
                                         </form>
@@ -250,8 +251,8 @@ export default function VisaFooter() {
                                     </a>
                                 </div>
 
-                                <div className="cs_copyright" style={{ color: 'white', fontSize: '14px', fontWeight: 400 }}>
-                                    {t('visa.footer.copyright', { year: currentYear })}
+                                <div className="cs_copyright" style={{ color: 'white', fontSize: '14px', fontWeight: 400 }} suppressHydrationWarning>
+                                    {isReady ? t('visa.footer.copyright', { year: currentYear }) : ''}
                                 </div>
                             </div>
                         </div>

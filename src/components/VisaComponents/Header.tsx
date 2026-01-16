@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../../i18n'
 
@@ -10,7 +10,8 @@ export default function VisaHeader() {
     const { t, i18n } = useTranslation()
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
-    const [selectedLanguage, setSelectedLanguage] = useState(i18n.language === 'en' ? 'EN' : 'TR')
+    const [mounted, setMounted] = useState(false)
+    const [selectedLanguage, setSelectedLanguage] = useState('TR') // SSR-safe default
 
     // Mobile menu açıkken body scroll'unu engelle
     useEffect(() => {
@@ -21,30 +22,53 @@ export default function VisaHeader() {
         }
     }, [isMobileMenuOpen])
 
-    // Language change handler
+    // Client-side mount kontrolü ve language setup
     useEffect(() => {
+        setMounted(true)
         const currentLang = i18n.language === 'en' ? 'EN' : 'TR'
         setSelectedLanguage(currentLang)
     }, [i18n.language])
 
+    // Memoize countries and otherLinks to prevent hydration mismatch
+    const countries = useMemo(() => {
+        if (!mounted || !i18n.isInitialized) {
+            return [
+                { title: '', href: '/visa/vize-basvurusu/ingiltere' },
+                { title: '', href: '/visa/vize-basvurusu/almanya' },
+                { title: '', href: '/visa/vize-basvurusu/fransa' },
+                { title: '', href: '/visa/vize-basvurusu/kanada' },
+                { title: '', href: '/visa/vize-basvurusu/abd' },
+            ]
+        }
+        return [
+            { title: t('visa.header.countriesList.uk'), href: '/visa/vize-basvurusu/ingiltere' },
+            { title: t('visa.header.countriesList.germany'), href: '/visa/vize-basvurusu/almanya' },
+            { title: t('visa.header.countriesList.france'), href: '/visa/vize-basvurusu/fransa' },
+            { title: t('visa.header.countriesList.canada'), href: '/visa/vize-basvurusu/kanada' },
+            { title: t('visa.header.countriesList.usa'), href: '/visa/vize-basvurusu/abd' },
+        ]
+    }, [t, i18n.language, i18n.isInitialized, mounted])
 
-    const countries = [
-        { title: t('visa.header.countriesList.uk'), href: '/visa/vize-basvurusu/ingiltere' },
-        { title: t('visa.header.countriesList.germany'), href: '/visa/vize-basvurusu/almanya' },
-        { title: t('visa.header.countriesList.france'), href: '/visa/vize-basvurusu/fransa' },
-        { title: t('visa.header.countriesList.canada'), href: '/visa/vize-basvurusu/kanada' },
-        { title: t('visa.header.countriesList.usa'), href: '/visa/vize-basvurusu/abd' },
-    ]
-
-    const otherLinks = [
-        { title: t('visa.header.aboutUs'), href: '/visa/hakkimizda' },
-        { title: t('visa.header.visaTable'), href: '/visa/vize-tablosu' },
-        { title: t('visa.header.successRates'), href: '/visa/basvuru-durumlari' },
-        { title: t('visa.header.advantages'), href: '/visa/sundugumuz-avantajlar' },
-        { title: t('visa.header.howToGetVisa'), href: '/visa/nasil-vize-alirim' },
-        { title: t('visa.header.contact'), href: '/visa/iletisim' },
-        { title: t('visa.header.faq'), href: '/visa/sss' },
-    ]
+    const otherLinks = useMemo(() => {
+        if (!mounted || !i18n.isInitialized) {
+            return [
+                { title: '', href: '/visa/vize-tablosu' },
+                { title: '', href: '/visa/basvuru-durumlari' },
+                { title: '', href: '/visa/sundugumuz-avantajlar' },
+                { title: '', href: '/visa/nasil-vize-alirim' },
+                { title: '', href: '/visa/iletisim' },
+                { title: '', href: '/visa/sss' },
+            ]
+        }
+        return [
+            { title: t('visa.header.visaTable'), href: '/visa/vize-tablosu' },
+            { title: t('visa.header.successRates'), href: '/visa/basvuru-durumlari' },
+            { title: t('visa.header.advantages'), href: '/visa/sundugumuz-avantajlar' },
+            { title: t('visa.header.howToGetVisa'), href: '/visa/nasil-vize-alirim' },
+            { title: t('visa.header.contact'), href: '/visa/iletisim' },
+            { title: t('visa.header.faq'), href: '/visa/sss' },
+        ]
+    }, [t, i18n.language, i18n.isInitialized, mounted])
 
     const branches = [
         { title: 'Bursa Genel Merkez', href: '/visa/subelerimiz/bursa' },
@@ -127,55 +151,13 @@ export default function VisaHeader() {
             <div id="overlay"></div>
             <header id="header">
                 <div className="container">
-                    <Link href="/" title="Çilek Vize" className="logo" style={{ width: "9%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Link href="/visa" title="Prince" className="logo" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '6.5%' }}>
                         <img
-                            src="/assets/img/logo.png"
-                            alt="Çilek Vize"
-                            width="100%"
-                            style={{ justifyContent: 'center', alignItems: 'center' }}
+                            src="/visa/assets/img/prince-logo-red.png"
+                            alt="Prince"
+                            style={{ justifyContent: 'center', alignItems: 'center', display: 'block' }}
                         />
                     </Link>
-
-                    {/* Language Dropdown */}
-                    <div className="language-selector">
-                        <button
-                            className={`language-selector-btn ${isLanguageDropdownOpen ? 'active' : ''}`}
-                            onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
-                            onBlur={() => {
-                                // Delay to allow click on dropdown items
-                                setTimeout(() => setIsLanguageDropdownOpen(false), 200)
-                            }}
-                        >
-                            <span>{selectedLanguage}</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                        {isLanguageDropdownOpen && (
-                            <div className="language-dropdown">
-                                <button
-                                    className={`language-option ${selectedLanguage === 'TR' ? 'active' : ''}`}
-                                    onClick={() => {
-                                        setSelectedLanguage('TR')
-                                        i18n.changeLanguage('tr')
-                                        setIsLanguageDropdownOpen(false)
-                                    }}
-                                >
-                                    TR
-                                </button>
-                                <button
-                                    className={`language-option ${selectedLanguage === 'EN' ? 'active' : ''}`}
-                                    onClick={() => {
-                                        setSelectedLanguage('EN')
-                                        i18n.changeLanguage('en')
-                                        setIsLanguageDropdownOpen(false)
-                                    }}
-                                >
-                                    EN
-                                </button>
-                            </div>
-                        )}
-                    </div>
 
                     <div className="primary-menu">
                         <div className="menu-item">
@@ -214,7 +196,7 @@ export default function VisaHeader() {
                             <div style={{ '--cat-color': '#FF9D00' } as React.CSSProperties} className="mega-menu-dropdown-box type-1">
                                 <div>
                                     {countries.map((country) => (
-                                        <Link key={country.href} href={country.href} title={country.title}>
+                                        <Link key={country.href} href={country.href} title={country.title} suppressHydrationWarning>
                                             {country.title}
                                         </Link>
                                     ))}
@@ -276,7 +258,7 @@ export default function VisaHeader() {
                             <div style={{ '--cat-color': '#FF9D00' } as React.CSSProperties} className="mega-menu-dropdown-box type-1">
                                 <div>
                                     {otherLinks.map((link) => (
-                                        <Link key={link.href} href={link.href} title={link.title}>
+                                        <Link key={link.href} href={link.href} title={link.title} suppressHydrationWarning>
                                             {link.title}
                                         </Link>
                                     ))}
@@ -290,6 +272,46 @@ export default function VisaHeader() {
                     </div>
 
                     <div className="header-actions">
+                        {/* Language Dropdown */}
+                        <div className="language-selector">
+                            <button
+                                className={`language-selector-btn ${isLanguageDropdownOpen ? 'active' : ''}`}
+                                onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+                                onBlur={() => {
+                                    // Delay to allow click on dropdown items
+                                    setTimeout(() => setIsLanguageDropdownOpen(false), 200)
+                                }}
+                            >
+                                <span suppressHydrationWarning>{selectedLanguage}</span>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                            {isLanguageDropdownOpen && (
+                                <div className="language-dropdown">
+                                    <button
+                                        className={`language-option ${selectedLanguage === 'TR' ? 'active' : ''}`}
+                                        onClick={() => {
+                                            setSelectedLanguage('TR')
+                                            i18n.changeLanguage('tr')
+                                            setIsLanguageDropdownOpen(false)
+                                        }}
+                                    >
+                                        TR
+                                    </button>
+                                    <button
+                                        className={`language-option ${selectedLanguage === 'EN' ? 'active' : ''}`}
+                                        onClick={() => {
+                                            setSelectedLanguage('EN')
+                                            i18n.changeLanguage('en')
+                                            setIsLanguageDropdownOpen(false)
+                                        }}
+                                    >
+                                        EN
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                         <div className="social-icons">
                             <a
                                 title="WhatsApp"
@@ -401,7 +423,9 @@ export default function VisaHeader() {
                                         <Link
                                             key={link.href}
                                             href={link.href}
+                                            title={link.title}
                                             onClick={() => setIsMobileMenuOpen(false)}
+                                            suppressHydrationWarning
                                         >
                                             {link.title}
                                         </Link>
@@ -421,4 +445,3 @@ export default function VisaHeader() {
         </>
     )
 }
-
