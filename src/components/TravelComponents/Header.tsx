@@ -61,7 +61,7 @@ export default function Header() {
 
               {/* LEFT */}
               <div className="cs_main_header_left">
-                <Link href="/" className="cs_site_branding">
+                <Link href="/" className="cs_site_branding" style={{ textAlign: 'left', justifyContent: 'flex-start', marginRight: 'auto' }}>
                   <Image src="/assets/logo/logo-goldd.png" alt="Logo" width={110} height={35} />
                 </Link>
 
@@ -90,6 +90,7 @@ export default function Header() {
                     style={{
                       display: 'flex',
                       alignItems: 'center',
+                      justifyContent: 'space-between',
                       gap: '8px',
                       padding: '8px 16px',
                       border: '1px solid #d7b76e',
@@ -102,7 +103,7 @@ export default function Header() {
                     }}
                   >
                     <span suppressHydrationWarning>{selectedLanguage}</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginLeft: 'auto' }}>
                       <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                   </button>

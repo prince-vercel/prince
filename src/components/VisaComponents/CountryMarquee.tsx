@@ -54,7 +54,6 @@ export default function CountryMarquee() {
           justify-content: flex-start;
           gap: 0 3rem;
           padding: 4rem 0;
-          margin-top: 4rem;
         }
         .section-marque .items-huge {
           gap: 0 3rem;
@@ -88,7 +87,7 @@ export default function CountryMarquee() {
         .flag-box img {
           display: inline-block;
           border-radius: 0.4rem;
-          min-width: 7.2rem;
+          min-width: 5rem;
         }
       `}</style>
       <section className="section-marque">

@@ -258,8 +258,16 @@ export default function VisaFooter() {
                                     </a>
                                 </div>
 
-                                <div className="cs_copyright" style={{ color: 'white', fontSize: '14px', fontWeight: 400 }} suppressHydrationWarning>
+                                <div className="cs_copyright" style={{ color: 'white', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '10px' }} suppressHydrationWarning>
                                     {isReady ? t('visa.footer.copyright', { year: currentYear }) : ''}
+                                    <Image
+                                        src="/assets/images/tursab.jpeg" // Görsel yolunu buraya koy
+                                        alt="Small Logo"
+                                        width={100}
+                                        height={60}
+                                        style={{ objectFit: 'contain' }}
+                                        loading="lazy"
+                                    />
                                 </div>
                             </div>
                         </div>

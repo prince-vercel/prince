@@ -10,16 +10,7 @@ export default function HakkimizdaPage() {
         <div className="about-page">
             {/* Hero Section */}
             <section id="about-title-section">
-                <div className="image">
-                    <img
-                        src="/visa/uploads/contents/cover/1763937127_70e331bafdcc4c55539d.webp"
-                        alt={t('visa.pages.hakkimizda.heroTitle', 'Evraklarla Uğraşmadan Vize Başvurunuzu Prince ile Tamamlayın!')}
-                        width={1728}
-                        height={462}
-                        fetchPriority="high"
-                    />
-                    <div className="gradient"></div>
-                </div>
+
                 <div className="about-title-section-logo">
                     <h1>{t('visa.pages.hakkimizda.heroTitle', 'Evraklarla Uğraşmadan Vize Başvurunuzu Prince ile Tamamlayın!')}</h1>
                 </div>

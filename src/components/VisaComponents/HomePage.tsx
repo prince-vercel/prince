@@ -55,7 +55,7 @@ export default function VisaHomePage() {
           width: 60px;
           height: 60px;
           border-radius: 50%;
-          background: #FF9D00;
+          background: #c42721;
           color: #fff;
           border: none;
           box-shadow: 0 4px 16px rgba(0,0,0,0.18);
@@ -67,7 +67,7 @@ export default function VisaHomePage() {
           transition: background 0.2s;
         }
         .chatbot-fab:hover {
-          background: #e68a00;
+          background: #c42721;
         }
         .chatbot-close-btn {
           position: absolute;
@@ -132,7 +132,7 @@ export default function VisaHomePage() {
           margin-top: 4px;
         }
         .visa-optionBtn {
-          background: #307bc4;
+          background: #c42721;
           color: #fff;
           border: none;
           border-radius: 8px;
@@ -148,7 +148,7 @@ export default function VisaHomePage() {
           min-width: 100%;
         }
         .visa-optionBtn:hover {
-          background: #205a8c;
+          background: #c42721;
         }
       `}</style>
       {chatbotQuestions.length > 0 && (
@@ -156,7 +156,7 @@ export default function VisaHomePage() {
           {!showChatbot && (
             <button className="chatbot-fab" onClick={() => setShowChatbot(true)} title={isReady ? t('visa.homePage.chatbot.startChat') : ''} suppressHydrationWarning>
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M21 15.5C21 16.3284 20.3284 17 19.5 17H7.41421L4.70711 19.7071C4.07714 20.3371 3 19.8906 3 19.0001V5.5C3 4.67157 3.67157 4 4.5 4H19.5C20.3284 4 21 4.67157 21 5.5V15.5Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="#FF9D00" />
+                <path d="M21 15.5C21 16.3284 20.3284 17 19.5 17H7.41421L4.70711 19.7071C4.07714 20.3371 3 19.8906 3 19.0001V5.5C3 4.67157 3.67157 4 4.5 4H19.5C20.3284 4 21 4.67157 21 5.5V15.5Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="#c42721" />
                 <circle cx="8" cy="10" r="1" fill="white" />
                 <circle cx="12" cy="10" r="1" fill="white" />
                 <circle cx="16" cy="10" r="1" fill="white" />

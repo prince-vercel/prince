@@ -349,53 +349,17 @@ export default function VisaHeader() {
                                 </div>
                             )}
                         </div>
-                        <div className="social-icons">
-                            <a
-                                title="WhatsApp"
-                                href="#"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="social-icon"
-                            >
-                                <Image
-                                    src="/visa/assets/img/icon/whatsapp.svg"
-                                    alt="WhatsApp"
-                                    width={18}
-                                    height={18}
-                                    loading="lazy"
-                                />
-                            </a>
-                            <a
-                                title="Facebook"
-                                href="#"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="social-icon"
-                            >
-                                <Image
-                                    src="/visa/assets/img/icon/social/facebook.svg"
-                                    alt="Facebook"
-                                    width={18}
-                                    height={18}
-                                    loading="lazy"
-                                />
-                            </a>
-                            <a
-                                title="Instagram"
-                                href="#"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="social-icon"
-                            >
-                                <Image
-                                    src="/visa/assets/img/icon/social/instagram.svg"
-                                    alt="Instagram"
-                                    width={18}
-                                    height={18}
-                                    loading="lazy"
-                                />
-                            </a>
-                        </div>
+                      <div className="cs_social_links cs_social_desktop" style={{ display: 'flex', gap: '25px' }}>
+                  <a href="#">
+                    <i className="fa-brands fa-facebook-f" style={{ color: '#c42721', fontSize: '24px' }}></i>
+                  </a>
+                  <a href="#">
+                    <i className="fa-brands fa-instagram" style={{ color: '#c42721', fontSize: '24px' }}></i>
+                  </a>
+                  <a href="#">
+                    <i className="fa-brands fa-whatsapp" style={{ color: '#c42721', fontSize: '24px' }}></i>
+                  </a>
+                </div>
                         <div
                             id="hamburger"
                             className={isMobileMenuOpen ? 'is-active' : ''}

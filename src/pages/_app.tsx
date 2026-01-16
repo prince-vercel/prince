@@ -212,6 +212,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <Head>
           <link
             rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            id={`${CSS_PREFIXES.visa}fontawesome`}
+            key="visa-fontawesome"
+          />
+          <link
+            rel="stylesheet"
             href="/visa/assets/css/vendors.css"
             id={`${CSS_PREFIXES.visa}vendors`}
             key="visa-vendors"

@@ -13,7 +13,6 @@ import '../../i18n'
 import i18n from 'i18next'
 import { getCollectionName } from '@/src/lib/localization'
 import Chatbot from './Chatbot'
-import CountryMarquee from '../VisaComponents/CountryMarquee'
 
 const normalizeText = (text: string) => {
   return text
@@ -319,6 +318,29 @@ export default function TravelHomePage() {
         </div>
       </div>
 
+      {/* ALT BANNERLAR */}
+      <div className="lg:grid grid-cols-4 xl:gap-base gap-3 mx-auto xl:px-base px-3 overflow-hidden mt-2">
+        {banners.length > 6 ? (
+          banners.slice(6, 10).map((banner, index) => (
+            <div key={banner.id} className="group hero-card-sm" style={{ height: '260px' }}>
+              <a href="#">
+                <img
+                  src={banner.imageUrl}
+                  alt={banner.title}
+                  className="lg:h-full w-full object-cover group-hover:scale-110 duration-500"
+                />
+                <div className="text-white absolute w-full lg:bottom-10 bottom-6 text-center">
+                  <h4 className="font-bold text-lg text-white">{banner.title}</h4>
+                  <div className="h-[3px] w-9 bg-white rounded-md mx-auto mt-2"></div>
+                </div>
+              </a>
+            </div>
+          ))
+        ) : (
+          <></>
+        )}
+      </div>
+
 
 
 
@@ -373,14 +395,7 @@ export default function TravelHomePage() {
         </div>
 
         <div className="container">
-<section>
-  <div className="cs_section_heading cs_style_1 text-center" >
-            <h2 className="section-title-v1 cs_fs_72 m-0 " suppressHydrationWarning>
-Dilinizi Konuşuyoruz !
-            </h2>
-          </div>
-  <CountryMarquee/>
-</section>
+
           <div className="text-center lg:pb-[60px] pb-[40px]">
             <h5 className="section-sub-title-v1" suppressHydrationWarning>{isReady ? t('travel.homePage.packages.subtitle') : ''}</h5>
             <h2 className="section-title-v1" suppressHydrationWarning>{isReady ? t('travel.homePage.packages.title') : ''}</h2>

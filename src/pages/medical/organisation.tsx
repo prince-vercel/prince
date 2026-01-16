@@ -16,7 +16,6 @@ const ITEMS_PER_PAGE = 3
 
 export default function OrganisationPage() {
   const { t, isReady } = useSafeTranslation()
-  const [activeFilter, setActiveFilter] = useState<'Tümü' | 'Oteller' | 'Hastaneler'>('Tümü')
   const [currentPage, setCurrentPage] = useState(1)
   const [organisations, setOrganisations] = useState<OrganisationItem[]>([])
   const [loading, setLoading] = useState(true)
@@ -48,22 +47,6 @@ export default function OrganisationPage() {
       })
       allOrganisations.push(...hotels)
 
-      // Fetch hospitals
-      const hospitalsRef = collection(db, `${baseCollection}/hospitals/list`)
-      const hospitalsSnapshot = await getDocs(hospitalsRef)
-      const hospitals = hospitalsSnapshot.docs.map((doc) => {
-        const data = doc.data() as Hospital
-        return {
-          id: data.id,
-          name: data.name,
-          location: data.location,
-          type: 'Hastaneler' as const,
-          desc: `${data.location}`,
-          image: data.image,
-        }
-      })
-      allOrganisations.push(...hospitals)
-
       setOrganisations(allOrganisations)
     } catch (error) {
       console.error(isReady ? t('medical.pages.organisation.error') : 'Kurumlar çekilirken hata:', error)
@@ -73,15 +56,8 @@ export default function OrganisationPage() {
   }
 
   const filteredItems = useMemo(() => {
-    let list = organisations
-
-    const allFilter = isReady ? t('medical.pages.organisation.filters.all') : 'Tümü'
-    if (activeFilter !== allFilter) {
-      list = list.filter(item => item.type === activeFilter)
-    }
-
-    return list
-  }, [activeFilter, organisations, t, isReady])
+    return organisations
+  }, [organisations])
 
   const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE)
 
@@ -118,40 +94,7 @@ export default function OrganisationPage() {
 
       <div className="container">
         <div className="cs_doctors_heading">
-          <div className="cs_isotop_filter cs_style1 mb-5 mt-3">
-            <ul className="cs_mp0">
-              {([
-                { key: 'Tümü' as const, tr: 'medical.pages.organisation.filters.all' },
-                { key: 'Oteller' as const, tr: 'medical.pages.organisation.filters.hotels' },
-                { key: 'Hastaneler' as const, tr: 'medical.pages.organisation.filters.hospitals' }
-              ]).map(({ key, tr }) => (
-                <li key={key} className={activeFilter === key ? 'active' : ''}>
-                  <button
-                    onClick={() => {
-                      setActiveFilter(key)
-                      setCurrentPage(1)
-                    }}
-                    style={{
-                      padding: '8px 18px',
-                      borderRadius: '16px',
-                      transition: 'all .3s ease',
-                      background:
-                        activeFilter === key
-                          ? '#4f8edc'
-                          : 'transparent',
-                      color: activeFilter === key ? '#fff' : 'inherit',
-                    }}
-                    suppressHydrationWarning
-                  >
-                    {isReady ? t(tr) : key}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           <div className="cs_view_box">
-            <span suppressHydrationWarning>{filteredItems.length} {isReady ? t('medical.pages.organisation.items') : 'Öğe'}</span>
           </div>
         </div>
 
