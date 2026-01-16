@@ -25,7 +25,14 @@ export default function VisaHeader() {
     // Client-side mount kontrolü ve language setup
     useEffect(() => {
         setMounted(true)
-        const currentLang = i18n.language === 'en' ? 'EN' : 'TR'
+        const langMap: { [key: string]: string } = {
+            'tr': 'TR',
+            'en': 'EN',
+            'es': 'ES',
+            'fr': 'FR',
+            'ru': 'RU'
+        }
+        const currentLang = langMap[i18n.language] || 'TR'
         setSelectedLanguage(currentLang)
     }, [i18n.language])
 
@@ -151,7 +158,7 @@ export default function VisaHeader() {
             <div id="overlay"></div>
             <header id="header">
                 <div className="container">
-                    <Link href="/visa" title="Prince" className="logo" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '6.5%' }}>
+                    <Link href="/" title="Prince" className="logo" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '6.5%' }}>
                         <img
                             src="/visa/assets/img/prince-logo-red.png"
                             alt="Prince"
@@ -309,13 +316,43 @@ export default function VisaHeader() {
                                     >
                                         EN
                                     </button>
+                                    <button
+                                        className={`language-option ${selectedLanguage === 'ES' ? 'active' : ''}`}
+                                        onClick={() => {
+                                            setSelectedLanguage('ES')
+                                            i18n.changeLanguage('es')
+                                            setIsLanguageDropdownOpen(false)
+                                        }}
+                                    >
+                                        ES
+                                    </button>
+                                    <button
+                                        className={`language-option ${selectedLanguage === 'FR' ? 'active' : ''}`}
+                                        onClick={() => {
+                                            setSelectedLanguage('FR')
+                                            i18n.changeLanguage('fr')
+                                            setIsLanguageDropdownOpen(false)
+                                        }}
+                                    >
+                                        FR
+                                    </button>
+                                    <button
+                                        className={`language-option ${selectedLanguage === 'RU' ? 'active' : ''}`}
+                                        onClick={() => {
+                                            setSelectedLanguage('RU')
+                                            i18n.changeLanguage('ru')
+                                            setIsLanguageDropdownOpen(false)
+                                        }}
+                                    >
+                                        RU
+                                    </button>
                                 </div>
                             )}
                         </div>
                         <div className="social-icons">
                             <a
                                 title="WhatsApp"
-                                href="https://wa.me/905508887071"
+                                href="#"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="social-icon"
@@ -330,7 +367,7 @@ export default function VisaHeader() {
                             </a>
                             <a
                                 title="Facebook"
-                                href="https://www.facebook.com/cilekvize"
+                                href="#"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="social-icon"
@@ -345,7 +382,7 @@ export default function VisaHeader() {
                             </a>
                             <a
                                 title="Instagram"
-                                href="https://www.instagram.com/turkiyeninvizecisi"
+                                href="#"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="social-icon"

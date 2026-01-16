@@ -79,6 +79,9 @@
                     }
                 }
             },
+            "languages": {
+                "title": "We Speak Your Language !"
+            },
             "results": {
                 "title": "Happy Results",
                 "loading": "Loading results...",

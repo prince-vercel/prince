@@ -1704,10 +1704,27 @@ iframe:last-child {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(180deg, rgba(255, 222, 221, .248) 0, rgba(252, 188, 184, .62) 100%);
     border-radius: 0 0 3.4rem 3.4rem;
     position: relative;
-    z-index: 1
+    z-index: 1;
+    overflow: hidden
+}
+
+.hero-slide-card .image-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0
+}
+
+.hero-slide-card .image-background picture,
+.hero-slide-card .image-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center
 }
 
 .hero-slide-card .content {
@@ -1717,7 +1734,9 @@ iframe:last-child {
     justify-content: center;
     gap: 1.8rem 0;
     width: 66rem;
-    max-width: 60%
+    max-width: 60%;
+    position: relative;
+    z-index: 2
 }
 
 .hero-slide-card .image {

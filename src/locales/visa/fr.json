@@ -1,0 +1,938 @@
+{
+  "visa": {
+    "header": {
+      "home": "Accueil",
+      "countries": "Pays que nous desservons",
+      "howToGetVisa": "Comment obtenir un visa ?",
+      "apply": "Faire une demande",
+      "blog": "Blog",
+      "about": "À propos",
+      "otherInfo": "Autres informations",
+      "aboutUs": "À propos de nous",
+      "visaTable": "Tableau des visas",
+      "successRates": "Taux de réussite des demandes de visa",
+      "advantages": "Avantages que nous offrons",
+      "contact": "Contact",
+      "faq": "Foire aux questions",
+      "countriesList": {
+        "uk": "Royaume-Uni",
+        "germany": "Allemagne",
+        "france": "France",
+        "canada": "Canada",
+        "usa": "États-Unis"
+      }
+    },
+    "footer": {
+      "description": "Prince Medical Aesthetics & Health Services",
+      "address": "Dap Vadisi Z Ofis, Merkez, Seçkin Sk. Z ofis, Kat 2, Daire 229, 34406 Kağıthane/İstanbul",
+      "phone": "+90 212 000 00 00",
+      "email": "info@princetourismagency.com",
+      "email2": "medical@princetourismagency.com",
+      "home": "Accueil",
+      "howToGetVisa": "Comment obtenir un visa ?",
+      "blog": "Blog",
+      "about": "À propos",
+      "contact": "Contact",
+      "faq": "Foire aux questions",
+      "privacy": "Politique de confidentialité",
+      "kvkk": "KVKK & Informations",
+      "newsletter": {
+        "title": "Rejoignez-nous",
+        "description": "Abonnez-vous à notre liste e-mail pour recevoir nos campagnes, mises à jour et contenus sur les visas.",
+        "placeholder": "Votre adresse e-mail",
+        "submit": "Envoyer"
+      },
+      "copyright": "Copyright © {{year}} Prince. Tous droits réservés."
+    },
+    "hero": {
+      "slides": [
+        {
+          "title": "Entrez en Europe en 15 jours !",
+          "description": "Chez Prince, nous obtenons votre rendez-vous Schengen en 15 jours. D’abord le processus, garantie de paiement !",
+          "cta": "Commencer votre demande"
+        },
+        {
+          "title": "Nous obtenons votre rendez-vous de visa USA en 30 jours",
+          "description": "Chez Prince, nous obtenons votre rendez-vous de visa USA en 30 jours et nous le garantissons. D’abord le processus, garantie de paiement !",
+          "cta": "Commencer votre demande"
+        },
+        {
+          "title": "Dites adieu à la confusion des visas !",
+          "description": "Les demandes de visa vous stressent à l’aube de votre nouvelle aventure ? Aucun problème ! Prince est là, étape par étape, pour simplifier vos démarches !",
+          "cta": "Commencer votre demande"
+        },
+        {
+          "title": "Des démarches sûres avec le meilleur cabinet de conseil en visa !",
+          "description": "Les demandes de visa vous stressent ? Prince est là pour rendre toutes vos démarches plus faciles !",
+          "cta": "Commencer votre demande"
+        },
+        {
+          "title": "Découvrez la magie de l’Italie",
+          "description": "Vous souhaitez vivre ou voyager en Italie, avec sa richesse historique et culturelle ? Faites votre demande de visa en toute sécurité avec notre équipe d’experts. Attrapez la magie de l’Italie !",
+          "cta": "Commencer votre demande"
+        },
+        {
+          "title": "Entrez dans le rêve américain !",
+          "description": "Vous souhaitez voyager, étudier ou travailler aux États-Unis ? Nous sommes là pour simplifier votre procédure de visa. Entrez dans le rêve américain avec notre service de conseil professionnel !",
+          "cta": "Commencer votre demande"
+        }
+      ],
+      "readMore": "En savoir plus",
+      "testimonials": [
+        {
+          "name": "Pelin Civelek",
+          "text": "J’ai reçu un accompagnement de Prince pour un visa américain. Grâce au soutien de Mme Zeynep, ils ont pu avancer mon rendez-vous de 1,5 an à 1 mois, et comme ils nous ont aidés à préparer nos documents, j’ai obtenu mon visa sans problème 1,5 mois après la demande. Merci pour votre soutien, en particulier à Mme Zeynep."
+        },
+        {
+          "name": "Ogün Şen",
+          "text": "Bonjour à tous, après de longues recherches, j’ai décidé de contacter la famille Prince et de commencer les démarches. Nous avons effectué nos entretiens avec Mme Elif, ma conseillère. Leur approche chaleureuse et compétente m’a mis en confiance. Je suis sûr qu’ils me communiqueront toutes les informations, évolutions et résultats durant cette période. Vous pouvez y aller en toute tranquillité et vous informer. Merci."
+        },
+        {
+          "name": "Nisan Gökdemirel",
+          "text": "En tant qu’entreprise, nous cherchions un cabinet de conseil pour des demandes groupées. Avec Prince, nous avons eu une expérience avec des retours rapides. Nos procédures sont suivies avec soin. Nous remercions tout particulièrement Mme Ezgi pour son intérêt et son attention."
+        },
+        {
+          "name": "Burçin Gül",
+          "text": "J’ai récemment reçu un refus de la France, j’ai donc décidé de continuer avec un cabinet de conseil et j’ai trouvé Prince. Comme j’avais eu un refus d’un autre pays, j’avais des dizaines de questions : serai-je refusée à nouveau, mon argent et mes efforts seront-ils perdus ? Pourtant, ma conseillère Mme Irmak a répondu soigneusement à chacune de mes questions. Elle m’a convaincue et a rassuré ma famille, m’encourageant à redéposer une demande. Le processus a été difficile pour moi, mais Mme Irmak était à un clic quand j’avais besoin d’aide. Au bout de 2 semaines, mon visa est arrivé de Suède. Je remercie Prince, ma conseillère Mme Irmak et Mme Nalan pour tout."
+        },
+        {
+          "name": "Handan Evcimen",
+          "text": "J’ai reçu le soutien de Prince pour la procédure Canada. Au début, j’avais des doutes et des inquiétudes, mais nous avons poursuivi les démarches avec Mme Irmak. C’est une conseillère professionnelle et attentionnée. Je la remercie encore une fois pour son aide. Heureusement qu’il y a Prince."
+        }
+      ]
+    },
+    "services": {
+      "title": "Prince répond à tous vos besoins de voyage\nsous un même toit pour vous permettre d’explorer !",
+      "tourist": {
+        "title": "Conseil en visa touristique",
+        "description": "Nous vous guidons professionnellement afin de faciliter votre demande de visa touristique et de rendre vos projets de voyage possibles."
+      },
+      "work": {
+        "title": "Conseil en visa de travail",
+        "description": "Nous proposons des services de conseil préparés par des experts pour vous aider à découvrir des opportunités de carrière à l’étranger."
+      },
+      "education": {
+        "title": "Conseil en études à l’étranger",
+        "description": "Nous vous accompagnons pour rechercher des opportunités d’études internationales et trouver la plus adaptée."
+      }
+    },
+    "faq": {
+      "title": "🤔 FAQ Visa Touristique",
+      "questions": [
+        {
+          "question": "Qu’est-ce qu’un visa touristique ?",
+          "answer": "Un visa touristique est un document officiel qui permet à une personne de se rendre dans un autre pays à des fins touristiques. Ce visa est généralement délivré pour des activités touristiques telles que des vacances, des voyages, des événements culturels ou des visites à des amis et à la famille. Un visa touristique est habituellement valable pour une période déterminée et permet d’entrer et de séjourner dans le pays pendant cette période. Comme chaque pays a des politiques de visa différentes, la procédure de demande, les documents requis et la durée du visa peuvent varier selon le pays."
+        },
+        {
+          "question": "Ai-je besoin d’un passeport pour obtenir un visa touristique ?",
+          "answer": "Oui, un passeport est nécessaire pour toutes les demandes de visa."
+        },
+        {
+          "question": "Que faut-il pour demander un visa touristique ?",
+          "answer": "Vous devez avoir votre passeport et ne pas faire l’objet d’une interdiction de voyager."
+        },
+        {
+          "question": "Qu’est-ce qu’un visa Schengen ?",
+          "answer": "C’est un visa obtenu pour voyager dans les pays membres de l’Union européenne ainsi qu’en Suisse, en Islande, en Norvège et au Liechtenstein, qui ne sont pas membres de l’UE. Avec un visa Schengen obtenu auprès d’un seul pays, vous pouvez voyager dans un total de 29 pays, à condition d’entrer d’abord dans le pays qui a délivré le visa."
+        },
+        {
+          "question": "Comment Prince obtient-il un visa touristique pour moi ?",
+          "answer": "Nous présentons vos billets d’avion aller-retour et votre réservation d’hôtel comme confirmés, et nous organisons également votre assurance santé voyage. Vos lettres d’intention et de motivation sont préparées de manière professionnelle et personnalisée par nos experts en visas. Nous remplissons vos formulaires de demande. Bref, tout le suivi de vos documents est pris en charge par nous. Vous ne vous rendez au consulat que pour les empreintes digitales et le dépôt des documents."
+        },
+        {
+          "question": "Combien de temps Prince met-il pour traiter mon visa de voyage ?",
+          "answer": "Un expert en visas est affecté à notre client dans les 24 heures suivant le contrat de conseil. La préparation des documents et le suivi des rendez-vous commencent. De plus, nous proposons un accompagnement VIP pour les rendez-vous en Amérique et dans les pays Schengen."
+        },
+        {
+          "question": "Combien de temps dure la procédure pour un visa Schengen ?",
+          "answer": "La procédure d’obtention d’un visa Schengen varie selon la charge de travail du consulat. En moyenne, cela prend 2 à 4 mois."
+        },
+        {
+          "question": "Le fait d’avoir une invitation influence-t-il positivement le résultat ou raccourcit-il la procédure ?",
+          "answer": "Avoir une invitation peut influencer positivement le résultat, mais ne raccourcit pas la procédure."
+        },
+        {
+          "question": "Puis-je aller dans d’autres pays Schengen avec le visa Schengen obtenu auprès d’un seul pays ?",
+          "answer": "Vous pouvez entrer dans tous les pays Schengen, à condition d’entrer d’abord dans le pays qui a délivré le visa."
+        },
+        {
+          "question": "Je ne travaille pas actuellement, y aura-t-il un problème pour ma demande de visa ?",
+          "answer": "Aucun problème. Vous pouvez faire une demande si un parent au premier degré vous parraine ou si vous présentez le montant requis sur votre compte."
+        },
+        {
+          "question": "Puis-je obtenir un rendez-vous de visa auprès d’un autre pays Schengen en attendant le résultat de mon visa Canada ?",
+          "answer": "Oui, c’est possible."
+        },
+        {
+          "question": "Combien de temps l’assurance santé voyage est-elle valable ?",
+          "answer": "Elle est valable pour la durée de votre plan de voyage."
+        },
+        {
+          "question": "J’ai moins de 18 ans, puis-je obtenir un visa ?",
+          "answer": "Oui, nous pouvons l’obtenir s’il y a une autorisation parentale de la mère et du père."
+        }
+      ],
+      "cta": {
+        "title": "Vous avez une autre question ?",
+        "description": "Obtenez rapidement toutes les réponses dont vous avez besoin auprès de nos experts en visas.",
+        "button": "Demander à un expert visa"
+      }
+    },
+    "comparison": {
+      "title": "Dites adieu aux demandes de visa complexes",
+      "with": {
+        "title": "Avec Prince",
+        "items": [
+          "Les démarches de demande de visa sont rapides et simples.",
+          "Validation rapide des demandes",
+          "Un accompagnement voyage et des services de conseil sont fournis.",
+          "La possibilité de protéger votre budget avec un prix fixe unique.",
+          "Un soutien professionnel à chaque étape du processus de demande."
+        ]
+      },
+      "without": {
+        "title": "Sans Prince",
+        "items": [
+          "Gérer les documents de visa peut être compliqué.",
+          "Le risque d’erreurs et de refus de visa peut augmenter.",
+          "Le délai d’approbation peut être incertain.",
+          "Vous devrez peut-être payer des frais élevés à différentes entreprises.",
+          "Vous devrez préparer de mauvais documents."
+        ]
+      },
+      "cta": "Commencer votre demande"
+    },
+    "awards": {
+      "title": "Nos visas",
+      "subtitle": "Exemples de nos demandes de visa réussies",
+      "approved": "Approuvé",
+      "congrats": "Félicitations",
+      "thanks": "merci de nous avoir choisis",
+      "description": "Contactez-nous pour vos démarches de visa Schengen et dans le monde entier.",
+      "brand": "CİLEK",
+      "prev": "Précédent",
+      "next": "Suivant",
+      "list": [
+        {
+          "title": "Visa Allemagne 1 an de M. Faruk",
+          "image": "/visa/uploads/contents/awards/2024a3a4cc_166c1f02f98dc2.webp"
+        },
+        {
+          "title": "Visa Autriche 1 mois de Mme Ebru",
+          "image": "/visa/uploads/contents/awards/2024324569_166c1f14fde365.webp"
+        },
+        {
+          "title": "Visa Bulgarie 1 mois - Schengen de M. Mustafa Yıldıray",
+          "image": "/visa/uploads/contents/awards/202472eeb2_166c1f168bce50.webp"
+        },
+        {
+          "title": "Visa Schengen 1 mois de M. Hasan",
+          "image": "/visa/uploads/contents/awards/2024cb2a3f_166c1f17ea010d.webp"
+        },
+        {
+          "title": "Visa USA 10 ans de M. Yener",
+          "image": "/visa/uploads/contents/awards/202484dda8_166c1f1b1a459e.webp"
+        },
+        {
+          "title": "Visa Dubaï 30 jours de Mme Tuğba",
+          "image": "/visa/uploads/contents/awards/2024e0983f_166c1f1c81ce34.webp"
+        },
+        {
+          "title": "Visa Royaume-Uni 6 mois de Mme Sena",
+          "image": "/visa/uploads/contents/awards/20248bc162_166c1f26bc269b.webp"
+        },
+        {
+          "title": "Visa Schengen de Mme Nisa",
+          "image": "/visa/uploads/contents/awards/202438fab7_166c1f27be5307.webp"
+        }
+      ]
+    },
+    "references": {
+      "title": "Institutions intermédiaires pour les rendez-vous",
+      "subtitle": "Nos partenaires de confiance"
+    },
+    "featured": {
+      "title": "Accélérer vos documents de visa n’a jamais été aussi facile.",
+      "description": "Plus besoin de chercher pendant des heures la bonne liste de documents ! Avec Prince, vous pouvez organiser tous vos documents officiels rapidement, facilement et auprès d’une seule institution, puis faire une demande de visa. Obtenez immédiatement des informations auprès d’experts en visas.",
+      "features": [
+        "Service client",
+        "Contrat de service",
+        "Contact des experts visa",
+        "Procédure de visa",
+        "Dossier de documents",
+        "Résultat"
+      ],
+      "cta": "Commencer votre demande"
+    },
+    "videoTestimonials": {
+      "title": "Écoutez nos clients !"
+    },
+    "common": {
+      "apply": "Faire une demande",
+      "applyStart": "Commencer votre demande",
+      "whatsapp": "WhatsApp",
+      "whatsappTitle": "Nous contacter via WhatsApp",
+      "home": "Accueil",
+      "readMore": "En savoir plus",
+      "close": "Fermer",
+      "loading": "Chargement...",
+      "submit": "Envoyer",
+      "cancel": "Annuler",
+      "yes": "Oui",
+      "no": "Non",
+      "select": "Sélectionner",
+      "thanks": "Merci !",
+      "infoReceived": "Vos informations ont bien été reçues.",
+      "ok": "OK",
+      "error": "Erreur !",
+      "errorOccurred": "Une erreur s’est produite."
+    },
+    "pages": {
+      "nasilVizeAlirim": {
+        "title": "Comment obtenir un visa ?",
+        "breadcrumb": "Accueil",
+        "whatIsVisa": "Qu’est-ce qu’un visa ?",
+        "whatIsVisaDesc1": "Un visa est un document d’autorisation officiel obtenu auprès des consulats ou aux points d’entrée afin d’entrer dans un pays. Il existe différents types de visas selon l’objectif. Par exemple, les visas de travail, de voyage et d’études varient en fonction du motif de déplacement.",
+        "whatIsVisaDesc2": "Chaque pays a ses propres politiques et exigences en matière de visa. Avant de faire une demande, il est important de connaître les conditions et les documents requis du pays à visiter.",
+        "howToGetVisa": "Comment obtenir un visa ?",
+        "howToGetVisaDesc1": "Avant de faire une demande de visa, nous recommandons de bénéficier d’un service de conseil professionnel. Vous devez d’abord déterminer le type de visa dont vous avez besoin. Ensuite, vous devez rassembler les bons documents et exprimer clairement l’objectif de votre voyage. De nombreux détails doivent être pris en compte dans la procédure de demande.",
+        "howToGetVisaDesc2": "Vous pouvez nous contacter pour plus d’informations. Notre équipe d’experts vous guidera dans votre demande de visa et nous réaliserons toutes les étapes ensemble.",
+        "workVisa": "Demandes de visa pour travailler à l’étranger",
+        "workVisaDesc1": "Travailler à l’étranger est une excellente opportunité de développer votre carrière et d’acquérir de nouvelles expériences. Les opportunités dans différents pays peuvent contribuer à votre développement professionnel et vous aider à apprendre une nouvelle langue.",
+        "workVisaDesc2": "Avant de demander un visa pour travailler à l’étranger, vous devez étudier en détail les conditions de visa de travail du pays cible. Un bon service de conseil en visa facilitera votre procédure. De plus, un séjour d’au moins un an est recommandé pour l’adaptation culturelle.",
+        "travelVisa": "Demandes de visa de voyage",
+        "travelVisaDesc1": "Le visa de voyage est le type de visa requis pour les déplacements touristiques. De nombreux pays appliquent des politiques différentes pour les touristes. Certains offrent une exemption de visa, d’autres exigent une demande préalable.",
+        "travelVisaDesc2": "Lors d’une demande de visa de voyage, vous devez indiquer clairement votre objectif et préparer tous les documents requis de manière complète. Des documents tels que la validité du passeport, l’assurance voyage et les réservations d’hébergement sont généralement demandés."
+      },
+      "sss": {
+        "title": "Foire aux questions",
+        "subtitle": "Vous trouverez ici les réponses à toutes vos questions sur votre procédure de demande de visa.",
+        "breadcrumb": "Accueil"
+      },
+      "basvuruDurumlari": {
+        "title": "Taux de réussite des demandes de visa",
+        "breadcrumb": "Accueil",
+        "table": {
+          "country": "Pays",
+          "applications": "Nombre de demandes",
+          "rates": "Taux par type de visa",
+          "updateNote": "Les données sont mises à jour tous les 6 mois.",
+          "rows": {
+            "germany": {
+              "country": "Allemagne",
+              "rates": "%57 Touristique - %24 Travail - %11 Visite familiale - %8 Affaires"
+            },
+            "italy": {
+              "country": "Italie",
+              "rates": "%78 Touristique - %2 Travail - %6 Ami - %14 Études"
+            },
+            "france": {
+              "country": "France",
+              "rates": "%45 Touristique - %35 Travail - %18 Visite d’amis - %2 Affaires"
+            },
+            "netherlands": {
+              "country": "Pays-Bas",
+              "rates": "%82 Touristique - %1 Travail - %14 Visite d’amis - %3 Affaires"
+            },
+            "greece": {
+              "country": "Grèce",
+              "rates": "%95 Touristique - %5 Affaires"
+            },
+            "usa": {
+              "country": "États-Unis",
+              "rates": "%99 Touristique - %1 Autre"
+            },
+            "canada": {
+              "country": "Canada",
+              "rates": "%84 Touristique - %10 Affaires - %6 Autre"
+            },
+            "uk": {
+              "country": "Royaume-Uni",
+              "rates": "%65 Touristique - %17 Études - %15 Affaires - %3 Autre"
+            },
+            "spain": {
+              "country": "Espagne",
+              "rates": "%72 Touristique - %19 Affaires - %9 Autre"
+            },
+            "poland": {
+              "country": "Pologne",
+              "rates": "%38 Touristique - %44 Travail - %16 Études %2 Autre"
+            },
+            "australia": {
+              "country": "Australie",
+              "rates": "%45 Touristique - %45 Études - %10 Autre"
+            },
+            "dubai": {
+              "country": "Dubaï",
+              "rates": "%100 Touristique - %100 Taux de réussite"
+            },
+            "russia": {
+              "country": "Russie",
+              "rates": "%100 Touristique - %100 Taux de réussite"
+            },
+            "belgium": {
+              "country": "Belgique",
+              "rates": "%50 Touristique - %24 Visite d’amis - %26 Autre"
+            },
+            "austria": {
+              "country": "Autriche",
+              "rates": "%25 Touristique - %63 Visite d’amis - %12 Autre"
+            },
+            "hungary": {
+              "country": "Hongrie",
+              "rates": "%65 Touristique - %18 Affaires - %5 Études - %12 Autre"
+            },
+            "portugal": {
+              "country": "Portugal",
+              "rates": "%90 Touristique - %10 Autre"
+            }
+          }
+        }
+      },
+      "sundugumuzAvantajlar": {
+        "title": "Avantages que nous offrons",
+        "breadcrumb": "Accueil",
+        "advantages": [
+          {
+            "title": "Service de rendez-vous anticipé Schengen (VIP)",
+            "description": "Chez Prince, nous proposons des rendez-vous visa rapides et fiables pour vos voyages dans l’espace Schengen. Nous vous permettons d’obtenir des rendez-vous pour des pays Schengen comme la Grèce, la France et les Pays-Bas en seulement 15 jours. Pour la Hongrie et le Portugal, nous réduisons ce délai à 10 jours. Grâce à notre service VIP, vous terminez vos démarches dans les plus brefs délais sans perturber vos plans de voyage."
+          },
+          {
+            "title": "Service de rendez-vous anticipé USA (VIP)",
+            "description": "Obtenir le rendez-vous le plus adapté pour vos demandes de visa pour les États-Unis est désormais beaucoup plus simple. Nous offrons une garantie d’avancer de nombreux rendez-vous prévus pour 2025 et au-delà dans un délai de 45 jours. Nous fournissons un service professionnel afin que vous puissiez voyager aux dates prévues, sans reporter votre voyage en Amérique."
+          },
+          {
+            "title": "Système de rendez-vous avancé",
+            "description": "Avec notre équipe d’experts, nous surveillons activement les systèmes de rendez-vous visa 24 h/24 et 7 j/7 et travaillons en continu pour trouver le rendez-vous le plus adapté. Nous gérons méticuleusement toutes les étapes pour obtenir le rendez-vous souhaité et vous offrir le meilleur service. Nous sommes là pour vous permettre d’avancer le plus vite possible sans perdre de temps."
+          },
+          {
+            "title": "Équipe d’experts en visas",
+            "description": "Prince, qui travaille avec une équipe d’experts en visas, vous offre de nombreux avantages."
+          },
+          {
+            "title": "Conseil en ligne",
+            "description": "Avec notre bureau à Bursa, nous pouvons servir non seulement Bursa et les provinces environnantes, mais aussi toute la Turquie en ligne et gérer facilement votre procédure."
+          },
+          {
+            "title": "Conseil personnalisé",
+            "description": "Dans notre entreprise, un spécialiste visa distinct est affecté à chaque pays. Après le démarrage de votre accompagnement, le spécialiste concerné vous appellera pour un premier échange et votre procédure commencera."
+          },
+          {
+            "title": "Gain de temps",
+            "description": "Après avoir rencontré notre équipe d’experts, vous ne vous occupez d’aucune paperasse, sauf attendre le résultat. Dites-nous vos rêves et laissez-nous gérer, sans perturber votre routine quotidienne !"
+          },
+          {
+            "title": "Solutions de visa alternatives",
+            "description": "Nous pouvons déterminer le type de visa le plus adapté à vos demandes et à votre profession."
+          },
+          {
+            "title": "Support linguistique",
+            "description": "Notre traducteur assermenté traduit les documents nécessitant une traduction moyennant des frais supplémentaires."
+          },
+          {
+            "title": "Études à l’étranger",
+            "description": "Prince, qui propose des services de visa dans le tourisme et bien d’autres domaines, offre la possibilité d’étudier en Amérique, au Canada, à Malte et dans de nombreux autres pays !"
+          }
+        ]
+      },
+      "basvuruYap": {
+        "title": "Demande de visa",
+        "badge": "Évaluation préliminaire gratuite",
+        "subtitle": "Faites le premier pas pour voyager sans visa vers le pays de vos rêves. Notre équipe d’experts travaillera avec vous.",
+        "steps": {
+          "visaInfo": "Informations sur le visa",
+          "personalInfo": "Informations personnelles",
+          "visaHistory": "Historique de visa",
+          "workInfo": "Informations professionnelles"
+        },
+        "sections": {
+          "visaInfo": {
+            "title": "Informations sur le visa",
+            "description": "Parlez-nous de vos projets de voyage"
+          },
+          "personalInfo": {
+            "title": "Informations personnelles",
+            "description": "Vos informations pour vous contacter"
+          },
+          "visaHistory": {
+            "title": "Historique de visa",
+            "description": "Vos expériences de visa précédentes"
+          },
+          "workInfo": {
+            "title": "Informations professionnelles et financières",
+            "description": "Votre situation professionnelle et vos revenus"
+          },
+          "additionalInfo": {
+            "title": "Informations supplémentaires",
+            "description": "Notes que vous souhaitez ajouter"
+          }
+        },
+        "fields": {
+          "country": "Pays de destination",
+          "visaType": "Type de visa",
+          "travelSubject": "Motif du voyage",
+          "travelDate": "Date de voyage estimée",
+          "flightTicket": "Avez-vous un billet d’avion ?",
+          "name": "Votre prénom",
+          "surname": "Votre nom",
+          "email": "E-mail",
+          "phone": "Téléphone",
+          "age": "Votre âge",
+          "travelWith": "Avec qui voyagerez-vous ?",
+          "maritalStatus": "Situation matrimoniale",
+          "visaBefore": "Avez-vous déjà obtenu un visa pour ce pays ?",
+          "visaRejection": "Avez-vous déjà essuyé un refus de visa ?",
+          "schengenVisa": "Avez-vous un visa Schengen ?",
+          "job": "Votre profession",
+          "workYears": "Depuis combien d’années êtes-vous dans le même emploi ?",
+          "netSalary": "Votre salaire net",
+          "salaryToBank": "Votre salaire est-il versé sur votre compte bancaire ?",
+          "message": "Notes ou questions à ajouter"
+        },
+        "options": {
+          "yes": "Oui",
+          "no": "Non",
+          "alone": "Seul(e)",
+          "withSpouse": "Avec conjoint(e)",
+          "withFamily": "Avec la famille",
+          "withFriend": "Avec un(e) ami(e)",
+          "withColleague": "Avec un(e) collègue",
+          "group": "Groupe",
+          "single": "Célibataire",
+          "married": "Marié(e)",
+          "divorced": "Divorcé(e)",
+          "widowed": "Veuf/Veuve",
+          "visaTypes": {
+            "tourist": "Visa touristique",
+            "business": "Visa affaires",
+            "student": "Visa étudiant",
+            "family": "Regroupement familial",
+            "transit": "Visa de transit",
+            "work": "Visa de travail"
+          },
+          "jobs": {
+            "employee": "Salarié(e)",
+            "employer": "Employeur",
+            "freelance": "Freelance",
+            "student": "Étudiant(e)",
+            "retired": "Retraité(e)",
+            "housewife": "Femme au foyer",
+            "unemployed": "Sans emploi"
+          },
+          "workYears": {
+            "0-1": "0-1 an",
+            "1-3": "1-3 ans",
+            "3-5": "3-5 ans",
+            "5-10": "5-10 ans",
+            "10+": "10+ ans",
+            "none": "Ne travaille pas"
+          },
+          "salary": {
+            "0-10k": "0-10 000 TL",
+            "10-20k": "10 000-20 000 TL",
+            "20-35k": "20 000-35 000 TL",
+            "35-50k": "35 000-50 000 TL",
+            "50-75k": "50 000-75 000 TL",
+            "75-100k": "75 000-100 000 TL",
+            "100k+": "100 000+ TL"
+          }
+        },
+        "summary": {
+          "title": "Résumé du formulaire",
+          "progress": "Progression",
+          "filledFields": "Champs remplis",
+          "noFields": "Aucun champ n’a encore été rempli",
+          "startFilling": "Commencez à saisir les informations...",
+          "privacyNote": "Vos informations seront gardées confidentielles et utilisées uniquement pour l’évaluation de visa."
+        },
+        "submit": "Envoyer la demande",
+        "success": "Votre demande a été envoyée avec succès !",
+        "error": "Une erreur s’est produite. Veuillez réessayer."
+      },
+      "hakkimizda": {
+        "heroTitle": "Finalisez votre demande de visa avec Prince sans vous occuper des documents !",
+        "testimonialsTitle": "Écoutez nos clients !",
+        "content": {
+          "intro": "Dans le monde d’aujourd’hui, les voyages internationaux et les démarches d’immigration deviennent de plus en plus complexes. Les personnes souhaitant voyager à l’étranger pour affaires, études, tourisme ou regroupement familial se heurtent souvent à des procédures et documents complexes lors des demandes de visa. Les services de conseil professionnels sont d’une grande importance pour surmonter ces difficultés et augmenter les chances de réussite. C’est là que nous, Prince, intervenons.",
+          "mission": {
+            "title": "Objectif et mission de notre entreprise",
+            "text": "Prince est une entreprise spécialisée qui fournit des services de conseil professionnel aux particuliers et aux institutions pour les demandes de visa internationales. Notre mission est de permettre à nos clients de gérer leurs demandes de visa de la manière la plus rapide, la plus correcte et la plus efficace. Dans ce cadre, nous proposons des solutions personnalisées adaptées aux besoins de chacun et travaillons avec diligence pour assurer la réussite des demandes."
+          },
+          "services": {
+            "title": "Nos services ;",
+            "subtitle": "1. Types de visas et procédures de demande :",
+            "tourist": {
+              "title": "Visas touristiques :",
+              "text": "Pour nos clients souhaitant voyager à l’étranger à des fins touristiques, nous fournissons des informations complètes sur les exigences, l’assurance santé voyage, les réservations et les documents requis. Nous gérons la procédure de bout en bout afin que nos clients obtiennent leurs visas sans difficulté."
+            },
+            "education": {
+              "title": "Visas d’études :",
+              "text": "Pour les étudiants souhaitant étudier à l’étranger, nous gérons la demande de visa d’études conformément aux exigences de l’établissement et du pays. Nous examinons tous les détails, de la préparation correcte des documents aux lettres d’admission et preuves de ressources financières."
+            },
+            "work": {
+              "title": "Visas de travail :",
+              "text": "Pour les professionnels souhaitant travailler à l’étranger, nous offrons un accompagnement sur la préparation de tous les documents requis, la coordination avec les employeurs et les entretiens consulaires. Nous veillons à ce que les permis de travail, contrats et autres documents soient complets."
+            },
+            "family": {
+              "title": "Visas de regroupement familial :",
+              "text": "Pour les clients souhaitant rejoindre leur famille à l’étranger, nous traitons en détail les demandes de regroupement familial. Nous fournissons des services tels que la préparation des preuves de lien familial, la préparation aux entretiens consulaires et le suivi des demandes."
+            }
+          },
+          "process": {
+            "title": "2. Gestion de la procédure de demande de visa :",
+            "documentation": {
+              "title": "Documents :",
+              "text": "Nous veillons à ce que la documentation, étape la plus critique, soit préparée correctement et complètement. Nous aidons nos clients à obtenir tous les documents nécessaires et à corriger les manquants ou erronés."
+            },
+            "forms": {
+              "title": "Formulaires de demande :",
+              "text": "Nous guidons nos clients dans le remplissage des formulaires. Conscients que des formulaires incorrects ou incomplets peuvent mettre en péril la demande, nous nous assurons qu’ils soient remplis correctement et intégralement."
+            },
+            "appointment": {
+              "title": "Rendez-vous et suivi :",
+              "text": "Nous gérons l’ensemble du processus, de la prise de rendez-vous à l’ambassade/consulat jusqu’au suivi des demandes. Nous surveillons en continu et intervenons si nécessaire afin d’éviter toute perturbation."
+            }
+          },
+          "rejection": {
+            "title": "3. Support après un refus de visa :",
+            "appeal": {
+              "title": "Recours et nouvelle demande :",
+              "text": "Pour les clients ayant essuyé un refus, nous analysons les raisons et aidons dans la procédure de recours. En cas de nouvelle demande, nous effectuons les corrections nécessaires pour augmenter les chances d’acceptation."
+            },
+            "alternatives": {
+              "title": "Solutions alternatives :",
+              "text": "Nous aidons nos clients à atteindre leurs objectifs en proposant des options alternatives de voyage ou d’immigration après un refus."
+            }
+          },
+          "personalized": {
+            "title": "4. Conseil personnalisé :",
+            "text": "Chaque client a des besoins différents ; nos services sont donc personnalisés. Nous proposons des solutions sur mesure selon les objectifs, plans de voyage et la situation personnelle. Nous les accompagnons pour gérer leurs demandes de la manière la plus efficace."
+          },
+          "team": {
+            "title": "Notre équipe d’experts",
+            "text": "Chez Prince, nous travaillons avec une équipe experte et expérimentée. Notre équipe possède une grande connaissance des procédures consulaires, exigences légales et politiques d’immigration internationales. Notre objectif est d’aider nos clients à réussir grâce à des informations à jour et exactes."
+          },
+          "why": {
+            "title": "Pourquoi Prince ?",
+            "reliability": {
+              "title": "Fiabilité :",
+              "text": "Forts de plusieurs années d’expérience, nous fournissons des services de conseil fiables et efficaces. La transparence et l’honnêteté sont nos principes."
+            },
+            "success": {
+              "title": "Taux de réussite :",
+              "text": "Notre taux de réussite élevé est un indicateur de la qualité de notre service. Nous obtenons de bons résultats en gérant les demandes selon les plus hauts standards."
+            },
+            "personal": {
+              "title": "Service personnalisé :",
+              "text": "Chaque client est unique pour nous ; nous proposons des solutions sur mesure adaptées à ses besoins. Nous concevons notre accompagnement selon sa situation et ses objectifs."
+            },
+            "support": {
+              "title": "Support et orientation :",
+              "text": "Nous apportons un soutien complet à chaque étape, de la préparation des documents aux entretiens consulaires."
+            }
+          },
+          "conclusion": "Chez Prince, nous visons à être le compagnon de voyage le plus fiable de nos clients pour les démarches de voyage international et de travail à l’étranger. Nous simplifions la complexité des demandes de visa grâce à notre expérience et expertise et proposons une procédure fluide. Nous sommes fiers de faciliter la vie de chaque client et de l’aider à atteindre ses objectifs. La satisfaction de nos clients est la plus grande récompense de notre succès."
+        },
+        "comparison": {
+          "title": "Adieu aux demandes de visa complexes",
+          "with": {
+            "items": {
+              "fast": "Les démarches de demande de visa sont rapides et simples.",
+              "approval": "Validation rapide des demandes",
+              "support": "Un accompagnement voyage et des services de conseil sont fournis.",
+              "price": "La possibilité de procéder tout en protégeant votre budget avec un prix fixe unique.",
+              "professional": "Un soutien professionnel à toutes les étapes du processus de demande."
+            }
+          },
+          "without": {
+            "items": {
+              "complex": "Gérer les documents de visa peut être complexe.",
+              "risk": "Le risque d’erreurs et de refus de visa peut augmenter.",
+              "timeline": "Le délai d’approbation peut être incertain.",
+              "cost": "Vous devrez peut-être payer des frais élevés à différentes entreprises.",
+              "wrong": "Vous devrez peut-être préparer de mauvais documents."
+            }
+          },
+          "testimonials": {
+            "1": {
+              "title": "🎄 Sapin spécial Prince pour 2025 ! 🍓 KARTONGİLLER 🎅🤶",
+              "description": "Nous avons apporté l’esprit du Nouvel An au bureau et laissé parler notre créativité ! ?✨ Voici ce projet amusant où, en tant que famille Prince, nous nous sommes réunis et avons fabriqué nous-mêmes un sapin du Nouvel An ! ?\r\n En entrant dans 2025, notre souhait est que toutes les routes vers vos rêves soient ouvertes !"
+            },
+            "2": {
+              "title": "Visa touristique Allemagne",
+              "description": "Vidéo de notre client M. Baran qui est allé en Allemagne."
+            },
+            "3": {
+              "title": "🎉 C’EST L’HEURE DU TIRAGE AU SORT ! 🎉",
+              "description": "En collaboration avec Prince et Lider Human Resources, nous offrons une CONSULTATION VISA GRATUITE à 3 heureux gagnants !"
+            },
+            "4": {
+              "title": "Le visa Russie est désormais beaucoup plus facile avec Prince ! 🍓",
+              "description": "Nous obtenons votre visa Russie en seulement 1 semaine ! Avec notre service rapide, fiable et professionnel, nous vous évitons une attente inutile. ✈️"
+            },
+            "5": {
+              "title": "Toute l’équipe Prince était au spectacle de @TaklitMan😎",
+              "description": "Nous avons passé un super spectacle et un super tirage au sort?️\r\n2 PERSONNES DU PUBLIC ONT GAGNÉ UN CONSEIL GRATUIT?✨\r\nNous sommes heureux de partager une journée amusante avec vous !\r\n☎️0850 888 7071 www.cilekvize.com"
+            },
+            "6": {
+              "title": "Visa touristique Australie",
+              "description": "Notre cliente Mme Cansu qui est allée en Australie."
+            },
+            "7": {
+              "title": "Faites le premier pas pour votre voyage de rêve en Italie ! 🍓",
+              "description": "Nous vous accompagnons dans toutes les démarches liées au visa pour l’Italie ! Nous facilitons vos procédures avec un service rapide et fiable. Contactez-nous dès maintenant et commencez votre aventure italienne ! ✈️"
+            },
+            "8": {
+              "title": "Visa regroupement familial Autriche",
+              "description": "Notre client M. Batuhan qui est parti à l’étranger avec un visa de regroupement familial."
+            },
+            "9": {
+              "title": "CE QUE VOUS DEVEZ SAVOIR SUR LES DEMANDES DE VISA ! Quelles sont les questions et réponses les plus fréquentes ?",
+              "description": "La procédure de demande de visa vous semble compliquée ? Ne vous inquiétez pas ! Dans cette vidéo, nous abordons les questions les plus fréquentes et les conseils essentiels.\r\n"
+            },
+            "10": {
+              "title": "Visa de travail Royaume-Uni",
+              "description": "Notre client parti au Royaume-Uni avec sa famille en obtenant un service de visa de travail."
+            },
+            "11": {
+              "title": "PROCÉDURE DE DEMANDE DE VISA EN LIGNE avec ÇİLEK VİZE – Simple et rapide !",
+              "description": "La demande de visa en ligne avec Prince est désormais très facile !\r\nDans cette vidéo, nous expliquons étape par étape comment finaliser vos démarches rapidement et sans accroc."
+            },
+            "12": {
+              "title": "Il n’y a personne qui ne puisse pas obtenir un visa, il y a juste quelqu’un qui ne vient pas chez Prince 😎✈️",
+              "description": "Pour plus d’informations et une demande✨\r\n☎️0850 888 7071\r\nwww.cilekvize.com"
+            },
+            "13": {
+              "title": "Vidéo de notre client qui est allé aux Pays-Bas !",
+              "description": ""
+            },
+            "14": {
+              "title": "🎉 Opportunité de remise de 20% pour le visa UK ! 🇬🇧✈️",
+              "description": "Chez Prince, nous proposons une campagne de remise de 20% sur le conseil en visa UK ! Ne manquez pas cette opportunité pour finaliser votre demande facilement et rapidement. ? Notre campagne est valable jusqu’au 20 novembre seulement !"
+            },
+            "15": {
+              "title": "Vidéo de notre client qui est allé au Canada...",
+              "description": ""
+            },
+            "16": {
+              "title": "Notre client qui est allé aux Pays-Bas !",
+              "description": ""
+            }
+          }
+        }
+      },
+      "vizeTablosu": {
+        "table": {
+          "headers": {
+            "country": "Pays",
+            "visaRequired": "Visa requis ?",
+            "visaType": "Type de visa",
+            "processingTime": "Délai de traitement",
+            "notes": "Remarques"
+          },
+          "rows": {
+            "uk": {
+              "country": "Royaume-Uni",
+              "visaType": "Standard Visitor Visa",
+              "processingTime": "15-20 jours ouvrables"
+            },
+            "germany": {
+              "country": "Allemagne",
+              "visaType": "Visa Schengen",
+              "processingTime": "10-15 jours ouvrables"
+            },
+            "france": {
+              "country": "France",
+              "visaType": "Visa Schengen",
+              "processingTime": "10-15 jours ouvrables"
+            },
+            "canada": {
+              "country": "Canada",
+              "visaType": "Visa touristique",
+              "processingTime": "20-30 jours ouvrables"
+            },
+            "usa": {
+              "country": "États-Unis",
+              "visaType": "Visa B1/B2",
+              "processingTime": "15-20 jours ouvrables"
+            }
+          }
+        }
+      },
+      "countryApplication": {
+        "notFound": "Pays introuvable",
+        "backHome": "Retour à l’accueil",
+        "guide": "Guide de demande de visa",
+        "gallery": "Galerie",
+        "visaApplication": "Demande de visa",
+        "galleryImageAlt": "Image de la galerie",
+        "contentComingSoon": "Le contenu sera ajouté prochainement.",
+        "countries": {
+          "ingiltere": "Royaume-Uni",
+          "almanya": "Allemagne",
+          "fransa": "France",
+          "kanada": "Canada",
+          "abd": "États-Unis"
+        },
+        "navLinks": {
+          "ingiltere": {
+            "generalInfo": "Informations générales sur le Royaume-Uni",
+            "touristVisa": "Visa touristique Royaume-Uni",
+            "educationVisa": "Visa études Royaume-Uni",
+            "investorVisa": "Visa investisseur Royaume-Uni",
+            "otherVisas": "Autres types de visas Royaume-Uni",
+            "workVisa": "Visa de travail Royaume-Uni",
+            "familyVisa": "Visa regroupement familial Royaume-Uni"
+          },
+          "almanya": {
+            "generalInfo": "Informations générales sur l’Allemagne",
+            "schengenVisa": "Visa Schengen Allemagne",
+            "workVisa": "Visa de travail Allemagne"
+          },
+          "fransa": {
+            "generalInfo": "Informations générales sur la France",
+            "schengenVisa": "Visa Schengen France"
+          },
+          "kanada": {
+            "generalInfo": "Informations générales sur le Canada",
+            "touristVisa": "Visa touristique Canada"
+          },
+          "abd": {
+            "generalInfo": "Informations générales sur les États-Unis",
+            "touristVisa": "Visa touristique États-Unis"
+          }
+        },
+        "content": {
+          "ingiltere": {
+            "excerpt": "Le visa requis pour ceux qui souhaitent se rendre au Royaume-Uni en tant que touristes s’appelle le « Standard Visitor Visa ». Ce visa convient aux personnes qui souhaitent visiter le Royaume-Uni pour des voyages touristiques, des visites à la famille ou à des amis, des réunions d’affaires ou des programmes d’études de courte durée.",
+            "content": "<p>L’Angleterre est l’un des quatre pays du Royaume-Uni (UK) et se situe à l’ouest de l’Europe. Elle occupe une place importante dans le monde grâce à son histoire, sa culture et son économie. Voici des informations générales sur l’Angleterre :</p><h3><strong>Géographie</strong></h3><ul><li><strong>Localisation :</strong> L’Angleterre se situe au sud-est de l’île de Grande-Bretagne et est bordée par l’Écosse au nord et le Pays de Galles à l’ouest. Elle est également entourée par la mer d’Irlande, la mer Celtique, la mer du Nord et la Manche.</li><li><strong>Capitale :</strong> Londres est la capitale de l’Angleterre et du Royaume-Uni. C’est un centre mondial important en matière de finance, de culture et d’histoire.</li><li><strong>Climat :</strong> Climat océanique tempéré. Les hivers sont généralement froids, les étés doux. Il pleut tout au long de l’année.</li></ul><h3><strong>Histoire</strong></h3><ul><li><strong>Période préhistorique et antique :</strong> Des monuments comme Stonehenge montrent que l’Angleterre est habitée depuis la préhistoire. À l’époque de l’Empire romain, l’Angleterre était connue sous le nom de Britannia.</li><li><strong>Moyen Âge :</strong> La conquête normande de 1066 est un tournant important de l’histoire du pays.</li><li><strong>Période moderne :</strong> Aux XVIe et XVIIe siècles, l’Angleterre a joué un rôle majeur dans la marine et la colonisation. La Révolution industrielle a également commencé ici au XVIIIe siècle.</li></ul><h3><strong>Culture</strong></h3><ul><li><strong>Langue :</strong> La langue officielle est l’anglais, l’une des langues les plus parlées au monde.</li><li><strong>Art et littérature :</strong> Des écrivains mondialement connus comme William Shakespeare, Charles Dickens et J.K. Rowling sont originaires d’Angleterre. Londres accueille de nombreuses galeries d’art et théâtres.</li><li><strong>Musique :</strong> Des groupes comme The Beatles et les Rolling Stones ont émergé en Angleterre et ont eu un grand impact sur la musique mondiale.</li><li><strong>Sports :</strong> Le football est le sport le plus populaire en Angleterre. La Premier League est l’un des championnats les plus prestigieux au monde. Le cricket et le rugby sont également très populaires.</li></ul><h3><strong>Économie</strong></h3><ul><li><strong>Aperçu :</strong> L’Angleterre possède l’une des plus grandes économies du monde. Londres est reconnue comme un centre financier international.</li><li><strong>Secteurs :</strong> La finance, la technologie, l’automobile, l’aéronautique et la pharmacie figurent parmi les secteurs majeurs.</li><li><strong>Monnaie :</strong> Livre sterling (GBP).</li></ul><h3><strong>Gouvernement</strong></h3><ul><li><strong>Régime :</strong> L’Angleterre est gouvernée par une monarchie constitutionnelle et une démocratie parlementaire. La reine ou le roi est le chef de l’État, mais le pouvoir politique est limité.</li><li><strong>Parlement :</strong> Le parlement, organe législatif, est composé de deux chambres : la Chambre des communes et la Chambre des lords.</li></ul><p>L’Angleterre demeure un pays important au niveau mondial grâce à son héritage historique, sa richesse culturelle et sa puissance économique. Chaque année, des millions de touristes visitent l’Angleterre pour voir les monuments emblématiques de Londres, les châteaux historiques et les magnifiques régions rurales.</p>"
+          },
+          "navContent": {
+            "ingiltere": {
+              "generalInfo": "<h2>Informations générales sur l’Angleterre</h2><p>L’Angleterre est le pays le plus grand et le plus peuplé du Royaume-Uni. Sa capitale est Londres et c’est un centre mondial majeur de finance, de culture et de tourisme.</p><h3>Géographie et climat</h3><p>L’Angleterre se situe au sud-est de l’île de Grande-Bretagne. Un climat océanique tempéré domine et il pleut tout au long de l’année.</p><h3>Économie</h3><p>L’Angleterre possède l’une des plus grandes économies du monde. Londres est reconnue comme un centre financier international.</p>",
+              "touristVisa": "<h2>Guide de demande de visa touristique UK</h2><p>Un Standard Visitor Visa est requis pour ceux qui souhaitent se rendre au Royaume-Uni à des fins touristiques.</p><h3>Documents requis</h3><ul><li>Passeport (valable au moins 6 mois)</li><li>Formulaire de demande</li><li>Photo</li><li>Documents financiers</li><li>Réservation d’hébergement</li><li>Réservation de billet d’avion</li></ul><h3>Procédure de demande</h3><p>La demande se fait en ligne et aboutit généralement sous 15 à 20 jours ouvrables.</p>",
+              "educationVisa": "<h2>Visa d’études UK</h2><p>Un Student Visa est requis pour les étudiants souhaitant étudier au Royaume-Uni.</p><h3>Exigences</h3><ul><li>Lettre d’acceptation (CAS - Confirmation of Acceptance for Studies)</li><li>Justificatifs de ressources financières</li><li>Niveau d’anglais (IELTS, TOEFL, etc.)</li><li>Assurance santé</li></ul><h3>Procédure</h3><p>Les demandes de visa d’études aboutissent généralement en 3 semaines.</p>",
+              "investorVisa": "<h2>Visa investisseur UK</h2><p>Un visa investisseur est disponible pour ceux qui souhaitent investir au Royaume-Uni.</p><h3>Exigences</h3><ul><li>Investissement minimum de 2 millions £</li><li>Plan d’investissement</li><li>Documents financiers</li><li>Documents d’expérience professionnelle</li></ul><h3>Avantages</h3><p>Les titulaires d’un visa investisseur ont le droit de vivre et travailler au Royaume-Uni.</p>",
+              "otherVisas": "<h2>Autres types de visas UK</h2><p>Différents types de visas existent selon le motif de voyage au Royaume-Uni.</p><h3>Types de visas</h3><ul><li>Visa affaires</li><li>Visa familial</li><li>Visa de transit</li><li>Visa de travail</li></ul><h3>Informations détaillées</h3><p>Chaque type de visa a des exigences et une procédure différentes.</p>",
+              "workVisa": "<h2>Visa de travail UK</h2><p>Un Skilled Worker Visa est requis pour ceux qui souhaitent travailler au Royaume-Uni.</p><h3>Exigences</h3><ul><li>Offre d’emploi (d’un employeur certifié sponsor)</li><li>Niveau d’anglais</li><li>Niveau de salaire adéquat</li><li>Documents de qualification professionnelle</li></ul><h3>Procédure</h3><p>Les demandes de visa de travail aboutissent généralement en 3 semaines.</p>",
+              "familyVisa": "<h2>Visa regroupement familial UK</h2><p>Un Family Visa est requis pour rejoindre des membres de la famille vivant au Royaume-Uni.</p><h3>Exigences</h3><ul><li>Preuves de lien familial (acte de mariage, acte de naissance, etc.)</li><li>Justificatifs de ressources financières</li><li>Justificatifs de logement</li><li>Niveau d’anglais</li></ul><h3>Procédure</h3><p>Les demandes de regroupement familial aboutissent généralement sous 12 semaines.</p>"
+            },
+            "almanya": {
+              "generalInfo": "<h2>Informations générales sur l’Allemagne</h2><p>L’Allemagne est une république fédérale située en Europe centrale. Elle possède la plus grande économie de l’Union européenne.</p><h3>Géographie</h3><p>L’Allemagne est frontalière de neuf pays. Sa capitale est Berlin.</p><h3>Économie</h3><p>L’Allemagne est la quatrième économie mondiale. Les secteurs de l’automobile, de la technologie et de l’ingénierie se distinguent.</p>",
+              "schengenVisa": "<h2>Visa Schengen Allemagne</h2><p>Un visa Schengen est requis pour voyager en Allemagne.</p><h3>Documents requis</h3><ul><li>Passeport</li><li>Formulaire de demande</li><li>Assurance voyage</li><li>Documents d’hébergement</li></ul><h3>Procédure</h3><p>Les demandes de visa Schengen aboutissent généralement sous 10 à 15 jours ouvrables.</p>",
+              "workVisa": "<h2>Visa de travail Allemagne</h2><p>Un visa de travail est requis pour travailler en Allemagne.</p><h3>Exigences</h3><ul><li>Offre d’emploi</li><li>Qualification professionnelle</li><li>Connaissance de l’allemand</li></ul>"
+            },
+            "fransa": {
+              "generalInfo": "<h2>Informations générales sur la France</h2><p>La France est un pays situé en Europe de l’Ouest. Sa capitale est Paris.</p>",
+              "schengenVisa": "<h2>Visa Schengen France</h2><p>Un visa Schengen est requis pour voyager en France.</p>"
+            },
+            "kanada": {
+              "generalInfo": "<h2>Informations générales sur le Canada</h2><p>Le Canada est un pays situé en Amérique du Nord.</p>",
+              "touristVisa": "<h2>Visa touristique Canada</h2><p>Un visa est requis pour voyager au Canada en tant que touriste.</p>"
+            },
+            "abd": {
+              "generalInfo": "<h2>Informations générales sur les États-Unis</h2><p>Les États-Unis d’Amérique sont une république fédérale située en Amérique du Nord.</p>",
+              "touristVisa": "<h2>Visa touristique États-Unis</h2><p>Un visa B1/B2 est requis pour voyager aux États-Unis en tant que touriste.</p>"
+            }
+          },
+          "almanya": {
+            "excerpt": "Un visa Schengen est requis pour les citoyens turcs souhaitant se rendre en Allemagne. L’Allemagne est l’une des économies les plus puissantes d’Europe et attire par son riche patrimoine culturel et ses villes modernes.",
+            "content": "<p>L’Allemagne est une république fédérale située en Europe centrale. L’Allemagne, qui possède la plus grande économie de l’Union européenne, est un leader mondial dans les domaines de la technologie, de l’automobile et de l’ingénierie.</p><h3><strong>Géographie</strong></h3><ul><li><strong>Localisation :</strong> Située en Europe centrale et frontalière de neuf pays.</li><li><strong>Capitale :</strong> Berlin est à la fois la capitale et la plus grande ville d’Allemagne.</li><li><strong>Climat :</strong> Climat océanique tempéré.</li></ul><h3><strong>Économie</strong></h3><ul><li><strong>Aperçu :</strong> L’Allemagne est la quatrième économie du monde.</li><li><strong>Secteurs :</strong> Les secteurs de l’automobile, des machines, de la chimie et de la technologie se distinguent.</li><li><strong>Monnaie :</strong> Euro (EUR).</li></ul>"
+          },
+          "fransa": {
+            "excerpt": "Un visa Schengen est requis pour voyager en France. La France est l’un des pays les plus visités au monde et est célèbre pour son histoire, sa culture et sa cuisine.",
+            "content": "<p>La France est un pays situé en Europe de l’Ouest. Sa capitale, Paris, est connue comme l’une des villes les plus romantiques au monde.</p><h3><strong>Culture</strong></h3><ul><li><strong>Art :</strong> Le musée du Louvre est l’un des plus grands musées d’art au monde.</li><li><strong>Cuisine :</strong> La cuisine française est inscrite sur la liste du patrimoine culturel immatériel de l’humanité de l’UNESCO.</li></ul>"
+          },
+          "kanada": {
+            "excerpt": "Un visa est requis pour voyager au Canada. Le Canada est le deuxième plus grand pays du monde et est connu pour ses paysages naturels, son haut niveau de vie et sa diversité culturelle.",
+            "content": "<p>Le Canada est un pays situé en Amérique du Nord. Il a deux langues officielles : l’anglais et le français.</p><h3><strong>Géographie</strong></h3><ul><li><strong>Localisation :</strong> Situé au nord de l’Amérique du Nord.</li><li><strong>Capitale :</strong> Ottawa</li><li><strong>Climat :</strong> Diverses zones climatiques.</li></ul>"
+          },
+          "abd": {
+            "excerpt": "Un visa est requis pour voyager aux États-Unis. Les États-Unis ont la plus grande économie du monde et regroupent diverses cultures et opportunités.",
+            "content": "<p>Les États-Unis d’Amérique sont une république fédérale située en Amérique du Nord.</p><h3><strong>Économie</strong></h3><ul><li><strong>Aperçu :</strong> La plus grande économie du monde</li><li><strong>Monnaie :</strong> Dollar américain (USD)</li></ul>"
+          }
+        }
+      }
+    },
+    "contact": {
+      "title": "Contactez-nous",
+      "subtitle": "Vous avez des questions ou des commentaires ? Envoyez-nous simplement un message !",
+      "loading": "Votre message est en cours d’envoi...",
+      "info": {
+        "title": "Coordonnées",
+        "description": "Dites quelque chose pour démarrer la conversation !"
+      },
+      "form": {
+        "sendMessage": "Envoyer un message",
+        "firstName": "Votre prénom",
+        "lastName": "Votre nom",
+        "email": "Votre adresse e-mail",
+        "phone": "Votre numéro de téléphone",
+        "subject": "Sélectionner un sujet",
+        "message": "Votre message",
+        "submit": "Envoyer le message",
+        "placeholders": {
+          "firstName": "Saisissez votre prénom",
+          "lastName": "Saisissez votre nom",
+          "email": "exemple@email.com",
+          "phone": "0532 123 4567",
+          "message": "Écrivez votre message ici..."
+        },
+        "subjects": {
+          "schengen": "Demande de visa Schengen",
+          "application": "Demande",
+          "appointment": "Rendez-vous visa",
+          "popular": "Pays populaires",
+          "other": "Autre"
+        },
+        "errors": {
+          "firstNameMin": "Votre prénom doit contenir au moins {{count}} caractères.",
+          "lastNameMin": "Votre nom doit contenir au moins {{count}} caractères.",
+          "invalidEmail": "Veuillez saisir une adresse e-mail valide.",
+          "invalidPhone": "Veuillez saisir un numéro de téléphone turc valide.",
+          "messageMin": "Votre message doit contenir au moins {{count}} caractères.",
+          "fillAllFields": "Veuillez remplir tous les champs."
+        },
+        "successMessage": "Votre message a été envoyé.",
+        "errorMessage": "Une erreur s’est produite. Veuillez réessayer."
+      }
+    },
+    "blog": {
+      "badge": "Blog Prince",
+      "featured": {
+        "title": "Points à considérer lors d’une demande de visa",
+        "readTime": "15 min de lecture"
+      },
+      "readPost": "Lire l’article",
+      "all": "Tous",
+      "popular": "Articles populaires",
+      "read": "Lire"
+    },
+    "branches": {
+      "title": "Nos agences",
+      "notFound": {
+        "title": "Agence introuvable",
+        "description": "L’agence que vous recherchez est introuvable.",
+        "backHome": "Retour à l’accueil"
+      },
+      "getInfo": "Obtenir des informations maintenant",
+      "callNow": "Appeler maintenant",
+      "phone": "Téléphone",
+      "address": "Adresse",
+      "whatsapp": "WhatsApp",
+      "writeNow": "Écrire maintenant",
+      "otherBranches": "Nos autres agences",
+      "form": {
+        "firstName": "Votre prénom",
+        "lastName": "Votre nom",
+        "phone": "Numéro de téléphone",
+        "branch": "Agence qui vous intéresse",
+        "privacyPolicy": "Politique de confidentialité",
+        "privacyAccept": " J’ai lu et j’accepte.",
+        "submit": "Obtenir des informations",
+        "success": "Votre demande d’informations a été envoyée avec succès !",
+        "error": "Une erreur s’est produite. Veuillez réessayer."
+      }
+    }
+  }
+}

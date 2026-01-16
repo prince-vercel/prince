@@ -7,6 +7,9 @@ import trMedicalTranslations from './locales/medical/tr.json'
 import enTravelTranslations from './locales/travel/en.json'
 import trTravelTranslations from './locales/travel/tr.json'
 import enVisaTranslations from './locales/visa/en.json'
+import esVisaTranslations from './locales/visa/es.json'
+import frVisaTranslations from './locales/visa/fr.json'
+import ruVisaTranslations from './locales/visa/ru.json'
 import trVisaTranslations from './locales/visa/tr.json'
 
 // SSR-safe language detection
@@ -19,7 +22,7 @@ const getInitialLanguage = () => {
   // Client-side: check localStorage first, then navigator
   try {
     const storedLang = localStorage.getItem('i18nextLng')
-    if (storedLang === 'en' || storedLang === 'tr') {
+    if (storedLang === 'en' || storedLang === 'tr' || storedLang === 'es' || storedLang === 'fr' || storedLang === 'ru') {
       return storedLang
     }
   } catch (e) {
@@ -28,7 +31,12 @@ const getInitialLanguage = () => {
 
   // Fallback to navigator language
   if (typeof navigator !== 'undefined' && navigator.language) {
-    return navigator.language.startsWith('en') ? 'en' : 'tr'
+    const navLang = navigator.language.toLowerCase()
+    if (navLang.startsWith('en')) return 'en'
+    if (navLang.startsWith('es')) return 'es'
+    if (navLang.startsWith('fr')) return 'fr'
+    if (navLang.startsWith('ru')) return 'ru'
+    return 'tr'
   }
 
   return 'tr'
@@ -51,6 +59,27 @@ i18n
           ...enVisaTranslations,
           ...enTravelTranslations,
           ...enMedicalTranslations,
+        },
+      },
+      es: {
+        translation: {
+          ...esVisaTranslations,
+          ...trTravelTranslations,
+          ...trMedicalTranslations,
+        },
+      },
+      fr: {
+        translation: {
+          ...frVisaTranslations,
+          ...trTravelTranslations,
+          ...trMedicalTranslations,
+        },
+      },
+      ru: {
+        translation: {
+          ...ruVisaTranslations,
+          ...trTravelTranslations,
+          ...trMedicalTranslations,
         },
       },
     },

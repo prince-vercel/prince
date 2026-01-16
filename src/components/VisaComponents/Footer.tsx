@@ -35,7 +35,14 @@ export default function VisaFooter() {
                                                 {isReady ? t('visa.footer.phone') : ''}
                                             </li>
                                             <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }} suppressHydrationWarning>
-                                                {isReady ? t('visa.footer.email') : ''}
+                                                <a href={`mailto:${isReady ? t('visa.footer.email') : ''}`} style={{ color: '#666', textDecoration: 'none' }}>
+                                                    {isReady ? t('visa.footer.email') : ''}
+                                                </a>
+                                            </li>
+                                            <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }} suppressHydrationWarning>
+                                                <a href={`mailto:${isReady ? t('visa.footer.email2') : ''}`} style={{ color: '#666', textDecoration: 'none' }}>
+                                                    {isReady ? t('visa.footer.email2') : ''}
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -158,7 +165,7 @@ export default function VisaFooter() {
                                 <div className="cs_social_links" style={{ display: 'flex', gap: '10px' }}>
                                     <a
                                         title="WhatsApp"
-                                        href="https://wa.me/905508887071"
+                                        href="#"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         style={{
@@ -189,7 +196,7 @@ export default function VisaFooter() {
                                     </a>
                                     <a
                                         title="Facebook"
-                                        href="https://www.facebook.com/cilekvize"
+                                        href="#"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         style={{
@@ -220,7 +227,7 @@ export default function VisaFooter() {
                                     </a>
                                     <a
                                         title="Instagram"
-                                        href="https://www.instagram.com/turkiyeninvizecisi"
+                                        href="#"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         style={{
