@@ -318,29 +318,6 @@ export default function TravelHomePage() {
         </div>
       </div>
 
-      {/* ALT BANNERLAR */}
-      <div className="lg:grid grid-cols-4 xl:gap-base gap-3 mx-auto xl:px-base px-3 overflow-hidden mt-2">
-        {banners.length > 6 ? (
-          banners.slice(6, 10).map((banner, index) => (
-            <div key={banner.id} className="group hero-card-sm" style={{ height: '260px' }}>
-              <a href="#">
-                <img
-                  src={banner.imageUrl}
-                  alt={banner.title}
-                  className="lg:h-full w-full object-cover group-hover:scale-110 duration-500"
-                />
-                <div className="text-white absolute w-full lg:bottom-10 bottom-6 text-center">
-                  <h4 className="font-bold text-lg text-white">{banner.title}</h4>
-                  <div className="h-[3px] w-9 bg-white rounded-md mx-auto mt-2"></div>
-                </div>
-              </a>
-            </div>
-          ))
-        ) : (
-          <></>
-        )}
-      </div>
-
 
 
 

@@ -8,7 +8,7 @@ import ImageManagerModal from '@/src/components/ImageManagerModal'
 
 const boxes = [ 
   {
-    title: 'Prince Medikal Estetik & Sağlık Hizmetleri',
+    title: 'Prince Medikal Estetik & Sağlık ',
     desc: 'Sağlık hizmetleri, kuruluşlar ve başvurular',
     href: '/admin/medical',
     color: '#307BC4',
