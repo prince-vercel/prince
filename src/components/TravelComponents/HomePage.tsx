@@ -10,6 +10,8 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
 import '../../i18n'
+import i18n from 'i18next'
+import { getCollectionName } from '@/src/lib/localization'
 import Chatbot from './Chatbot'
 
 const normalizeText = (text: string) => {
@@ -62,20 +64,20 @@ export default function TravelHomePage() {
   useEffect(() => {
     // Firestore'dan chatbotQuestions koleksiyonunu çek
     import('firebase/firestore').then(({ collection, getDocs }) => {
-      getDocs(collection(db, 'travelchatbotQuestions'))
+      getDocs(collection(db, getCollectionName('travelchatbotQuestions', i18n.language)))
         .then(snapshot => {
           const data = snapshot.docs.map(doc => doc.data())
           setChatbotQuestions(data)
         })
         .catch(() => setChatbotQuestions([]))
     })
-  }, [])
+  }, [i18n.language])
 
   // Firebase'den partners'ları çek
   useEffect(() => {
     const fetchPartners = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'travelcontents/partner/partners'))
+        const querySnapshot = await getDocs(collection(db, getCollectionName('travelcontents', i18n.language) + '/partner/partners'))
         const partnersData: any[] = []
         querySnapshot.forEach((doc) => {
           partnersData.push({
@@ -94,12 +96,12 @@ export default function TravelHomePage() {
     }
 
     fetchPartners()
-  }, [isReady, t])
+  }, [isReady, t, i18n.language])
 
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        const q = query(collection(db, 'travelcontents', 'images', 'banners'), orderBy('createdAt', 'desc'))
+        const q = query(collection(db, getCollectionName('travelcontents', i18n.language), 'images', 'banners'), orderBy('createdAt', 'desc'))
         const snap = await getDocs(q)
         const bannersList = snap.docs.map(doc => ({
           id: doc.id,
@@ -113,12 +115,12 @@ export default function TravelHomePage() {
     }
 
     fetchBanners()
-  }, [isReady, t])
+  }, [isReady, t, i18n.language])
 
   useEffect(() => {
     const fetchTours = async () => {
       try {
-        const q = query(collection(db, 'traveltours'), orderBy('createdAt', 'desc'))
+        const q = query(collection(db, getCollectionName('traveltours', i18n.language)), orderBy('createdAt', 'desc'))
         const snap = await getDocs(q)
         const tours: Tour[] = snap.docs.map(doc => ({
           id: doc.id,
@@ -139,7 +141,7 @@ export default function TravelHomePage() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const q = query(collection(db, 'travelblogs'), orderBy('createdAt', 'desc'), limit(3))
+        const q = query(collection(db, getCollectionName('travelblogs', i18n.language)), orderBy('createdAt', 'desc'), limit(3))
         const snap = await getDocs(q)
         const blogsData: Blog[] = []
         snap.forEach((doc) => {
@@ -157,7 +159,7 @@ export default function TravelHomePage() {
     }
 
     fetchBlogs()
-  }, [isReady, t])
+  }, [isReady, t,i18n.language])
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault()

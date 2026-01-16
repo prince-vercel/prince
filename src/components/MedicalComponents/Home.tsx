@@ -13,6 +13,8 @@ import dynamic from 'next/dynamic'
 import { useEffect as useEffectReact } from 'react'
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
 import '../../i18n'
+import i18n from 'i18next'
+import { getCollectionName } from '@/src/lib/localization'
 
 const Chatbot = dynamic(() => import('./Chatbot'), { ssr: false })
 
@@ -36,14 +38,14 @@ export default function HomePage() {
   useEffectReact(() => {
     // Firestore'dan chatbotQuestions koleksiyonunu çek
     import('firebase/firestore').then(({ collection, getDocs }) => {
-      getDocs(collection(db, 'medicalchatbotQuestions'))
+      getDocs(collection(db, getCollectionName('medicalchatbotQuestions', i18n.language)))
         .then(snapshot => {
           const data = snapshot.docs.map(doc => doc.data())
           setChatbotQuestions(data)
         })
         .catch(() => setChatbotQuestions([]))
     })
-  }, [])
+  }, [i18n.language])
 
 
 
@@ -115,7 +117,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'medicalblogs'))
+        const querySnapshot = await getDocs(collection(db, getCollectionName('medicalblogs', i18n.language)))
         const blogsData: Blog[] = []
         querySnapshot.forEach((doc) => {
           blogsData.push({
@@ -135,7 +137,7 @@ export default function HomePage() {
     }
 
     fetchBlogs()
-  }, [isReady, t])
+  }, [isReady, t,i18n.language])
 
   // Firebase'den results'ları çek
   useEffect(() => {
@@ -145,7 +147,7 @@ export default function HomePage() {
         const categories = ['dis', 'genital', 'gogus', 'goz', 'kalca', 'kulak', 'boyun-ve-yuz', 'burun', 'sac-ekimi', 'vucut-sekillendirme-liposuction']
 
         const fetchPromises = categories.map(async (categoryKey) => {
-          const resultsRef = collection(db, `medicalcontents/results/${categoryKey}`)
+          const resultsRef = collection(db, `${getCollectionName('medicalcontents', i18n.language)}/results/${categoryKey}`)
           const snapshot = await getDocs(resultsRef)
           return snapshot.docs.map((doc) => ({
             id: doc.id,
@@ -168,14 +170,14 @@ export default function HomePage() {
     }
 
     fetchResults()
-  }, [isReady, t])
+  }, [isReady, t,i18n.language])
 
 
   // Firebase'den partners'ları çek
   useEffect(() => {
     const fetchPartners = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'medicalcontents/partner/partners'))
+        const querySnapshot = await getDocs(collection(db, getCollectionName('medicalcontents', i18n.language) + '/partner/partners'))
         const partnersData: any[] = []
         querySnapshot.forEach((doc) => {
           partnersData.push({
@@ -194,7 +196,7 @@ export default function HomePage() {
     }
 
     fetchPartners()
-  }, [isReady, t])
+  }, [isReady, t,i18n.language])
 
 
   return (
