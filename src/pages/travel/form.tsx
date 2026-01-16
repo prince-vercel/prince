@@ -187,9 +187,7 @@ const Form = () => {
                   </span>
                   <p className="text-sm lg:text-base whitespace-nowrap">{s.name}</p>
                 </div>
-                {index < steps.length - 1 && (
-                  <div className={`flex-1 h-1 mx-6 w-16 ${step >= s.number ? 'bg-primary-1' : 'bg-gray-300'} transition-colors`} />
-                )}
+              
               </div>
             ))}
           </div>

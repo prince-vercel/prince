@@ -83,9 +83,7 @@ export default function OrganisationPage() {
             <h2 className="cs_banner_title cs_fs_72" style={{ color: '#fff' }} suppressHydrationWarning>
               {isReady ? t('medical.pages.organisation.title') : ''}
             </h2>
-            <p className="cs_banner_subtitle cs_fs_20" style={{ color: '#fff' }} suppressHydrationWarning>
-              {isReady ? t('medical.pages.organisation.subtitle') : ''}
-            </p>
+
           </div>
         </div>
       </section>
@@ -93,10 +91,7 @@ export default function OrganisationPage() {
       <div className="cs_height_65" />
 
       <div className="container">
-        <div className="cs_doctors_heading">
-          <div className="cs_view_box">
-          </div>
-        </div>
+
 
         <div className="cs_height_65" />
 

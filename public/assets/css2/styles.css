@@ -1516,7 +1516,7 @@ html{
 }
 
 .gap-base{
-  gap: 30px;
+  gap: 20px;
 }
 
 .gap-x-1{
@@ -5320,7 +5320,7 @@ Customiz Third-Party Plugins
   }
 
   .lg\:col-span-8{
-    grid-column: span 8 / span 8;
+    grid-column: span 7 / span 7;
   }
 
   .lg\:mx-0{

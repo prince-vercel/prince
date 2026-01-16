@@ -41,6 +41,7 @@ interface Tour {
   galleryImageUrls?: string[]
   imageUrl?: string
   isFavorite?: boolean
+  status?: string
   createdAt: any
 }
 
@@ -60,6 +61,7 @@ interface FormData {
   faq: Array<{ question: string; answer: string }>
   mainImageUrl: string
   galleryImageUrls: string[]
+  status: string
 }
 
 const ContentTours = () => {
@@ -90,7 +92,8 @@ const ContentTours = () => {
     tourPlan: [{ day: 1, content: '' }],
     faq: [{ question: '', answer: '' }],
     mainImageUrl: '',
-    galleryImageUrls: []
+    galleryImageUrls: [],
+    status: 'aktif'
   })
 
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -259,7 +262,8 @@ const ContentTours = () => {
         tourPlan: [{ day: 1, content: '' }],
         faq: [{ question: '', answer: '' }],
         mainImageUrl: '',
-        galleryImageUrls: []
+        galleryImageUrls: [],
+        status: 'aktif'
       })
       setEditingId(null)
       setShowForm(false)
@@ -290,7 +294,8 @@ const ContentTours = () => {
       tourPlan: tour.tourPlan,
       faq: tour.faq,
       mainImageUrl: tour.mainImageUrl || tour.imageUrl || '',
-      galleryImageUrls: tour.galleryImageUrls || []
+      galleryImageUrls: tour.galleryImageUrls || [],
+      status: tour.status || 'aktif'
     })
     setEditingId(tour.id)
     setShowForm(true)
@@ -350,7 +355,8 @@ const ContentTours = () => {
                   tourPlan: [{ day: 1, content: '' }],
                   faq: [{ question: '', answer: '' }],
                   mainImageUrl: '',
-                  galleryImageUrls: []
+                  galleryImageUrls: [],
+                  status: 'aktif'
                 })
               }}
               className={styles.tourAddBtn} 
@@ -426,6 +432,34 @@ const ContentTours = () => {
                       >
                         <MdDelete size={18} />
                       </button>
+                      <select
+                        value={tour.status || 'aktif'}
+                        onChange={async (e) => {
+                          try {
+                            await updateDoc(doc(db, getCollectionName('traveltours', selectedLanguage), tour.id), {
+                              status: e.target.value
+                            })
+                            fetchTours()
+                            setSuccess('Durum güncellendi!')
+                            setTimeout(() => setSuccess(''), 3000)
+                          } catch (error) {
+                            console.error('Durum güncelleme hatası:', error)
+                            alert('Durum güncelleme başarısız oldu')
+                          }
+                        }}
+                        style={{
+                          padding: '4px 8px',
+                          border: '1px solid #ccc',
+                          borderRadius: '4px',
+                          backgroundColor: 'white',
+                          fontSize: '12px',
+                          marginLeft: '8px'
+                        }}
+                      >
+                        <option value="aktif">Aktif</option>
+                        <option value="pasif">Pasif</option>
+                        <option value="tükendi">Tükendi</option>
+                      </select>
                     </div>
                   </div>
                   <p className={styles.tourCardDesc}>{tour.description.substring(0, 150)}...</p>
@@ -729,7 +763,6 @@ const ContentTours = () => {
 
             {/* Tarih Aralığı */}
             <div className={styles.tourFormGroup}>
-              <label>Tarih Aralığı (İsteğe Bağlı)</label>
               <div className={styles.tourFormRow}>
                 <div className={styles.tourFormGroup}>
                   <label>Başlangıç Tarihi</label>
@@ -843,6 +876,19 @@ const ContentTours = () => {
                   )}
                 </div>
               ))}
+            </div>
+
+            {/* Status */}
+            <div className={styles.tourFormGroup}>
+              <label>Durum</label>
+              <select
+                value={formData.status}
+                onChange={e => handleInputChange('status', e.target.value)}
+              >
+                <option value="aktif">Aktif</option>
+                <option value="pasif">Pasif</option>
+                <option value="tükendi">Tükendi</option>
+              </select>
             </div>
           </div>
 

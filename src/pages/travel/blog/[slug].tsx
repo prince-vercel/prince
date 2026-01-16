@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { getCollectionName } from '../../../lib/localization'
 import i18n from '../../../i18n'
+import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
 
 interface Blog {
   id: string
@@ -21,6 +22,8 @@ interface Blog {
 }
 
 export default function BlogDetail() {
+    const { t, isReady } = useSafeTranslation()
+  
   const router = useRouter()
   const { slug } = router.query
   const [blog, setBlog] = useState<Blog | null>(null)
@@ -62,20 +65,27 @@ export default function BlogDetail() {
     <>
 
       {/* BREADCRUMB */}
-      <div className="paralax-container lg:py-20 py-16 relative overflow-hidden">
+       <div className="paralax-container lg:py-20 py-12 relative overflow-hidden" style={{ backgroundColor: '#d7b76e' }}>
         <div className="absolute inset-0 z-minus before:content-[''] before:absolute before:inset-0 before:bg-[#030610] before:bg-opacity-50">
-          <img src="/assets/images/backgrounds/breadcrumb-bg.webp" alt="breadcrumb" className="w-full h-full object-cover" width={100} height={100} />
         </div>
 
-        <Image src="/assets/images/illustration/breadcrunb__shape.png" alt="shape" className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]" width={100} height={100} />
+        <img
+          src="/assets/images/illustration/breadcrunb__shape.png"
+          alt="placeholder"
+          className="absolute bottom-0 left-0 z-1 lg:w-[12.5%] w-[20%]"
+        />
+
 
         <div className="container relative z-2">
           <nav>
-            <ol className="breadcrumb2 text-white">
-              <li><Link href="/travel">Anasayfa</Link></li>
-              <li><Link href="/travel/blog">Blog</Link></li>
+            <ol className="breadcrumb2" style={{ color: 'white' }}>
+              <li className="breadcrumb-item2">
+                <Link href="/travel" suppressHydrationWarning>{isReady ? t('travel.pages.breadcrumb.home') : ''}</Link>
+              </li>
+              <li className="breadcrumb-item2" suppressHydrationWarning> {isReady ? t('travel.pages.blog.breadcrumb') : ''}</li>
             </ol>
           </nav>
+
 
           <h2 className="l:text-[54px] mt-2 pb-2 lg:text-4xl md:text-2xl text-[30px] text-white leading-[1.3] font-medium max-w-[640px]">
             {blog.title}

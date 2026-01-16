@@ -148,36 +148,35 @@ export default function PackageList() {
 
       const pricedOk = !showPricedOnly || !tour.price || tour.price === 0
 
-      return destinationOk && durationOk && maxPeopleOk && priceOk && daysOk && dateOk && inclusionsOk && pricedOk
+      const statusOk = tour.status !== 'pasif'
+
+      return destinationOk && durationOk && maxPeopleOk && priceOk && daysOk && dateOk && inclusionsOk && pricedOk && statusOk
     })
   }, [tours, selectedDestinations, selectedDurations, selectedMaxPeople, priceRange, selectedDays, selectedStartDate, selectedEndDate, selectedInclusions, showPricedOnly])
 
   const uniqueDestinations = useMemo(() => {
-    const defaultDestinations = ["İstanbul", "Ankara", "İzmir", "Antalya", "Bursa"]
     const dbDestinations = new Set(tours.map(tour => tour.location).filter(Boolean))
-    const combined = new Set([...defaultDestinations, ...Array.from(dbDestinations)])
+    const combined = new Set([ ...Array.from(dbDestinations)])
     return Array.from(combined).sort()
   }, [tours])
 
   const uniqueDurations = useMemo(() => {
-    const defaultDurations = ["2 Gün 2 Gece", "3 Gün 3 Gece", "4 Gün 5 Gece", "5 Gün 6 Gece"]
     const dbDurations = new Set(tours.map(tour => tour.duration).filter(Boolean))
-    const combined = new Set([...defaultDurations, ...Array.from(dbDurations)])
+    const combined = new Set([...Array.from(dbDurations)])
     return Array.from(combined)
   }, [tours])
 
   const uniqueInclusions = useMemo(() => {
-    const defaultInclusions = ['Yemek Dahil', 'Alkollü', 'Alkolsüz', 'Teleferik', 'Feribot', 'Müze Girişi']
     const dbInclusions = new Set<string>()
     tours.forEach(tour => {
       if (tour.includedInPrice && typeof tour.includedInPrice === 'string') {
-        const items = tour.includedInPrice.split(',').map((item: string) => item.trim())
+        const items = tour.includedInPrice.split('\n').map((item: string) => item.trim())
         items.forEach((inc: string) => {
           if (inc) dbInclusions.add(inc)
         })
       }
     })
-    const combined = new Set([...defaultInclusions, ...Array.from(dbInclusions)])
+    const combined = new Set([ ...Array.from(dbInclusions)])
     return Array.from(combined).sort()
   }, [tours])
 
@@ -208,97 +207,10 @@ export default function PackageList() {
       {/* ===== CONTENT ===== */}
       <div className="relative">
         <div className="container mt-10">
-          <div className="grid grid-cols-12 lg:gap-12 ">
-
-            {/* LIST (AYNI STİL) */}
-            <div className="lg:col-span-8 col-span-12 grid md:grid-cols-2 grid-cols-1 gap-base">
-              {loadingTours ? (
-                <div className="col-span-2 text-center py-20">
-                  <p className="text-lg text-gray-500" suppressHydrationWarning>{isReady ? t('travel.pages.all.results.loading') : ''}</p>
-                </div>
-              ) : filteredPackages.length === 0 ? (
-                <div className="col-span-2 text-center py-20">
-                  <p className="text-lg text-gray-500" suppressHydrationWarning>{isReady ? t('travel.pages.all.results.noTours') : ''}</p>
-                </div>
-              ) : (
-                filteredPackages.map((tour) => (
-                  <div
-                    key={tour.id}
-                    className="group/card package-card-style-one"
-                    onMouseEnter={() => setHoveredCardId(tour.id)}
-                    onMouseLeave={() => setHoveredCardId(null)}
-                  >
-                    <div className="overflow-hidden relative" style={{ height: '280px', maxHeight: '280px' }}>
-                      <a href={`/travel/all/${tour.id}`} className="block w-full h-full">
-                        {tour.mainImageUrl || tour.imageUrl ? (
-                          <img
-                            src={tour.mainImageUrl || tour.imageUrl}
-                            alt={tour.title}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                            className="group-hover/card:scale-105 duration-300"
-                          />
-                        ) : (
-                          <div style={{ width: '100%', height: '100%' }} className="bg-gray-200 flex items-center justify-center">
-                            <span className="text-gray-400" suppressHydrationWarning>{isReady ? t('travel.pages.all.results.noImage') : ''}</span>
-                          </div>
-                        )}
-                      </a>
-                    </div>
-
-                    <h4 className="card-title-alpha lg:mt-6 mt-5" style={{ color: hoveredCardId === tour.id ? '#d7b76e' : 'black' }}>
-                      <a href={`/travel/all/${tour.id}`}>{tour.title}</a>
-                    </h4>
-
-                    <ul className="flex flex-wrap text-sm font-medium text-dark-2 mt-4 package-feature">
-                      {(tour.startDate || tour.endDate) ? (
-                        <li className="mr-4">
-                          <i className="bi bi-calendar-event text-primary-1 mr-2"></i>
-                          {tour.startDate && tour.endDate ? 
-                            `${new Date(tour.startDate).toLocaleDateString('tr-TR')} - ${new Date(tour.endDate).toLocaleDateString('tr-TR')}` :
-                            tour.startDate ? 
-                              `Başlangıç: ${new Date(tour.startDate).toLocaleDateString('tr-TR')}` :
-                              `Bitiş: ${new Date(tour.endDate).toLocaleDateString('tr-TR')}`
-                          }
-                        </li>
-                      ) : tour.days ? (
-                        <li className="mr-4">
-                          <i className="bi bi-calendar-event text-primary-1 mr-2"></i>
-                          {tour.days.slice(0, 2).join(', ')}
-                        </li>
-                      ) : null}
-
-                      {tour.location ? (
-                        <li className="mr-4">
-                          <i className="bi bi-geo-alt text-primary-1 mr-2"></i>
-                          {tour.location}
-                        </li>
-                      ) : null}
-
-                      <li className="mr-4">
-                        {tour.price ? (
-                          <>
-                            <i className="bi bi-currency-euro text-primary-1 mr-2"></i>
-                            {tour.price}€
-                          </>
-                        ) : (
-                          <>
-                            <i className="bi bi-currency-euro text-primary-1 mr-2"></i>
-                            {isReady ? t('travel.pages.all.results.getPrice') : ''}
-                          </>
-                        )}
-                      </li>
-                    </ul>
-
-                    <a href={`/travel/all/${tour.id}`} className="package-explore-btn" style={{ color: hoveredCardId === tour.id ? '#d7b76e' : 'black' }} suppressHydrationWarning>
-                      {isReady ? t('travel.pages.all.filters.exploreNow') : ''}
-                    </a>
-                  </div>
-                ))
-              )}
-            </div>
+          <div className="flex flex-col lg:flex-row lg:gap-12">
 
             {/* ===== FILTER SIDEBAR (AYNI STİL, SADECE BAĞLI) ===== */}
-            <div className="lg:col-span-4 col-span-12">
+            <div className="lg:w-1/3 w-full">
               <div className="pb-[10px] mb-8 border-b border-dark-1 border-opacity-10">
                 <h4 className="text-lg font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.title') : ''}</h4>
               </div>
@@ -376,22 +288,26 @@ export default function PackageList() {
               <aside>
                 <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.days') : ''}</h5>
                  <div className="pt-4 space-y-3">
-                  <div>
+                  <div className="flex items-center mb-2">
+                    <i className="bi bi-calendar mr-2 text-gray-500"></i>
+                    <span className="text-sm font-medium mr-2">Başlangıç:</span>
                     <input
                       type="date"
                       value={selectedStartDate}
                       onChange={(e) => setSelectedStartDate(e.target.value)}
-                      className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
-                      style={{ backgroundColor: '#fff', color: '#333' }}
+                      className="flex-1 h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
+                      style={{ backgroundColor: '#fff', color: '#333',borderRadius: '4px' }}
                     />
                   </div>
-                  <div>
+                  <div className="flex items-center">
+                    <i className="bi bi-calendar mr-2 text-gray-500"></i>
+                    <span className="text-sm font-medium mr-2">Bitiş:</span>
                     <input
                       type="date"
                       value={selectedEndDate}
                       onChange={(e) => setSelectedEndDate(e.target.value)}
-                      className="w-full h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
-                      style={{ backgroundColor: '#fff', color: '#333',marginTop: '8px' }}
+                      className="flex-1 h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
+                      style={{ backgroundColor: '#fff', color: '#333' }}
                     />
                   </div>
                 </div>
@@ -399,10 +315,7 @@ export default function PackageList() {
 
               <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
 
-             
-
-              <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
-
+            
               {/* INCLUSIONS */}
               <aside>
                 <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.inclusions') : ''}</h5>
@@ -424,6 +337,121 @@ export default function PackageList() {
                   ))}
                 </ul>
               </aside>
+            </div>
+
+            {/* LIST (AYNI STİL) */}
+            <div className="lg:w-2/3 w-full grid md:grid-cols-2 grid-cols-1 gap-base">
+              {loadingTours ? (
+                <div className="col-span-2 text-center py-20">
+                  <p className="text-lg text-gray-500" suppressHydrationWarning>{isReady ? t('travel.pages.all.results.loading') : ''}</p>
+                </div>
+              ) : filteredPackages.length === 0 ? (
+                <div className="col-span-2 text-center py-20">
+                  <p className="text-lg text-gray-500" suppressHydrationWarning>{isReady ? t('travel.pages.all.results.noTours') : ''}</p>
+                </div>
+              ) : (
+             filteredPackages.map((tour) => (
+  <div
+    key={tour.id}
+    className="wow fadeInUp overflow-hidden bg-white relative"
+    style={{ borderRadius: '16px' }}
+    onMouseEnter={() => setHoveredCardId(tour.id)}
+    onMouseLeave={() => setHoveredCardId(null)}
+  >
+    {/* IMAGE */}
+    <div className="relative" style={{ height: '250px' }}>
+      <a href={`/travel/all/${tour.id}`} className="block w-full h-full">
+    
+        {tour.mainImageUrl || tour.imageUrl ? (
+          <img
+            src={tour.mainImageUrl || tour.imageUrl}
+            alt={tour.title}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            className="hover:scale-105 duration-300"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+            <span className="text-gray-400" suppressHydrationWarning>
+              {isReady ? t('travel.pages.all.results.noImage') : ''}
+            </span>
+          </div>
+        )}
+      </a>
+
+      {tour.discount && (
+        <span
+          className="absolute top-4 left-4 bg-red-600 text-white font-bold px-3 py-1"
+          style={{ borderRadius: '8px' }}
+        >
+          -{tour.discount} €
+        </span>
+      )}
+
+      {tour.status === 'tükendi' && (
+        <span
+          className=" text-lg font-bold"
+          style={{
+            fontSize: '16px',
+            backgroundColor: '#f8d9d9',
+            color: '#cc0000',
+            padding: '4px 8px',
+            borderRadius: '4px',
+            opacity: 0.8,
+            position:'absolute',
+            right:'4%',
+            top:'5%',
+          }}
+        >
+          • TÜKENDİ
+        </span>
+      )}
+    </div>
+
+    {/* CONTENT */}
+    <div className="p-4 text-center">
+      <h3 className="font-bold text-xl mb-2">
+        {tour.title}
+      </h3>
+      <h4 className="font-extrabold text-lg">
+        {tour.country}
+      </h4>
+
+      <p className="text-sm font-semibold mt-1">
+        {tour.route}
+      </p>
+
+      <div className="mt-1 text-sm font-semibold">
+        <i className="bi bi-geo-alt mr-1"></i> {tour.location}
+      </div>
+
+      <div className="flex justify-between mt-2 text-xs font-semibold">
+        <span><strong>GİDİŞ:</strong> {tour.startDate ? new Date(tour.startDate).toLocaleDateString('tr-TR') : '-'}</span>
+        <span><strong>DÖNÜŞ:</strong> {tour.endDate ? new Date(tour.endDate).toLocaleDateString('tr-TR') : '-'}</span>
+      </div>
+    </div>
+
+    {/* PRICE BAR */}
+    <div
+      className="flex justify-center items-center gap-4 text-white"
+      style={{
+        background: '#d7b76e',
+        padding: '14px'
+      }}
+    >
+      {tour.oldPrice && (
+        <span className="line-through opacity-80 text-base">
+          {tour.oldPrice} €
+        </span>
+      )}
+      <span className="text-xl font-extrabold" style={{ fontSize: '20px' }}>
+        {tour.price ? `${tour.price} €` : 'Fiyat Al'}
+      </span>
+      
+    </div>
+  </div>
+))
+
+              )}
             </div>
           </div>
         </div>

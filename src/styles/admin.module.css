@@ -2735,3 +2735,72 @@
   background: #d1d5db;
   cursor: not-allowed;
 }
+.container {
+  max-width: 900px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d0d5dd;
+  font-size: 14px;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: #c42721;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background: #fafafa;
+}
+
+.cardTitle {
+  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.button {
+  padding: 6px 10px;
+  background: #c42721;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #b61d18;
+}

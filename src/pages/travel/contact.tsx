@@ -208,7 +208,7 @@ export default function ContactPage() {
                     <input
                       type="text"
                       name="name"
-                      placeholder={isReady ? t('travel.pages.contact.form.name') : ''}
+                      placeholder={`${isReady ? t('travel.pages.contact.form.name') : ''}*`}
                       value={formData.name}
                       onChange={handleInputChange}
                       className="input_style__primary"
@@ -220,7 +220,7 @@ export default function ContactPage() {
                     <input
                       type="email"
                       name="email"
-                      placeholder={isReady ? t('travel.pages.contact.form.email') : ''}
+                      placeholder={`${isReady ? t('travel.pages.contact.form.email') : ''}*`}
                       value={formData.email}
                       onChange={handleInputChange}
                       className="input_style__primary"
@@ -232,7 +232,7 @@ export default function ContactPage() {
                     <input
                       type="text"
                       name="subject"
-                      placeholder={isReady ? t('travel.pages.contact.form.subject') : ''}
+                      placeholder={`${isReady ? t('travel.pages.contact.form.subject') : ''}*`}
                       value={formData.subject}
                       onChange={handleInputChange}
                       className="input_style__primary"
@@ -245,7 +245,7 @@ export default function ContactPage() {
                       rows={6}
                       name="message"
                       className="input_style__primary"
-                      placeholder={isReady ? t('travel.pages.contact.form.message') : ''}
+                      placeholder={`${isReady ? t('travel.pages.contact.form.message') : ''}*`}
                       value={formData.message}
                       onChange={handleInputChange}
                       required

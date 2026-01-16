@@ -8,7 +8,8 @@ import {
   MdHelpOutline,
   MdQuestionAnswer,
   MdImage,
-  MdChat
+  MdChat,
+  MdPublic
 } from 'react-icons/md'
 import { AdminVisaLayout } from '@/src/components/AdminComponents/visa/AdminVisaLayout'
 import ContentVisa from '@/src/components/AdminComponents/visa/ContentVisa'
@@ -16,11 +17,12 @@ import FormAsks from '@/src/components/AdminComponents/visa/FormAsks'
 import ContentAdmin from '@/src/components/AdminComponents/visa/ContentChatBot'
 import ContentTestimonials from '@/src/components/AdminComponents/visa/ContentTestimonials'
 import ContentBlog from '@/src/components/AdminComponents/visa/ContentBlog'
+import ContentVisaTable from '@/src/components/AdminComponents/visa/ContentVisaTable'
 import ContentFaq from '@/src/components/AdminComponents/visa/ContentFaq'
 
 const ContentsPage = () => {
   const [activeTab, setActiveTab] = useState<
-     'reviews' | 'blog' | 'faq' | 'testimonials' | 'visa' | 'questions' | 'chatbot' | null
+     'reviews' | 'blog' | 'faq' | 'testimonials' | 'visa' | 'visa-table' | 'questions' | 'chatbot' | 'success-rates' | 'countries' | null
   >(null)
   const [hoveredBox, setHoveredBox] = useState<string | null>(null)
 
@@ -29,6 +31,21 @@ const ContentsPage = () => {
       id: 'visa',
       title: 'Vizelerimiz',
       icon: <MdImage size={40} />
+    },
+    {
+      id: 'visa-table',
+      title: 'Vize Tablosu',
+      icon: <MdArticle size={40} />
+    },
+     {
+      id: 'success-rates',
+      title: 'Vize Başarı Oranları',
+      icon: <MdStar size={40} />
+    },
+    {
+      id: 'countries',
+      title: 'Hizmet Verdiğimiz Ülkeler',
+      icon: <MdPublic size={40} />
     },
     {
       id: 'questions',
@@ -74,6 +91,12 @@ const ContentsPage = () => {
         return <FormAsks/>
       case 'visa':
         return <ContentVisa />
+      case 'visa-table':
+        return <ContentVisaTable />
+      case 'success-rates':
+        return <div>Yakında eklenecek: Vize Başarı Oranları yönetimi</div>
+      case 'countries':
+        return <div>Yakında eklenecek: Hizmet Verdiğimiz Ülkeler yönetimi</div>
       default:
         return null
     }

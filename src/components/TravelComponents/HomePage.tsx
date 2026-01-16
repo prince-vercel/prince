@@ -178,7 +178,7 @@ export default function TravelHomePage() {
       <div className="hero_style__start" style={{ marginTop: '60px' }}>
         <div className="lg:grid grid-cols-12 xl:gap-base gap-3 mx-auto xl:px-base px-3 overflow-hidden">
 
-          <div className="lg:col-span-3 md:col-span-6 hidden lg:flex flex-col ">
+                   <div className="lg:col-span-3 md:col-span-6 hidden lg:flex flex-col gap-1">
             {banners.length > 0 ? (
               banners.slice(0, 3).map((banner, index) => (
                 <div key={banner.id} className="group hero-card-sm" style={{ height: '260px', marginTop: index > 0 ? '15px' : '0' }}>
@@ -212,7 +212,7 @@ export default function TravelHomePage() {
           >
             <form className="w-full max-w-[570px]" onSubmit={handleSearchSubmit}>
               <div
-                className="lg:py-[50px] py-base lg:px-14 md:px-10 px-base mx-3 text-center backdrop-blur-[21px]"
+                className="lg:py-[40px] py-base lg:px-14 md:px-10 px-base mx-3 text-center backdrop-blur-[21px]"
                 style={{
                   background:
                     'linear-gradient(152.97deg, rgba(255,255,255,0.36) 0%, rgba(255,255,255,0.12) 100%)',
@@ -253,12 +253,10 @@ export default function TravelHomePage() {
                     value={date ? date : (isReady ? t('travel.homePage.search.datePlaceholder') : '')}
                     readOnly
                     className="
-      relative z-0 w-full bg-white outline-0 cursor-pointer
-      h-14 lg:h-17
-      pl-12 lg:pl-[60px] pr-3
-    "
-                    suppressHydrationWarning
-                  />
+                relative z-0 w-full bg-white outline-0 cursor-pointer
+                h-14 lg:h-17
+                pl-12 lg:pl-[60px] pr-3
+              "  suppressHydrationWarning/>
 
                   <input
                     ref={dateRef}
@@ -267,11 +265,10 @@ export default function TravelHomePage() {
                     onChange={(e) => setDate(e.target.value)}
                     onClick={(e) => e.currentTarget.showPicker?.()}
                     className="
-      absolute top-0 left-0 z-20 w-full h-full
-      opacity-0 cursor-pointer
-      pl-12 lg:pl-[60px]
-    "
-                  />
+                    absolute top-0 left-0 z-20 w-full h-full
+                    opacity-0 cursor-pointer
+                    pl-12 lg:pl-[60px]
+                  "  />
                 </div>
 
 
@@ -316,6 +313,29 @@ export default function TravelHomePage() {
           </div>
 
         </div>
+      </div>
+
+      {/* ALT BANNERLAR */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:gap-base gap-3 mx-auto xl:px-base px-3 overflow-hidden mt-3">
+        {banners.length > 6 ? (
+          banners.slice(6, 10).map((banner, index) => (
+            <div key={banner.id} className="group hero-card-sm relative overflow-hidden" style={{ height: '260px' }}>
+              <a href="#">
+                <img
+                  src={banner.imageUrl}
+                  alt={banner.title}
+                  className="h-full w-full object-cover group-hover:scale-110 duration-500"
+                />
+                <div className="absolute w-full bottom-6 text-center text-white">
+                  <h4 className="font-bold text-lg">{banner.title}</h4>
+                  <div className="h-[3px] w-9 bg-white rounded-md mx-auto mt-2"></div>
+                </div>
+              </a>
+            </div>
+          ))
+        ) : (
+          <></>
+        )}
       </div>
 
 
@@ -386,66 +406,73 @@ export default function TravelHomePage() {
               </div>
             ) : (
               packages.map((item, index) => (
-                <div key={item.id} className="group/card package-card-style-one wow fadeInUp" data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}>
-                  <div className="overflow-hidden relative" style={{ height: '280px', maxHeight: '280px' }}>
+                <div
+                  key={item.id}
+                  className="wow fadeInUp overflow-hidden bg-white"
+                  style={{ borderRadius: '16px' }}
+                  data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}
+                >
+                  {/* IMAGE */}
+                  <div className="relative" style={{ height: '250px' }}>
                     <a href={`/travel/all/${item.id}`} className="block w-full h-full">
-                      {item.mainImageUrl || item.imageUrl ? (
-                        <img
-                          src={item.mainImageUrl || item.imageUrl}
-                          alt={item.title}
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                          className="group-hover/card:scale-105 duration-300"
-                        />
-                      ) : (
-                        <div style={{ width: '100%', height: '100%' }} className="bg-gray-200 flex items-center justify-center">
-                          <span className="text-gray-400" suppressHydrationWarning>{isReady ? t('travel.homePage.packages.noImage') : ''}</span>
-                        </div>
-                      )}
+                      <img
+                        src={item.mainImageUrl || item.imageUrl}
+                        alt={item.title}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        className="hover:scale-105 duration-300"
+                      />
                     </a>
-                    {<span className="absolute top-5 right-5 text-sm text-white rounded-full bg-[#219FFF] py-1 px-3" suppressHydrationWarning>{isReady ? t('travel.homePage.packages.popular') : ''}</span>}
+
+                    {item.discount && (
+                      <span
+                        className="absolute top-4 left-4 bg-red-600 text-white font-bold px-3 py-1"
+                        style={{ borderRadius: '8px' }}
+                      >
+                        -{item.discount} €
+                      </span>
+                    )}
                   </div>
 
-                  <h3 className="card-title-alpha group-hover/card:text-primary-1 lg:mt-6 mt-5">
-                    <a href={`/travel/all/${item.id}`}>{item.title}</a>
-                  </h3>
+                  {/* CONTENT */}
+                  <div className="p-4 text-center">
+                    <h3 className="font-bold text-xl mb-2">
+                      {item.title}
+                    </h3>
+                    <h4 className="font-extrabold text-lg">
+                      {item.country}
+                    </h4>
 
-                  <ul className="flex flex-wrap text-sm font-medium text-dark-2 mt-4 package-feature">
-                    {item.days ? (
-                      <li className="mr-4">
-                        <i className="bi bi-calendar-event text-primary-1 mr-2"></i>
-                        {Array.isArray(item.days) ? item.days.slice(0, 2).join(', ') : item.days}
-                      </li>
-                    ) : null}
+                    <p className="text-sm font-semibold mt-1">
+                      {item.route}
+                    </p>
 
-                    {item.location ? (
-                      <li className="mr-4">
-                        <i className="bi bi-geo-alt text-primary-1 mr-2"></i>
-                        {item.location}
-                      </li>
-                    ) : null}
+                    <div className="mt-1 text-sm font-semibold">
+                      <i className="bi bi-geo-alt mr-1"></i> {item.location}
+                    </div>
 
-                    <li className="mr-4">
-                      {item.price ? (
-                        <>
-                          <i className="bi bi-currency-euro text-primary-1 mr-2"></i>
-                          {item.price}€
-                        </>
-                      ) : (
-                        <>
-                          <i className="bi bi-currency-euro text-primary-1 mr-2"></i>
-                          {isReady ? t('travel.homePage.packages.getPrice') : ''}
-                        </>
-                      )}
-                    </li>
-                  </ul>
-                  <a href={`/travel/all/${item.id}`} className="package-explore-btn group/btn" suppressHydrationWarning>
-                    <span className="mr-2" suppressHydrationWarning>{isReady ? t('travel.homePage.packages.viewDetails') : ''}</span>
-                    <svg className="group-hover/btn:translate-x-2 duration-200" width="27" height="14" viewBox="0 0 27 14" fill="none">
-                      <path d="M0.217443 6.25H18.4827V7.75H0.217443Z" fill="currentColor" />
-                      <path d="M20.7 12.28L25.05 7.93C25.56 7.42 25.56 6.58 25.05 6.07L20.7 1.72"
-                        stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </a>
+                    <div className="flex justify-between mt-2 text-xs font-semibold">
+                      <span><strong>GİDİŞ:</strong> {item.startDate}</span>
+                      <span><strong>DÖNÜŞ:</strong> {item.endDate}</span>
+                    </div>
+                  </div>
+
+                  {/* PRICE BAR */}
+                  <div
+                    className="flex justify-center items-center gap-4 text-white"
+                    style={{
+                      background: '#d7b76e',
+                      padding: '14px'
+                    }}
+                  >
+                    {item.oldPrice && (
+                      <span className="line-through opacity-80 text-base">
+                        {item.oldPrice} €
+                      </span>
+                    )}
+                    <span className="text-xl font-extrabold" style={{ fontSize: '25px' }}>
+                      {item.price} €
+                    </span>
+                  </div>
                 </div>
               ))
             )}
