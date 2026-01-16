@@ -101,6 +101,16 @@
         }
       ]
     },
+    "countrySelection": {
+      "title": "Start Your Visa Application",
+      "description": "Select the country you want to go to, and suitable visa types will be displayed",
+      "countryLabel": "Where is the journey to?",
+      "purposeLabel": "What is your travel purpose?",
+      "selectCountry": "Select Country",
+      "selectPurpose": "Select Travel Purpose",
+      "selectCountryFirst": "Please Select Country",
+      "startButton": "Start Application"
+    },
     "services": {
       "title": "Prince that meets all your travel needs\nunder one roof for you to explore!",
       "tourist": {

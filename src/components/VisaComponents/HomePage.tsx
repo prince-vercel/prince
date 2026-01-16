@@ -9,6 +9,7 @@ import '../../i18n'
 import AwardsSection from './AwardsSection'
 import ComparisonSection from './ComparisonSection'
 import CountryMarquee from './CountryMarquee'
+import CountrySelectionForm from './CountrySelectionForm'
 import FeaturedImageBlock from './FeaturedImageBlock'
 import HeroSection from './HeroSection'
 import ReferencesSection from './ReferencesSection'
@@ -38,6 +39,7 @@ export default function VisaHomePage() {
   return (
     <>
       <HeroSection />
+      <CountrySelectionForm />
       <CountryMarquee />
       <ServicesSection />
       <FeaturedImageBlock />
