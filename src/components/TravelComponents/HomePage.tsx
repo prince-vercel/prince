@@ -13,6 +13,7 @@ import '../../i18n'
 import i18n from 'i18next'
 import { getCollectionName } from '@/src/lib/localization'
 import Chatbot from './Chatbot'
+import CountryMarquee from '../VisaComponents/CountryMarquee'
 
 const normalizeText = (text: string) => {
   return text
@@ -372,7 +373,14 @@ export default function TravelHomePage() {
         </div>
 
         <div className="container">
-
+<section>
+  <div className="cs_section_heading cs_style_1 text-center " style={{ marginTop: '5vh' }}>
+            <h2 className="cs_section_title cs_fs_72 m-0 " suppressHydrationWarning>
+Dilinizi Konuşuyoruz !
+            </h2>
+          </div>
+  <CountryMarquee/>
+</section>
           <div className="text-center lg:pb-[60px] pb-[40px]">
             <h5 className="section-sub-title-v1" suppressHydrationWarning>{isReady ? t('travel.homePage.packages.subtitle') : ''}</h5>
             <h2 className="section-title-v1" suppressHydrationWarning>{isReady ? t('travel.homePage.packages.title') : ''}</h2>

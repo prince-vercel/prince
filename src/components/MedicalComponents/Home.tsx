@@ -15,6 +15,7 @@ import { useSafeTranslation } from '../../hooks/useSafeTranslation'
 import '../../i18n'
 import i18n from 'i18next'
 import { getCollectionName } from '@/src/lib/localization'
+import CountryMarquee from '../VisaComponents/CountryMarquee'
 
 const Chatbot = dynamic(() => import('./Chatbot'), { ssr: false })
 
@@ -341,7 +342,7 @@ export default function HomePage() {
                           src={item.icon}
                           alt={item.title}
                           width={48}
-                          height={48}
+                          height={40}
                           style={{
                             filter: 'brightness(0) saturate(100%) invert(0%)',
                             transition: 'filter 0.3s ease'
@@ -447,7 +448,14 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
+<section>
+  <div className="cs_section_heading cs_style_1 text-center " style={{ marginTop: '8vh' }}>
+            <h2 className="cs_section_title cs_fs_72 m-0 " suppressHydrationWarning>
+Dilinizi Konuşuyoruz !
+            </h2>
+          </div>
+  <CountryMarquee/>
+</section>
       {/* RESULTS */}
       <section>
         <div className="container" style={{ margin: '12vh' }}>
