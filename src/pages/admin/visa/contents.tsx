@@ -19,6 +19,8 @@ import ContentTestimonials from '@/src/components/AdminComponents/visa/ContentTe
 import ContentBlog from '@/src/components/AdminComponents/visa/ContentBlog'
 import ContentVisaTable from '@/src/components/AdminComponents/visa/ContentVisaTable'
 import ContentFaq from '@/src/components/AdminComponents/visa/ContentFaq'
+import ContentSucces from '@/src/components/AdminComponents/visa/ContentSucces'
+import ContentCountries from '@/src/components/AdminComponents/visa/ContentCountries'
 
 const ContentsPage = () => {
   const [activeTab, setActiveTab] = useState<
@@ -94,9 +96,9 @@ const ContentsPage = () => {
       case 'visa-table':
         return <ContentVisaTable />
       case 'success-rates':
-        return <div>Yakında eklenecek: Vize Başarı Oranları yönetimi</div>
+        return <ContentSucces/>
       case 'countries':
-        return <div>Yakında eklenecek: Hizmet Verdiğimiz Ülkeler yönetimi</div>
+        return <ContentCountries/>
       default:
         return null
     }
