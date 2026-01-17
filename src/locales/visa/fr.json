@@ -101,6 +101,16 @@
         }
       ]
     },
+    "countrySelection": {
+      "title": "Commencez votre demande de visa",
+      "description": "Sélectionnez le pays où vous souhaitez vous rendre et les types de visa appropriés s'afficheront",
+      "countryLabel": "Où allez-vous voyager?",
+      "purposeLabel": "Quel est le but de votre voyage?",
+      "selectCountry": "Sélectionnez le pays",
+      "selectPurpose": "Sélectionnez le but du voyage",
+      "selectCountryFirst": "Veuillez sélectionner le pays",
+      "startButton": "Commencer la demande"
+    },
     "services": {
       "title": "Prince répond à tous vos besoins de voyage\nsous un même toit pour vous permettre d’explorer !",
       "tourist": {

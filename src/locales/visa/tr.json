@@ -101,6 +101,16 @@
         }
       ]
     },
+    "countrySelection": {
+      "title": "Vize Başvurunuza Başlayın",
+      "description": "Gitmek istediğiniz ülkeyi seçin, size uygun vize türleri görüntülensin",
+      "countryLabel": "Yolculuk Nereye?",
+      "purposeLabel": "Seyahat Amacınız Nedir?",
+      "selectCountry": "Ülke Seçiniz",
+      "selectPurpose": "Seyahat Amacı Seçiniz",
+      "selectCountryFirst": "Lütfen Ülke Seçiniz",
+      "startButton": "Başvuruyu Başlat"
+    },
     "services": {
       "title": "Keşfetmeniz için tüm seyahat ihtiyaçlarınızı\ntek bir çatı altında karşılayan Prince !",
       "tourist": {
