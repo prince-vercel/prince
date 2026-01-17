@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     await transporter.sendMail({
       from: `"Prince" <${process.env.EMAIL_USER}>`,
       to,
-      subject: `Prince'ten Cevap: ${subject}`,
+      subject: `Prince'ten: ${subject}`,
       html: `
         <p>Merhaba <b>${recipientName}</b>,</p>
         <p>${message}</p>

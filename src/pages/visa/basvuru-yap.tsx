@@ -253,6 +253,27 @@ const completedStep = (stepNum: number) => {
     return filled
   }
 
+  // Email içeriği oluşturma
+  const generateEmailContent = (values: AnswersState): string => {
+    let content = '<h2>Yeni Vize Başvurusu</h2><p>Aşağıda form detayları bulunmaktadır:</p><ul>'
+
+    questions.forEach((question) => {
+      const answer = values[question.id]
+      const additionalAnswer = values[`${question.id}__extra`]
+
+      if (answer) {
+        let displayAnswer = Array.isArray(answer) ? answer.join(', ') : answer
+        if (additionalAnswer) {
+          displayAnswer += ` (${additionalAnswer})`
+        }
+        content += `<li><strong>${question.questionText}:</strong> ${displayAnswer}</li>`
+      }
+    })
+
+    content += '</ul><p>Bu bildirim otomatik olarak gönderilmiştir.</p>'
+    return content
+  }
+
   const renderQuestion = (q: Question) => {
     const v = answers[q.id]
 
@@ -526,6 +547,21 @@ const completedStep = (stepNum: number) => {
       }
 
       await addDoc(collection(db, 'visaforms'), payload)
+
+      // Email gönderme
+      const emailContent = generateEmailContent(answers)
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: 'happencodedestek@gmail.com',
+          subject: 'Yeni Vize Başvurusu',
+          message: emailContent,
+          recipientName: 'Prince'
+        }),
+      })
 
       if ((window as any).Swal) {
         ;(window as any).Swal.fire({

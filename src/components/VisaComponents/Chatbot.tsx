@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/immutability */
 import React, { useEffect, useState } from 'react';
 
 import { db } from '@/src/lib/firebase';
@@ -10,6 +12,10 @@ interface ChatStep {
     id: string;
     text: string;
     options?: { label: string; next: string }[];
+    redirect?: {
+        type: 'route' | 'whatsapp' | 'instagram' | 'url';
+        value: string;
+    };
 }
 
 const Chatbot: React.FC = () => {
@@ -43,6 +49,18 @@ const Chatbot: React.FC = () => {
         setHistory([...history, next]);
     };
 
+    const handleRedirect = (redirect: { type: string; value: string }) => {
+        if (redirect.type === 'route') {
+            window.location.href = redirect.value;
+        } else if (redirect.type === 'whatsapp') {
+            window.open(`https://wa.me/${redirect.value}`, '_blank');
+        } else if (redirect.type === 'instagram') {
+            window.open(`https://instagram.com/${redirect.value}`, '_blank');
+        } else if (redirect.type === 'url') {
+            window.open(redirect.value, '_blank');
+        }
+    };
+
     if (loading) {
         return (
             <div className="visa-chatbotBox">
@@ -62,13 +80,18 @@ const Chatbot: React.FC = () => {
                     return (
                         <div key={stepId + idx} className="visa-chatMessage">
                             <div className="visa-bot">{step.text}</div>
-                            {idx === history.length - 1 && step.options && (
+                            {idx === history.length - 1 && (step.options || step.redirect) && (
                                 <div className="visa-options">
-                                    {step.options.map(opt => (
+                                    {step.options && step.options.map(opt => (
                                         <button key={opt.next} onClick={() => handleOption(opt.next)} className="visa-optionBtn">
                                             {opt.label}
                                         </button>
                                     ))}
+                                    {step.redirect && (
+                                            <button onClick={() => step.redirect && handleRedirect(step.redirect)} className="visa-optionBtn redirectBtn">
+                                             <i className="bi bi-arrow-right"></i>
+                                        </button>
+                                    )}
                                 </div>
                             )}
                         </div>

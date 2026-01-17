@@ -219,6 +219,22 @@ export default function AppointmentSection() {
 
     try {
       await addDoc(collection(db, 'medicalforms'), payload)
+
+      // Email gönderme
+      const emailContent = generateEmailContent(formValues)
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: 'happencodedestek@gmail.com',
+          subject: 'Yeni Medikal Form Başvurusu',
+          message: emailContent,
+          recipientName: 'Prince'
+        }),
+      })
+
       setShowSuccess(true)
       setTimeout(() => setShowSuccess(false), 3000)
 
@@ -244,6 +260,27 @@ export default function AppointmentSection() {
   const getStepName = (stepNumber: number): string => {
     const step = steps.find((s) => s.number === stepNumber)
     return step ? step.name : `Adım ${stepNumber}`
+  }
+
+  // Email içeriği oluşturma
+  const generateEmailContent = (values: Record<string, any>): string => {
+    let content = '<h2>Yeni Medikal Form Başvurusu</h2><p>Aşağıda form detayları bulunmaktadır:</p><ul>'
+
+    questions.forEach((question) => {
+      const answer = values[question.id]
+      const additionalAnswer = values[`${question.id}_additional`]
+
+      if (answer) {
+        let displayAnswer = Array.isArray(answer) ? answer.join(', ') : answer
+        if (additionalAnswer) {
+          displayAnswer += ` (${additionalAnswer})`
+        }
+        content += `<li><strong>${question.questionText}:</strong> ${displayAnswer}</li>`
+      }
+    })
+
+    content += '</ul><p>Bu bildirim otomatik olarak gönderilmiştir.</p>'
+    return content
   }
 
   // Soru input render function

@@ -28,7 +28,8 @@ const ContentAdmin: React.FC = () => {
             return {
               id: typeof d.id === 'string' ? d.id : '',
               text: typeof d.text === 'string' ? d.text : '',
-              options: Array.isArray(d.options) ? d.options : []
+              options: Array.isArray(d.options) ? d.options : [],
+              redirect: d.redirect && typeof d.redirect === 'object' ? d.redirect : undefined
             };
           });
           setQuestions(data);
@@ -54,6 +55,10 @@ const ContentAdmin: React.FC = () => {
           setImportError('JSON formatı hatalı: Her soruda id ve text alanı olmalı.');
           return;
         }
+        if (q.redirect && typeof q.redirect !== 'object') {
+          setImportError('JSON formatı hatalı: redirect alanı obje olmalı.');
+          return;
+        }
       }
       setQuestions(imported);
     } catch (err: any) {
@@ -74,7 +79,7 @@ const ContentAdmin: React.FC = () => {
   const handleAddQuestion = () => {
     setQuestions([
       ...questions,
-      { id: generateId(), text: '', options: [{ label: '', next: '' }] }
+      { id: generateId(), text: '', options: [{ label: '', next: '' }], redirect: undefined }
     ]);
   };
 
@@ -116,12 +121,39 @@ const ContentAdmin: React.FC = () => {
     setQuestions(updated);
   };
 
+  // Update redirect
+  const handleRedirectChange = (qIdx: number, field: 'type' | 'value', value: string) => {
+    const updated = [...questions];
+    if (!updated[qIdx].redirect) {
+      updated[qIdx].redirect = { type: 'url', value: '' };
+    }
+    if (field === 'type') {
+      updated[qIdx].redirect!.type = value as 'route' | 'whatsapp' | 'instagram' | 'url';
+    } else {
+      updated[qIdx].redirect!.value = value;
+    }
+    setQuestions(updated);
+  };
+
+  // Remove redirect
+  const handleRemoveRedirect = (qIdx: number) => {
+    const updated = [...questions];
+    updated[qIdx].redirect = undefined;
+    setQuestions(updated);
+  };
+
   // Save questions to Firestore
   const handleSave = async () => {
     if (!questions.length) return;
     const collectionName = getCollectionName('medicalchatbotQuestions', selectedLanguage)
     await Promise.all(
-      questions.map(q => setDoc(doc(db, collectionName, q.id), q))
+      questions.map(q => {
+        const dataToSave = { ...q };
+        if (dataToSave.redirect === undefined) {
+          delete dataToSave.redirect;
+        }
+        return setDoc(doc(db, collectionName, q.id), dataToSave);
+      })
     );
     alert('Sorular kaydedildi!');
   };
@@ -151,7 +183,8 @@ const ContentAdmin: React.FC = () => {
                   return {
                     id: typeof d.id === 'string' ? d.id : '',
                     text: typeof d.text === 'string' ? d.text : '',
-                    options: Array.isArray(d.options) ? d.options : []
+                    options: Array.isArray(d.options) ? d.options : [],
+                    redirect: d.redirect && typeof d.redirect === 'object' ? d.redirect : undefined
                   };
                 });
                 setQuestions(data);
@@ -232,6 +265,35 @@ const ContentAdmin: React.FC = () => {
                 </ul>
                 <button className={styles.adminChatbotBtn} onClick={() => handleAddOption(qIdx)} style={{ marginTop: 4 }}>Seçenek Ekle</button>
                 <div style={{ color: '#888', fontSize: 13, marginTop: 2 }}>Buton metni ve tıklanınca geçilecek adım ID&apos;si girin.</div>
+              </div>
+              <div style={{ marginLeft: 12, marginTop: 6, background: '#f0f0f0', borderRadius: 6, padding: 8 }}>
+                <b>Yönlendirme (İsteğe Bağlı):</b>
+                {q.redirect ? (
+                  <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 4 }}>
+                    <select
+                      className={styles.adminInputCustom}
+                      value={q.redirect.type}
+                      onChange={e => handleRedirectChange(qIdx, 'type', e.target.value)}
+                      style={{ width: 120 }}
+                    >
+                      <option value="route">Sayfa Route</option>
+                      <option value="whatsapp">WhatsApp</option>
+                      <option value="instagram">Instagram</option>
+                      <option value="url">URL</option>
+                    </select>
+                    <input
+                      className={styles.adminInputCustom}
+                      value={q.redirect.value}
+                      placeholder="Yönlendirme değeri (örn: /contact, https://wa.me/..., @username)"
+                      onChange={e => handleRedirectChange(qIdx, 'value', e.target.value)}
+                      style={{ flex: 1 }}
+                    />
+                    <button className={styles.adminChatbotBtn} onClick={() => handleRemoveRedirect(qIdx)} title="Yönlendirmeyi Sil">Sil</button>
+                  </div>
+                ) : (
+                  <button className={styles.adminChatbotBtn} onClick={() => handleRedirectChange(qIdx, 'type', 'url')} style={{ marginTop: 4 }}>Yönlendirme Ekle</button>
+                )}
+                <div style={{ color: '#888', fontSize: 13, marginTop: 2 }}>Bu adımda sohbet bittiğinde yönlendirme butonu göster.</div>
               </div>
             </div>
           ))

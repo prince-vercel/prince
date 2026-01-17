@@ -327,7 +327,7 @@ export default function TravelHomePage() {
                   className="h-full w-full object-cover group-hover:scale-110 duration-500"
                 />
                 <div className="absolute w-full bottom-6 text-center text-white">
-                  <h4 className="font-bold text-lg">{banner.title}</h4>
+                  <h4 className="font-bold text-lg text-white">{banner.title}</h4>
                   <div className="h-[3px] w-9 bg-white rounded-md mx-auto mt-2"></div>
                 </div>
               </a>

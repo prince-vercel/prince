@@ -98,6 +98,25 @@ const Form = () => {
   const filledFields = Object.values(formData).filter(val => val !== '').length
   const progressPercent = requiredQuestions.length > 0 ? Math.round((filledFields / requiredQuestions.length) * 100) : 0
 
+  // Email içeriği oluşturma
+  const generateEmailContent = (values: Record<string, string>): string => {
+    let content = '<h2>Yeni Seyahat Form Başvurusu</h2><p>Aşağıda form detayları bulunmaktadır:</p><ul>'
+
+    questions.forEach((question) => {
+      const answer = values[question.id]
+      if (answer) {
+        let displayAnswer = answer
+        if (question.type === 'checkbox') {
+          displayAnswer = answer.split(',').filter(v => v).join(', ')
+        }
+        content += `<li><strong>${question.questionText}:</strong> ${displayAnswer}</li>`
+      }
+    })
+
+    content += '</ul><p>Bu bildirim otomatik olarak gönderilmiştir.</p>'
+    return content
+  }
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -119,6 +138,21 @@ const Form = () => {
       }
 
       await addDoc(collection(db, 'travelforms'), submitData)
+
+      // Email gönderme
+      const emailContent = generateEmailContent(formData)
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: 'happencodedestek@gmail.com',
+          subject: 'Yeni Turizm Form Başvurusu',
+          message: emailContent,
+          recipientName: 'Prince'
+        }),
+      })
 
       setSuccess(true)
       // Reset form data

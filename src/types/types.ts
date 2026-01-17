@@ -179,4 +179,8 @@ export interface ChatbotStep {
   id: string;
   text: string;
   options?: ChatbotOption[];
+  redirect?: {
+    type: 'route' | 'whatsapp' | 'instagram' | 'url';
+    value: string;
+  };
 }
