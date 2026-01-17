@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     })
 
     await transporter.sendMail({
-      from: `"HappenCode Medical" <${process.env.EMAIL_USER}>`,
+      from: `"Prince" <${process.env.EMAIL_USER}>`,
       to,
       subject: `Prince'ten Cevap: ${subject}`,
       html: `

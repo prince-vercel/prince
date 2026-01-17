@@ -1,10 +1,16 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import Head from 'next/head'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
-import '../../i18n'
+import i18n from '@/src/i18n'
+import '@/src/i18n'
 import '../../styles/visa/AwardsSection.css'
+import { db } from '../../lib/firebase'
+import { collection, getDocs, query, orderBy } from 'firebase/firestore'
+import { getCollectionName } from '@/src/lib/localization'
 
 interface Award {
   title: string
@@ -14,16 +20,44 @@ interface Award {
 
 export default function AwardsSection() {
   const { t, isReady } = useSafeTranslation()
+  const [awards, setAwards] = useState<Award[]>([])
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
 
-  const awards: Award[] = useMemo(() => {
-    if (!isReady) return []
-    const awardsData = t('visa.awards.list', { returnObjects: true }) as Array<{ title: string; image: string }>
-    return awardsData.map((award) => ({
-      title: award.title,
-      image: award.image,
-      status: 'approved' as const
-    }))
-  }, [t, isReady])
+  // Update selected language when i18n changes
+  useEffect(() => {
+    const handleLanguageChange = (lng: string) => {
+      setSelectedLanguage(lng as 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru')
+    }
+
+    // Set initial language
+    setSelectedLanguage(i18n.language as 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru')
+
+    // Listen for language changes
+    i18n.on('languageChanged', handleLanguageChange)
+
+    return () => {
+      i18n.off('languageChanged', handleLanguageChange)
+    }
+  }, [])
+
+  // Fetch awards from database
+  useEffect(() => {
+    const fetchAwards = async () => {
+      try {
+        const q = query(collection(db, getCollectionName('visacontents', selectedLanguage), 'images', 'visa'), orderBy('createdAt', 'desc'))
+        const querySnapshot = await getDocs(q)
+        const awardsList = querySnapshot.docs.map(doc => ({
+          title: doc.data().title,
+          image: doc.data().imageUrl,
+          status: 'approved' as const
+        })) as Award[]
+        setAwards(awardsList)
+      } catch (err: any) {
+        console.error('Error fetching awards:', err)
+      }
+    }
+    fetchAwards()
+  }, [selectedLanguage])
 
   // HTML'deki script'leri başlat: Swiper ve LightGallery
   useEffect(() => {

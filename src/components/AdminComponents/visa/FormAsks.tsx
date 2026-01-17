@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   collection,
   addDoc,
@@ -13,7 +13,7 @@ import {
 } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
-import { MdDelete, MdEdit, MdSave, MdAdd } from 'react-icons/md'
+import { MdDelete, MdEdit, MdSave, MdAdd, MdUpload } from 'react-icons/md'
 import LanguageSelector from '../../LanguageSelector'
 import { getCollectionName } from '../../../lib/localization'
 
@@ -47,6 +47,8 @@ const FormAsks = () => {
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
   const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru' | 'es' | 'ar' | 'ru'>('tr')
 
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
   const [formData, setFormData] = useState({
     questionText: '',
     type: 'select' as 'select' | 'checkbox' | 'text' | 'date' | 'radio',
@@ -61,7 +63,7 @@ const FormAsks = () => {
 
   const loadQuestions = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, getCollectionName('travelquestions', selectedLanguage)))
+      const querySnapshot = await getDocs(collection(db, getCollectionName('visaquestions', selectedLanguage)))
       const questionsData: Question[] = []
       querySnapshot.forEach((doc) => {
         questionsData.push({
@@ -79,7 +81,7 @@ const FormAsks = () => {
 
   const loadSteps = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, getCollectionName('travelsteps', selectedLanguage)))
+      const querySnapshot = await getDocs(collection(db, getCollectionName('visasteps', selectedLanguage)))
       const stepsData: StepName[] = []
       querySnapshot.forEach((doc) => {
         stepsData.push({
@@ -102,6 +104,71 @@ const FormAsks = () => {
   const showNotification = (type: 'success' | 'error', message: string) => {
     setNotification({ type, message })
     setTimeout(() => setNotification(null), 3000)
+  }
+
+  const handleImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    if (!file.name.endsWith('.json')) {
+      showNotification('error', 'Lütfen geçerli bir JSON dosyası seçiniz')
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = async (e) => {
+      try {
+        const jsonData = JSON.parse(e.target?.result as string)
+        if (!Array.isArray(jsonData)) {
+          showNotification('error', 'JSON dosyası bir dizi içermelidir')
+          return
+        }
+
+        setLoading(true)
+        let successCount = 0
+        let errorCount = 0
+
+        for (const item of jsonData) {
+          try {
+            const questionData: any = {
+              questionText: item.questionText,
+              type: item.type,
+              options: item.options || [],
+              step: item.step,
+              required: item.required !== undefined ? item.required : true,
+              order: item.order || 1,
+            }
+
+            if (item.triggerValue) questionData.triggerValue = item.triggerValue
+            if (item.additionalInputLabel) questionData.additionalInputLabel = item.additionalInputLabel
+            if (item.additionalInputType) questionData.additionalInputType = item.additionalInputType
+
+            await addDoc(collection(db, getCollectionName('visaquestions', selectedLanguage)), {
+              ...questionData,
+              createdAt: new Date(),
+            })
+            successCount++
+          } catch (error) {
+            console.error('Soru ekleme hatası:', error)
+            errorCount++
+          }
+        }
+
+        if (successCount > 0) {
+          showNotification('success', `${successCount} soru başarıyla içe aktarıldı${errorCount > 0 ? `, ${errorCount} hata` : ''}`)
+          loadQuestions()
+        } else {
+          showNotification('error', 'Hiç soru içe aktarılamadı')
+        }
+      } catch (error) {
+        console.error('JSON parse hatası:', error)
+        showNotification('error', 'JSON dosyası geçersiz')
+      } finally {
+        setLoading(false)
+        if (fileInputRef.current) fileInputRef.current.value = ''
+      }
+    }
+    reader.readAsText(file)
   }
 
   const parseOptions = (optionsString: string): string[] => {
@@ -147,10 +214,10 @@ const FormAsks = () => {
       }
 
       if (editingId) {
-        await updateDoc(doc(db, getCollectionName('travelquestions', selectedLanguage), editingId), questionData)
+        await updateDoc(doc(db, getCollectionName('visaquestions', selectedLanguage), editingId), questionData)
         showNotification('success', 'Soru başarıyla güncellendi')
       } else {
-        await addDoc(collection(db, getCollectionName('travelquestions', selectedLanguage)), {
+        await addDoc(collection(db, getCollectionName('visaquestions', selectedLanguage)), {
           ...questionData,
           createdAt: new Date(),
         })
@@ -183,7 +250,7 @@ const FormAsks = () => {
     if (!confirm('Bu soruyu silmek istediğinize emin misiniz?')) return
 
     try {
-      await deleteDoc(doc(db, getCollectionName('travelquestions', selectedLanguage), questionId))
+      await deleteDoc(doc(db, getCollectionName('visaquestions', selectedLanguage), questionId))
       showNotification('success', 'Soru başarıyla silindi')
       loadQuestions()
     } catch (error) {
@@ -214,11 +281,11 @@ const FormAsks = () => {
     try {
       for (const step of steps) {
         if (step.id) {
-          await updateDoc(doc(db, getCollectionName('travelsteps', selectedLanguage), step.id), {
+          await updateDoc(doc(db, getCollectionName('visasteps', selectedLanguage), step.id), {
             name: step.name,
           })
         } else {
-          await addDoc(collection(db, getCollectionName('travelsteps', selectedLanguage)), {
+          await addDoc(collection(db, getCollectionName('visasteps', selectedLanguage)), {
             number: step.number,
             name: step.name,
           })
@@ -332,6 +399,31 @@ const FormAsks = () => {
             <MdAdd size={18} />
             Yeni Soru Ekle
           </button>
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '10px 20px',
+              backgroundColor: '#10b981',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: '600',
+            }}
+          >
+            <MdUpload size={18} />
+            JSON'dan İçe Aktar
+          </button>
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleImport}
+            accept=".json"
+            style={{ display: 'none' }}
+          />
 
         </div>
       </div>
@@ -349,7 +441,7 @@ const FormAsks = () => {
         >
           <h3 style={{ marginTop: 0, marginBottom: '20px' }}>Adım İsimleri</h3>
           <div style={{ display: 'grid', gap: '16px', marginBottom: '20px' }}>
-            {Array.from({ length: 3 }).map((_, i) => {
+            {Array.from({ length: 5 }).map((_, i) => {
               const stepNum = i + 1
               const currentStep = steps.find((s) => s.number === stepNum)
               return (

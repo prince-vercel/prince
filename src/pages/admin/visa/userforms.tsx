@@ -72,7 +72,7 @@ const GetForms = () => {
 
   const fetchQuestions = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'visaforms'))
+      const querySnapshot = await getDocs(collection(db, 'visaquestions'))
       const questionsData: Question[] = []
       querySnapshot.forEach((doc) => {
         questionsData.push({
@@ -90,6 +90,16 @@ const GetForms = () => {
   const getQuestionText = (questionId: string): string => {
     const question = questions.find(q => q.id === questionId)
     return question ? question.questionText : questionId
+  }
+
+  const getAnswerByLabel = (answers: Record<string, any>, labelKeywords: string[]): string => {
+    for (const q of questions) {
+      if (labelKeywords.some(keyword => q.questionText.toLowerCase().includes(keyword))) {
+        const value = answers[q.id]
+        if (value) return Array.isArray(value) ? value.join(', ') : String(value)
+      }
+    }
+    return ''
   }
 
   const deleteMedicalForm = async (id: string) => {
@@ -207,14 +217,14 @@ useEffect(() => {
                 <>
                   {paginatedForms
                     .filter(item => {
-                      const nameData = item.answers?.[''] || item.name || ''
+                      const nameData = getAnswerByLabel(item.answers || {}, ['ad', 'name']) || 'İsim Bilinmiyor'
                       return String(nameData).toLowerCase().includes(filterName.toLowerCase())
                     })
                     .map((item, index) => {
-                      const nameData = item.answers?.[''] || item.name || 'İsim Bilinmiyor'
-                      const locationData = item.answers?.[''] || item.destination || 'Yer Bilinmiyor'
+                      const nameData = getAnswerByLabel(item.answers || {}, ['ad', 'name']) || 'İsim Bilinmiyor'
+                      const locationData = getAnswerByLabel(item.answers || {}, ['ülke', 'country', 'yer']) || 'Yer Bilinmiyor'
                       
-                      const email = item.email || ''
+                      const email = getAnswerByLabel(item.answers || {}, ['email', 'e-posta'])
 
                       return (
                         <>
@@ -238,7 +248,7 @@ useEffect(() => {
                           <div key={item.id} className={styles.gfCard}>
                             {/* KAPALI HAL SATIR */}
                             <div className={styles.gfCardRow}>
-                              <div className={styles.gfRowNumber} style={{ color: '#c42127', background: '#f5edde' }}>{startIndex + index + 1}</div>
+                              <div className={styles.gfRowNumber} style={{ color: '#c42127', background: '#f9f1ef' }}>{startIndex + index + 1}</div>
                               <div className={styles.gfRowDate}>
                                 {item.createdAt?.toDate
                                   ? item.createdAt.toDate().toLocaleDateString('tr-TR')
@@ -292,38 +302,18 @@ useEffect(() => {
                             {expandedId === item.id && (
                               <div className={styles.gfCardContent}>
                                 <div className={styles.gfSection}>
-                                  <h3>Başvuru Detayları</h3>
+                                  <h4>Başvuru Detayları</h4>
                                   <div className={styles.gfFields}>
-                                    {[
-                                      { key: 'country', label: 'Başvuru Ülkesi' },
-                                      { key: 'visa_type', label: 'Vize Türü' },
-                                      { key: 'travel_subject', label: 'Seyahat Konusu' },
-                                      { key: 'travel_date', label: 'Seyahat Tarihi' },
-                                      { key: 'flight_ticket', label: 'Uçak Bileti' },
-                                      { key: 'name', label: 'Ad' },
-                                      { key: 'surname', label: 'Soyad' },
-                                      { key: 'email', label: 'E-posta' },
-                                      { key: 'phone', label: 'Telefon' },
-                                      { key: 'age', label: 'Yaş' },
-                                      { key: 'travel_with', label: 'Kiminle Seyahat' },
-                                      { key: 'marital_status', label: 'Medeni Durum' },
-                                      { key: 'visa_before', label: 'Daha Önce Vize' },
-                                      { key: 'visa_rejection', label: 'Vize Reddi' },
-                                      { key: 'schengen_visa', label: 'Schengen Vizesi' },
-                                      { key: 'job', label: 'Meslek' },
-                                      { key: 'work_years', label: 'İş Yılı' },
-                                      { key: 'net_salary', label: 'Net Maaş' },
-                                      { key: 'salary_to_bank', label: 'Banka Yatan Maaş' },
-                                      { key: 'message', label: 'Ek Mesaj' },
-                                    ].map(field => {
-                                      const value = item.answers?.[field.key] || item[field.key] || '';
-                                      if (!value) return null;
+                                    {Object.entries(item.answers || {}).map(([questionId, value]) => {
+                                      if (!value || (Array.isArray(value) && value.length === 0)) return null
+                                      const questionText = getQuestionText(questionId)
+                                      const displayValue = Array.isArray(value) ? value.join(', ') : String(value)
                                       return (
-                                        <div key={field.key} className={styles.gfField}>
-                                          <label>{field.label}</label>
-                                          <div>{String(value)}</div>
+                                        <div key={questionId} className={styles.gfField}>
+                                          <label>{questionText}</label>
+                                          <div>{displayValue}</div>
                                         </div>
-                                      );
+                                      )
                                     })}
                                   </div>
                                 </div>

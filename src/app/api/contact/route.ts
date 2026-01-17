@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { db } from '@/src/lib/firebase'
 
 export async function POST(request: NextRequest) {
     try {
@@ -34,47 +36,40 @@ export async function POST(request: NextRequest) {
         const phonePattern = /^(\+90|90|0)?[1-9][0-9]{9}$/
         if (!phonePattern.test(cleanedPhone)) {
             return NextResponse.json(
-                { success: false, message: 'Geçerli bir Türkiye telefon numarası giriniz.' },
+                { success: false, message: 'Geçerli bir telefon numarası giriniz.' },
                 { status: 400 }
             )
         }
 
-        // reCAPTCHA verification (optional - implement if needed)
-        // For now, we'll just check if token exists
-        if (!recaptcha_token) {
-            return NextResponse.json(
-                { success: false, message: 'Güvenlik doğrulaması başarısız.' },
-                { status: 403 }
-            )
-        }
-
-        // Here you would typically:
-        // 1. Verify reCAPTCHA token with Google
-        // 2. Send email using nodemailer or similar
-        // 3. Save to database if needed
-
-        // For now, we'll just return success
-        // TODO: Implement actual email sending and reCAPTCHA verification
-        
-        console.log('Contact form submission:', {
+        // Save to Firestore
+        const docRef = await addDoc(collection(db, 'visacontact'), {
             first_name,
             last_name,
             email,
             phone,
             subject,
             message,
-            recaptcha_token: recaptcha_token.substring(0, 20) + '...'
+            recaptcha_token,
+            createdAt: serverTimestamp(),
+            status: 'new' // Yeni mesaj durumu
         })
+
+        console.log('✅ Contact form saved with ID:', docRef.id)
 
         return NextResponse.json({
             success: true,
-            message: 'Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız.'
+            message: 'Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapacağız.',
+            id: docRef.id
         })
 
-    } catch (error) {
-        console.error('Contact form error:', error)
+    } catch (error: any) {
+        console.error('❌ Contact form error:', error)
         return NextResponse.json(
-            { success: false, message: 'Bir hata oluştu. Lütfen tekrar deneyiniz.' },
+            { 
+                success: false, 
+                message: 'Bir hata oluştu. Lütfen tekrar deneyiniz.',
+                error: process.env.NODE_ENV === 'development' ? error.message : undefined
+            },
             { status: 500 }
         )
     }

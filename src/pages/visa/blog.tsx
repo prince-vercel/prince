@@ -1,91 +1,110 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import '../../i18n';
 import '../../styles/visa/Blog.css';
+import { db } from '@/src/lib/firebase';
+import { collection, getDocs, orderBy, limit, query } from 'firebase/firestore';
+import { getCollectionName } from '@/src/lib/localization';
 
-// Blog post data
-const blogPosts = [
-    {
-        id: 1,
-        title: "Yurtdışında Çalışmanın Avantajları ve Dezavantajları",
-        image: "/visa/uploads/contents/main/6936370862074_2024e0f2dd_16674246702d19.webp",
-        date: "08 Aralık 2025",
-        readTime: "4 dk",
-        slug: "yurtdisinda-calismanin-avantajlari-ve-dezavantajlari"
-    },
-    {
-        id: 2,
-        title: "Kariyerinizi Uluslararasılaştırmanın Yolları",
-        image: "/visa/uploads/contents/main/69363708633d4_2024ddb250_166742482b42c6.webp",
-        date: "08 Aralık 2025",
-        readTime: "4 dk",
-        slug: "kariyerinizi-uluslararasilastirmanin-yollari"
-    },
-    {
-        id: 3,
-        title: "Almanya'da Blue Card: Nedir, Kimler Başvurabilir ve Nasıl Alınır?",
-        image: "/visa/uploads/contents/main/69363708649e8_2024ffe588_166b8f8ac3306c.webp",
-        date: "08 Aralık 2025",
-        readTime: "5 dk",
-        slug: "almanya-da-blue-card-nedir-kimler-basvurabilir-ve-nasil-alinir"
-    },
-    {
-        id: 4,
-        title: "Hollanda'da Çalışmak: Yaşam, Kariyer ve Fırsatlar",
-        image: "/visa/uploads/contents/main/6936370865c62_2024bde696_166b8fef82ecd1.webp",
-        date: "08 Aralık 2025",
-        readTime: "6 dk",
-        slug: "hollanda-da-calismak-yasam-kariyer-ve-firsatlar"
-    },
-    {
-        id: 5,
-        title: "Hollanda Mutfağı: Peynir, Stroopwafel ve Daha Fazlası",
-        image: "/visa/uploads/contents/main/6936370866f72_20248ee4e7_166b900512ce3e.webp",
-        date: "08 Aralık 2025",
-        readTime: "5 dk",
-        slug: "hollanda-mutfagi-peynir-stroopwafel-ve-daha-fazlasi"
-    },
-    {
-        id: 6,
-        title: "Online Vize Danışmanlığı Nedir ?",
-        image: "/visa/uploads/contents/main/6936370869dca_20247e5ba4_166b9038742062.webp",
-        date: "08 Aralık 2025",
-        readTime: "2 dk",
-        slug: "online-vize-danismanligi-nedir"
-    }
-];
+// Blog post veri tipi
+interface BlogPost {
+    id: string;
+    title: string;
+    desc: string;
+    imageUrl: string;
+    slug: string;
+    date: string;
+    readTime: string;
+}
 
-const popularPosts = [
-    {
-        id: 1,
-        title: "Vize Alırken Dikkat Edilmesi Gerekenler",
-        slug: "vize-alirken-dikkat-edilmesi-gerekenler"
-    },
-    {
-        id: 2,
-        title: "Yurtdışında Çalışmanın Avantajları ve Dezavantajları",
-        slug: "yurtdisinda-calismanin-avantajlari-ve-dezavantajlari"
-    },
-    {
-        id: 3,
-        title: "Kariyerinizi Uluslararasılaştırmanın Yolları",
-        slug: "kariyerinizi-uluslararasilastirmanin-yollari"
-    },
-    {
-        id: 4,
-        title: "Almanya'da Blue Card: Nedir, Kimler Başvurabilir ve Nasıl Alınır?",
-        slug: "almanya-da-blue-card-nedir-kimler-basvurabilir-ve-nasil-alinir"
-    },
-    {
-        id: 5,
-        title: "Hollanda'da Çalışmak: Yaşam, Kariyer ve Fırsatlar",
-        slug: "hollanda-da-calismak-yasam-kariyer-ve-firsatlar"
-    }
-];
+interface PopularPost {
+    id: string;
+    title: string;
+    slug: string;
+}
+
 
 export default function BlogPage() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+    const [popularPosts, setPopularPosts] = useState<PopularPost[]>([]);
+
+    // Slug oluşturma fonksiyonu
+    const createSlug = (title: string): string => {
+        return title
+            .toLowerCase()
+            .replace(/ğ/g, 'g')
+            .replace(/ü/g, 'u')
+            .replace(/ş/g, 's')
+            .replace(/ı/g, 'i')
+            .replace(/ö/g, 'o')
+            .replace(/ç/g, 'c')
+            .replace(/[^a-z0-9 -]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-+|-+$/g, '');
+    };
+
+    const fetchPopularPosts = async () => {
+        try {
+            const currentLang = (i18n.language || 'tr') as 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru';
+            const blogsRef = collection(db, getCollectionName('visablogs', currentLang));
+            const q = query(blogsRef, orderBy('createdAt', 'desc'), limit(5));
+            const snapshot = await getDocs(q);
+            
+            const posts: PopularPost[] = snapshot.docs.map(doc => {
+                const data = doc.data();
+                return {
+                    id: doc.id,
+                    title: data.title || '',
+                    slug: createSlug(data.title || '')
+                };
+            });
+            
+            setPopularPosts(posts);
+        } catch (error) {
+            console.error('Popüler yazılar çekilirken hata:', error);
+            // Hata durumunda boş array set et
+            setPopularPosts([]);
+        }
+    };
+
+    const fetchBlogPosts = async () => {
+        try {
+            const currentLang = (i18n.language || 'tr') as 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru';
+            const blogsRef = collection(db, getCollectionName('visablogs', currentLang));
+            const q = query(blogsRef, orderBy('createdAt', 'desc'));
+            const snapshot = await getDocs(q);
+            
+            const posts: BlogPost[] = snapshot.docs.map(doc => {
+                const data = doc.data();
+                const createdAt = data.createdAt?.toDate?.() || new Date();
+                const dateStr = createdAt.toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' });
+                
+                return {
+                    id: doc.id,
+                    title: data.title || '',
+                    desc: data.desc || '',
+                    imageUrl: data.imageUrl || '',
+                    slug: createSlug(data.title || ''),
+                    date: dateStr,
+                    readTime: '5 dk' // Varsayılan okuma süresi
+                };
+            });
+            
+            setBlogPosts(posts);
+        } catch (error) {
+            console.error('Blog yazıları çekilirken hata:', error);
+            setBlogPosts([]);
+        }
+    };
+
+    useEffect(() => {
+        fetchBlogPosts();
+        fetchPopularPosts();
+    }, [i18n.language]);
 
     useEffect(() => {
         // Scroll animation for shapes
@@ -126,12 +145,14 @@ export default function BlogPage() {
                             <path d="M12 20h9" />
                             <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
                         </svg>
-                        <span>{t('visa.blog.badge', 'Prince Blog')}</span>
+                        <span suppressHydrationWarning>{t('visa.blog.badge', 'Prince Blog')}</span>
                     </div>
 
                     <div className="featured-post-wrapper">
                         <div className="featured-content">
-                            <h1 className="featured-title">{t('visa.blog.featured.title', 'Vize Alırken Dikkat Edilmesi Gerekenler')}</h1>
+                            <h1 className="featured-title" suppressHydrationWarning>
+                                {t('visa.blog.featured.title', 'Vize Alırken Dikkat Edilmesi Gerekenler')}
+                            </h1>
 
                             <div className="featured-meta">
                                 <span className="meta-date">
@@ -148,12 +169,14 @@ export default function BlogPage() {
                                         <circle cx="12" cy="12" r="10" />
                                         <polyline points="12 6 12 12 16 14" />
                                     </svg>
-                                    {t('visa.blog.featured.readTime', '15 dk okuma')}
+                                    <span suppressHydrationWarning>
+                                        {t('visa.blog.featured.readTime', '15 dk okuma')}
+                                    </span>
                                 </span>
                             </div>
 
                             <Link href="/visa/blog/vize-alirken-dikkat-edilmesi-gerekenler" className="featured-cta">
-                                <span>{t('visa.blog.readPost', 'Yazıyı Oku')}</span>
+                                <span suppressHydrationWarning>{t('visa.blog.readPost', 'Yazıyı Oku')}</span>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <line x1="5" y1="12" x2="19" y2="12" />
                                     <polyline points="12 5 19 12 12 19" />
@@ -176,7 +199,7 @@ export default function BlogPage() {
                 <div className="container">
                     <div className="category-pills">
                         <Link href="/visa/blog" className="category-pill active">
-                            <span>{t('visa.blog.all', 'Tümü')}</span>
+                            <span suppressHydrationWarning>{t('visa.blog.all', 'Tümü')}</span>
                         </Link>
                     </div>
                 </div>
@@ -188,41 +211,49 @@ export default function BlogPage() {
                     <div className="blog-layout">
                         {/* Blog Grid */}
                         <div className="blog-grid">
-                            {blogPosts.map((post) => (
-                                <article key={post.id} className="blog-card">
-                                    <Link href={`/visa/blog/${post.slug}`} className="card-link">
-                                        <div className="card-image">
-                                            <img
-                                                src={post.image}
-                                                alt={post.title}
-                                                loading="lazy"
-                                            />
-                                            <div className="card-overlay"></div>
-                                        </div>
-
-                                        <div className="card-body">
-                                            <h2 className="card-title">{post.title}</h2>
-
-                                            <p className="card-excerpt"></p>
-
-                                            <div className="card-footer">
-                                                <div className="card-meta">
-                                                    <span className="meta-date">{post.date}</span>
-                                                    <span className="meta-separator">•</span>
-                                                    <span className="meta-read">{post.readTime}</span>
-                                                </div>
-                                                <span className="card-cta">
-                                                    {t('visa.blog.read', 'Oku')}
-                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                        <line x1="5" y1="12" x2="19" y2="12" />
-                                                        <polyline points="12 5 19 12 12 19" />
-                                                    </svg>
-                                                </span>
+                            {blogPosts.length > 0 ? (
+                                blogPosts.map((post) => (
+                                    <article key={post.id} className="blog-card">
+                                        <Link href={`/visa/blog/${post.slug}`} className="card-link">
+                                            <div className="card-image">
+                                                <img
+                                                    src={post.imageUrl}
+                                                    alt={post.title}
+                                                    loading="lazy"
+                                                />
+                                                <div className="card-overlay"></div>
                                             </div>
-                                        </div>
-                                    </Link>
-                                </article>
-                            ))}
+
+                                            <div className="card-body">
+                                                <h2 className="card-title">{post.title}</h2>
+
+                                                <p className="card-excerpt">{post.desc.substring(0, 100)}...</p>
+
+                                                <div className="card-footer">
+                                                    <div className="card-meta">
+                                                        <span className="meta-date">{post.date}</span>
+                                                        <span className="meta-separator">•</span>
+                                                        <span className="meta-read">{post.readTime}</span>
+                                                    </div>
+                                                    <span className="card-cta">
+                                                        <span suppressHydrationWarning>
+                                                            {t('visa.blog.read', 'Oku')}
+                                                        </span>
+                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                            <line x1="5" y1="12" x2="19" y2="12" />
+                                                            <polyline points="12 5 19 12 12 19" />
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </article>
+                                ))
+                            ) : (
+                                <p style={{ color: '#666', fontSize: '16px', textAlign: 'center', width: '100%' }}>
+                                    Henüz blog yazısı bulunmamaktadır.
+                                </p>
+                            )}
                         </div>
 
                         {/* Sidebar */}
@@ -233,21 +264,27 @@ export default function BlogPage() {
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                                         </svg>
-                                        <h3>{t('visa.blog.popular', 'Popüler Yazılar')}</h3>
+                                        <h3 suppressHydrationWarning>{t('visa.blog.popular', 'Popüler Yazılar')}</h3>
                                     </div>
                                     <div className="popular-list">
-                                        {popularPosts.map((post, index) => (
-                                            <Link
-                                                key={post.id}
-                                                href={`/visa/blog/${post.slug}`}
-                                                className="popular-item"
-                                            >
-                                                <span className="popular-number">
-                                                    {String(index + 1).padStart(2, '0')}
-                                                </span>
-                                                <span className="popular-title">{post.title}</span>
-                                            </Link>
-                                        ))}
+                                        {popularPosts.length > 0 ? (
+                                            popularPosts.map((post, index) => (
+                                                <Link
+                                                    key={post.id}
+                                                    href={`/visa/blog/${post.slug}`}
+                                                    className="popular-item"
+                                                >
+                                                    <span className="popular-number">
+                                                        {String(index + 1).padStart(2, '0')}
+                                                    </span>
+                                                    <span className="popular-title">{post.title}</span>
+                                                </Link>
+                                            ))
+                                        ) : (
+                                            <p style={{ color: '#666', fontSize: '14px', padding: '10px' }}>
+                                                Henüz popüler yazı bulunmamaktadır.
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -258,4 +295,3 @@ export default function BlogPage() {
         </div>
     );
 }
-

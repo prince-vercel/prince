@@ -372,7 +372,7 @@ export default function IletisimPage() {
                                 {t('visa.contact.form.sendMessage', 'Mesaj Gönderin')}
                             </h2>
                             <div className="col-lg-6">
-                                <label className="cs_input_label" suppressHydrationWarning>{t('visa.contact.form.firstName', 'Adınız')} <span style={{ color: 'red' }}>*</span></label>
+                                <label className="cs_input_label" style={{ marginTop: '15px' }} suppressHydrationWarning>{t('visa.contact.form.firstName', 'Adınız')} <span style={{ color: 'red' }}>*</span></label>
                                 <input
                                     className="cs_form_field"
                                     type="text"
@@ -384,7 +384,7 @@ export default function IletisimPage() {
                             </div>
 
                             <div className="col-lg-6">
-                                <label className="cs_input_label" suppressHydrationWarning>{t('visa.contact.form.lastName', 'Soyadınız')} <span style={{ color: 'red' }}>*</span></label>
+                                <label className="cs_input_label" style={{ marginTop: '15px' }} suppressHydrationWarning>{t('visa.contact.form.lastName', 'Soyadınız')} <span style={{ color: 'red' }}>*</span></label>
                                 <input
                                     className="cs_form_field"
                                     type="text"
@@ -396,7 +396,7 @@ export default function IletisimPage() {
                             </div>
 
                             <div className="col-lg-6">
-                                <label className="cs_input_label" suppressHydrationWarning>{t('visa.contact.form.email', 'E-Posta Adresiniz')} <span style={{ color: 'red' }}>*</span></label>
+                                <label className="cs_input_label" style={{ marginTop: '15px' }} suppressHydrationWarning>{t('visa.contact.form.email', 'E-Posta Adresiniz')} <span style={{ color: 'red' }}>*</span></label>
                                 <input
                                     className="cs_form_field"
                                     type="email"
@@ -408,7 +408,7 @@ export default function IletisimPage() {
                             </div>
 
                             <div className="col-lg-6">
-                                <label className="cs_input_label" suppressHydrationWarning>{t('visa.contact.form.phone', 'Telefon Numaranız')} <span style={{ color: 'red' }}>*</span></label>
+                                <label className="cs_input_label" style={{ marginTop: '15px' }} suppressHydrationWarning>{t('visa.contact.form.phone', 'Telefon Numaranız')} <span style={{ color: 'red' }}>*</span></label>
                                 <input
                                     className="cs_form_field"
                                     type="tel"
@@ -420,7 +420,7 @@ export default function IletisimPage() {
                             </div>
 
                             <div className="col-lg-12">
-                                <label className="cs_input_label" suppressHydrationWarning>{t('visa.contact.form.subject', 'Konu Seçiniz')} <span style={{ color: 'red' }}>*</span></label>
+                                <label className="cs_input_label" style={{ marginTop: '15px' }} suppressHydrationWarning>{t('visa.contact.form.subject', 'Konu Seçiniz')} <span style={{ color: 'red' }}>*</span></label>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginTop: '10px' }}>
                                     <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '1.5rem', fontWeight: '500' }}>
                                         <input
@@ -481,7 +481,7 @@ export default function IletisimPage() {
                             </div>
 
                             <div className="col-lg-12">
-                                <label className="cs_input_label" suppressHydrationWarning>{t('visa.contact.form.message', 'Mesajınız')} <span style={{ color: 'red' }}>*</span></label>
+                                <label className="cs_input_label" style={{ marginTop: '15px' }} suppressHydrationWarning>{t('visa.contact.form.message', 'Mesajınız')} <span style={{ color: 'red' }}>*</span></label>
                                 <textarea
                                     className="cs_form_field"
                                     rows={6}

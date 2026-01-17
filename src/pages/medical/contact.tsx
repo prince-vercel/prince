@@ -7,7 +7,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
-import { getCollectionName } from '@/src/lib/localization'
 import i18n from '@/src/i18n'
 import '@/src/i18n'
 
@@ -30,8 +29,7 @@ export default function ContactPage() {
     }
 
     try {
-      const collectionName = getCollectionName('medicalcontact', i18n.language)
-      await addDoc(collection(db, collectionName), {
+      await addDoc(collection(db, 'medicalcontact'), {
         name,
         email,
         subject,

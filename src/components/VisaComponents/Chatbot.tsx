@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { db } from '@/src/lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { useSafeTranslation } from '../../hooks/useSafeTranslation';
+import { getCollectionName } from '../../lib/localization';
 import '../../i18n';
 
 interface ChatStep {
@@ -12,7 +13,7 @@ interface ChatStep {
 }
 
 const Chatbot: React.FC = () => {
-    const { t, isReady } = useSafeTranslation();
+    const { t, isReady, i18n } = useSafeTranslation();
     const [questions, setQuestions] = useState<ChatStep[]>([]);
     const [loading, setLoading] = useState(true);
     const [history, setHistory] = useState<string[]>(['start']);
@@ -20,13 +21,21 @@ const Chatbot: React.FC = () => {
     useEffect(() => {
         const fetchQuestions = async () => {
             setLoading(true);
-            const snapshot = await getDocs(collection(db, 'visachatbotQuestions'));
-            const data: ChatStep[] = snapshot.docs.map(doc => doc.data() as ChatStep);
+            const lang = (i18n.language || 'tr') as any;
+            const collectionName = getCollectionName('visachatbotQuestions', lang);
+            console.log('Fetching from collection:', collectionName);
+            const snapshot = await getDocs(collection(db, collectionName));
+            console.log('Snapshot docs:', snapshot.docs.length);
+            const data: ChatStep[] = snapshot.docs.map(doc => {
+                console.log('Doc data:', doc.data());
+                return doc.data() as ChatStep;
+            });
+            console.log('Questions data:', data);
             setQuestions(data);
             setLoading(false);
         };
         fetchQuestions();
-    }, []);
+    }, [i18n.language]);
 
     const currentStep = questions.find(q => q.id === history[history.length - 1]);
 

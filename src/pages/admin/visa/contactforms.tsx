@@ -22,8 +22,10 @@ import { MdDelete, MdEmail, MdExpandLess, MdExpandMore } from 'react-icons/md'
 
 interface ContactWithId {
   id: string
-  name: string
+  first_name: string
+  last_name: string
   email: string
+  phone: string
   subject: string
   message: string
   createdAt: any
@@ -82,7 +84,7 @@ useEffect(() => {
             <input
               id="nameFilter"
               type="text"
-              placeholder="Kullanıcı adı yazın..."
+              placeholder="Ad soyad yazın..."
               value={filterName}
               onChange={(e) => setFilterName(e.target.value)}
               className={styles.filterInput}
@@ -104,7 +106,7 @@ useEffect(() => {
             <>
               {paginatedForms
                 .filter(item =>
-                  item.name.toLowerCase().includes(filterName.toLowerCase())
+                  `${item.first_name} ${item.last_name}`.toLowerCase().includes(filterName.toLowerCase())
                 )
                 .map((item, index) => (
                 <div key={item.id} className={styles.gfCard}>
@@ -113,13 +115,13 @@ useEffect(() => {
                     <div className={styles.gfRowDate} style={{fontSize:'15px'}}>
                       {item.createdAt?.toDate?.().toLocaleDateString('tr-TR')}
                     </div>
-                    <div className={styles.gfRowName} style={{fontSize:'16px'}}>{item.name}</div>
+                    <div className={styles.gfRowName} style={{fontSize:'16px'}}>{item.first_name} {item.last_name}</div>
 
                     <div className={styles.gfRowActions}>
                           <button
                         className={styles.gfIconBtn}
                         onClick={() => {
-                          setSelectedEmail({email: item.email, name: item.name})
+                          setSelectedEmail({email: item.email, name: `${item.first_name} ${item.last_name}`})
                           setShowEmailModal(true)
                         }}
                         title="Cevap gönder"
@@ -154,8 +156,16 @@ useEffect(() => {
                   {expandedId === item.id && (
                     <div className={styles.gfCardContent}>
                       <div className={styles.gfField}>
+                        <label style={{fontSize:'15px'}}>Ad Soyad</label>
+                        <div style={{fontSize:'16px'}}>{item.first_name} {item.last_name}</div>
+                      </div>
+                      <div className={styles.gfField}>
                         <label style={{fontSize:'15px'}}>E-posta</label>
                         <div style={{fontSize:'16px'}}>{item.email}</div>
+                      </div>
+                      <div className={styles.gfField}>
+                        <label style={{fontSize:'15px'}}>Telefon</label>
+                        <div style={{fontSize:'16px'}}>{item.phone}</div>
                       </div>
                       <div className={styles.gfField}>
                         <label style={{fontSize:'15px'}}>Konu</label>

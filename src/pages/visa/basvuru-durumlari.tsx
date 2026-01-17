@@ -1,103 +1,48 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { db } from '../../lib/firebase'
+import { collection, getDocs, query, orderBy } from 'firebase/firestore'
+import { getCollectionName } from '../../lib/localization'
 import '../../i18n'
 import '../../styles/visa/BasvuruDurumlari.css'
 
+interface VisaStatItem {
+  id: string
+  country: string
+  applicationCount: number
+  visaTypeText: string
+}
+
 export default function BasvuruDurumlariPage() {
     const { t, i18n } = useTranslation()
-
-    // Tablo verileri
-    const tableData = useMemo(() => [
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.germany.country', 'Almanya'),
-            applications: '2.453',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.germany.rates', '%57 Turist - %24 Çalışma - %11 Akraba Ziyareti - %8 Ticari')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.italy.country', 'İtalya'),
-            applications: '2.184',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.italy.rates', '%78 Turist - %2 Çalışma - %6 Arkadaş - %14 Eğitim')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.france.country', 'Fransa'),
-            applications: '2.061',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.france.rates', '%45 Turist - %35 Çalışma - %18 Arkadaş Ziyareti - %2 Ticari')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.netherlands.country', 'Hollanda'),
-            applications: '1.874',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.netherlands.rates', '%82 Turist - %1 Çalışma - %14 Arkadaş Ziyareti - %3 Ticari')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.greece.country', 'Yunanistan'),
-            applications: '1.799',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.greece.rates', '%95 Turist - %5 Ticari')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.usa.country', 'Amerika'),
-            applications: '1.784',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.usa.rates', '%99 Turist - %1 Diğer')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.canada.country', 'Kanada'),
-            applications: '1.619',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.canada.rates', '%84 Turist - %10 Ticari - %6 Diğer')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.uk.country', 'İngiltere'),
-            applications: '1.120',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.uk.rates', '%65 Turist - %17 Eğitim - %15 Ticari - %3 Diğer')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.spain.country', 'İspanya'),
-            applications: '1.403',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.spain.rates', '%72 Turist - %19 Ticari - %9 Diğer')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.poland.country', 'Polonya'),
-            applications: '964',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.poland.rates', '%38 Turist - %44 Çalışma - %16 Eğitim %2 Diğer')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.australia.country', 'Avustralya'),
-            applications: '911',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.australia.rates', '%45 Turist - %45 Eğitim - %10 Diğer')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.dubai.country', 'Dubai'),
-            applications: '1.814',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.dubai.rates', '%100 Turist - %100 Başarı Oranı')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.russia.country', 'Rusya'),
-            applications: '624',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.russia.rates', '%100 Turist - %100 Başarı Oranı')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.belgium.country', 'Belçika'),
-            applications: '720',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.belgium.rates', '%50 Turist - %24 Arkadaş Ziyareti - %26 Diğer')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.austria.country', 'Avusturya'),
-            applications: '1.180',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.austria.rates', '%25 Turist- % 63 Arkadaş Ziyareti - %12 Diğer')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.hungary.country', 'Macaristan'),
-            applications: '627',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.hungary.rates', '%65 Turist - %18 Ticari - %5 Eğitim - %12 Diğer')
-        },
-        {
-            country: t('visa.pages.basvuruDurumlari.table.rows.portugal.country', 'Portekiz'),
-            applications: '328',
-            rates: t('visa.pages.basvuruDurumlari.table.rows.portugal.rates', '%90 Turist - %10 Diğer')
-        }
-    ], [t, i18n.language])
+    const [tableData, setTableData] = useState<VisaStatItem[]>([])
+    const [loading, setLoading] = useState(true)
     const shapesRef = useRef<HTMLDivElement>(null)
+
+    // Fetch data from database
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const collectionName = getCollectionName('visaStats', i18n.language as 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru')
+                const q = query(collection(db, collectionName), orderBy('applicationCount', 'desc'))
+                const querySnapshot = await getDocs(q)
+                const data = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                })) as VisaStatItem[]
+                setTableData(data)
+            } catch (error) {
+                console.error('Error fetching visa stats:', error)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchData()
+    }, [i18n.language])
 
     // Parallax effect on hero shapes
     useEffect(() => {
@@ -199,21 +144,35 @@ export default function BasvuruDurumlariPage() {
                                                     <b>{t('visa.pages.basvuruDurumlari.table.rates')}</b>
                                                 </td>
                                             </tr>
-                                            {tableData.map((row, index) => (
-                                                <tr key={index}>
-                                                    <td style={{ padding: '5px', border: '1px solid #ddd' }}>
-                                                        {row.country}
-                                                    </td>
-                                                    <td style={{ padding: '5px', border: '1px solid #ddd' }}>
-                                                        {row.applications}
-                                                    </td>
-                                                    <td style={{ padding: '5px', border: '1px solid #ddd' }}>
-                                                        <p style={{ marginRight: 0, marginBottom: '10px', marginLeft: 0, padding: 0, border: 0 }}>
-                                                            {row.rates}
-                                                        </p>
+                                            {loading ? (
+                                                <tr>
+                                                    <td colSpan={3} style={{ padding: '40px', textAlign: 'center', color: '#666' }}>
+                                                        Yükleniyor...
                                                     </td>
                                                 </tr>
-                                            ))}
+                                            ) : tableData.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan={3} style={{ padding: '40px', textAlign: 'center', color: '#666' }}>
+                                                        Veri bulunamadı
+                                                    </td>
+                                                </tr>
+                                            ) : (
+                                                tableData.map((row, index) => (
+                                                    <tr key={index}>
+                                                        <td style={{ padding: '5px', border: '1px solid #ddd' }}>
+                                                            {row.country}
+                                                        </td>
+                                                        <td style={{ padding: '5px', border: '1px solid #ddd' }}>
+                                                            {row.applicationCount.toLocaleString()}
+                                                        </td>
+                                                        <td style={{ padding: '5px', border: '1px solid #ddd' }}>
+                                                            <p style={{ marginRight: 0, marginBottom: '10px', marginLeft: 0, padding: 0, border: 0 }}>
+                                                                {row.visaTypeText}
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            )}
                                         </tbody>
                                     </table>
                                     <p style={{ textAlign: 'center', marginRight: 0, marginBottom: '10px', marginLeft: 0, padding: 0, border: 0 }}>

@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { db } from '../../lib/firebase'
+import { collection, getDocs, query, orderBy } from 'firebase/firestore'
+import { getCollectionName } from '../../lib/localization'
 import '../../i18n'
 import '../../styles/visa/VizeTablosu.css'
 
@@ -13,12 +17,60 @@ declare global {
     }
 }
 
+type PassportType = 'lacivert' | 'yesil' | 'gri' | 'kırmızı'
+
+interface PassportData {
+  status: 'Vize Var' | 'Vize Yok'
+  duration?: string
+}
+
+interface VisaTableRow {
+  id: string
+  country: string
+  passports: Record<PassportType, PassportData>
+}
+
 export default function VizeTablosuPage() {
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation()
     const sidebarRef = useRef<HTMLDivElement>(null)
     const shapesRef = useRef<HTMLDivElement>(null)
     const [isLightboxOpen, setIsLightboxOpen] = useState(false)
     const [lightboxImage, setLightboxImage] = useState('')
+    const [visaTableData, setVisaTableData] = useState<VisaTableRow[]>([])
+    const [loading, setLoading] = useState(true)
+
+    // Fetch visa table data
+    useEffect(() => {
+        const fetchVisaTableData = async () => {
+            try {
+                const collectionName = getCollectionName('visatable', i18n.language as 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru')
+                const q = query(collection(db, collectionName), orderBy('country'))
+                const querySnapshot = await getDocs(q)
+                const data = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                })) as VisaTableRow[]
+
+                const updatedData = data.map(item => ({
+                    ...item,
+                    passports: {
+                        lacivert: item.passports.lacivert || { status: 'Vize Var' },
+                        yesil: item.passports.yesil || { status: 'Vize Var' },
+                        gri: item.passports.gri || { status: 'Vize Var' },
+                        kırmızı: item.passports.kırmızı || { status: 'Vize Var' }
+                    }
+                }))
+
+                setVisaTableData(updatedData)
+            } catch (error) {
+                console.error('Error fetching visa table data:', error)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchVisaTableData()
+    }, [i18n.language])
 
     // Parallax effect on hero shapes
     useEffect(() => {
@@ -302,52 +354,52 @@ export default function VizeTablosuPage() {
                                 {/* Main Content */}
                                 <div className="article-prose">
                                     <div className="table-responsive">
-                                        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
                                             <thead>
                                                 <tr>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>{t('visa.pages.vizeTablosu.table.headers.country', 'Ülke')}</th>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>{t('visa.pages.vizeTablosu.table.headers.visaRequired', 'Vize Gerekli mi?')}</th>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>{t('visa.pages.vizeTablosu.table.headers.visaType', 'Vize Türü')}</th>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>{t('visa.pages.vizeTablosu.table.headers.processingTime', 'İşlem Süresi')}</th>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left' }}>{t('visa.pages.vizeTablosu.table.headers.notes', 'Notlar')}</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left', fontSize: '14px' }}>Ülke</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left', fontSize: '14px' }}>Lacivert</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left', fontSize: '14px' }}>Yeşil</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left', fontSize: '14px' }}>Gri</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left', fontSize: '14px' }}>Kırmızı</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.uk.country', 'İngiltere')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.common.yes', 'Evet')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.uk.visaType', 'Standart Ziyaretçi Vizesi')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.uk.processingTime', '15-20 iş günü')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.germany.country', 'Almanya')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.common.yes', 'Evet')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.germany.visaType', 'Schengen Vizesi')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.germany.processingTime', '10-15 iş günü')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.france.country', 'Fransa')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.common.yes', 'Evet')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.france.visaType', 'Schengen Vizesi')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.france.processingTime', '10-15 iş günü')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.canada.country', 'Kanada')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.common.yes', 'Evet')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.canada.visaType', 'Turist Vizesi')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.canada.processingTime', '20-30 iş günü')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.usa.country', 'ABD')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.common.yes', 'Evet')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.usa.visaType', 'B1/B2 Vizesi')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{t('visa.pages.vizeTablosu.table.rows.usa.processingTime', '15-20 iş günü')}</td>
-                                                    <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>-</td>
-                                                </tr>
+                                                {loading ? (
+                                                    <tr>
+                                                        <td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: '#666' }}>
+                                                            Yükleniyor...
+                                                        </td>
+                                                    </tr>
+                                                ) : visaTableData.length === 0 ? (
+                                                    <tr>
+                                                        <td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: '#666' }}>
+                                                            Veri bulunamadı
+                                                        </td>
+                                                    </tr>
+                                                ) : (
+                                                    visaTableData.map((row) => (
+                                                        <tr key={row.id}>
+                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{row.country}</td>
+                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>
+                                                                {row.passports.lacivert.status}
+                                                                {row.passports.lacivert.duration && ` (${row.passports.lacivert.duration})`}
+                                                            </td>
+                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>
+                                                                {row.passports.yesil.status}
+                                                                {row.passports.yesil.duration && ` (${row.passports.yesil.duration})`}
+                                                            </td>
+                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>
+                                                                {row.passports.gri.status}
+                                                                {row.passports.gri.duration && ` (${row.passports.gri.duration})`}
+                                                            </td>
+                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>
+                                                                {row.passports.kırmızı.status}
+                                                                {row.passports.kırmızı.duration && ` (${row.passports.kırmızı.duration})`}
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                )}
                                             </tbody>
                                         </table>
                                     </div>
