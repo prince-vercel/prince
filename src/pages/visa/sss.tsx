@@ -2,10 +2,13 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../../styles/visa/SSS.css'
 import '../../i18n'
+import { db } from '@/src/lib/firebase'
+import { collection, getDocs, orderBy, query } from 'firebase/firestore'
+import { getCollectionName } from '../../lib/localization'
 
 interface FAQItem {
     question: string
@@ -13,9 +16,33 @@ interface FAQItem {
 }
 
 export default function SSSPage() {
-    const { t } = useTranslation()
-    const faqs: FAQItem[] = t('visa.faq.questions', { returnObjects: true }) as FAQItem[]
+    const { t, i18n } = useTranslation()
+    const [faqs, setFaqs] = useState<FAQItem[]>([])
     const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+    const fetchFAQs = async () => {
+        try {
+            const currentLang = i18n.language as 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'
+            const faqsRef = collection(db, getCollectionName('visacontents/faq/list', currentLang))
+            const q = query(faqsRef, orderBy('createdAt', 'asc'))
+            const snapshot = await getDocs(q)
+            
+            const faqData = snapshot.docs.map(doc => ({
+                question: doc.data().question || '',
+                answer: doc.data().answer || ''
+            })) as FAQItem[]
+            
+            setFaqs(faqData)
+        } catch (error) {
+            console.error('SSS verileri çekilirken hata:', error)
+            // Hata durumunda boş array
+            setFaqs([])
+        }
+    }
+
+    useEffect(() => {
+        fetchFAQs()
+    }, [i18n.language])
 
     const toggleFAQ = (index: number) => {
         setOpenIndex(openIndex === index ? null : index)
@@ -79,33 +106,37 @@ export default function SSSPage() {
                     </div>
                     <div className="main-inner">
                         <div className="accordion">
-                            {faqs.map((faq, index) => (
-                                <div key={index}>
-                                    <button
-                                        className={`btn-accordion heading-4 ${openIndex === index ? 'active' : ''}`}
-                                        onClick={() => toggleFAQ(index)}
-                                    >
-                                        <span className="heading-4">{faq.question}</span>
-                                        <span className="accordion-icon">
-                                            <Image
-                                                src="/visa/assets/img/icon/accordion-caret.svg"
-                                                width={6}
-                                                height={9}
-                                                alt="Caret Down"
-                                                loading="lazy"
-                                                decoding="async"
-                                            />
-                                        </span>
-                                    </button>
-                                    {openIndex === index && (
-                                        <div className="accordion-inner">
-                                            <div className="body-sm">
-                                                <p>{faq.answer}</p>
+                            {faqs.length > 0 ? (
+                                faqs.map((faq, index) => (
+                                    <div key={index}>
+                                        <button
+                                            className={`btn-accordion heading-4 ${openIndex === index ? 'active' : ''}`}
+                                            onClick={() => toggleFAQ(index)}
+                                        >
+                                            <span className="heading-4">{faq.question}</span>
+                                            <span className="accordion-icon">
+                                                <Image
+                                                    src="/visa/assets/img/icon/accordion-caret.svg"
+                                                    width={6}
+                                                    height={9}
+                                                    alt="Caret Down"
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                />
+                                            </span>
+                                        </button>
+                                        {openIndex === index && (
+                                            <div className="accordion-inner">
+                                                <div className="body-sm">
+                                                    <p>{faq.answer}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
+                                        )}
+                                    </div>
+                                ))
+                            ) : (
+                                <p>Henüz SSS sorusu eklenmemiş.</p>
+                            )}
                         </div>
                     </div>
                 </div>

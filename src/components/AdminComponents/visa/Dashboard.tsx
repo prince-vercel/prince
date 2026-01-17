@@ -16,9 +16,16 @@ interface DashboardStats {
   topDestinations: Array<{ name: string; count: number }>
 }
 
-interface FilterPeriod {
-  label: string
-  value: 'daily' | 'monthly' | 'yearly'
+interface Question {
+  id: string
+  questionText: string
+  type: 'select' | 'checkbox' | 'text' | 'date' | 'radio'
+  options: string[]
+  step: number
+  required: boolean
+  order: number
+  createdAt?: Date
+  additionalInputLabel?: string
 }
 
 const filterPeriods: FilterPeriod[] = [
@@ -40,9 +47,37 @@ const Dashboard = () => {
   const [formPeriod, setFormPeriod] = useState<'daily' | 'monthly' | 'yearly'>('monthly')
   const [loading, setLoading] = useState(true)
   const [rawData, setRawData] = useState<{ contacts: any[]; forms: any[]; visits: any[] }>({ contacts: [], forms: [], visits: [] })
+  const [questions, setQuestions] = useState<Question[]>([])
  
 
   // Fonksiyonlar
+
+  const fetchQuestions = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'visaquestions'))
+      const questionsData: Question[] = []
+      querySnapshot.forEach((doc) => {
+        questionsData.push({
+          id: doc.id,
+          ...doc.data(),
+          createdAt: doc.data().createdAt?.toDate(),
+        } as Question)
+      })
+      setQuestions(questionsData.sort((a, b) => a.step - b.step || a.order - b.order))
+    } catch (error) {
+      console.error('Soru yükleme hatası:', error)
+    }
+  }
+
+  const getAnswerByLabel = (answers: Record<string, any>, labelKeywords: string[]): string => {
+    for (const q of questions) {
+      if (labelKeywords.some(keyword => q.questionText.toLowerCase().includes(keyword))) {
+        const value = answers[q.id]
+        if (value) return Array.isArray(value) ? value.join(', ') : String(value)
+      }
+    }
+    return ''
+  }
 
 
   // Ziyaret çizgi grafiği datası (son 6 ay)
@@ -78,9 +113,12 @@ const Dashboard = () => {
     try {
       setLoading(true)
 
+      // Soruları çek
+      await fetchQuestions()
+
       // İletişim formlarını çek
       const contactsSnapshot = await getDocs(collection(db, 'visacontact'))
-      const formsSnapshot = await getDocs(collection(db, 'visafoms'))
+      const formsSnapshot = await getDocs(collection(db, 'visaforms'))
       const visitsSnapshot = await getDocs(collection(db, 'visaSiteVisits'))
 
       setRawData({
@@ -98,7 +136,7 @@ const Dashboard = () => {
       const destinationMap: { [key: string]: number } = {}
       formsSnapshot.docs.forEach((doc) => {
         const data = doc.data()
-        const location = data.answers?.[''] || data.destination || 'Belirtilmemiş'
+        const location = getAnswerByLabel(data.answers || {}, ['ülke', 'country', 'yer', 'hangi ülkeye']) || 'Belirtilmemiş'
         destinationMap[location] = (destinationMap[location] || 0) + 1
       })
 
@@ -195,7 +233,7 @@ const Dashboard = () => {
     const destinationMap: { [key: string]: number } = {}
     formsFiltered.forEach((doc) => {
       const data = doc.data()
-      const location = data.answers?.[''] || data.destination || ''
+      const location = getAnswerByLabel(data.answers || {}, ['ülke', 'country', 'yer', 'hangi ülkeye']) || 'Belirtilmemiş'
       destinationMap[location] = (destinationMap[location] || 0) + 1
     })
     const topDestinations = Object.entries(destinationMap)
@@ -289,7 +327,7 @@ const Dashboard = () => {
 
       {/* En Çok Başvuru Alan Destinasyonlar */}
       <div className={styles.dashboardSection}>
-        <h2 className={styles.dashboardSectionTitle}>En Çok Başvuru Alan Vize TÜrleri</h2>
+        <h2 className={styles.dashboardSectionTitle}>En Çok Başvuru Alan Yerler</h2>
         {stats.topDestinations.length === 0 ? (
           <p className={styles.dashboardEmpty}>Henüz veri yok</p>
         ) : (
