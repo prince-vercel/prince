@@ -10,6 +10,9 @@
       "otherInfo": "Autres informations",
       "aboutUs": "À propos de nous",
       "visaTable": "Tableau des visas",
+      "consularFees": "Frais consulaires",
+      "tirDriverVisa": "Visa de Conducteur TIR",
+      "residencePermit": "Permis de Séjour pour les Étrangers en Turquie",
       "successRates": "Taux de réussite des demandes de visa",
       "advantages": "Avantages que nous offrons",
       "contact": "Contact",
@@ -862,6 +865,217 @@
             "content": "<p>Les États-Unis d’Amérique sont une république fédérale située en Amérique du Nord.</p><h3><strong>Économie</strong></h3><ul><li><strong>Aperçu :</strong> La plus grande économie du monde</li><li><strong>Monnaie :</strong> Dollar américain (USD)</li></ul>"
           }
         }
+      },
+      "consularFees": {
+        "intro": "Les frais de demande consulaires pour les demandes de visa peuvent varier selon le type de visa demandé, le pays de demande et la nationalité du demandeur. Ci-dessous, des informations sur les montants des frais pour certains types de visa populaires sont fournies. Cependant, comme ces informations peuvent changer avec le temps, il est préférable d'obtenir les informations les plus récentes sur le site Web officiel du consulat du pays pour lequel vous postulez.",
+        "title": "Frais généraux de visa",
+        "schengen": {
+          "title": "Visa Schengen (Touristique, Affaires, Visite familiale, etc.)",
+          "adults": "Pour les adultes : Environ 80 euros",
+          "children6to12": "Pour les enfants de 6 à 12 ans : Environ 40 euros",
+          "childrenUnder6": "Pour les enfants de moins de 6 ans : Gratuit"
+        },
+        "usa": {
+          "title": "Visa des États-Unis (USA)",
+          "b1b2": "Visa de visiteur B1/B2 : 185 USD",
+          "f1": "Visa étudiant F1 : 185 USD",
+          "h1b": "Visa de travail H1B : 190 USD"
+        },
+        "uk": {
+          "title": "Visa du Royaume-Uni (Angleterre)",
+          "standard6months": "Visa de visiteur standard (6 mois) : Environ 100 GBP",
+          "twoYear": "Visa de visiteur de 2 ans : Environ 376 GBP",
+          "fiveYear": "Visa de visiteur de 5 ans : Environ 670 GBP"
+        },
+        "canada": {
+          "title": "Visa du Canada",
+          "singleEntry": "Visa à entrée unique : 100 CAD",
+          "multipleEntry": "Visa à entrées multiples : 100 CAD",
+          "family": "Pour les familles (4 personnes ou plus) : 500 CAD (pour les visas de visiteur uniquement)"
+        },
+        "australia": {
+          "title": "Visa de l'Australie",
+          "evisitor": "Visa touristique (eVisitor - Sous-classe 651) : Gratuit",
+          "visitor": "Visa touristique (Visitor - Sous-classe 600) : Environ 150 AUD",
+          "workHoliday": "Visa travail et vacances (Sous-classe 417) : Environ 485 AUD"
+        },
+        "notes": {
+          "title": "Notes",
+          "note1": "Ces prix sont des frais de demande consulaires et peuvent varier selon le pays pour lequel vous postulez.",
+          "note2": "Certains pays peuvent facturer des frais supplémentaires pour des services supplémentaires ou des options de traitement accéléré.",
+          "note3": "Les méthodes de paiement peuvent généralement être la carte de crédit, le virement bancaire ou d'autres méthodes déterminées par le consulat.",
+          "note4": "Les frais de demande ne sont pas remboursables, donc les frais ne peuvent pas être remboursés même si votre demande est rejetée.",
+          "note5": "Avant de faire une demande, il est important d'obtenir des informations à jour sur le site Web officiel du consulat du pays pour lequel vous postulez ou auprès des services de conseil."
+        }
+      },
+      "tirDriverVisa": {
+        "intro": "Les conducteurs TIR engagés dans le transport international doivent obtenir des visas pour entrer dans les pays où ils travaillent. Un visa de conducteur TIR est une autorisation requise pour que les conducteurs professionnels travaillent légalement à l'étranger.",
+        "generalInfo": {
+          "title": "Informations générales sur le visa de conducteur TIR",
+          "description": "Un visa de conducteur TIR est une autorisation requise pour que les conducteurs professionnels travaillent légalement à l'étranger. Ce type de visa est spécialement conçu pour les conducteurs travaillant dans le secteur du transport international."
+        },
+        "visaType": {
+          "title": "Type de visa et conditions de demande",
+          "typeC": {
+            "title": "Visa de type C (court terme)",
+            "description": "Il s'agit d'un type de visa de court terme. Généralement valable jusqu'à 90 jours dans les zones Schengen, ce type de visa est utilisé pour les voyages d'affaires."
+          },
+          "typeD": {
+            "title": "Visa de type D (long terme)",
+            "description": "Dans certains cas, les conducteurs TIR peuvent avoir besoin d'un visa de long terme. Généralement requis pour les travaux de transport dépassant 90 jours."
+          }
+        },
+        "requiredDocuments": {
+          "title": "Documents requis",
+          "passport": {
+            "title": "Passeport",
+            "description": "Passeport valide au moins 6 mois, non endommagé."
+          },
+          "applicationForm": {
+            "title": "Formulaire de demande de visa",
+            "description": "Formulaire de demande de visa rempli et signé."
+          },
+          "photo": {
+            "title": "Photo",
+            "description": "Photo biométrique."
+          },
+          "workCertificate": {
+            "title": "Certificat de travail",
+            "description": "Documents officiels prouvant que le demandeur travaille comme conducteur TIR."
+          },
+          "invitation": {
+            "title": "Lettre d'invitation",
+            "description": "Une lettre d'invitation d'une entreprise dans le pays de destination (requise pour certains pays)."
+          },
+          "insurance": {
+            "title": "Assurance",
+            "description": "Assurance santé voyage couvrant la période de voyage."
+          },
+          "vehicleDocuments": {
+            "title": "Documents du véhicule",
+            "description": "Documents liés au véhicule TIR et à sa licence."
+          },
+          "workPermit": {
+            "title": "Permis de travail",
+            "description": "Documents de permis de travail, si requis."
+          }
+        },
+        "applicationProcess": {
+          "title": "Processus de demande",
+          "description": "Les demandes sont généralement faites par l'entreprise affiliée du conducteur, par l'intermédiaire de centres de demande de visa ou de consulats. Comme le processus peut prendre plusieurs semaines, il est recommandé de faire une demande à l'avance. Après l'approbation de la demande, le conducteur obtient le droit de travailler dans les pays spécifiés pour une période spécifiée."
+        },
+        "visaDuration": {
+          "title": "Durée du visa et renouvellement",
+          "description": "La durée du visa est généralement déterminée par la durée du travail de transport. Les visas de court terme sont généralement de 90 jours, tandis que les visas de long terme peuvent être plus longs. Le renouvellement est possible si nécessaire lorsque le visa expire, mais le processus de renouvellement peut varier selon le pays et peut nécessiter une nouvelle demande."
+        },
+        "specialCases": {
+          "title": "Cas spéciaux",
+          "description": "Certains pays peuvent offrir des programmes de visa spéciaux pour les conducteurs TIR. Pour des informations détaillées sur ces cas, il est recommandé d'obtenir des informations auprès des consulats ou des services de conseil en visas."
+        },
+        "note": {
+          "title": "Note",
+          "description": "En tant que Çilek Vize, nous fournissons des services de visa de conducteur TIR ainsi que des services de rendez-vous rapide (VIP)."
+        }
+      },
+      "residencePermit": {
+        "intro": "La Turquie est un pays attractif pour de nombreux étrangers en raison de son riche patrimoine culturel, de sa belle géographie et de son emplacement stratégique. Les étrangers souhaitant séjourner en Turquie pendant une longue période doivent obtenir un permis de séjour. Ce texte fournira des détails informatifs sur les permis de séjour pour les étrangers en Turquie.",
+        "types": {
+          "title": "Types de Permis de Séjour",
+          "intro": "Les principaux types de permis de séjour accordés aux étrangers en Turquie sont les suivants :",
+          "shortTerm": {
+            "title": "Permis de Séjour de Court Terme",
+            "whoFor": "Pour qui ?",
+            "whoForDesc": "Pour les étrangers souhaitant séjourner en Turquie à des fins telles que le tourisme, les réunions d'affaires, les conférences, la recherche, les cours, l'éducation, les cours de langue turque, l'investissement et la propriété immobilière.",
+            "duration": "Durée",
+            "durationDesc": "Peut être accordé pour une durée maximale d'un an et est renouvelable selon les conditions.",
+            "documents": "Documents Requis",
+            "documentsDesc": "Passeport, formulaire de demande, photographie biométrique, assurance santé, documents montrant la situation financière et documents d'hébergement (contrat de location ou réservation d'hôtel)."
+          },
+          "family": {
+            "title": "Permis de Séjour Familial",
+            "whoFor": "Pour qui ?",
+            "whoForDesc": "Pour les conjoints, enfants et parents à charge des citoyens turcs résidant en Turquie ou des étrangers détenant un permis de séjour valide.",
+            "duration": "Durée",
+            "durationDesc": "Peut être accordé initialement pour une durée maximale de 2 ans et est renouvelable.",
+            "documents": "Documents Requis",
+            "documentsDesc": "Passeport, formulaire de demande, photographie biométrique, assurance santé, certificat de mariage ou de naissance et documents montrant la situation financière du sponsor."
+          },
+          "student": {
+            "title": "Permis de Séjour Étudiant",
+            "whoFor": "Pour qui ?",
+            "whoForDesc": "Pour les étudiants étrangers souhaitant étudier dans des universités ou des établissements d'enseignement en Turquie.",
+            "duration": "Durée",
+            "durationDesc": "Accordé selon la durée des études et renouvelable tant que l'éducation continue.",
+            "documents": "Documents Requis",
+            "documentsDesc": "Passeport, formulaire de demande, photographie biométrique, certificat d'étudiant, assurance santé, documents montrant la situation financière et documents d'hébergement."
+          },
+          "longTerm": {
+            "title": "Permis de Séjour de Long Terme",
+            "whoFor": "Pour qui ?",
+            "whoForDesc": "Pour les étrangers qui ont résidé en Turquie de manière continue pendant au moins 8 ans.",
+            "duration": "Durée",
+            "durationDesc": "Accordé indéfiniment.",
+            "documents": "Documents Requis",
+            "documentsDesc": "Passeport, formulaire de demande, photographie biométrique, documents montrant la situation financière et documents prouvant la durée du séjour en Turquie."
+          },
+          "humanitarian": {
+            "title": "Permis de Séjour Humanitaire",
+            "whoFor": "Pour qui ?",
+            "whoForDesc": "Pour les étrangers en Turquie en raison de circonstances extraordinaires qui ne peuvent pas bénéficier d'autres permis de séjour.",
+            "duration": "Durée",
+            "durationDesc": "Déterminé et renouvelable selon la nature de la situation.",
+            "documents": "Documents Requis",
+            "documentsDesc": "Varie selon la situation."
+          },
+          "work": {
+            "title": "Permis de Travail et de Séjour",
+            "whoFor": "Pour qui ?",
+            "whoForDesc": "Pour les étrangers qui souhaitent travailler en Turquie.",
+            "duration": "Durée",
+            "durationDesc": "Accordé et renouvelable selon la durée du contrat d'emploi.",
+            "documents": "Documents Requis",
+            "documentsDesc": "Document de permis de travail délivré par l'employeur, passeport, formulaire de demande et photographie biométrique."
+          }
+        },
+        "applicationProcess": {
+          "title": "Processus de Demande de Permis de Séjour",
+          "application": {
+            "title": "Demande",
+            "description": "Les demandes sont faites à la Direction Générale de la Gestion de l'Immigration en Turquie. Les demandes doivent être soumises dans les 30 jours suivant l'entrée en Turquie."
+          },
+          "prepareDocuments": {
+            "title": "Préparation des Documents Requis",
+            "description": "Les documents nécessaires doivent être collectés selon le type de demande et soumis complètement. Les documents doivent généralement être notariés et traduits par un traducteur assermenté."
+          },
+          "appointment": {
+            "title": "Prise de Rendez-vous",
+            "description": "Après avoir préparé les documents de demande, un rendez-vous est pris avec la Gestion de l'Immigration. Le jour du rendez-vous, les documents sont soumis et les données biométriques sont collectées."
+          },
+          "evaluation": {
+            "title": "Évaluation de la Demande",
+            "description": "La Gestion de l'Immigration examine la demande et décide d'accorder ou non le permis de séjour. Le processus prend généralement entre 1 et 3 mois."
+          },
+          "card": {
+            "title": "Carte de Permis de Séjour",
+            "description": "Une fois la demande approuvée, la carte de permis de séjour est envoyée à l'adresse du demandeur."
+          }
+        },
+        "renewal": {
+          "title": "Renouvellement du Permis de Séjour",
+          "description": "Une demande de renouvellement doit être faite avant l'expiration du permis de séjour actuel. Les demandes de renouvellement peuvent être faites 60 jours avant la date d'expiration du permis de séjour existant. Les documents requis pour le renouvellement sont similaires à ceux de la demande initiale et sont soumis à la Gestion de l'Immigration."
+        },
+        "cancellation": {
+          "title": "Annulation du Permis de Séjour",
+          "description": "Un permis de séjour peut être annulé dans certaines circonstances. Les exemples incluent des activités contraires au but déclaré du permis de séjour, des permis expirés et non renouvelés, et l'utilisation de documents falsifiés."
+        },
+        "conclusion": {
+          "title": "Conclusion",
+          "description": "Pour les étrangers souhaitant obtenir un permis de séjour en Turquie, le processus se déroule sans problème avec une préparation appropriée des documents et une demande en temps opportun. Obtenir un permis de séjour est une exigence légale pour ceux qui souhaitent séjourner en Turquie à long terme, et il est crucial de prêter attention à toutes les étapes du processus. Chercher une consultation professionnelle dans cette affaire peut augmenter le taux de réussite de la demande."
+        },
+        "note": {
+          "title": "Note",
+          "description": "En tant que Çilek Vize, nous fournissons des services de conseil aux ressortissants étrangers pour obtenir des permis de séjour en Turquie. Pour des informations détaillées, il est conseillé aux personnes de contacter leur spécialiste en permis de séjour."
+        }
       }
     },
     "contact": {
@@ -913,10 +1127,12 @@
         "title": "Points à considérer lors d'une demande de visa",
         "readTime": "15 min de lecture"
       },
-      "readPost": "Lire l'article",
-      "all": "Tous",
-      "popular": "Articles populaires",
-      "read": "Lire",
+        "readPost": "Lire l'article",
+        "all": "Tous",
+        "popular": "Articles populaires",
+        "read": "Lire",
+        "noPosts": "Aucun article de blog trouvé pour le moment.",
+        "noPopularPosts": "Aucun article populaire trouvé pour le moment.",
       "detail": {
         "notFound": "Article de blog introuvable",
         "readTime": "lecture",

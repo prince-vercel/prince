@@ -10,6 +10,9 @@
       "otherInfo": "Other Information",
       "aboutUs": "About Us",
       "visaTable": "Visa Table",
+      "consularFees": "Consular Fees",
+      "tirDriverVisa": "TIR Driver Visa",
+      "residencePermit": "Residence Permit for Foreigners in Turkey",
       "successRates": "Visa Application Success Rates",
       "advantages": "Advantages We Offer",
       "contact": "Contact",
@@ -862,6 +865,217 @@
             "content": "<p>The United States of America is a federal republic located in North America.</p><h3><strong>Economy</strong></h3><ul><li><strong>Overview:</strong> The largest economy in the world</li><li><strong>Currency:</strong> US Dollar (USD)</li></ul>"
           }
         }
+      },
+      "consularFees": {
+        "intro": "Consular application fees for visa applications may vary according to the visa type applied for, the country of application, and the nationality of the applicant. Below, information about the fee amounts for some popular visa types is provided. However, as this information may change over time, it is best to obtain the most current information from the official website of the consulate of the country you are applying to.",
+        "title": "General Visa Fees",
+        "schengen": {
+          "title": "Schengen Visa (Tourist, Business, Family Visit, etc.)",
+          "adults": "For adults: Approximately 80 Euro",
+          "children6to12": "For children aged 6-12: Approximately 40 Euro",
+          "childrenUnder6": "For children under 6: Free"
+        },
+        "usa": {
+          "title": "United States (USA) Visa",
+          "b1b2": "B1/B2 Visitor Visa: 185 USD",
+          "f1": "F1 Student Visa: 185 USD",
+          "h1b": "H1B Work Visa: 190 USD"
+        },
+        "uk": {
+          "title": "United Kingdom (England) Visa",
+          "standard6months": "Standard Visitor Visa (6 months): Approximately 100 GBP",
+          "twoYear": "2-Year Visitor Visa: Approximately 376 GBP",
+          "fiveYear": "5-Year Visitor Visa: Approximately 670 GBP"
+        },
+        "canada": {
+          "title": "Canada Visa",
+          "singleEntry": "Single entry visa: 100 CAD",
+          "multipleEntry": "Multiple entry visa: 100 CAD",
+          "family": "For families (4 or more people): 500 CAD (for visitor visas only)"
+        },
+        "australia": {
+          "title": "Australia Visa",
+          "evisitor": "Tourist Visa (eVisitor - Subclass 651): Free",
+          "visitor": "Tourist Visa (Visitor - Subclass 600): Approximately 150 AUD",
+          "workHoliday": "Work and Holiday Visa (Subclass 417): Approximately 485 AUD"
+        },
+        "notes": {
+          "title": "Notes",
+          "note1": "These prices are consular application fees and may vary depending on the country you are applying to.",
+          "note2": "Some countries may charge additional fees for extra services or expedited processing options.",
+          "note3": "Payment methods can generally be credit card, bank transfer, or other methods determined by the consulate.",
+          "note4": "Application fees are non-refundable, so the fee cannot be refunded even if your application is rejected.",
+          "note5": "Before applying, it is important to obtain up-to-date information from the official website of the consulate of the country you are applying to or from consultancy services."
+        }
+      },
+      "tirDriverVisa": {
+        "intro": "TIR drivers engaged in international transportation must obtain visas to enter the countries where they work. A TIR driver visa is an authorization required for professional drivers to work legally abroad.",
+        "generalInfo": {
+          "title": "General Information about TIR Driver Visa",
+          "description": "A TIR driver visa is an authorization required for professional drivers to work legally abroad. This visa type is specifically designed for drivers working in the international transportation sector."
+        },
+        "visaType": {
+          "title": "Visa Type and Application Conditions",
+          "typeC": {
+            "title": "Type C Visa (Short Term)",
+            "description": "This is a short-term visa type. Generally valid for up to 90 days in Schengen areas, this visa type is used for business travel."
+          },
+          "typeD": {
+            "title": "Type D Visa (Long Term)",
+            "description": "In some cases, TIR drivers may need a long-term visa. Usually required for transportation work exceeding 90 days."
+          }
+        },
+        "requiredDocuments": {
+          "title": "Required Documents",
+          "passport": {
+            "title": "Passport",
+            "description": "Passport valid for at least 6 months, undamaged."
+          },
+          "applicationForm": {
+            "title": "Visa Application Form",
+            "description": "Filled and signed visa application form."
+          },
+          "photo": {
+            "title": "Photo",
+            "description": "Biometric photo."
+          },
+          "workCertificate": {
+            "title": "Work Certificate",
+            "description": "Official documents proving the applicant works as a TIR driver."
+          },
+          "invitation": {
+            "title": "Invitation Letter",
+            "description": "An invitation letter from a company in the destination country (required for some countries)."
+          },
+          "insurance": {
+            "title": "Insurance",
+            "description": "Travel health insurance covering the travel period."
+          },
+          "vehicleDocuments": {
+            "title": "Vehicle Documents",
+            "description": "Documents related to the TIR vehicle and its license."
+          },
+          "workPermit": {
+            "title": "Work Permit",
+            "description": "Work permit documents, if required."
+          }
+        },
+        "applicationProcess": {
+          "title": "Application Process",
+          "description": "Applications are usually made by the driver's affiliated company, through visa application centers or consulates. Since the process may take several weeks, it is recommended to apply in advance. After the application is approved, the driver gains the right to work in specified countries for a specified period."
+        },
+        "visaDuration": {
+          "title": "Visa Duration and Renewal",
+          "description": "Visa duration is generally determined by the transportation job's length. Short-term visas are typically 90 days, while long-term visas can be longer. Renewal is possible if needed when the visa expires, but the renewal process can vary by country and may require a new application."
+        },
+        "specialCases": {
+          "title": "Special Cases",
+          "description": "Some countries may offer special visa programs for TIR drivers. For detailed information about these cases, it is recommended to obtain information from consulates or visa consulting services."
+        },
+        "note": {
+          "title": "Note",
+          "description": "As Çilek Vize, we provide TIR driver visa services along with fast appointment (VIP) services."
+        }
+      },
+      "residencePermit": {
+        "intro": "Turkey is an attractive country for many foreigners due to its rich cultural heritage, beautiful geography, and strategic location. Foreigners wishing to stay in Turkey for a long period must obtain a residence permit. This text will provide informative details about residence permits for foreigners in Turkey.",
+        "types": {
+          "title": "Types of Residence Permits",
+          "intro": "The main types of residence permits granted to foreigners in Turkey are as follows:",
+          "shortTerm": {
+            "title": "Short-Term Residence Permit",
+            "whoFor": "Who is it for?",
+            "whoForDesc": "For foreigners wishing to stay in Turkey for purposes such as tourism, business meetings, conferences, research, courses, education, Turkish language courses, investment, and real estate ownership.",
+            "duration": "Duration",
+            "durationDesc": "Can be granted for up to 1 year and is renewable based on conditions.",
+            "documents": "Required Documents",
+            "documentsDesc": "Passport, application form, biometric photograph, health insurance, documents showing financial status, and accommodation documents (rental contract or hotel reservation)."
+          },
+          "family": {
+            "title": "Family Residence Permit",
+            "whoFor": "Who is it for?",
+            "whoForDesc": "For spouses, children, and dependent parents of Turkish citizens residing in Turkey or foreigners holding a valid residence permit.",
+            "duration": "Duration",
+            "durationDesc": "Can be granted for up to 2 years initially and is renewable.",
+            "documents": "Required Documents",
+            "documentsDesc": "Passport, application form, biometric photograph, health insurance, marriage or birth certificate, and documents showing the sponsor's financial status."
+          },
+          "student": {
+            "title": "Student Residence Permit",
+            "whoFor": "Who is it for?",
+            "whoForDesc": "For foreign students wishing to study at universities or educational institutions in Turkey.",
+            "duration": "Duration",
+            "durationDesc": "Granted according to the duration of study and is renewable as long as education continues.",
+            "documents": "Required Documents",
+            "documentsDesc": "Passport, application form, biometric photograph, student certificate, health insurance, documents showing financial status, and accommodation documents."
+          },
+          "longTerm": {
+            "title": "Long-Term Residence Permit",
+            "whoFor": "Who is it for?",
+            "whoForDesc": "For foreigners who have resided in Turkey continuously for at least 8 years.",
+            "duration": "Duration",
+            "durationDesc": "Granted indefinitely.",
+            "documents": "Required Documents",
+            "documentsDesc": "Passport, application form, biometric photograph, documents showing financial status, and documents proving the duration of stay in Turkey."
+          },
+          "humanitarian": {
+            "title": "Humanitarian Residence Permit",
+            "whoFor": "Who is it for?",
+            "whoForDesc": "For foreigners in Turkey due to extraordinary circumstances who cannot benefit from other residence permits.",
+            "duration": "Duration",
+            "durationDesc": "Determined and renewable according to the nature of the situation.",
+            "documents": "Required Documents",
+            "documentsDesc": "Varies according to the situation."
+          },
+          "work": {
+            "title": "Work and Residence Permit",
+            "whoFor": "Who is it for?",
+            "whoForDesc": "For foreigners who want to work in Turkey.",
+            "duration": "Duration",
+            "durationDesc": "Granted and renewable according to the duration of the employment contract.",
+            "documents": "Required Documents",
+            "documentsDesc": "Work permit document issued by the employer, passport, application form, and biometric photograph."
+          }
+        },
+        "applicationProcess": {
+          "title": "Residence Permit Application Process",
+          "application": {
+            "title": "Application",
+            "description": "Applications are made to the General Directorate of Migration Management in Turkey. Applications must be submitted within 30 days of entering Turkey."
+          },
+          "prepareDocuments": {
+            "title": "Preparation of Required Documents",
+            "description": "Necessary documents must be collected according to the application type and submitted completely. Documents generally need to be notarized and translated by a sworn translator."
+          },
+          "appointment": {
+            "title": "Making an Appointment",
+            "description": "After preparing the application documents, an appointment is made with the Migration Management. On the appointment day, documents are submitted, and biometric data is collected."
+          },
+          "evaluation": {
+            "title": "Evaluation of the Application",
+            "description": "The Migration Management reviews the application and decides whether to grant the residence permit. The process typically takes between 1 and 3 months."
+          },
+          "card": {
+            "title": "Residence Permit Card",
+            "description": "Once the application is approved, the residence permit card is sent to the applicant's address."
+          }
+        },
+        "renewal": {
+          "title": "Residence Permit Renewal",
+          "description": "A renewal application must be made before the current residence permit expires. Renewal applications can be made 60 days before the expiration date of the existing residence permit. The required documents for renewal are similar to those for the initial application and are submitted to the Migration Management."
+        },
+        "cancellation": {
+          "title": "Cancellation of Residence Permit",
+          "description": "A residence permit can be canceled under certain circumstances. Examples include activities contrary to the stated purpose of the residence permit, expired and unrenewed permits, and the use of forged documents."
+        },
+        "conclusion": {
+          "title": "Conclusion",
+          "description": "For foreigners wishing to obtain a residence permit in Turkey, the process proceeds smoothly with proper document preparation and timely application. Obtaining a residence permit is a legal requirement for those wishing to stay in Turkey long-term, and attention to all steps of the process is crucial. Seeking professional consultation in this matter can increase the success rate of the application."
+        },
+        "note": {
+          "title": "Note",
+          "description": "As Çilek Vize, we provide consultancy services to foreign nationals for obtaining residence permits in Turkey. For detailed information, individuals are advised to contact their residence permit specialist."
+        }
       }
     },
     "contact": {
@@ -913,10 +1127,12 @@
         "title": "Things to Consider When Getting a Visa",
         "readTime": "15 min read"
       },
-      "readPost": "Read Post",
-      "all": "All",
-      "popular": "Popular Posts",
-      "read": "Read",
+        "readPost": "Read Post",
+        "all": "All",
+        "popular": "Popular Posts",
+        "read": "Read",
+        "noPosts": "No blog posts found yet.",
+        "noPopularPosts": "No popular posts found yet.",
       "detail": {
         "notFound": "Blog post not found",
         "readTime": "read",

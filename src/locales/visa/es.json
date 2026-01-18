@@ -10,6 +10,9 @@
       "otherInfo": "Otra información",
       "aboutUs": "Sobre nosotros",
       "visaTable": "Tabla de visas",
+      "consularFees": "Tarifas Consulares",
+      "tirDriverVisa": "Visa de Conductor TIR",
+      "residencePermit": "Permiso de Residencia para Extranjeros en Turquía",
       "successRates": "Tasas de éxito en solicitudes de visa",
       "advantages": "Ventajas que ofrecemos",
       "contact": "Contacto",
@@ -862,6 +865,217 @@
             "content": "<p>Estados Unidos de América es una república federal ubicada en América del Norte.</p><h3><strong>Economía</strong></h3><ul><li><strong>Panorama:</strong> La economía más grande del mundo</li><li><strong>Moneda:</strong> Dólar estadounidense (USD)</li></ul>"
           }
         }
+      },
+      "consularFees": {
+        "intro": "Las tarifas de solicitud consular para solicitudes de visa pueden variar según el tipo de visa solicitado, el país de solicitud y la nacionalidad del solicitante. A continuación se proporciona información sobre los montos de las tarifas para algunos tipos de visa populares. Sin embargo, como esta información puede cambiar con el tiempo, es mejor obtener la información más actualizada del sitio web oficial del consulado del país al que está solicitando.",
+        "title": "Tarifas Generales de Visa",
+        "schengen": {
+          "title": "Visa Schengen (Turística, Comercial, Visita Familiar, etc.)",
+          "adults": "Para adultos: Aproximadamente 80 Euros",
+          "children6to12": "Para niños de 6-12 años: Aproximadamente 40 Euros",
+          "childrenUnder6": "Para niños menores de 6 años: Gratis"
+        },
+        "usa": {
+          "title": "Visa de Estados Unidos (EE. UU.)",
+          "b1b2": "Visa de Visitante B1/B2: 185 USD",
+          "f1": "Visa de Estudiante F1: 185 USD",
+          "h1b": "Visa de Trabajo H1B: 190 USD"
+        },
+        "uk": {
+          "title": "Visa del Reino Unido (Inglaterra)",
+          "standard6months": "Visa de Visitante Estándar (6 meses): Aproximadamente 100 GBP",
+          "twoYear": "Visa de Visitante de 2 Años: Aproximadamente 376 GBP",
+          "fiveYear": "Visa de Visitante de 5 Años: Aproximadamente 670 GBP"
+        },
+        "canada": {
+          "title": "Visa de Canadá",
+          "singleEntry": "Visa de entrada única: 100 CAD",
+          "multipleEntry": "Visa de entrada múltiple: 100 CAD",
+          "family": "Para familias (4 o más personas): 500 CAD (solo para visas de visitante)"
+        },
+        "australia": {
+          "title": "Visa de Australia",
+          "evisitor": "Visa de Turista (eVisitor - Subclase 651): Gratis",
+          "visitor": "Visa de Turista (Visitor - Subclase 600): Aproximadamente 150 AUD",
+          "workHoliday": "Visa de Trabajo y Vacaciones (Subclase 417): Aproximadamente 485 AUD"
+        },
+        "notes": {
+          "title": "Notas",
+          "note1": "Estos precios son tarifas de solicitud consular y pueden variar según el país al que está solicitando.",
+          "note2": "Algunos países pueden cobrar tarifas adicionales por servicios adicionales u opciones de procesamiento acelerado.",
+          "note3": "Los métodos de pago generalmente pueden ser tarjeta de crédito, transferencia bancaria u otros métodos determinados por el consulado.",
+          "note4": "Las tarifas de solicitud no son reembolsables, por lo que la tarifa no se puede reembolsar incluso si su solicitud es rechazada.",
+          "note5": "Antes de solicitar, es importante obtener información actualizada del sitio web oficial del consulado del país al que está solicitando o de los servicios de consultoría."
+        }
+      },
+      "tirDriverVisa": {
+        "intro": "Los conductores TIR que se dedican al transporte internacional deben obtener visas para ingresar a los países donde trabajan. Una visa de conductor TIR es una autorización requerida para que los conductores profesionales trabajen legalmente en el extranjero.",
+        "generalInfo": {
+          "title": "Información General sobre la Visa de Conductor TIR",
+            "description": "Una visa de conductor TIR es una autorización requerida para que los conductores profesionales trabajen legalmente en el extranjero. Este tipo de visa está específicamente diseñado para conductores que trabajan en el sector de transporte internacional."
+          },
+        "visaType": {
+          "title": "Tipo de Visa y Condiciones de Solicitud",
+          "typeC": {
+            "title": "Visa Tipo C (Corto Plazo)",
+              "description": "Este es un tipo de visa de corto plazo. Generalmente válida por hasta 90 días en áreas Schengen, este tipo de visa se utiliza para viajes de negocios."
+            },
+          "typeD": {
+            "title": "Visa Tipo D (Largo Plazo)",
+              "description": "En algunos casos, los conductores TIR pueden necesitar una visa de largo plazo. Generalmente requerida para trabajos de transporte que exceden los 90 días."
+            }
+          },
+        "requiredDocuments": {
+          "title": "Documentos Requeridos",
+          "passport": {
+            "title": "Pasaporte",
+              "description": "Pasaporte válido por al menos 6 meses, sin daños."
+            },
+          "applicationForm": {
+            "title": "Formulario de Solicitud de Visa",
+              "description": "Formulario de solicitud de visa completado y firmado."
+            },
+          "photo": {
+            "title": "Foto",
+              "description": "Foto biométrica."
+            },
+          "workCertificate": {
+            "title": "Certificado de Trabajo",
+              "description": "Documentos oficiales que prueban que el solicitante trabaja como conductor TIR."
+            },
+          "invitation": {
+            "title": "Carta de Invitación",
+              "description": "Una carta de invitación de una empresa en el país de destino (requerida para algunos países)."
+            },
+          "insurance": {
+            "title": "Seguro",
+              "description": "Seguro de salud de viaje que cubra el período de viaje."
+            },
+          "vehicleDocuments": {
+            "title": "Documentos del Vehículo",
+              "description": "Documentos relacionados con el vehículo TIR y su licencia."
+            },
+          "workPermit": {
+            "title": "Permiso de Trabajo",
+              "description": "Documentos de permiso de trabajo, si se requieren."
+            }
+          },
+        "applicationProcess": {
+          "title": "Proceso de Solicitud",
+            "description": "Las solicitudes generalmente son realizadas por la empresa afiliada del conductor, a través de centros de solicitud de visas o consulados. Dado que el proceso puede tomar varias semanas, se recomienda solicitar con anticipación. Después de que la solicitud sea aprobada, el conductor obtiene el derecho de trabajar en países especificados por un período especificado."
+          },
+        "visaDuration": {
+          "title": "Duración de la Visa y Renovación",
+            "description": "La duración de la visa generalmente se determina según la duración del trabajo de transporte. Las visas de corto plazo suelen ser de 90 días, mientras que las visas de largo plazo pueden ser más largas. La renovación es posible si es necesario cuando la visa expire, pero el proceso de renovación puede variar según el país y puede requerir una nueva solicitud."
+          },
+        "specialCases": {
+          "title": "Casos Especiales",
+            "description": "Algunos países pueden ofrecer programas de visa especiales para conductores TIR. Para obtener información detallada sobre estos casos, se recomienda obtener información de consulados o servicios de consultoría de visas."
+          },
+        "note": {
+          "title": "Nota",
+          "description": "Como Çilek Vize, proporcionamos servicios de visa de conductor TIR junto con servicios de cita rápida (VIP)."
+        }
+      },
+      "residencePermit": {
+        "intro": "Turquía es un país atractivo para muchos extranjeros debido a su rico patrimonio cultural, hermosa geografía y ubicación estratégica. Los extranjeros que deseen permanecer en Turquía por un período prolongado deben obtener un permiso de residencia. Este texto proporcionará detalles informativos sobre los permisos de residencia para extranjeros en Turquía.",
+        "types": {
+          "title": "Tipos de Permisos de Residencia",
+          "intro": "Los principales tipos de permisos de residencia otorgados a extranjeros en Turquía son los siguientes:",
+          "shortTerm": {
+            "title": "Permiso de Residencia de Corto Plazo",
+            "whoFor": "¿Para quién es?",
+            "whoForDesc": "Para extranjeros que deseen permanecer en Turquía con fines como turismo, reuniones de negocios, conferencias, investigación, cursos, educación, cursos de idioma turco, inversión y propiedad inmobiliaria.",
+            "duration": "Duración",
+            "durationDesc": "Puede otorgarse por hasta 1 año y es renovable según las condiciones.",
+            "documents": "Documentos Requeridos",
+            "documentsDesc": "Pasaporte, formulario de solicitud, fotografía biométrica, seguro de salud, documentos que muestren la situación financiera y documentos de alojamiento (contrato de alquiler o reserva de hotel)."
+          },
+          "family": {
+            "title": "Permiso de Residencia Familiar",
+            "whoFor": "¿Para quién es?",
+            "whoForDesc": "Para cónyuges, hijos y padres dependientes de ciudadanos turcos que residen en Turquía o extranjeros que tengan un permiso de residencia válido.",
+            "duration": "Duración",
+            "durationDesc": "Puede otorgarse inicialmente por hasta 2 años y es renovable.",
+            "documents": "Documentos Requeridos",
+            "documentsDesc": "Pasaporte, formulario de solicitud, fotografía biométrica, seguro de salud, certificado de matrimonio o nacimiento y documentos que muestren la situación financiera del patrocinador."
+          },
+          "student": {
+            "title": "Permiso de Residencia Estudiantil",
+            "whoFor": "¿Para quién es?",
+            "whoForDesc": "Para estudiantes extranjeros que deseen estudiar en universidades o instituciones educativas en Turquía.",
+            "duration": "Duración",
+            "durationDesc": "Se otorga según la duración del estudio y es renovable mientras continúe la educación.",
+            "documents": "Documentos Requeridos",
+            "documentsDesc": "Pasaporte, formulario de solicitud, fotografía biométrica, certificado de estudiante, seguro de salud, documentos que muestren la situación financiera y documentos de alojamiento."
+          },
+          "longTerm": {
+            "title": "Permiso de Residencia de Largo Plazo",
+            "whoFor": "¿Para quién es?",
+            "whoForDesc": "Para extranjeros que han residido en Turquía continuamente durante al menos 8 años.",
+            "duration": "Duración",
+            "durationDesc": "Se otorga indefinidamente.",
+            "documents": "Documentos Requeridos",
+            "documentsDesc": "Pasaporte, formulario de solicitud, fotografía biométrica, documentos que muestren la situación financiera y documentos que prueben la duración de la estancia en Turquía."
+          },
+          "humanitarian": {
+            "title": "Permiso de Residencia Humanitario",
+            "whoFor": "¿Para quién es?",
+            "whoForDesc": "Para extranjeros en Turquía debido a circunstancias extraordinarias que no pueden beneficiarse de otros permisos de residencia.",
+            "duration": "Duración",
+            "durationDesc": "Se determina y renueva según la naturaleza de la situación.",
+            "documents": "Documentos Requeridos",
+            "documentsDesc": "Varía según la situación."
+          },
+          "work": {
+            "title": "Permiso de Trabajo y Residencia",
+            "whoFor": "¿Para quién es?",
+            "whoForDesc": "Para extranjeros que deseen trabajar en Turquía.",
+            "duration": "Duración",
+            "durationDesc": "Se otorga y renueva según la duración del contrato de empleo.",
+            "documents": "Documentos Requeridos",
+            "documentsDesc": "Documento de permiso de trabajo emitido por el empleador, pasaporte, formulario de solicitud y fotografía biométrica."
+          }
+        },
+        "applicationProcess": {
+          "title": "Proceso de Solicitud de Permiso de Residencia",
+          "application": {
+            "title": "Solicitud",
+            "description": "Las solicitudes se realizan ante la Dirección General de Gestión de Migración en Turquía. Las solicitudes deben presentarse dentro de los 30 días posteriores a la entrada a Turquía."
+          },
+          "prepareDocuments": {
+            "title": "Preparación de Documentos Requeridos",
+            "description": "Los documentos necesarios deben recopilarse según el tipo de solicitud y presentarse completamente. Los documentos generalmente deben estar notariados y traducidos por un traductor jurado."
+          },
+          "appointment": {
+            "title": "Obtener una Cita",
+            "description": "Después de preparar los documentos de solicitud, se hace una cita con la Gestión de Migración. El día de la cita, se presentan los documentos y se recopilan los datos biométricos."
+          },
+          "evaluation": {
+            "title": "Evaluación de la Solicitud",
+            "description": "La Gestión de Migración revisa la solicitud y decide si otorgar el permiso de residencia. El proceso generalmente toma entre 1 y 3 meses."
+          },
+          "card": {
+            "title": "Tarjeta de Permiso de Residencia",
+            "description": "Una vez que la solicitud es aprobada, la tarjeta de permiso de residencia se envía a la dirección del solicitante."
+          }
+        },
+        "renewal": {
+          "title": "Renovación del Permiso de Residencia",
+          "description": "Debe hacerse una solicitud de renovación antes de que expire el permiso de residencia actual. Las solicitudes de renovación pueden hacerse 60 días antes de la fecha de vencimiento del permiso de residencia existente. Los documentos requeridos para la renovación son similares a los de la solicitud inicial y se presentan a la Gestión de Migración."
+        },
+        "cancellation": {
+          "title": "Cancelación del Permiso de Residencia",
+          "description": "Un permiso de residencia puede cancelarse bajo ciertas circunstancias. Los ejemplos incluyen actividades contrarias al propósito declarado del permiso de residencia, permisos vencidos y no renovados, y el uso de documentos falsificados."
+        },
+        "conclusion": {
+          "title": "Conclusión",
+          "description": "Para extranjeros que deseen obtener un permiso de residencia en Turquía, el proceso avanza sin problemas con la preparación adecuada de documentos y la solicitud oportuna. Obtener un permiso de residencia es un requisito legal para aquellos que deseen permanecer en Turquía a largo plazo, y es crucial prestar atención a todos los pasos del proceso. Buscar consultoría profesional en este asunto puede aumentar la tasa de éxito de la solicitud."
+        },
+        "note": {
+          "title": "Nota",
+          "description": "Como Çilek Vize, proporcionamos servicios de consultoría a nacionales extranjeros para obtener permisos de residencia en Turquía. Para obtener información detallada, se recomienda a las personas que se pongan en contacto con su especialista en permisos de residencia."
+        }
       }
     },
     "contact": {
@@ -914,9 +1128,11 @@
         "readTime": "15 min de lectura"
       },
       "readPost": "Leer artículo",
-      "all": "Todos",
-      "popular": "Artículos populares",
-      "read": "Leer",
+        "all": "Todos",
+        "popular": "Artículos populares",
+        "read": "Leer",
+        "noPosts": "Aún no hay publicaciones de blog.",
+        "noPopularPosts": "Aún no hay publicaciones populares.",
       "detail": {
         "notFound": "Artículo de blog no encontrado",
         "readTime": "lectura",

@@ -60,6 +60,9 @@ export default function VisaHeader() {
         if (!mounted || !i18n.isInitialized) {
             return [
                 { title: '', href: '/visa/vize-tablosu' },
+                { title: '', href: '/visa/konsolosluk-harclari' },
+                { title: '', href: '/visa/tirci-vizesi' },
+                { title: '', href: '/visa/yabancilara-turkiye-de-oturum-izni' },
                 { title: '', href: '/visa/basvuru-durumlari' },
                 { title: '', href: '/visa/sundugumuz-avantajlar' },
                 { title: '', href: '/visa/nasil-vize-alirim' },
@@ -69,6 +72,9 @@ export default function VisaHeader() {
         }
         return [
             { title: t('visa.header.visaTable'), href: '/visa/vize-tablosu' },
+            { title: t('visa.header.consularFees'), href: '/visa/konsolosluk-harclari' },
+            { title: t('visa.header.tirDriverVisa'), href: '/visa/tirci-vizesi' },
+            { title: t('visa.header.residencePermit'), href: '/visa/yabancilara-turkiye-de-oturum-izni' },
             { title: t('visa.header.successRates'), href: '/visa/basvuru-durumlari' },
             { title: t('visa.header.advantages'), href: '/visa/sundugumuz-avantajlar' },
             { title: t('visa.header.howToGetVisa'), href: '/visa/nasil-vize-alirim' },

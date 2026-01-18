@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/set-state-in-effect */
+import { db } from '@/src/lib/firebase';
+import { getCollectionName } from '@/src/lib/localization';
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import '../../i18n';
 import '../../styles/visa/Blog.css';
-import { db } from '@/src/lib/firebase';
-import { collection, getDocs, orderBy, limit, query } from 'firebase/firestore';
-import { getCollectionName } from '@/src/lib/localization';
 
 // Blog post veri tipi
 interface BlogPost {
@@ -53,7 +53,7 @@ export default function BlogPage() {
             const blogsRef = collection(db, getCollectionName('visablogs', currentLang));
             const q = query(blogsRef, orderBy('createdAt', 'desc'), limit(5));
             const snapshot = await getDocs(q);
-            
+
             const posts: PopularPost[] = snapshot.docs.map(doc => {
                 const data = doc.data();
                 return {
@@ -62,7 +62,7 @@ export default function BlogPage() {
                     slug: createSlug(data.title || '')
                 };
             });
-            
+
             setPopularPosts(posts);
         } catch (error) {
             console.error('Popüler yazılar çekilirken hata:', error);
@@ -77,12 +77,12 @@ export default function BlogPage() {
             const blogsRef = collection(db, getCollectionName('visablogs', currentLang));
             const q = query(blogsRef, orderBy('createdAt', 'desc'));
             const snapshot = await getDocs(q);
-            
+
             const posts: BlogPost[] = snapshot.docs.map(doc => {
                 const data = doc.data();
                 const createdAt = data.createdAt?.toDate?.() || new Date();
                 const dateStr = createdAt.toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' });
-                
+
                 return {
                     id: doc.id,
                     title: data.title || '',
@@ -93,7 +93,7 @@ export default function BlogPage() {
                     readTime: '5 dk' // Varsayılan okuma süresi
                 };
             });
-            
+
             setBlogPosts(posts);
         } catch (error) {
             console.error('Blog yazıları çekilirken hata:', error);
@@ -251,7 +251,7 @@ export default function BlogPage() {
                                 ))
                             ) : (
                                 <p style={{ color: '#666', fontSize: '16px', textAlign: 'center', width: '100%' }}>
-                                    Henüz blog yazısı bulunmamaktadır.
+                                    {t('visa.blog.noPosts')}
                                 </p>
                             )}
                         </div>
@@ -282,7 +282,7 @@ export default function BlogPage() {
                                             ))
                                         ) : (
                                             <p style={{ color: '#666', fontSize: '14px', padding: '10px' }}>
-                                                Henüz popüler yazı bulunmamaktadır.
+                                                {t('visa.blog.noPopularPosts')}
                                             </p>
                                         )}
                                     </div>

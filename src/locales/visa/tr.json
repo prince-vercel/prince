@@ -10,6 +10,9 @@
       "otherInfo": "Diğer Bilgilendirmeler",
       "aboutUs": "Hakkımızda",
       "visaTable": "Vize Tablosu",
+      "consularFees": "Konsolosluk Harçları",
+      "tirDriverVisa": "Tırcı Şoför Vizesi",
+      "residencePermit": "Yabancılara Türkiye'de Oturum İzni",
       "successRates": "Vize Başvuru Başarı Oranları",
       "advantages": "Sunduğumuz Avantajlar",
       "contact": "İletişim",
@@ -850,6 +853,8 @@
         "all": "Tümü",
         "popular": "Popüler Yazılar",
         "read": "Oku",
+        "noPosts": "Henüz blog yazısı bulunmamaktadır.",
+        "noPopularPosts": "Henüz popüler yazı bulunmamaktadır.",
         "detail": {
           "notFound": "Blog yazısı bulunamadı",
           "readTime": "okuma",
@@ -993,6 +998,217 @@
             "excerpt": "Amerika Birleşik Devletleri'ne seyahat için vize gereklidir. ABD, dünyanın en büyük ekonomisine sahip olup, çeşitli kültürleri ve fırsatları barındırır.",
             "content": "<p>Amerika Birleşik Devletleri, Kuzey Amerika'da yer alan federal bir cumhuriyettir.</p><h3><strong>Ekonomi</strong></h3><ul><li><strong>Genel Bakış:</strong> Dünyanın en büyük ekonomisi</li><li><strong>Para Birimi:</strong> Amerikan Doları (USD)</li></ul>"
           }
+        }
+      },
+      "consularFees": {
+        "intro": "Vize başvurusu için konsolosluk başvuru harçları, başvurulan vize türüne, başvuru yapılan ülkeye ve başvuru sahibinin uyruğuna göre değişiklik gösterebilir. Aşağıda, genel olarak bazı popüler vize türleri için harç miktarları hakkında bilgi verilmiştir. Ancak, bu bilgiler zamanla değişebileceğinden, en güncel bilgilere başvuracağınız ülkenin konsolosluğunun resmi web sitesinden ulaşmanız en doğrusu olacaktır.",
+        "title": "Genel Vize Harçları",
+        "schengen": {
+          "title": "Schengen Vizesi (Turistik, Ticari, Aile Ziyareti, vb.)",
+          "adults": "Yetişkinler için: Yaklaşık 80 Euro",
+          "children6to12": "6-12 yaş arası çocuklar için: Yaklaşık 40 Euro",
+          "childrenUnder6": "6 yaş altı çocuklar için: Ücretsiz"
+        },
+        "usa": {
+          "title": "Amerika Birleşik Devletleri (ABD) Vizesi",
+          "b1b2": "B1/B2 Ziyaretçi Vizesi: 185 USD",
+          "f1": "F1 Öğrenci Vizesi: 185 USD",
+          "h1b": "H1B Çalışma Vizesi: 190 USD"
+        },
+        "uk": {
+          "title": "Birleşik Krallık (İngiltere) Vizesi",
+          "standard6months": "Standart Ziyaretçi Vizesi (6 ay): Yaklaşık 100 GBP",
+          "twoYear": "2 Yıllık Ziyaretçi Vizesi: Yaklaşık 376 GBP",
+          "fiveYear": "5 Yıllık Ziyaretçi Vizesi: Yaklaşık 670 GBP"
+        },
+        "canada": {
+          "title": "Kanada Vizesi",
+          "singleEntry": "Tek girişli vize: 100 CAD",
+          "multipleEntry": "Çok girişli vize: 100 CAD",
+          "family": "Aile için (4 veya daha fazla kişi): 500 CAD (yalnızca ziyaretçi vizeleri için)"
+        },
+        "australia": {
+          "title": "Avustralya Vizesi",
+          "evisitor": "Turist Vizesi (eVisitor - Subclass 651): Ücretsiz",
+          "visitor": "Turist Vizesi (Visitor - Subclass 600): Yaklaşık 150 AUD",
+          "workHoliday": "Çalışma ve Tatil Vizesi (Subclass 417): Yaklaşık 485 AUD"
+        },
+        "notes": {
+          "title": "Notlar",
+          "note1": "Bu fiyatlar, konsolosluk başvuru harçları olup, başvurunuzu yapacağınız ülkeye göre değişiklik gösterebilir.",
+          "note2": "Bazı ülkeler, ek hizmetler veya hızlı işlem seçenekleri için ek ücret talep edebilir.",
+          "note3": "Ödeme yöntemleri genellikle kredi kartı, banka transferi veya konsolosluk tarafından belirlenen diğer yöntemler olabilir.",
+          "note4": "Başvuru harçları iade edilmez, bu nedenle başvurunuz reddedilse bile ücret geri alınamaz.",
+          "note5": "Başvuru yapmadan önce, başvuru yapacağınız ülkenin konsolosluğunun resmi web sitesinden veya danışmanlık hizmetlerinden güncel bilgi almanız önemlidir."
+        }
+      },
+      "tirDriverVisa": {
+        "intro": "Uluslararası taşımacılık yapan TIR şoförleri, çalıştıkları ülkelere giriş yapabilmek için vize almak zorundadırlar. TIR şoförü vizesi, profesyonel şoförlerin yurtdışında yasal olarak çalışabilmeleri için gerekli olan bir yetkilendirmedir.",
+        "generalInfo": {
+          "title": "TIR Şoförü Vizesi Hakkında Genel Bilgilendirme",
+          "description": "TIR şoförü vizesi, profesyonel şoförlerin yurtdışında yasal olarak çalışabilmeleri için gerekli olan bir yetkilendirmedir. Bu vize türü, uluslararası taşımacılık sektöründe çalışan şoförler için özel olarak tasarlanmıştır."
+        },
+        "visaType": {
+          "title": "Vize Türü ve Başvuru Koşulları",
+          "typeC": {
+            "title": "C Tipi Vize (Kısa Süreli)",
+            "description": "Kısa süreli vize türüdür. Genellikle Schengen bölgelerinde 90 güne kadar geçerli olan bu vize türü, iş seyahatleri için kullanılır."
+          },
+          "typeD": {
+            "title": "D Tipi Vize (Uzun Süreli)",
+            "description": "Bazı durumlarda TIR şoförleri uzun süreli vizeye ihtiyaç duyabilir. Genellikle 90 günü aşan taşımacılık işleri için gereklidir."
+          }
+        },
+        "requiredDocuments": {
+          "title": "Gerekli Belgeler",
+          "passport": {
+            "title": "Pasaport",
+            "description": "En az 6 ay geçerliliği olan, hasar görmemiş pasaport."
+          },
+          "applicationForm": {
+            "title": "Vize Başvuru Formu",
+            "description": "Doldurulmuş ve imzalanmış vize başvuru formu."
+          },
+          "photo": {
+            "title": "Fotoğraf",
+            "description": "Biyometrik fotoğraf."
+          },
+          "workCertificate": {
+            "title": "Çalışma Belgesi",
+            "description": "Başvuru sahibinin TIR şoförü olarak çalıştığını gösteren resmi belgeler."
+          },
+          "invitation": {
+            "title": "Davetiye",
+            "description": "Gidilecek ülkedeki bir şirketten davetiye mektubu (bazı ülkeler için gerekli)."
+          },
+          "insurance": {
+            "title": "Sigorta",
+            "description": "Seyahat süresini kapsayan seyahat sağlık sigortası."
+          },
+          "vehicleDocuments": {
+            "title": "Araç Belgeleri",
+            "description": "TIR aracı ve ruhsatı ile ilgili belgeler."
+          },
+          "workPermit": {
+            "title": "Çalışma İzni",
+            "description": "Gerekli durumlarda çalışma izni belgeleri."
+          }
+        },
+        "applicationProcess": {
+          "title": "Başvuru Süreci",
+          "description": "Başvurular genellikle şoförün bağlı olduğu şirket tarafından, vize başvuru merkezleri veya konsolosluklar üzerinden yapılır. Süreç birkaç hafta sürebileceğinden, başvurunun önceden yapılması önerilir. Başvuru onaylandıktan sonra şoför, belirtilen ülkelerde belirtilen süre boyunca çalışma hakkı kazanır."
+        },
+        "visaDuration": {
+          "title": "Vize Süresi ve Yenileme",
+          "description": "Vize süresi genellikle taşımacılık işinin süresine göre belirlenir. Kısa süreli vizeler genellikle 90 gün, uzun süreli vizeler ise daha uzun olabilir. Vize süresi dolduğunda gerekirse yenileme yapılabilir, ancak yenileme süreci ülkeye göre değişebilir ve yeni bir başvuru gerektirebilir."
+        },
+        "specialCases": {
+          "title": "Özel Durumlar",
+          "description": "Bazı ülkeler TIR şoförleri için özel vize programları sunabilir. Bu durumlar hakkında detaylı bilgi için konsolosluk veya vize danışmanlık hizmetlerinden bilgi alınması önerilir."
+        },
+        "note": {
+          "title": "Not",
+          "description": "Çilek Vize olarak tırcı (şoför) vizesi hizmeti vermek ile beraber hızlı randevu (VIP) hizmeti de vermekteyiz."
+        }
+      },
+      "residencePermit": {
+        "intro": "Türkiye, zengin kültürel mirası, güzel coğrafyası ve stratejik konumu nedeniyle birçok yabancı için çekici bir ülkedir. Türkiye'de uzun süre kalmak isteyen yabancıların oturum izni alması gerekmektedir. Bu metin, Türkiye'de yabancılara verilen oturum izinleri hakkında bilgilendirici detaylar sunacaktır.",
+        "types": {
+          "title": "Oturum İzni Türleri",
+          "intro": "Türkiye'de yabancılara verilen başlıca oturum izni türleri şunlardır:",
+          "shortTerm": {
+            "title": "Kısa Dönem Oturum İzni",
+            "whoFor": "Kimler İçin?",
+            "whoForDesc": "Turizm, iş görüşmeleri, konferans, araştırma, kurs, eğitim, Türkçe kursu, yatırım ve gayrimenkul sahipliği gibi amaçlarla Türkiye'de kalmak isteyen yabancılar için.",
+            "duration": "Süre",
+            "durationDesc": "En fazla 1 yıl süreyle verilebilir ve koşullara göre yenilenebilir.",
+            "documents": "Gerekli Belgeler",
+            "documentsDesc": "Pasaport, başvuru formu, biyometrik fotoğraf, sağlık sigortası, mali durumu gösteren belgeler ve konaklama belgeleri (kira sözleşmesi veya otel rezervasyonu)."
+          },
+          "family": {
+            "title": "Aile İkamet İzni",
+            "whoFor": "Kimler İçin?",
+            "whoForDesc": "Türkiye'de ikamet eden Türk vatandaşlarının veya geçerli oturum izni bulunan yabancıların eşleri, çocukları ve bakmakla yükümlü oldukları anne-babaları için.",
+            "duration": "Süre",
+            "durationDesc": "İlk olarak en fazla 2 yıl süreyle verilebilir ve yenilenebilir.",
+            "documents": "Gerekli Belgeler",
+            "documentsDesc": "Pasaport, başvuru formu, biyometrik fotoğraf, sağlık sigortası, evlilik veya doğum belgesi ve sponsorun mali durumunu gösteren belgeler."
+          },
+          "student": {
+            "title": "Öğrenci İkamet İzni",
+            "whoFor": "Kimler İçin?",
+            "whoForDesc": "Türkiye'deki üniversitelerde veya eğitim kurumlarında öğrenim görmek isteyen yabancı öğrenciler için.",
+            "duration": "Süre",
+            "durationDesc": "Öğrenim süresine göre verilir ve eğitim devam ettiği sürece yenilenebilir.",
+            "documents": "Gerekli Belgeler",
+            "documentsDesc": "Pasaport, başvuru formu, biyometrik fotoğraf, öğrenci belgesi, sağlık sigortası, mali durumu gösteren belgeler ve konaklama belgeleri."
+          },
+          "longTerm": {
+            "title": "Uzun Dönem Oturum İzni",
+            "whoFor": "Kimler İçin?",
+            "whoForDesc": "Türkiye'de en az 8 yıl kesintisiz ikamet eden yabancılar için.",
+            "duration": "Süre",
+            "durationDesc": "Süresiz olarak verilir.",
+            "documents": "Gerekli Belgeler",
+            "documentsDesc": "Pasaport, başvuru formu, biyometrik fotoğraf, mali durumu gösteren belgeler ve Türkiye'deki ikamet süresini kanıtlayan belgeler."
+          },
+          "humanitarian": {
+            "title": "İnsani İkamet İzni",
+            "whoFor": "Kimler İçin?",
+            "whoForDesc": "Olağanüstü durumlar nedeniyle Türkiye'de bulunan ve diğer oturum izinlerinden yararlanamayan yabancılar için.",
+            "duration": "Süre",
+            "durationDesc": "Durumun niteliğine göre belirlenir ve yenilenebilir.",
+            "documents": "Gerekli Belgeler",
+            "documentsDesc": "Duruma göre değişiklik gösterir."
+          },
+          "work": {
+            "title": "İş ve Çalışma İzni",
+            "whoFor": "Kimler İçin?",
+            "whoForDesc": "Türkiye'de çalışmak isteyen yabancılar için.",
+            "duration": "Süre",
+            "durationDesc": "İş sözleşmesinin süresine göre verilir ve yenilenebilir.",
+            "documents": "Gerekli Belgeler",
+            "documentsDesc": "İşveren tarafından verilen çalışma izni belgesi, pasaport, başvuru formu ve biyometrik fotoğraf."
+          }
+        },
+        "applicationProcess": {
+          "title": "Oturum İzni Başvuru Süreci",
+          "application": {
+            "title": "Başvuru",
+            "description": "Başvurular Türkiye'de Göç İdaresi Genel Müdürlüğü'ne yapılır. Başvurular Türkiye'ye giriş yapıldıktan sonra 30 gün içinde yapılmalıdır."
+          },
+          "prepareDocuments": {
+            "title": "Gerekli Belgelerin Hazırlanması",
+            "description": "Başvuru türüne göre gerekli belgeler toplanmalı ve eksiksiz olarak sunulmalıdır. Belgeler genellikle noter onaylı ve yeminli tercüman tarafından çevrilmiş olmalıdır."
+          },
+          "appointment": {
+            "title": "Randevu Alma",
+            "description": "Başvuru belgeleri hazırlandıktan sonra Göç İdaresi ile randevu alınır. Randevu gününde belgeler teslim edilir ve biyometrik veriler alınır."
+          },
+          "evaluation": {
+            "title": "Başvurunun Değerlendirilmesi",
+            "description": "Göç İdaresi başvuruyu inceler ve oturum izninin verilip verilmeyeceğine karar verir. Süreç genellikle 1-3 ay arasında sürer."
+          },
+          "card": {
+            "title": "Oturum İzni Kartı",
+            "description": "Başvuru onaylandıktan sonra oturum izni kartı başvuru sahibinin adresine gönderilir."
+          }
+        },
+        "renewal": {
+          "title": "Oturum İzni Yenileme",
+          "description": "Mevcut oturum izninin süresi dolmadan yenileme başvurusu yapılmalıdır. Yenileme başvuruları mevcut oturum izninin sona erme tarihinden 60 gün önce yapılabilir. Yenileme için gerekli belgeler ilk başvuruya benzer şekilde hazırlanır ve Göç İdaresi'ne sunulur."
+        },
+        "cancellation": {
+          "title": "Oturum İzninin İptali",
+          "description": "Oturum izni belirli durumlarda iptal edilebilir. Oturum izninin belirtilen amacına aykırı faaliyetlerde bulunulması, süresi dolan ve yenilenmeyen izinler ve sahte belge kullanımı gibi durumlar iptal sebepleri arasındadır."
+        },
+        "conclusion": {
+          "title": "Sonuç",
+          "description": "Türkiye'de oturum izni almak isteyen yabancılar için, doğru belge hazırlığı ve zamanında başvuru yapılması ile süreç sorunsuz ilerler. Oturum izni almak, Türkiye'de uzun süre kalmak isteyenler için yasal bir zorunluluktur ve sürecin tüm aşamalarına dikkat edilmesi önemlidir. Bu konuda profesyonel danışmanlık almak başvurunun başarı şansını artırabilir."
+        },
+        "note": {
+          "title": "Not",
+          "description": "Çilek Vize olarak yabancı uyruklu kişilere Türkiye'de oturum izni almak için danışmanlık hizmeti vermekteyiz. Detaylı bilgi için oturum izni uzmanımızla iletişime geçebilirsiniz."
         }
       }
     }
