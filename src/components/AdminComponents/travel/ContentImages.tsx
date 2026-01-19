@@ -2,25 +2,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { useState, useEffect } from 'react'
+import { db, storage } from '@/src/lib/firebase'
+import { getCollectionName } from '@/src/lib/localization'
+import styles from '@/src/styles/admin.module.css'
 import {
-  collection,
-  getDocs,
   addDoc,
-  updateDoc,
+  collection,
   deleteDoc,
   doc,
-  serverTimestamp,
+  getDocs,
+  orderBy,
   query,
-  orderBy
+  serverTimestamp,
+  updateDoc
 } from 'firebase/firestore'
-import { db } from '@/src/lib/firebase'
-import { storage } from '@/src/lib/firebase'
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import styles from '@/src/styles/admin.module.css'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { useEffect, useState } from 'react'
 import { MdDelete, MdEdit } from 'react-icons/md'
 import LanguageSelector from '../../LanguageSelector'
-import { getCollectionName } from '@/src/lib/localization'
 
 interface Image {
   id: string
@@ -44,6 +43,8 @@ const ContentImages = () => {
   })
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
+  const [jsonFile, setJsonFile] = useState<File | null>(null)
+  const [importingJson, setImportingJson] = useState(false)
 
   // Fetch images
   useEffect(() => {
@@ -88,10 +89,10 @@ const ContentImages = () => {
       const timestamp = Date.now()
       const filename = `travel-banner-${timestamp}-${file.name}`
       const storageRef = ref(storage, `travelbanners/${filename}`)
-      
+
       await uploadBytes(storageRef, file)
       const downloadURL = await getDownloadURL(storageRef)
-      
+
       return downloadURL
     } catch (err: any) {
       console.error('Error uploading image:', err)
@@ -102,10 +103,45 @@ const ContentImages = () => {
     }
   }
 
+  // Upload image from URL/path to Firebase Storage
+  const uploadImageFromPath = async (imagePath: string) => {
+    try {
+      // Eğer zaten bir URL ise (http/https ile başlıyorsa), direkt döndür
+      if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+        return imagePath
+      }
+
+      // Local path ise (örn: /travel-banners/resim.webp)
+      setUploadingImage(true)
+
+      // Public klasöründeki dosyayı fetch et
+      const response = await fetch(imagePath)
+      if (!response.ok) {
+        throw new Error(`Görsel yüklenemedi: ${imagePath}`)
+      }
+
+      const blob = await response.blob()
+      const filename = imagePath.split('/').pop() || `image-${Date.now()}`
+      const timestamp = Date.now()
+      const storageFilename = `travel-banner-${timestamp}-${filename}`
+      const storageRef = ref(storage, `travelbanners/${storageFilename}`)
+
+      await uploadBytes(storageRef, blob)
+      const downloadURL = await getDownloadURL(storageRef)
+
+      return downloadURL
+    } catch (err: any) {
+      console.error('Error uploading image from path:', err)
+      return null
+    } finally {
+      setUploadingImage(false)
+    }
+  }
+
   // Handle form submission
   const handleSubmit = async (e: any) => {
     e.preventDefault()
-    
+
     if (!formData.title.trim()) {
       setError('Başlık gereklidir')
       return
@@ -187,7 +223,7 @@ const ContentImages = () => {
   // Handle bulk image upload
   const handleBulkSubmit = async (e: any) => {
     e.preventDefault()
-    
+
     if (selectedFiles.length === 0) {
       setError('Lütfen en az bir görsel seçin')
       return
@@ -199,7 +235,7 @@ const ContentImages = () => {
       setSuccess('')
 
       let uploadedCount = 0
-      
+
       for (const file of selectedFiles) {
         try {
           const uploadedUrl = await uploadImageToStorage(file)
@@ -245,7 +281,7 @@ const ContentImages = () => {
       setLoading(true)
       await deleteDoc(doc(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners', id))
       setSuccess('Görsel silindi')
-      
+
       // Refresh images
       const q = query(collection(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners'), orderBy('createdAt', 'desc'))
       const querySnapshot = await getDocs(q)
@@ -270,12 +306,128 @@ const ContentImages = () => {
     setError('')
   }
 
+  // Handle JSON file selection
+  const handleJsonFileSelect = (e: any) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      if (file.type !== 'application/json' && !file.name.endsWith('.json')) {
+        setError('Lütfen geçerli bir JSON dosyası seçin')
+        return
+      }
+      setJsonFile(file)
+    }
+  }
+
+  // Handle JSON import
+  const handleJsonImport = async () => {
+    if (!jsonFile) {
+      setError('Lütfen bir JSON dosyası seçin')
+      return
+    }
+
+    try {
+      setImportingJson(true)
+      setError('')
+      setSuccess('')
+
+      // Read JSON file
+      const text = await jsonFile.text()
+      let jsonData: Array<{ title: string; imageUrl: string }>
+
+      try {
+        jsonData = JSON.parse(text)
+      } catch (parseError) {
+        setError('JSON dosyası geçersiz format. Lütfen doğru formatta bir JSON dosyası yükleyin.')
+        setImportingJson(false)
+        return
+      }
+
+      // Validate JSON structure
+      if (!Array.isArray(jsonData)) {
+        setError('JSON dosyası bir dizi içermelidir')
+        setImportingJson(false)
+        return
+      }
+
+      if (jsonData.length === 0) {
+        setError('JSON dosyası boş')
+        setImportingJson(false)
+        return
+      }
+
+      // Validate each item
+      for (const item of jsonData) {
+        if (!item.title || !item.imageUrl) {
+          setError('JSON dosyasındaki her öğe "title" ve "imageUrl" alanlarına sahip olmalıdır')
+          setImportingJson(false)
+          return
+        }
+      }
+
+      // Import to Firebase
+      let importedCount = 0
+      let failedCount = 0
+
+      for (const item of jsonData) {
+        try {
+          let finalImageUrl = item.imageUrl.trim()
+
+          // Eğer local path ise (http/https ile başlamıyorsa), Firebase Storage'a yükle
+          if (!finalImageUrl.startsWith('http://') && !finalImageUrl.startsWith('https://')) {
+            const uploadedUrl = await uploadImageFromPath(finalImageUrl)
+            if (!uploadedUrl) {
+              console.error(`Görsel yüklenemedi: ${item.title} - ${finalImageUrl}`)
+              failedCount++
+              continue
+            }
+            finalImageUrl = uploadedUrl
+          }
+
+          await addDoc(collection(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners'), {
+            title: item.title.trim(),
+            imageUrl: finalImageUrl,
+            createdAt: serverTimestamp()
+          })
+          importedCount++
+        } catch (err) {
+          console.error(`Hata: ${item.title}`, err)
+          failedCount++
+        }
+      }
+
+      if (importedCount > 0) {
+        setSuccess(`${importedCount} banner başarıyla eklendi${failedCount > 0 ? `, ${failedCount} başarısız` : ''}`)
+
+        // Refresh images
+        const q = query(collection(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners'), orderBy('createdAt', 'desc'))
+        const querySnapshot = await getDocs(q)
+        const imagesList = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Image[]
+        setImages(imagesList)
+      } else {
+        setError('Hiçbir banner eklenemedi')
+      }
+
+      // Reset JSON file
+      setJsonFile(null)
+      const jsonInput = document.querySelector('input[type="file"][accept=".json,application/json"]') as HTMLInputElement
+      if (jsonInput) jsonInput.value = ''
+    } catch (err: any) {
+      console.error('JSON import hatası:', err)
+      setError('JSON dosyası yüklenirken hata oluştu: ' + (err.message || 'Bilinmeyen hata'))
+    } finally {
+      setImportingJson(false)
+    }
+  }
+
   return (
     <div>
       <LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
 
       <div className={styles.gfHeader}>
-        
+
         <h2 className={styles.gfTitle}>Anasayfa Bannerları</h2>
         <div style={{ display: 'flex', gap: '10px', marginLeft: 'auto' }}>
           {!showForm && (
@@ -287,11 +439,158 @@ const ContentImages = () => {
               >
                 + Banner Ekle
               </button>
-         
+              <label
+                htmlFor="json-import-input"
+                className={styles.gfBtn}
+                style={{
+                  background: '#10b981',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                📥 JSON İçe Aktar
+              </label>
+              <input
+                id="json-import-input"
+                type="file"
+                accept=".json,application/json"
+                onChange={handleJsonFileSelect}
+                style={{ display: 'none' }}
+                disabled={loading || importingJson}
+              />
             </>
           )}
         </div>
       </div>
+
+      {!jsonFile && !showForm && (
+        <div style={{ marginBottom: '30px', padding: '20px', background: '#f0f9ff', border: '1px solid #bae6fd', borderRadius: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+            <span style={{ fontSize: '20px' }}>ℹ️</span>
+            <div style={{ flex: 1 }}>
+              <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '600', color: '#0369a1' }}>
+                JSON Dosya Formatı
+              </h4>
+              <p style={{ margin: '0 0 12px 0', fontSize: '12px', color: '#64748b' }}>
+                JSON dosyanız aşağıdaki formatta olmalıdır:
+              </p>
+              <pre style={{
+                margin: 0,
+                padding: '12px',
+                background: '#1e293b',
+                color: '#e2e8f0',
+                borderRadius: '6px',
+                overflowX: 'auto',
+                fontSize: '11px',
+                lineHeight: '1.6',
+                fontFamily: 'monospace',
+                border: '1px solid #334155'
+              }}>
+                {`[
+  {
+    "title": "Banner Başlığı",
+    "imageUrl": "/travel-banners/resim.webp"
+  },
+  {
+    "title": "Başka Banner",
+    "imageUrl": "/travel-banners/diger-resim.jpg"
+  }
+]`}
+              </pre>
+              <div style={{ marginTop: '10px', fontSize: '11px', color: '#64748b' }}>
+                <strong>Not:</strong> Her öğe <strong>"title"</strong> ve <strong>"imageUrl"</strong> alanlarına sahip olmalıdır. Seçili dil: <strong>{selectedLanguage.toUpperCase()}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {jsonFile && (
+        <div className="json-import-section" style={{ marginBottom: '30px', padding: '24px', background: '#f0fdf4', border: '2px solid #10b981', borderRadius: '8px' }}>
+          <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '600', color: '#047857' }}>
+            JSON Dosyası Seçildi
+          </h3>
+          <div style={{ marginBottom: '20px', padding: '12px', background: '#fff', borderRadius: '6px', border: '1px solid #d1fae5' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <span style={{ fontSize: '14px', color: '#1f2937', fontWeight: '600' }}>📄 {jsonFile.name}</span>
+                <span style={{ fontSize: '12px', color: '#666', marginLeft: '12px' }}>({(jsonFile.size / 1024).toFixed(2)} KB)</span>
+              </div>
+              <span style={{ fontSize: '12px', color: '#047857', fontWeight: '500' }}>
+                Dil: {selectedLanguage.toUpperCase()}
+              </span>
+            </div>
+            <div style={{ marginTop: '12px', padding: '12px', background: '#f9fafb', borderRadius: '4px', fontSize: '11px' }}>
+              <div style={{ marginBottom: '8px', fontWeight: '600', color: '#374151' }}>📋 JSON Formatı:</div>
+              <pre style={{
+                margin: 0,
+                padding: '10px',
+                background: '#1f2937',
+                color: '#e5e7eb',
+                borderRadius: '4px',
+                overflowX: 'auto',
+                fontSize: '11px',
+                lineHeight: '1.5',
+                fontFamily: 'monospace'
+              }}>
+                {`[
+  {
+    "title": "Banner Başlığı",
+    "imageUrl": "/travel-banners/resim.webp"
+  },
+  {
+    "title": "Başka Banner",
+    "imageUrl": "/travel-banners/diger-resim.jpg"
+  }
+]`}
+              </pre>
+              <div style={{ marginTop: '8px', fontSize: '10px', color: '#6b7280' }}>
+                ⚠️ Her öğe <strong>"title"</strong> ve <strong>"imageUrl"</strong> alanlarına sahip olmalıdır.
+              </div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+            <button
+              onClick={handleJsonImport}
+              disabled={loading || importingJson || uploadingImage}
+              style={{
+                padding: '10px 24px',
+                background: '#10b981',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '6px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              {importingJson ? 'İçe Aktarılıyor...' : 'JSON\'u İçe Aktar'}
+            </button>
+            <button
+              onClick={() => {
+                setJsonFile(null)
+                const jsonInput = document.querySelector('input[type="file"][accept=".json,application/json"]') as HTMLInputElement
+                if (jsonInput) jsonInput.value = ''
+              }}
+              disabled={loading || importingJson || uploadingImage}
+              style={{
+                padding: '10px 24px',
+                background: '#e5e7eb',
+                color: '#1f2937',
+                border: 'none',
+                borderRadius: '6px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              İptal Et
+            </button>
+          </div>
+        </div>
+      )}
 
       {selectedFiles.length > 0 && (
         <div className="bulk-upload-section" style={{ marginBottom: '30px', padding: '24px', background: '#f0f9ff', border: '2px solid #219FFF', borderRadius: '8px' }}>
@@ -310,9 +609,9 @@ const ContentImages = () => {
             <button
               onClick={handleBulkSubmit}
               disabled={loading || uploadingImage}
-              style={{ 
+              style={{
                 padding: '10px 24px',
-                background: '#219FFF', 
+                background: '#219FFF',
                 color: '#fff',
                 border: 'none',
                 borderRadius: '6px',
@@ -328,9 +627,9 @@ const ContentImages = () => {
                 setSelectedFiles([])
               }}
               disabled={loading || uploadingImage}
-              style={{ 
+              style={{
                 padding: '10px 24px',
-                background: '#e5e7eb', 
+                background: '#e5e7eb',
                 color: '#1f2937',
                 border: 'none',
                 borderRadius: '6px',
@@ -346,12 +645,12 @@ const ContentImages = () => {
       )}
 
       {success && (
-        <div style={{ 
-          background: '#f0fdf4', 
-          border: '1px solid #bbf7d0', 
-          color: '#15803d', 
-          padding: '12px 16px', 
-          borderRadius: '6px', 
+        <div style={{
+          background: '#f0fdf4',
+          border: '1px solid #bbf7d0',
+          color: '#15803d',
+          padding: '12px 16px',
+          borderRadius: '6px',
           marginBottom: '20px',
           fontSize: '14px'
         }}>
@@ -359,12 +658,12 @@ const ContentImages = () => {
         </div>
       )}
       {error && (
-        <div style={{ 
-          background: '#fef2f2', 
-          border: '1px solid #fecaca', 
-          color: '#b91c1c', 
-          padding: '12px 16px', 
-          borderRadius: '6px', 
+        <div style={{
+          background: '#fef2f2',
+          border: '1px solid #fecaca',
+          color: '#b91c1c',
+          padding: '12px 16px',
+          borderRadius: '6px',
           marginBottom: '20px',
           fontSize: '14px'
         }}>
@@ -402,9 +701,9 @@ const ContentImages = () => {
               </label>
               {formData.imageUrl && !selectedFile && (
                 <div style={{ marginBottom: '12px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                  <img 
-                    src={formData.imageUrl} 
-                    alt="preview" 
+                  <img
+                    src={formData.imageUrl}
+                    alt="preview"
                     style={{ maxWidth: '150px', maxHeight: '150px', borderRadius: '6px', objectFit: 'cover' }}
                   />
                   <button
@@ -452,9 +751,9 @@ const ContentImages = () => {
               <button
                 type="submit"
                 disabled={loading || uploadingImage}
-                style={{ 
+                style={{
                   padding: '10px 24px',
-                  background: '#d7b76e', 
+                  background: '#d7b76e',
                   color: '#fff',
                   border: 'none',
                   borderRadius: '6px',
@@ -469,9 +768,9 @@ const ContentImages = () => {
                 type="button"
                 onClick={handleCancel}
                 disabled={loading || uploadingImage}
-                style={{ 
+                style={{
                   padding: '10px 24px',
-                  background: '#e5e7eb', 
+                  background: '#e5e7eb',
                   color: '#1f2937',
                   border: 'none',
                   borderRadius: '6px',
@@ -487,20 +786,20 @@ const ContentImages = () => {
         </div>
       )}
 
-      <div style={{ 
-        display: 'grid', 
+      <div style={{
+        display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
         gap: '20px'
       }}>
         {images.map((image) => (
-          <div 
-            key={image.id} 
+          <div
+            key={image.id}
             className={styles.gfCard}
             style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
           >
-            <img 
-              src={image.imageUrl} 
-              alt={image.title} 
+            <img
+              src={image.imageUrl}
+              alt={image.title}
               style={{ width: '100%', height: '200px', objectFit: 'cover' }}
             />
             <div className={styles.gfCardContent} style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -548,7 +847,7 @@ const ContentImages = () => {
                     justifyContent: 'center',
                     gap: '6px',
                     border: '1px solid #ef4444'
-                
+
                   }}
                   title="Sil"
                 >

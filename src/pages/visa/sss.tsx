@@ -1,14 +1,14 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import '../../styles/visa/SSS.css'
-import '../../i18n'
+import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
 import { db } from '@/src/lib/firebase'
 import { collection, getDocs, orderBy, query } from 'firebase/firestore'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import '../../i18n'
 import { getCollectionName } from '../../lib/localization'
+import '../../styles/visa/SSS.css'
 
 interface FAQItem {
     question: string
@@ -16,7 +16,7 @@ interface FAQItem {
 }
 
 export default function SSSPage() {
-    const { t, i18n } = useTranslation()
+    const { t, i18n } = useSafeTranslation()
     const [faqs, setFaqs] = useState<FAQItem[]>([])
     const [openIndex, setOpenIndex] = useState<number | null>(null)
 
@@ -26,12 +26,12 @@ export default function SSSPage() {
             const faqsRef = collection(db, getCollectionName('visacontents/faq/list', currentLang))
             const q = query(faqsRef, orderBy('createdAt', 'asc'))
             const snapshot = await getDocs(q)
-            
+
             const faqData = snapshot.docs.map(doc => ({
                 question: doc.data().question || '',
                 answer: doc.data().answer || ''
             })) as FAQItem[]
-            
+
             setFaqs(faqData)
         } catch (error) {
             console.error('SSS verileri çekilirken hata:', error)

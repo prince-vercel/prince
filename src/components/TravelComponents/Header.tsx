@@ -35,7 +35,8 @@ export default function Header() {
         'en': 'EN',
         'es': 'ES',
         'fr': 'FR',
-        'ru': 'RU'
+        'ru': 'RU',
+        'ar': 'AR'
       }
       const currentLang = langMap[i18n.language] || 'TR'
       setSelectedLanguage(currentLang)
@@ -222,12 +223,33 @@ export default function Header() {
                           color: selectedLanguage === 'RU' ? 'white' : '#333',
                           border: 'none',
                           cursor: 'pointer',
+                          fontSize: '14px'
+                        }}
+                      >
+                        RU
+                      </button>
+                      <button
+                        className={`language-option ${selectedLanguage === 'AR' ? 'active' : ''}`}
+                        onClick={() => {
+                          setSelectedLanguage('AR')
+                          i18n.changeLanguage('ar')
+                          setIsLanguageDropdownOpen(false)
+                        }}
+                        style={{
+                          display: 'block',
+                          width: '100%',
+                          padding: '10px 16px',
+                          textAlign: 'left',
+                          background: selectedLanguage === 'AR' ? '#d7b76e' : 'transparent',
+                          color: selectedLanguage === 'AR' ? 'white' : '#333',
+                          border: 'none',
+                          cursor: 'pointer',
                           fontSize: '14px',
                           borderBottomLeftRadius: '8px',
                           borderBottomRightRadius: '8px'
                         }}
                       >
-                        RU
+                        AR
                       </button>
                     </div>
                   )}

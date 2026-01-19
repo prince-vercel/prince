@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../../i18n'
 
@@ -47,10 +47,10 @@ export default function CountrySelectionForm() {
           <div className="country-selection-card">
             <div className="selection-header">
               <div className="header-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10"/>
-                  <line x1="2" y1="12" x2="22" y2="12"/>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                 </svg>
               </div>
               <div className="header-text">
@@ -69,8 +69,8 @@ export default function CountrySelectionForm() {
                 <div className="select-wrapper" id="country-select-wrapper">
                   <label className="select-label">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                      <circle cx="12" cy="10" r="3"/>
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                      <circle cx="12" cy="10" r="3" />
                     </svg>
                     <span suppressHydrationWarning>
                       {mounted && i18n.isInitialized ? t('visa.countrySelection.countryLabel', 'Yolculuk Nereye?') : ''}
@@ -99,10 +99,10 @@ export default function CountrySelectionForm() {
                 <div className="select-wrapper" id="purpose-select-wrapper">
                   <label className="select-label">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                      <line x1="16" y1="2" x2="16" y2="6"/>
-                      <line x1="8" y1="2" x2="8" y2="6"/>
-                      <line x1="3" y1="10" x2="21" y2="10"/>
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
                     </svg>
                     <span suppressHydrationWarning>
                       {mounted && i18n.isInitialized ? t('visa.countrySelection.purposeLabel', 'Seyahat Amacınız Nedir?') : ''}
@@ -119,7 +119,7 @@ export default function CountrySelectionForm() {
                       required
                     >
                       <option value="" disabled>
-                        {selectedCountry 
+                        {selectedCountry
                           ? (mounted && i18n.isInitialized ? t('visa.countrySelection.selectPurpose', 'Seyahat Amacı Seçiniz') : '')
                           : (mounted && i18n.isInitialized ? t('visa.countrySelection.selectCountryFirst', 'Lütfen Ülke Seçiniz') : '')
                         }
@@ -137,8 +137,8 @@ export default function CountrySelectionForm() {
                     {mounted && i18n.isInitialized ? t('visa.countrySelection.startButton', 'Başvuruyu Başlat') : ''}
                   </span>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="5" y1="12" x2="19" y2="12"/>
-                    <polyline points="12 5 19 12 12 19"/>
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </button>
               </div>
@@ -168,8 +168,8 @@ export default function CountrySelectionForm() {
         }
 
         .header-icon {
-          width: 64px;
-          height: 64px;
+          width: 80px;
+          height: 80px;
           background: rgba(255, 255, 255, 0.15);
           border-radius: 16px;
           display: flex;
@@ -177,6 +177,11 @@ export default function CountrySelectionForm() {
           justify-content: center;
           flex-shrink: 0;
           color: #fff;
+        }
+
+        .header-icon svg {
+          width: 50%;
+          height: 50%;
         }
 
         .header-text h2 {
@@ -331,8 +336,8 @@ export default function CountrySelectionForm() {
           }
 
           .header-icon {
-            width: 56px;
-            height: 56px;
+            width: 64px;
+            height: 64px;
           }
 
           .header-text h2 {

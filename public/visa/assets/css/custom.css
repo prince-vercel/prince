@@ -2561,6 +2561,18 @@ body {
     justify-content: center;
 }
 
+.mobile-search-submit svg,
+#navigation .mobile-search-submit svg,
+.mobile-search-form .mobile-search-submit svg {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+    flex-shrink: 0;
+}
+
 #hero-header .hero-header-area .content.no-width {
     max-width: 100% !important;
     width: auto !important;

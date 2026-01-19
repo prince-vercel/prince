@@ -1,0 +1,407 @@
+{
+    "travel": {
+        "header": {
+            "home": "Accueil",
+            "tours": "Circuits",
+            "reservation": "Réservation",
+            "blog": "Blog",
+            "about": "À propos",
+            "contact": "Contact",
+            "openMenu": "Ouvrir le menu"
+        },
+        "footer": {
+            "description": "Prince Medical Aesthetics & Health Services",
+            "address": "Kağıthane / Istanbul",
+            "phone": "+90 212 000 00 00",
+            "email": "medical@princetourismagency.com",
+            "home": "Accueil",
+            "tours": "Circuits",
+            "blog": "Blog",
+            "about": "À propos",
+            "contact": "Contact",
+            "faq": "Questions fréquentes",
+            "privacy": "Politique de confidentialité",
+            "kvkk": "KVKK & Déclaration",
+            "newsletter": {
+                "title": "Rejoignez-nous",
+                "description": "Abonnez-vous à notre liste e-mail pour les campagnes, les mises à jour et le contenu santé.",
+                "placeholder": "Votre adresse e-mail",
+                "submit": "Envoyer"
+            },
+            "copyright": "© Happencode. Tous droits réservés."
+        },
+        "homePage": {
+            "search": {
+                "title": "Trouver un itinéraire",
+                "destinationPlaceholder": "Où voulez-vous aller ?",
+                "datePlaceholder": "Sélectionner une date",
+                "submit": "EXPLORER MAINTENANT"
+            },
+            "categories": {
+                "subtitle": "Catégories de circuits",
+                "title": "Types de circuits populaires",
+                "cityDayTrip": {
+                    "title": "Excursion urbaine d’une journée",
+                    "description": "Des itinéraires de découverte passionnants pour une journée en ville",
+                    "alt": "Aventure"
+                },
+                "outdoorDayTrip": {
+                    "title": "Excursion d’une journée en plein air",
+                    "description": "Des excursions d’une journée confortables et agréables dans la nature",
+                    "alt": "Bateau"
+                },
+                "accommodationPackages": {
+                    "title": "Forfaits avec hébergement",
+                    "description": "Des services de circuits tout compris incluant l’hébergement",
+                    "alt": "Nature"
+                },
+                "internationalTours": {
+                    "title": "Circuits internationaux",
+                    "description": "Des vacances spéciales et romantiques dans des destinations internationales",
+                    "alt": "Lune de miel"
+                }
+            },
+            "packages": {
+                "subtitle": "Découvrez nos circuits",
+                "title": "Nouveaux circuits et les plus populaires",
+                "noTours": "Aucun circuit trouvé",
+                "popular": "Populaire",
+                "noImage": "Aucune image",
+                "getPrice": "Obtenir le prix",
+                "viewDetails": "Voir les détails",
+                "loadingPartners": "Chargement des partenaires...",
+                "noPartners": "Pas encore de partenaires."
+            },
+            "partners": {
+                "defaultAlt": "Partenaire"
+            },
+            "blog": {
+                "subtitle": "Blog & Actualités",
+                "title": "Restez à jour avec des conseils de voyage !",
+                "noBlogs": "Aucun article trouvé",
+                "readMore": "Lire la suite"
+            },
+            "chatbot": {
+                "startChat": "Démarrer le chat",
+                "close": "Fermer",
+                "loading": "Chargement..."
+            },
+            "errors": {
+                "loadingPartners": "Erreur lors du chargement des partenaires :",
+                "loadingBanners": "Erreur lors du chargement des bannières :",
+                "loadingTours": "Erreur lors du chargement des circuits :",
+                "loadingBlogs": "Erreur lors du chargement des articles :"
+            }
+        },
+        "pages": {
+            "breadcrumb": {
+                "home": "Accueil"
+            },
+            "contact": {
+                "title": "Nous contacter",
+                "breadcrumb": "Contact",
+                "email": {
+                    "title": "Envoyer un e-mail",
+                    "address": "info@princetourismagency.com"
+                },
+                "phone": {
+                    "title": "Nous appeler",
+                    "number": "+90 212 000 00 00"
+                },
+                "address": {
+                    "title": "Nous rendre visite",
+                    "location": "Kağıthane / Istanbul"
+                },
+                "form": {
+                    "title": "Entrer en contact",
+                    "subtitle": "Contactez-nous !",
+                    "name": "Votre nom",
+                    "email": "Votre adresse e-mail",
+                    "subject": "Objet",
+                    "message": "Votre message",
+                    "submit": "Envoyer",
+                    "success": "Votre message a été envoyé avec succès !",
+                    "error": "Une erreur s’est produite. Veuillez réessayer.",
+                    "required": "Veuillez remplir tous les champs."
+                }
+            },
+            "blog": {
+                "title": "Articles de blog",
+                "breadcrumb": "Blog",
+                "view": "Voir",
+                "loading": "Chargement des articles...",
+                "noBlogs": "Aucun article de blog pour le moment.",
+                "errors": {
+                    "loading": "Erreur lors du chargement des articles :"
+                }
+            },
+            "faqs": {
+                "subtitle": "Questions les plus fréquentes",
+                "title": "Questions fréquentes"
+            },
+            "privacy": {
+                "title": "Politique de confidentialité",
+                "intro": "Chez Prince, nous accordons une grande importance à la protection de la vie privée de nos visiteurs et utilisateurs. Cette Politique de confidentialité explique quelles données personnelles sont collectées lorsque vous visitez notre site, comment elles sont utilisées, protégées et quels sont vos droits.",
+                "sections": {
+                    "collectedInfo": {
+                        "title": "1. Informations collectées",
+                        "description": "Les informations suivantes peuvent être collectées lorsque vous utilisez notre site :",
+                        "items": [
+                            "Nom, prénom",
+                            "Adresse e-mail",
+                            "Numéro de téléphone",
+                            "Adresse IP",
+                            "Informations sur l’appareil, le navigateur et l’utilisation",
+                            "Données de cookies",
+                            "Informations transmises via les formulaires de contact ou de demande"
+                        ]
+                    },
+                    "collectionMethod": {
+                        "title": "2. Méthode de collecte des données personnelles",
+                        "description": "Vos données personnelles sont collectées par les méthodes suivantes :",
+                        "items": [
+                            "Lorsque vous visitez notre site",
+                            "Lorsque vous créez un compte",
+                            "Lorsque vous remplissez des formulaires de contact",
+                            "Lorsque vous utilisez nos services"
+                        ],
+                        "note": "Les données sont collectées par des méthodes automatiques ou non automatiques."
+                    },
+                    "usagePurpose": {
+                        "title": "3. Finalités d’utilisation des données personnelles",
+                        "description": "Les données collectées peuvent être utilisées aux fins suivantes :",
+                        "items": [
+                            "Fournir et améliorer les services",
+                            "Répondre aux demandes des utilisateurs",
+                            "Mener des activités de communication",
+                            "Respecter les obligations légales",
+                            "Assurer la sécurité du système",
+                            "Activités de marketing et d’analyse (si le consentement est donné)"
+                        ]
+                    },
+                    "sharing": {
+                        "title": "4. Partage des données personnelles",
+                        "description": "Vos données personnelles peuvent être partagées dans les cas suivants :",
+                        "items": [
+                            "Avec les institutions publiques autorisées en cas d’obligations légales",
+                            "Avec des tiers auprès desquels des services sont obtenus (hébergement, infrastructure, services e-mail, etc.)",
+                            "Si vous avez donné votre consentement explicite"
+                        ]
+                    },
+                    "storage": {
+                        "title": "5. Conservation et sécurité des données personnelles",
+                        "description": "Vos données personnelles sont conservées pendant les durées prévues par la législation applicable et les mesures techniques et administratives nécessaires sont prises contre tout accès non autorisé."
+                    },
+                    "cookies": {
+                        "title": "6. Cookies",
+                        "description": "Des cookies sont utilisés sur notre site afin d’améliorer l’expérience utilisateur. Vous pouvez refuser ou supprimer les cookies via les paramètres de votre navigateur."
+                    },
+                    "updates": {
+                        "title": "7. Mises à jour de la politique de confidentialité",
+                        "description": "Cette Politique de confidentialité peut être mise à jour lorsque nécessaire. Le texte en vigueur est toujours publié sur notre site."
+                    }
+                },
+                "contactEmail": "Vous pouvez nous écrire à l’adresse <strong>info@princetourismagency.com</strong> pour vos questions."
+            },
+            "kvkk": {
+                "title": "Texte d’information KVKK",
+                "intro": "Conformément à la Loi n° 6698 sur la protection des données personnelles (KVKK), Pro Health, en tant que responsable du traitement, traite vos données personnelles dans le cadre décrit ci-dessous.",
+                "sections": {
+                    "dataController": {
+                        "title": "1. Responsable du traitement",
+                        "companyName": "Nom de l’entreprise :",
+                        "companyNameValue": "prince",
+                        "email": "E-mail :",
+                        "emailValue": "info@princetourismagency.com"
+                    },
+                    "processedData": {
+                        "title": "2. Données personnelles traitées",
+                        "items": [
+                            "Informations d’identité (nom, prénom)",
+                            "Informations de contact (e-mail, téléphone)",
+                            "Informations de sécurité des transactions (IP, journaux)",
+                            "Informations relatives aux transactions de l’utilisateur"
+                        ]
+                    },
+                    "processingPurpose": {
+                        "title": "3. Finalités du traitement des données personnelles",
+                        "description": "Vos données personnelles sont traitées aux fins suivantes :",
+                        "items": [
+                            "Exécution des services",
+                            "Conduite des activités de communication",
+                            "Évaluation des demandes et réclamations",
+                            "Respect des obligations légales",
+                            "Exécution des processus de sécurité de l’information"
+                        ]
+                    },
+                    "transfer": {
+                        "title": "4. Transfert des données personnelles",
+                        "description": "Vos données personnelles peuvent être transférées aux institutions et organisations publiques autorisées, ainsi qu’aux tiers auprès desquels des services sont obtenus, conformément aux Articles 8 et 9 de la KVKK."
+                    },
+                    "collectionMethod": {
+                        "title": "5. Méthode de collecte des données personnelles et base juridique",
+                        "description": "Vos données personnelles sont collectées par les méthodes suivantes :",
+                        "items": [
+                            "Site web",
+                            "Formulaires électroniques",
+                            "Cookies"
+                        ],
+                        "note": "Vos données personnelles sont traitées sur la base des motifs juridiques précisés à l’Article 5 de la KVKK."
+                    },
+                    "rights": {
+                        "title": "6. Vos droits au titre de la KVKK",
+                        "description": "Conformément à l’Article 11 de la KVKK, vous disposez des droits suivants :",
+                        "items": [
+                            "Savoir si vos données personnelles sont traitées",
+                            "Demander des informations si elles sont traitées",
+                            "Connaître la finalité du traitement",
+                            "Demander la rectification en cas de traitement incorrect ou incomplet",
+                            "Demander la suppression ou la destruction",
+                            "Demander la notification des opérations aux tiers",
+                            "Vous opposer à l’analyse par des systèmes automatiques",
+                            "Demander réparation en cas de préjudice"
+                        ]
+                    }
+                },
+                "contactEmail": "Vous pouvez soumettre vos demandes via notre adresse e-mail <strong>info@princetourismagency.com</strong>."
+            },
+            "all": {
+                "title": "Tous nos circuits",
+                "breadcrumb": "Circuits",
+                "filters": {
+                    "title": "Filtrer",
+                    "destination": "Ville",
+                    "allDestinations": "Toutes les villes",
+                    "duration": "Durée",
+                    "maxPeople": "Nombre max. de personnes",
+                    "priceRange": "Fourchette de prix (€) :",
+                    "priceRangeMin": "Min",
+                    "priceRangeMax": "Max",
+                    "days": "Jour",
+                    "allDays": "Tous les jours",
+                    "inclusions": "Inclus",
+                    "showPricedOnly": "Obtenir le prix",
+                    "clearFilters": "Réinitialiser les filtres",
+                    "exploreNow": "Explorer maintenant"
+                },
+                "results": {
+                    "noTours": "Aucun circuit trouvé",
+                    "loading": "Chargement des circuits...",
+                    "viewDetails": "Voir les détails",
+                    "noImage": "Aucune image",
+                    "getPrice": "Obtenir le prix"
+                }
+            },
+            "form": {
+                "title": "Planifiez vos vacances parfaites",
+                "subtitle": "Réservez maintenant pour une expérience de voyage personnalisée !",
+                "breadcrumb": "Circuits",
+                "loading": "Chargement des questions...",
+                "selectPlaceholder": "Sélectionner",
+                "datePlaceholder": "jj.mm.aaaa",
+                "previous": "Précédent",
+                "next": "Continuer",
+                "submit": "Envoyer le formulaire",
+                "success": "Envoyé avec succès !",
+                "error": "Veuillez remplir les champs obligatoires !",
+                "errorAlert": "Une erreur s’est produite lors de l’envoi du formulaire !",
+                "privacy": "Vos informations sont confidentielles et ne seront pas partagées avec des tiers.",
+                "errors": {
+                    "loadingQuestions": "Erreur lors du chargement des questions :",
+                    "submitError": "Erreur d’envoi du formulaire :"
+                },
+                "summary": {
+                    "title": "Résumé du formulaire",
+                    "empty": "Commencez à remplir les informations..."
+                },
+                "steps": {
+                    "step1": "Informations personnelles",
+                    "step2": "Détails du voyage",
+                    "step3": "Informations supplémentaires",
+                    "vize_bilgileri": "Informations sur le visa",
+                    "kisisel_bilgiler": "Informations personnelles",
+                    "vize_gecmisi": "Historique des visas",
+                    "is_ve_finansal_bilgiler": "Informations professionnelles et financières",
+                    "ek_bilgiler": "Informations supplémentaires"
+                },
+                "questions": {
+                    "ad_soyad": "Nom complet",
+                    "deneme": "Test",
+                    "basvuru_ulkesi": "Pays de demande",
+                    "dogum_tarihi": "Date de naissance",
+                    "vize_turu": "Type de visa",
+                    "seyahat_konusu": "Motif du voyage",
+                    "cinsiyet": "Genre",
+                    "seyahat_tarihi": "Date de voyage",
+                    "uyruk": "Nationalité",
+                    "ucak_bileti_var_mi": "Avez-vous un billet d’avion ?",
+                    "telefon_whatsapp": "Téléphone (WhatsApp)",
+                    "e_posta": "E-mail"
+                },
+                "options": {
+                    "evet": "Oui",
+                    "hayır": "Non",
+                    "yes": "Oui",
+                    "no": "Non",
+                    "kadin": "Femme",
+                    "erkek": "Homme",
+                    "belirtmek_istemiyorum": "Je préfère ne pas le préciser",
+                    "1": "1 personne",
+                    "2": "2 personnes",
+                    "3": "3 personnes",
+                    "4": "4 personnes",
+                    "5+": "5+ personnes",
+                    "var": "Disponible",
+                    "yok": "Non disponible"
+                }
+            },
+            "about": {
+                "title": "Le meilleur itinéraire de voyage",
+                "breadcrumb": "À propos de nous",
+                "subtitle": "À propos de nous",
+                "heading": "Nous sommes des planificateurs professionnels pour vos vacances",
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. sed do eiusmod tem por incididunt ut labore et dolore magna aliqua.",
+                "contactExpert": "Parlez directement à nos experts en destinations au +1 546 378 654",
+                "features": [
+                    "Tous les lieux et activités sont soigneusement sélectionnés par nous.",
+                    "Nous sommes une agence primée",
+                    "Plus de 80 000 clients nous font confiance"
+                ],
+                "moreInfo": "Plus d’informations",
+                "featuredPackages": {
+                    "subtitle": "Forfaits en vedette",
+                    "title": "Découvrez nos forfaits en vedette",
+                    "startingFrom": "À partir de 1 200 $",
+                    "packageTitle": "Retour d’été X MEXIQUE",
+                    "packageDescription": "Rejoignez-nous pour découvrir la culture afro-latine et célébrer le week-end de l’Indépendance de la Colombie !",
+                    "packageDetails": "Duis id interdum ex, eu accumsan massa. Fusce vel nibh diam. Nulla ultrices ex at erat pharetra.",
+                    "inclusions": [
+                        "Guide touristique professionnel",
+                        "Coût de transport pour acheminer de nouveaux matériaux/pièces",
+                        "Coût de transport pour acheminer de nouveaux matériaux/pièces"
+                    ],
+                    "bookNow": "Réserver maintenant"
+                },
+                "partners": {
+                    "loading": "Chargement des partenaires...",
+                    "noPartners": "Pas encore de partenaires."
+                },
+                "testimonials": {
+                    "subtitle": "Témoignages",
+                    "title": "Ce que disent nos voyageurs"
+                },
+                "errors": {
+                    "loadingPartners": "Erreur lors du chargement des partenaires :",
+                    "loadingTestimonials": "Erreur lors du chargement des témoignages :"
+                }
+            }
+        },
+        "common": {
+            "close": "Fermer",
+            "loading": "Chargement...",
+            "error": "Une erreur s’est produite",
+            "success": "Succès",
+            "search": "Rechercher"
+        }
+    }
+}
