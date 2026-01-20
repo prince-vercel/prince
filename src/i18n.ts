@@ -14,6 +14,7 @@ import esTravelTranslations from './locales/travel/es.json'
 import frTravelTranslations from './locales/travel/fr.json'
 import ruTravelTranslations from './locales/travel/ru.json'
 import trTravelTranslations from './locales/travel/tr.json'
+import arVisaTranslations from './locales/visa/ar.json'
 import enVisaTranslations from './locales/visa/en.json'
 import esVisaTranslations from './locales/visa/es.json'
 import frVisaTranslations from './locales/visa/fr.json'
@@ -93,7 +94,7 @@ i18n
       },
       ar: {
         translation: {
-          ...trVisaTranslations,
+          ...arVisaTranslations,
           ...arTravelTranslations,
           ...arMedicalTranslations,
         },

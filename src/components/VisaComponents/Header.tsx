@@ -361,6 +361,16 @@ export default function VisaHeader() {
                                     >
                                         RU
                                     </button>
+                                    <button
+                                        className={`language-option ${selectedLanguage === 'AR' ? 'active' : ''}`}
+                                        onClick={() => {
+                                            setSelectedLanguage('AR')
+                                            i18n.changeLanguage('ar')
+                                            setIsLanguageDropdownOpen(false)
+                                        }}
+                                    >
+                                        AR
+                                    </button>
                                 </div>
                             )}
                         </div>
