@@ -1,4 +1,19 @@
 {
+  "home": {
+    "medicalTitle": {
+      "line1": "Prince",
+      "line2": "Medical Aesthetics &",
+      "line3": "Health Services"
+    },
+    "visaTitle": {
+      "line1": "Prince",
+      "line2": "Visa Consultancy"
+    },
+    "travelTitle": {
+      "line1": "Prince",
+      "line2": "Tourism & Travel"
+    }
+  },
   "visa": {
     "header": {
       "home": "Home",
@@ -113,6 +128,39 @@
       "selectPurpose": "Select Travel Purpose",
       "selectCountryFirst": "Please Select Country",
       "startButton": "Start Application"
+    },
+    "countries": {
+      "ingiltere": "United Kingdom",
+      "danimarka": "Denmark",
+      "belcika": "Belgium",
+      "kanada": "Canada",
+      "almanya": "Germany",
+      "fransa": "France",
+      "italya": "Italy",
+      "malta": "Malta",
+      "irlanda": "Ireland",
+      "ispanya": "Spain",
+      "portekiz": "Portugal",
+      "amerika": "United States",
+      "hollanda": "Netherlands",
+      "macaristan": "Hungary",
+      "yunanistan": "Greece",
+      "dubai": "Dubai",
+      "polonya": "Poland",
+      "bulgaristan": "Bulgaria",
+      "luksemburg": "Luxembourg",
+      "isvec": "Sweden",
+      "romanya": "Romania",
+      "slovenya": "Slovenia",
+      "estonya": "Estonia",
+      "letonya": "Latvia",
+      "litvanya": "Lithuania",
+      "finlandiya": "Finland",
+      "norvec": "Norway",
+      "rusya": "Russia",
+      "suudiArabistan": "Saudi Arabia",
+      "cin": "China",
+      "guneyKore": "South Korea"
     },
     "services": {
       "title": "Prince that meets all your travel needs\nunder one roof for you to explore!",

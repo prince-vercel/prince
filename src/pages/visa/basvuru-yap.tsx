@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
+import Toast from '@/src/components/Toast'
+import { db } from '@/src/lib/firebase'
+import { getCollectionName } from '@/src/lib/localization'
+import { addDoc, collection, getDocs, serverTimestamp } from 'firebase/firestore'
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../../i18n'
 import '../../styles/visa/BasvuruYap.css'
-import { addDoc, collection, getDocs, serverTimestamp } from 'firebase/firestore'
-import { db } from '@/src/lib/firebase'
-import { getCollectionName } from '@/src/lib/localization'
-import Toast from '@/src/components/Toast'
 
 interface Question {
   id: string
@@ -59,7 +59,7 @@ export default function BasvuruYapPage() {
         const scrolled = window.pageYOffset
         shapes.forEach((shape, index) => {
           const speed = (index + 1) * 0.03
-          ;(shape as HTMLElement).style.transform = `translateY(${scrolled * speed}px)`
+            ; (shape as HTMLElement).style.transform = `translateY(${scrolled * speed}px)`
         })
         ticking = false
       })
@@ -169,10 +169,10 @@ export default function BasvuruYapPage() {
     return currentStepQuestions.every(isQuestionCompleted)
   }, [currentStepQuestions, answers])
 
-const completedStep = (stepNum: number) => {
+  const completedStep = (stepNum: number) => {
     // Henüz ulaşılmamış step'ler için false dön
     if (stepNum > currentStep) return false
-    
+
     const qs = questions.filter((q) => q.step === stepNum)
     if (!qs.length) return false
     return qs.every((q) => {
@@ -280,6 +280,9 @@ const completedStep = (stepNum: number) => {
     if (q.type === 'text') {
       return (
         <div className="form-group full-width">
+          <label htmlFor={q.id}>
+            {q.questionText} {q.required ? <span className="required">*</span> : null}
+          </label>
           <div className="input-wrapper">
             <input
               type="text"
@@ -287,12 +290,9 @@ const completedStep = (stepNum: number) => {
               id={q.id}
               value={v || ''}
               onChange={(e) => setAnswerValue(q.id, e.target.value)}
-              placeholder=" "
+              placeholder={q.questionText}
               required={q.required}
             />
-            <label htmlFor={q.id}>
-              {q.questionText} {q.required ? <span className="required">*</span> : null}
-            </label>
           </div>
 
           {q.triggerValue && v === q.triggerValue ? (
@@ -316,6 +316,9 @@ const completedStep = (stepNum: number) => {
     if (q.type === 'date') {
       return (
         <div className="form-group">
+          <label htmlFor={q.id}>
+            {q.questionText} {q.required ? <span className="required">*</span> : null}
+          </label>
           <div className="input-wrapper">
             <input
               type="date"
@@ -323,12 +326,10 @@ const completedStep = (stepNum: number) => {
               id={q.id}
               value={v || ''}
               onChange={(e) => setAnswerValue(q.id, e.target.value)}
-              placeholder=" "
+              placeholder={q.questionText}
               required={q.required}
             />
-            <label htmlFor={q.id}>
-              {q.questionText} {q.required ? <span className="required">*</span> : null}
-            </label>
+
           </div>
 
           {q.triggerValue && v === q.triggerValue ? (
@@ -352,6 +353,9 @@ const completedStep = (stepNum: number) => {
     if (q.type === 'select') {
       return (
         <div className="form-group">
+          <label htmlFor={q.id}>
+            {q.questionText} {q.required ? <span className="required">*</span> : null}
+          </label>
           <div className="select-wrapper">
             <select
               name={q.id}
@@ -369,9 +373,6 @@ const completedStep = (stepNum: number) => {
                 </option>
               ))}
             </select>
-            <label htmlFor={q.id}>
-              {q.questionText} {q.required ? <span className="required">*</span> : null}
-            </label>
             <span className="select-arrow">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="6 9 12 15 18 9" />
@@ -400,7 +401,7 @@ const completedStep = (stepNum: number) => {
     if (q.type === 'radio') {
       return (
         <div className="form-group">
-          <label className="group-label">
+          <label>
             {q.questionText} {q.required ? <span className="required">*</span> : null}
           </label>
           <div className="radio-cards">
@@ -564,7 +565,7 @@ const completedStep = (stepNum: number) => {
       })
 
       if ((window as any).Swal) {
-        ;(window as any).Swal.fire({
+        ; (window as any).Swal.fire({
           icon: 'success',
           title: t('visa.common.success', 'Başarılı!'),
           text: t('visa.pages.basvuruYap.success', 'Başvurunuz alınmıştır.'),
@@ -660,6 +661,9 @@ const completedStep = (stepNum: number) => {
                           const v = answers[q.id] || ''
                           return (
                             <div key={q.id} className="form-group">
+                              <label htmlFor={q.id}>
+                                {q.questionText} {q.required ? <span className="required">*</span> : null}
+                              </label>
                               <div className="input-wrapper">
                                 <input
                                   type="tel"
@@ -667,12 +671,9 @@ const completedStep = (stepNum: number) => {
                                   id={q.id}
                                   value={v}
                                   onChange={handlePhoneInput}
-                                  placeholder=" "
+                                  placeholder={q.questionText}
                                   required={q.required}
                                 />
-                                <label htmlFor={q.id}>
-                                  {q.questionText} {q.required ? <span className="required">*</span> : null}
-                                </label>
                               </div>
                             </div>
                           )
@@ -738,7 +739,7 @@ const completedStep = (stepNum: number) => {
                 padding: '24px',
                 backgroundColor: '#fff',
                 boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                marginTop:'20px'
+                marginTop: '20px'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '24px' }}>
                   <h5 style={{

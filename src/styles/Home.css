@@ -3,8 +3,9 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+
 }
+
 :root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -43,6 +44,7 @@ body {
   background: rgba(0, 0, 0, 0.30);
   backdrop-filter: blur(4px);
 }
+
 .logo-wrapper {
   transition: transform 0.35s ease;
   cursor: pointer;
@@ -104,6 +106,108 @@ body {
   filter: brightness(0.45);
 }
 
+/* Header Actions */
+.header {
+  justify-content: space-between;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Language Selector */
+.language-selector {
+  position: relative;
+  z-index: 100;
+}
+
+.language-selector-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0);
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 60px;
+  justify-content: center;
+  backdrop-filter: blur(12px);
+}
+
+.language-selector-btn:hover {
+  background: rgba(0, 0, 0, 0.55);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.language-selector-btn svg {
+  transition: transform 0.3s ease;
+  color: #ffffff;
+}
+
+.language-selector-btn.active {
+  background: rgba(0, 0, 0, 0.7);
+  border-color: rgba(255, 255, 255, 0.75);
+}
+
+.language-selector-btn.active svg {
+  transform: rotate(180deg);
+}
+
+.language-selector-btn:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.4);
+}
+
+.language-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  min-width: 60px;
+  overflow: hidden;
+  z-index: 1000;
+  backdrop-filter: blur(18px);
+}
+
+.language-option {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.language-option:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.language-option.active {
+  background: rgba(196, 33, 39, 0.6);
+  color: white;
+}
+
+.language-option.active:hover {
+  background: rgba(196, 33, 39, 0.75);
+}
+
 @media (max-width: 767px) {
   .image-row {
     flex-direction: column;
@@ -111,5 +215,19 @@ body {
 
   .title {
     font-size: 1.6rem;
+  }
+
+  .header {
+    padding: 0 16px;
+  }
+
+  .language-selector-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    min-width: 50px;
+  }
+
+  .language-dropdown {
+    right: 0;
   }
 }

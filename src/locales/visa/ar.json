@@ -1,4 +1,19 @@
 {
+    "home": {
+        "medicalTitle": {
+            "line1": "Prince",
+            "line2": "التجميل الطبي &",
+            "line3": "الخدمات الصحية"
+        },
+        "visaTitle": {
+            "line1": "Prince",
+            "line2": "استشارات التأشيرات"
+        },
+        "travelTitle": {
+            "line1": "Prince",
+            "line2": "السياحة & Travel"
+        }
+    },
     "visa": {
         "header": {
             "home": "الرئيسية",
@@ -113,6 +128,39 @@
             "selectPurpose": "اختر غرض السفر",
             "selectCountryFirst": "يرجى اختيار الدولة",
             "startButton": "ابدأ الطلب"
+        },
+        "countries": {
+            "ingiltere": "المملكة المتحدة",
+            "danimarka": "الدنمارك",
+            "belcika": "بلجيكا",
+            "kanada": "كندا",
+            "almanya": "ألمانيا",
+            "fransa": "فرنسا",
+            "italya": "إيطاليا",
+            "malta": "مالطا",
+            "irlanda": "أيرلندا",
+            "ispanya": "إسبانيا",
+            "portekiz": "البرتغال",
+            "amerika": "الولايات المتحدة",
+            "hollanda": "هولندا",
+            "macaristan": "المجر",
+            "yunanistan": "اليونان",
+            "dubai": "دبي",
+            "polonya": "بولندا",
+            "bulgaristan": "بلغاريا",
+            "luksemburg": "لوكسمبورغ",
+            "isvec": "السويد",
+            "romanya": "رومانيا",
+            "slovenya": "سلوفينيا",
+            "estonya": "إستونيا",
+            "letonya": "لاتفيا",
+            "litvanya": "ليتوانيا",
+            "finlandiya": "فنلندا",
+            "norvec": "النرويج",
+            "rusya": "روسيا",
+            "suudiArabistan": "المملكة العربية السعودية",
+            "cin": "الصين",
+            "guneyKore": "كوريا الجنوبية"
         },
         "services": {
             "title": "برنس يلبي جميع احتياجات سفرك\nتحت سقف واحد لتكتشف!",

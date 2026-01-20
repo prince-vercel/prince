@@ -544,6 +544,15 @@
     grid-column: 1 / -1;
 }
 
+/* Top labels for standard inputs/selects */
+.form-group>label:not(.group-label) {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+}
+
 /* ============================================
    INPUT WRAPPER - Floating Labels
    ============================================ */
@@ -553,13 +562,12 @@
     position: relative;
     width: 100%;
     display: block;
-    margin-top: 28px;
+    margin-top: 0;
 }
 
 .input-wrapper input,
 .textarea-wrapper textarea {
     width: 100%;
-    padding: 16px;
     border: 2px solid var(--color-border);
     border-radius: var(--radius-md);
     font-size: 16px;
@@ -572,18 +580,33 @@
 }
 
 .input-wrapper input {
-    height: 72px;
-    padding: 32px 16px 12px 16px;
+    height: 56px;
+    padding: 12px 16px !important;
+    line-height: 1.4 !important;
 }
 
 .input-wrapper input[type="date"] {
-    height: 72px;
-    padding: 32px 16px 12px 16px;
+    height: 56px;
+    padding: 12px 16px !important;
+    line-height: 1.4 !important;
 }
 
 .input-wrapper input[type="number"] {
-    height: 72px;
-    padding: 32px 16px 12px 16px;
+    height: 56px;
+    padding: 12px 16px !important;
+    line-height: 1.4 !important;
+}
+
+.input-wrapper input[type="text"] {
+    height: 56px;
+    padding: 12px 16px !important;
+    line-height: 1.4 !important;
+}
+
+.input-wrapper input[type="tel"] {
+    height: 56px;
+    padding: 12px 16px !important;
+    line-height: 1.4 !important;
 }
 
 .textarea-wrapper textarea {
@@ -694,13 +717,13 @@ input[type="number"]::-webkit-inner-spin-button {
    ============================================ */
 .select-wrapper {
     position: relative;
-    margin-top: 28px;
+    margin-top: 0;
 }
 
 .select-wrapper select {
     width: 100%;
-    height: 72px;
-    padding: 24px 40px 10px 16px;
+    height: 56px;
+    padding: 12px 40px 12px 16px !important;
     border: 2px solid var(--color-border);
     border-radius: var(--radius-md);
     font-size: 16px;
@@ -714,6 +737,7 @@ input[type="number"]::-webkit-inner-spin-button {
     -moz-appearance: none;
     appearance: none;
     box-sizing: border-box;
+    line-height: 1.4 !important;
 }
 
 .select-wrapper select:focus {
@@ -783,6 +807,10 @@ input[type="number"]::-webkit-inner-spin-button {
     padding-top: 0;
 }
 
+.form-group .radio-cards {
+    margin-top: 2px;
+}
+
 .radio-cards {
     display: flex;
     gap: var(--space-md);
@@ -807,7 +835,7 @@ input[type="number"]::-webkit-inner-spin-button {
     align-items: center;
     justify-content: center;
     gap: var(--space-sm);
-    height: 64px;
+    height: 56px;
     width: 100%;
     padding: 0 var(--space-lg);
     background: var(--color-bg-primary);
@@ -1175,12 +1203,26 @@ input[type="number"]::-webkit-inner-spin-button {
 
     .input-wrapper input,
     .select-wrapper select {
-        height: 52px;
+        height: 48px;
         font-size: 15px;
+        padding: 10px 12px !important;
+        line-height: 1.4 !important;
+    }
+
+    .input-wrapper input[type="date"],
+    .input-wrapper input[type="number"],
+    .input-wrapper input[type="text"],
+    .input-wrapper input[type="tel"] {
+        padding: 10px 12px !important;
+    }
+
+    .select-wrapper select {
+        padding: 10px 36px 10px 12px !important;
     }
 
     .radio-card-content {
         height: 48px;
+        padding: 0 12px;
     }
 
     .submit-btn {
