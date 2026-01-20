@@ -12,13 +12,22 @@ export default function VisaHeader() {
     const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
     const [mounted, setMounted] = useState(false)
     const [selectedLanguage, setSelectedLanguage] = useState('TR') // SSR-safe default
+    const [openDropdowns, setOpenDropdowns] = useState<{ [key: string]: boolean }>({})
 
     // Mobile menu açıkken body scroll'unu engelle
     useEffect(() => {
         if (isMobileMenuOpen) {
             document.body.style.overflow = 'hidden'
+            document.body.classList.add('navigation-active')
         } else {
             document.body.style.overflow = 'unset'
+            document.body.classList.remove('navigation-active')
+            // Menü kapandığında dropdown'ları kapat
+            setOpenDropdowns({})
+        }
+        return () => {
+            document.body.style.overflow = 'unset'
+            document.body.classList.remove('navigation-active')
         }
     }, [isMobileMenuOpen])
 
@@ -355,23 +364,27 @@ export default function VisaHeader() {
                                 </div>
                             )}
                         </div>
-                      <div className="cs_social_links cs_social_desktop" style={{ display: 'flex', gap: '25px' }}>
-                  <a href="#">
-                    <i className="fa-brands fa-facebook-f" style={{ color: '#c42721', fontSize: '24px' }}></i>
-                  </a>
-                  <a href="#">
-                    <i className="fa-brands fa-instagram" style={{ color: '#c42721', fontSize: '24px' }}></i>
-                  </a>
-                  <a href="#">
-                    <i className="fa-brands fa-whatsapp" style={{ color: '#c42721', fontSize: '24px' }}></i>
-                  </a>
-                </div>
+                        <div className="cs_social_links cs_social_desktop" style={{ display: 'flex', gap: '25px' }}>
+                            <a href="#">
+                                <i className="fa-brands fa-facebook-f" style={{ color: '#c42721', fontSize: '24px' }}></i>
+                            </a>
+                            <a href="#">
+                                <i className="fa-brands fa-instagram" style={{ color: '#c42721', fontSize: '24px' }}></i>
+                            </a>
+                            <a href="#">
+                                <i className="fa-brands fa-whatsapp" style={{ color: '#c42721', fontSize: '24px' }}></i>
+                            </a>
+                        </div>
                         <div
                             id="hamburger"
                             className={isMobileMenuOpen ? 'is-active' : ''}
                             onClick={() => {
                                 setIsMobileMenuOpen(!isMobileMenuOpen)
-                                document.body.classList.toggle('navigation-active')
+                                if (!isMobileMenuOpen) {
+                                    document.body.classList.add('navigation-active')
+                                } else {
+                                    document.body.classList.remove('navigation-active')
+                                }
                             }}
                         >
                             <span className="line"></span>
@@ -382,73 +395,176 @@ export default function VisaHeader() {
                 </div>
             </header>
 
-            {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-                <div className="mobile-menu-overlay" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="mobile-menu" onClick={(e) => e.stopPropagation()}>
-                        <button className="mobile-menu-close" onClick={() => setIsMobileMenuOpen(false)}>
-                            ×
+            {/* Mobile Navigation */}
+            <nav id="navigation">
+                <div className="mobile-search">
+                    <div className="mobile-search-form">
+                        <input
+                            type="text"
+                            name="q"
+                            id="mobile-search-input"
+                            placeholder="Ara..."
+                            autoComplete="off"
+                        />
+                        <button type="button" className="mobile-search-submit">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '16px', height: '16px', display: 'block' }}>
+                                <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M21 21L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
                         </button>
-                        <nav className="mobile-nav">
-                            <Link href="/visa" onClick={() => setIsMobileMenuOpen(false)}>
-                                {t('visa.header.home')}
-                            </Link>
-                            <div className="mobile-menu-section">
-                                <button onClick={(e) => {
-                                    const target = e.currentTarget.parentElement
-                                    target?.classList.toggle('active')
-                                }}>
-                                    {t('visa.header.countries')}
-                                </button>
-                                <div className="mobile-submenu">
-                                    {countries.map((country) => (
-                                        <Link
-                                            key={country.href}
-                                            href={country.href}
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                            {country.title}
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
-                            <Link href="/visa/nasil-vize-alirim" onClick={() => setIsMobileMenuOpen(false)}>
-                                {t('visa.header.howToGetVisa')}
-                            </Link>
-                            <Link href="/visa/blog" onClick={() => setIsMobileMenuOpen(false)}>
-                                {t('visa.header.blog')}
-                            </Link>
-                            <div className="mobile-menu-section">
-                                <button onClick={(e) => {
-                                    const target = e.currentTarget.parentElement
-                                    target?.classList.toggle('active')
-                                }}>
-                                    {t('visa.header.otherInfo')}
-                                </button>
-                                <div className="mobile-submenu">
-                                    {otherLinks.map((link) => (
-                                        <Link
-                                            key={link.href}
-                                            href={link.href}
-                                            title={link.title}
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                            suppressHydrationWarning
-                                        >
-                                            {link.title}
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
-                            <Link href="/visa/basvuru-yap" onClick={() => setIsMobileMenuOpen(false)}>
-                                {t('visa.header.apply')}
-                            </Link>
-                            <Link href="/visa/hakkimizda" onClick={() => setIsMobileMenuOpen(false)}>
-                                {t('visa.header.about')}
-                            </Link>
-                        </nav>
+                    </div>
+                    <div id="mobile-search-results" className="mobile-search-results">
+                        <div className="search-loading" style={{ display: 'none' }}>
+                            <div className="spinner"></div>
+                            <p>Aranıyor...</p>
+                        </div>
+                        <div className="mobile-search-results-content"></div>
                     </div>
                 </div>
-            )}
+                <div className="primary-menu">
+                    <div className="menu-item">
+                        <Link href="/visa" title={t('visa.header.home')} onClick={() => setIsMobileMenuOpen(false)} suppressHydrationWarning>
+                            {t('visa.header.home')}
+                        </Link>
+                    </div>
+                    <div style={{ '--cat-color': '#FF9D00' } as React.CSSProperties} className={`menu-item ${openDropdowns.countries ? 'active' : ''}`}>
+                        <a
+                            title={t('visa.header.countries')}
+                            href="javascript:;"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                setOpenDropdowns(prev => ({
+                                    ...prev,
+                                    countries: !prev.countries
+                                }))
+                            }}
+                            suppressHydrationWarning
+                        >
+                            {t('visa.header.countries')}
+                            <span className="caret-icon">
+                                <Image
+                                    src="/visa/assets/img/icon/caret-down.svg"
+                                    alt="Caret Down"
+                                    width={18}
+                                    height={18}
+                                    decoding="async"
+                                    fetchPriority="high"
+                                />
+                            </span>
+                        </a>
+                        {openDropdowns.countries && (
+                            <div className="nav-dropdown-menu">
+                                {countries.map((country) => (
+                                    <Link
+                                        key={country.href}
+                                        href={country.href}
+                                        title={country.title}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        suppressHydrationWarning
+                                    >
+                                        {country.title}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    <div className="menu-item">
+                        <Link href="/visa/nasil-vize-alirim" title={t('visa.header.howToGetVisa')} onClick={() => setIsMobileMenuOpen(false)} suppressHydrationWarning>
+                            {t('visa.header.howToGetVisa')}
+                        </Link>
+                    </div>
+                    <div className="menu-item">
+                        <Link href="/visa/blog" title={t('visa.header.blog')} onClick={() => setIsMobileMenuOpen(false)} suppressHydrationWarning>
+                            {t('visa.header.blog')}
+                        </Link>
+                    </div>
+                    <div style={{ '--cat-color': '#FF9D00' } as React.CSSProperties} className={`menu-item ${openDropdowns.otherInfo ? 'active' : ''}`}>
+                        <a
+                            title={t('visa.header.otherInfo')}
+                            href="javascript:;"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                setOpenDropdowns(prev => ({
+                                    ...prev,
+                                    otherInfo: !prev.otherInfo
+                                }))
+                            }}
+                            suppressHydrationWarning
+                        >
+                            {t('visa.header.otherInfo')}
+                            <span className="caret-icon">
+                                <Image
+                                    src="/visa/assets/img/icon/caret-down.svg"
+                                    alt="Caret Down"
+                                    width={18}
+                                    height={18}
+                                    decoding="async"
+                                    fetchPriority="high"
+                                />
+                            </span>
+                        </a>
+                        {openDropdowns.otherInfo && (
+                            <div className="nav-dropdown-menu">
+                                {otherLinks.map((link) => (
+                                    <Link
+                                        key={link.href}
+                                        href={link.href}
+                                        title={link.title}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        suppressHydrationWarning
+                                    >
+                                        {link.title}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    <div className="menu-item">
+                        <Link href="/visa/basvuru-yap" title={t('visa.header.apply')} onClick={() => setIsMobileMenuOpen(false)} suppressHydrationWarning>
+                            {t('visa.header.apply')}
+                        </Link>
+                    </div>
+                    <div style={{ '--cat-color': '#FF9D00' } as React.CSSProperties} className={`menu-item ${openDropdowns.branches ? 'active' : ''}`}>
+                        <a
+                            title="Şubelerimiz"
+                            href="javascript:;"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                setOpenDropdowns(prev => ({
+                                    ...prev,
+                                    branches: !prev.branches
+                                }))
+                            }}
+                        >
+                            Şubelerimiz
+                            <span className="caret-icon">
+                                <Image
+                                    src="/visa/assets/img/icon/caret-down.svg"
+                                    alt="Caret Down"
+                                    width={18}
+                                    height={18}
+                                    decoding="async"
+                                    fetchPriority="high"
+                                />
+                            </span>
+                        </a>
+                        {openDropdowns.branches && (
+                            <div className="nav-dropdown-menu">
+                                {branches.map((branch) => (
+                                    <Link
+                                        key={branch.href}
+                                        href={branch.href}
+                                        title={branch.title}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        {branch.title}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </nav>
         </>
     )
 }

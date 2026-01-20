@@ -23,7 +23,8 @@ export default function Header() {
         'en': 'EN',
         'es': 'ES',
         'fr': 'FR',
-        'ru': 'RU'
+        'ru': 'RU',
+        'ar': 'AR'
       }
       const currentLang = langMap[i18n.language] || 'TR'
       setSelectedLanguage(currentLang)
@@ -222,12 +223,33 @@ export default function Header() {
                         color: selectedLanguage === 'RU' ? 'white' : '#333',
                         border: 'none',
                         cursor: 'pointer',
+                        fontSize: '14px'
+                      }}
+                    >
+                      RU
+                    </button>
+                    <button
+                      className={`language-option ${selectedLanguage === 'AR' ? 'active' : ''}`}
+                      onClick={() => {
+                        setSelectedLanguage('AR')
+                        i18n.changeLanguage('ar')
+                        setIsLanguageDropdownOpen(false)
+                      }}
+                      style={{
+                        display: 'block',
+                        width: '100%',
+                        padding: '10px 16px',
+                        textAlign: 'left',
+                        background: selectedLanguage === 'AR' ? '#307BC4' : 'transparent',
+                        color: selectedLanguage === 'AR' ? 'white' : '#333',
+                        border: 'none',
+                        cursor: 'pointer',
                         fontSize: '14px',
                         borderBottomLeftRadius: '8px',
                         borderBottomRightRadius: '8px'
                       }}
                     >
-                      RU
+                      AR
                     </button>
                   </div>
                 )}
@@ -268,13 +290,13 @@ export default function Header() {
 
           {/* MOBILE MENU */}
           <ul className="cs_mobile_menu">
-            <li><Link href="/medical" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Anasayfa</Link></li>
-            <li><Link href="/medical/organisation" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Kurumlar</Link></li>
-            <li><Link href="/medical/results" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Mutlu Sonuçlar</Link></li>
-            <li><Link href="/medical/form" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Başvuru</Link></li>
-            <li><Link href="/medical/blog" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Blog</Link></li>
-            <li><Link href="/medical/about" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>Hakkımızda</Link></li>
-            <li><Link href="/medical/contact" className="font-semibold" onClick={() => setIsSidebarOpen(false)}>İletişim</Link></li>
+            <li><Link href="/medical" className="font-semibold" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('medical.header.home') : ''}</Link></li>
+            <li><Link href="/medical/organisation" className="font-semibold" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('medical.header.organisation') : ''}</Link></li>
+            <li><Link href="/medical/results" className="font-semibold" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('medical.header.results') : ''}</Link></li>
+            <li><Link href="/medical/form" className="font-semibold" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('medical.header.form') : ''}</Link></li>
+            <li><Link href="/medical/blog" className="font-semibold" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('medical.header.blog') : ''}</Link></li>
+            <li><Link href="/medical/about" className="font-semibold" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('medical.header.about') : ''}</Link></li>
+            <li><Link href="/medical/contact" className="font-semibold" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('medical.header.contact') : ''}</Link></li>
           </ul>
 
           {/* SOCIALS – MOBILE (EN ALTTA) */}

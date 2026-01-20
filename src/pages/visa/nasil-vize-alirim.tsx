@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import '../../styles/visa/NasilVizeAlirim.css';
 import '../../i18n';
+import '../../styles/visa/NasilVizeAlirim.css';
 
 export default function NasilVizeAlirimPage() {
     const { t } = useTranslation();
@@ -39,16 +39,6 @@ export default function NasilVizeAlirimPage() {
                                     <polyline points="12 5 19 12 12 19" />
                                 </svg>
                             </Link>
-                        </div>
-
-                        {/* Sağ Kolon: Görsel */}
-                        <div className="hero-image">
-                            <picture>
-                                <img
-                                    src="/visa/uploads/contents/cover/1766008916_298ef5002edaee39d925.png"
-                                    alt={t('visa.pages.nasilVizeAlirim.title')}
-                                />
-                            </picture>
                         </div>
                     </div>
                 </div>

@@ -5,13 +5,13 @@
 
 
 import { db } from '@/src/lib/firebase'
+import { getCollectionName } from '@/src/lib/localization'
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore'
+import i18n from 'i18next'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
 import '../../i18n'
-import i18n from 'i18next'
-import { getCollectionName } from '@/src/lib/localization'
 import Chatbot from './Chatbot'
 
 const normalizeText = (text: string) => {
@@ -136,7 +136,7 @@ export default function TravelHomePage() {
     }
 
     fetchTours()
-  }, [isReady, t])
+  }, [isReady, t, i18n.language])
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -159,7 +159,7 @@ export default function TravelHomePage() {
     }
 
     fetchBlogs()
-  }, [isReady, t,i18n.language])
+  }, [isReady, t, i18n.language])
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -178,7 +178,7 @@ export default function TravelHomePage() {
       <div className="hero_style__start" style={{ marginTop: '60px' }}>
         <div className="lg:grid grid-cols-12 xl:gap-base gap-3 mx-auto xl:px-base px-3 overflow-hidden">
 
-                   <div className="lg:col-span-3 md:col-span-6 hidden lg:flex flex-col gap-1">
+          <div className="lg:col-span-3 md:col-span-6 hidden lg:flex flex-col gap-1">
             {banners.length > 0 ? (
               banners.slice(0, 3).map((banner, index) => (
                 <div key={banner.id} className="group hero-card-sm" style={{ height: '260px', marginTop: index > 0 ? '15px' : '0' }}>
@@ -256,7 +256,7 @@ export default function TravelHomePage() {
                 relative z-0 w-full bg-white outline-0 cursor-pointer
                 h-14 lg:h-17
                 pl-12 lg:pl-[60px] pr-3
-              "  suppressHydrationWarning/>
+              "  suppressHydrationWarning />
 
                   <input
                     ref={dateRef}

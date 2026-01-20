@@ -2,20 +2,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import {
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
-import { MdDelete, MdEdit, MdSave, MdAdd, MdUpload } from 'react-icons/md'
-import LanguageSelector from '../../LanguageSelector'
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  updateDoc,
+} from 'firebase/firestore'
+import { useEffect, useRef, useState } from 'react'
+import { MdAdd, MdDelete, MdEdit, MdSave, MdUpload } from 'react-icons/md'
 import { getCollectionName } from '../../../lib/localization'
+import LanguageSelector from '../../LanguageSelector'
 
 interface Question {
   id: string
@@ -275,7 +275,7 @@ const FormAsks = () => {
     setShowForm(true)
   }
 
-  
+
 
   const handleSaveSteps = async () => {
     try {
@@ -305,7 +305,7 @@ const FormAsks = () => {
     return step ? step.name : `Adım ${stepNumber}`
   }
 
- 
+
 
   const groupedQuestions = questions.reduce(
     (acc, q) => {
@@ -339,16 +339,16 @@ const FormAsks = () => {
           {notification.message}
         </div>
       )}
-<LanguageSelector
-            selectedLanguage={selectedLanguage as 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'}
-            onLanguageChange={(lang: 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru') => setSelectedLanguage(lang)}
-          />
+      <LanguageSelector
+        selectedLanguage={selectedLanguage as 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'}
+        onLanguageChange={(lang: 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru') => setSelectedLanguage(lang)}
+      />
       {/* Başlık ve Butonlar */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', gap: '10px', flexWrap: 'wrap' }}>
-    
+
         <h2 style={{ margin: 0, fontSize: '28px', fontWeight: 'bold' }}>Soru Yönetimi</h2>
         <div style={{ display: 'flex', gap: '10px' }}>
-          
+
           <button
             onClick={() => setShowStepsForm(!showStepsForm)}
             style={{
@@ -670,7 +670,7 @@ const FormAsks = () => {
             {/* Ek Input Alanları */}
             <div style={{ marginBottom: '20px', padding: '16px', backgroundColor: '#f3f4f6', borderRadius: '6px', border: '1px solid #d1d5db' }}>
               <h4 style={{ margin: '0 0 16px 0', fontSize: '14px', fontWeight: '600' }}>Koşullu Ek Input (İsteğe Bağlı)</h4>
-              
+
               <div style={{ marginBottom: '16px' }}>
                 <label style={{ display: 'block', fontWeight: '500', marginBottom: '8px', fontSize: '14px' }}>
                   Tetikleme Değeri (Örn: &quot;Diğer&quot;, &quot;Evet&quot;)
@@ -768,7 +768,7 @@ const FormAsks = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={styles.contentServicesSaveBtn} style={{backgroundColor:'#C42127'}}
+                className={styles.contentServicesSaveBtn} style={{ backgroundColor: '#C42127' }}
               >
                 <MdSave size={18} />
                 {loading ? 'Yükleniyor...' : editingId ? 'Güncelle' : 'Kaydet'}
@@ -837,12 +837,12 @@ const FormAsks = () => {
                             {question.type === 'select'
                               ? 'Açılır Liste'
                               : question.type === 'radio'
-                              ? 'Radio'
-                              : question.type === 'checkbox'
-                              ? 'Checkbox'
-                              : question.type === 'text'
-                              ? 'Metin'
-                              : 'Tarih'}
+                                ? 'Radio'
+                                : question.type === 'checkbox'
+                                  ? 'Checkbox'
+                                  : question.type === 'text'
+                                    ? 'Metin'
+                                    : 'Tarih'}
                           </span>
                           {question.required && (
                             <span
