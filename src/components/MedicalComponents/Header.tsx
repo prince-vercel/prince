@@ -67,7 +67,7 @@ export default function Header() {
             </div>
 
             {/* CENTER - Navigation */}
-            <nav className="cs_nav" style={{ flex: '1', display: 'flex', justifyContent: 'center' }}>
+            <nav className="cs_nav" style={{ flex: '1', justifyContent: 'center' }}>
               <ul className="cs_nav_list" style={{ display: 'flex', margin: 0, padding: 0 }}>
                 <li><Link href="/medical" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.home') : ''}</Link></li>
                 <li><Link href="/medical/organisation" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.organisation') : ''}</Link></li>

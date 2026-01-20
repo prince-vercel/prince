@@ -41,7 +41,7 @@ export default function HomePage() {
     <div className="page-wrapper">
       <header className="header">
         <div className="logo-wrapper">
-          <Image src="/logo.png" alt="Logo" width={90} height={80} priority />
+          <Image src="/site-header-logo.png" alt="Logo" width={500} height={270} priority />
         </div>
       </header>
 
@@ -50,12 +50,11 @@ export default function HomePage() {
           href="/medical"
           className="image-card"
           style={{
-            backgroundImage: `url(${images.medical || '/assets/images/medikal.jpeg'})`,
+            backgroundImage: `url(${images.medical})`,
           }}
         >
           <div className="overlay-dark" />
           <div className="title">
-            Prince <br />
             Medikal Estetik & <br />
             Sağlık Hizmetleri
           </div>
@@ -65,12 +64,11 @@ export default function HomePage() {
           href="/visa"
           className="image-card"
           style={{
-            backgroundImage: `url(${images.visa || '/assets/images/vize.jpeg'})`,
+            backgroundImage: `url(${images.visa})`,
           }}
         >
           <div className="overlay-dark" />
           <div className="title">
-            Prince <br />
             Vize Danışmanlığı
           </div>
         </Link>
@@ -78,12 +76,11 @@ export default function HomePage() {
           href="/travel"
           className="image-card"
           style={{
-            backgroundImage: `url(${images.travel || '/assets/images/seyahat.jpeg'})`,
+            backgroundImage: `url(${images.travel})`,
           }}
         >
           <div className="overlay-dark" />
           <div className="title">
-            Prince <br />
             Turizm & Travel
           </div>
         </Link>

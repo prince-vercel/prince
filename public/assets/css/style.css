@@ -266,7 +266,7 @@ textarea {
   justify-content: center;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 1023px) {
   .cs_nav {
     display: none;
   }
@@ -294,14 +294,14 @@ textarea {
 .cs_sidebar_toggle_btn {
   display: none !important;
 }
-@media (max-width: 991px) {
+@media (max-width: 1023px) {
   .cs_sidebar_toggle_btn {
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
   }
 }
-@media (max-width: 991px) {
+@media (max-width: 1023px) {
   .cs_nav {
     display: none !important;
   }
@@ -310,7 +310,7 @@ textarea {
     display: none !important;
   }
 }
-@media (min-width: 992px) {
+@media (min-width: 1024px) {
   .cs_sidenav {
     display: none !important;
   }
