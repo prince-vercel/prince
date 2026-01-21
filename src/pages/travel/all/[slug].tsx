@@ -93,16 +93,17 @@ export default function TravelDetailPage() {
               </div>
             </div>
           )}
-          {tour?.mainImageUrl && (
+          {tour?.additionalImageUrl && (
             <Image
-              src={tour.mainImageUrl}
+              src={tour.additionalImageUrl}
               alt="Kapak"
-              fill
+              width={1920} // Set fixed width
+              height={1080} // Set fixed height
               priority
               sizes="100vw"
               className="jarallax-img object-cover"
               onLoadingComplete={() => setImageLoading(false)}
-              quality={85}
+              quality={100} // Increase quality to maximum
             />
           )}
         </div>

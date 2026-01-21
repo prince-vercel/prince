@@ -45,7 +45,7 @@ const FormAsks = () => {
   const [showStepsForm, setShowStepsForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
-  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru' | 'es' | 'ar' | 'ru'>('tr')
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'ru' | 'es' | 'ar'>('tr')
 
   const [formData, setFormData] = useState({
     questionText: '',

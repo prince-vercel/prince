@@ -42,6 +42,7 @@ interface Tour {
   mainImageUrl?: string
   galleryImageUrls?: string[]
   imageUrl?: string
+  additionalImageUrl?: string
   isFavorite?: boolean
   status?: string
   createdAt: any
@@ -72,6 +73,7 @@ interface FormData {
   faq: Array<{ question: string; answer: string }>
   mainImageUrl: string
   galleryImageUrls: string[]
+  additionalImageUrl?: string
   status: string
   priceEnabled: boolean
 }
@@ -107,6 +109,7 @@ const ContentTours = () => {
     faq: [{ question: '', answer: '' }],
     mainImageUrl: '',
     galleryImageUrls: [],
+    additionalImageUrl: '',
     status: 'aktif',
     priceEnabled: true
   })
@@ -257,6 +260,25 @@ const ContentTours = () => {
     }
   }
 
+  const handleAdditionalImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setUploadingImage(true);
+      try {
+        const timestamp = Date.now();
+        const storageRef = ref(storage, `tours/${timestamp}_additional_${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        const downloadUrl = await getDownloadURL(snapshot.ref);
+        setFormData((prev) => ({ ...prev, additionalImageUrl: downloadUrl }));
+      } catch (error) {
+        console.error('Additional image upload error:', error);
+        alert('Failed to upload additional image');
+      } finally {
+        setUploadingImage(false);
+      }
+    }
+  };
+
   const removeImage = () => {
     setFormData(prev => ({ ...prev, mainImageUrl: '' }))
     if (fileInputRef.current) {
@@ -270,6 +292,13 @@ const ContentTours = () => {
       galleryImageUrls: prev.galleryImageUrls.filter((_, i) => i !== index)
     }))
   }
+
+  const removeAdditionalImage = () => {
+    setFormData((prev) => ({ ...prev, additionalImageUrl: '' }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   const uploadCountryImage = async (file: File) => {
     setUploadingCountryImage(true)
@@ -287,7 +316,7 @@ const ContentTours = () => {
     try {
       const submitData = { ...formData }
       if (!formData.priceEnabled) {
-        submitData.price = undefined
+        delete submitData.price; // Explicitly remove the price field
       }
 
       if (editingId) {
@@ -377,6 +406,7 @@ const ContentTours = () => {
       faq: tour.faq,
       mainImageUrl: tour.mainImageUrl || tour.imageUrl || '',
       galleryImageUrls: tour.galleryImageUrls || [],
+      additionalImageUrl: tour.additionalImageUrl || '',
       status: tour.status || 'aktif',
       priceEnabled: tour.price !== null && tour.price !== undefined
     })
@@ -449,6 +479,7 @@ const ContentTours = () => {
                     faq: [{ question: '', answer: '' }],
                     mainImageUrl: '',
                     galleryImageUrls: [],
+                    additionalImageUrl: '',
                     status: 'aktif',
                     priceEnabled: true
                   })
@@ -834,6 +865,28 @@ const ContentTours = () => {
                       className={styles.tourImageInput}
                     />
                   </label>
+                )}
+              </div>
+            </div>
+
+            {/* Ek Görsel */}
+            <div className={styles.tourFormGroup}>
+              <label>Ek Görsel (Kapak Görselinin Altında Gösterilecek (1920:1080))</label>
+              <div className={styles.tourImageUploadBox}>
+                {formData.additionalImageUrl ? (
+                  <div className={styles.imagePreview}>
+                    <img src={formData.additionalImageUrl} alt="Additional" />
+                    <button type="button" onClick={removeAdditionalImage} className={styles.removeImageBtn}>
+                      Remove
+                    </button>
+                  </div>
+                ) : (
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAdditionalImageUpload}
+                    className={styles.imageUploadInput}
+                  />
                 )}
               </div>
             </div>
