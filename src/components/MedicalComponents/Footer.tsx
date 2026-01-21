@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
 import '../../i18n'
 
@@ -8,9 +9,10 @@ export default function Footer() {
   return (
     <>
       <footer className="cs_footer cs_style_1 cs_heading_color">
-        <div className="cs_footer_main">
-          <div className="container">
-            <div className="row">
+        <div className="cs_footer_main"  >
+          <div className="container d-flex flex-column align-items-center">
+      
+            <div className="row align-items-start" style={{gap:'150px', }}>
 
               <div className="col-lg-4">
                 <div className="cs_footer_item">
@@ -22,7 +24,6 @@ export default function Footer() {
                     <li suppressHydrationWarning>{isReady ? t('medical.footer.address') : ''}</li>
                     <li suppressHydrationWarning>{isReady ? t('medical.footer.phone') : ''}</li>
                     <li suppressHydrationWarning>{isReady ? t('medical.footer.email') : ''}</li>
-                    <li suppressHydrationWarning>{isReady ? t('medical.footer.medicalEmail') : ''}</li>
                   </ul>
                 </div>
               </div>
@@ -42,32 +43,13 @@ export default function Footer() {
                   <li><Link href="/medical/faq" suppressHydrationWarning>{isReady ? t('medical.footer.faqs') : ''}</Link></li>
                   <li><Link href="/medical/privacy" suppressHydrationWarning>{isReady ? t('medical.footer.privacyPolicy') : ''}</Link></li>
                   <li><Link href="/medical/kvkk" suppressHydrationWarning>{isReady ? t('medical.footer.kvkk') : ''}</Link></li>
+                      <div className="d-flex justify-content-center mb-4">
+              <Image src="/assets/logo/logo-mavi.png" alt="Logo" width={120} height={80} className="img-fluid" style={{marginRight:'40px'}} />
+            </div>
                 </ul>
               </div>
 
-              <div className="col-lg-4">
-                <div className="cs_newsletter cs_style1">
-                  <h2 className="cs_newsletter_title" suppressHydrationWarning>{isReady ? t('medical.footer.newsletter.title') : ''}</h2>
-                  <p suppressHydrationWarning>
-                    {isReady ? t('medical.footer.newsletter.description') : ''}
-                  </p>
-
-                  <form
-                    className="cs_newsletter_form"
-                    onSubmit={(e) => e.preventDefault()}
-                  >
-                    <input
-                      type="email"
-                      className="cs_newsletter_input"
-                      placeholder={isReady ? t('medical.footer.newsletter.placeholder') : ''}
-                      suppressHydrationWarning
-                    />
-                    <button className="cs_btn cs_style_1" suppressHydrationWarning>
-                      <span>{isReady ? t('medical.footer.newsletter.submit') : ''}</span>
-                    </button>
-                  </form>
-                </div>
-              </div>
+      
 
             </div>
           </div>

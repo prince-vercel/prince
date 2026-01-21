@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
 import '../../i18n'
+import Image from "next/image"
 
 export default function Footer() {
   const { t, isReady } = useSafeTranslation()
@@ -12,12 +13,13 @@ export default function Footer() {
           color: #d7b76e !important;
         }
       `}</style>
-      <footer className="cs_footer cs_style_1 cs_heading_color">
-        <div className="cs_footer_main">
-          <div className="container">
-            <div className="row">
+           <footer className="cs_footer cs_style_1 cs_heading_color">
+        <div className="cs_footer_main"  >
+          <div className="container d-flex flex-column">
+      
+            <div className="row align-items-start" style={{gap:'150px', }}>
 
-             <div className="col-lg-4">
+              <div className="col-lg-4">
                 <div className="cs_footer_item">
                   <p suppressHydrationWarning>
                     {isReady ? t('travel.footer.description') : ''} <br />
@@ -47,64 +49,13 @@ export default function Footer() {
                   <li><Link href="/travel/faqs" suppressHydrationWarning>{isReady ? t('travel.footer.faq') : ''}</Link></li>
                   <li><Link href="/travel/privacy" suppressHydrationWarning>{isReady ? t('travel.footer.privacy') : ''}</Link></li>
                   <li><Link href="/travel/kvkk" suppressHydrationWarning>{isReady ? t('travel.footer.kvkk') : ''}</Link></li>
+                  <div className="d-flex justify-content-center mb-4">
+                            <Image src="/assets/logo/logo-goldd.png" alt="Logo" width={120} height={80} className="img-fluid" />
+                          </div>
                 </ul>
               </div>
 
-              <div className="col-lg-4">
-                <div className="cs_newsletter cs_style1">
-                  <h2 className="cs_newsletter_title" suppressHydrationWarning>{isReady ? t('travel.footer.newsletter.title') : ''}</h2>
-                  <p suppressHydrationWarning>
-                    {isReady ? t('travel.footer.newsletter.description') : ''}
-                  </p>
-<form
-  className="cs_newsletter_form"
-  onSubmit={(e) => e.preventDefault()}
->
-  <div
-    style={{
-      position: 'relative',
-      width: '100%'
-    }}
-  >
-    <input
-      type="email"
-      className="cs_newsletter_input"
-      placeholder={isReady ? t('travel.footer.newsletter.placeholder') : ''}
-      style={{
-        width: '100%',
-        border: '2px solid #d7b76e',
-        borderRadius: '32px',
-        padding: '12px 140px 12px 20px',
-        outline: 'none'
-      }}
-      suppressHydrationWarning
-    />
-
-    <button
-      type="submit"
-      style={{
-        position: 'absolute',
-        top: '50%',
-        right: '6px',
-        transform: 'translateY(-50%)',
-        background: '#d7b76e',
-        color: '#fff',
-        borderRadius: '24px',
-        padding: '10px 28px',
-        border: 'none',
-        fontWeight: 500,
-        cursor: 'pointer',
-        whiteSpace: 'nowrap'
-      }}
-      suppressHydrationWarning
-    >
-      {isReady ? t('travel.footer.newsletter.submit') : ''}
-    </button>
-  </div>
-</form>
-
-                </div>
-              </div>
+            
 
             </div>
           </div>

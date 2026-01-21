@@ -121,16 +121,7 @@ export default function BlogPage() {
 
                   <div className="cs_post_info">
                     <div>
-                      <div className="cs_post_meta">
-                        <div className="cs_posted_by">
-                          {post.createdAt?.toLocaleDateString('tr-TR')}
-                        </div>
-                        <div className="cs_post_social">
-                          <a href="#"><i className="fa-brands fa-linkedin-in" /></a>
-                          <a href="#"><i className="fa-brands fa-facebook-f" /></a>
-                          <a href="#"><i className="fa-brands fa-twitter" /></a>
-                        </div>
-                      </div>
+                    
 
                       <h2 className="cs_post_title cs_semibold cs_fs_32" style={{ fontSize: '20px', lineHeight: '1.4', }}>
                         <span>{post.title}</span>

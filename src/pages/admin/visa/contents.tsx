@@ -21,18 +21,24 @@ import ContentVisaTable from '@/src/components/AdminComponents/visa/ContentVisaT
 import ContentFaq from '@/src/components/AdminComponents/visa/ContentFaq'
 import ContentSucces from '@/src/components/AdminComponents/visa/ContentSucces'
 import ContentCountries from '@/src/components/AdminComponents/visa/ContentCountries'
+import ContentBanner from '@/src/components/AdminComponents/visa/ContentBanner'
 
 const ContentsPage = () => {
   const [activeTab, setActiveTab] = useState<
-     'reviews' | 'blog' | 'faq' | 'testimonials' | 'visa' | 'visa-table' | 'questions' | 'chatbot' | 'success-rates' | 'countries' | null
+     'reviews' | 'blog' | 'faq' | 'banner'| 'testimonials' | 'visa' | 'visa-table' | 'questions' | 'chatbot' | 'success-rates' | 'countries' | null
   >(null)
   const [hoveredBox, setHoveredBox] = useState<string | null>(null)
 
   const contentBoxes = [
+     {
+      id: 'banner',
+      title: 'Banner',
+      icon: <MdImage size={40} />
+    },
     {
       id: 'visa',
       title: 'Vizelerimiz',
-      icon: <MdImage size={40} />
+      icon: <MdPublic size={40} />
     },
     {
       id: 'visa-table',
@@ -44,11 +50,11 @@ const ContentsPage = () => {
       title: 'Vize Başarı Oranları',
       icon: <MdStar size={40} />
     },
-    {
-      id: 'countries',
-      title: 'Hizmet Verdiğimiz Ülkeler',
-      icon: <MdPublic size={40} />
-    },
+   // {
+    //  id: 'countries',
+   //   title: 'Hizmet Verdiğimiz Ülkeler',
+  //    icon: <MdPublic size={40} />
+   // },
     {
       id: 'questions',
       title: 'Başvuru Soruları',
@@ -99,6 +105,8 @@ const ContentsPage = () => {
         return <ContentSucces/>
       case 'countries':
         return <ContentCountries/>
+       case 'banner':
+        return <ContentBanner/>
       default:
         return null
     }

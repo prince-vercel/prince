@@ -16,12 +16,14 @@ interface Testimonial {
   name: string
   text: string
   imageUrl: string
+  rating: number
 }
 
 const ContentTestimonials = () => {
   const [name, setName] = useState('')
   const [text, setText] = useState('')
   const [imageUrl, setImageUrl] = useState('')
+  const [rating, setRating] = useState(5)
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -88,6 +90,7 @@ const ContentTestimonials = () => {
           name,
           text,
           imageUrl,
+          rating,
           updatedAt: serverTimestamp(),
           ...(editingTestimonialId ? {} : { createdAt: serverTimestamp() })
         },
@@ -134,6 +137,7 @@ const ContentTestimonials = () => {
     setName(testimonial.name)
     setText(testimonial.text)
     setImageUrl(testimonial.imageUrl)
+    setRating(testimonial.rating || 5)
     setIsEditMode(true)
   }
 
@@ -141,6 +145,7 @@ const ContentTestimonials = () => {
     setName('')
     setText('')
     setImageUrl('')
+    setRating(5)
     setSelectedFile(null)
     setIsEditMode(false)
     setEditingTestimonialId(null)
@@ -197,6 +202,23 @@ const ContentTestimonials = () => {
             rows={6}
             style={{fontSize:'16px'}}
           />
+        </div>
+
+        {/* Rating */}
+        <div className={styles.contentServicesFieldGroup}>
+          <label className={styles.contentServicesLabel} style={{fontSize:'15px', fontWeight: '600'}}>Yıldız Puanı</label>
+          <select
+            value={rating}
+            onChange={(e) => setRating(Number(e.target.value))}
+            className={styles.contentServicesInput}
+            style={{fontSize:'16px'}}
+          >
+            <option value={1}>1 Yıldız</option>
+            <option value={2}>2 Yıldız</option>
+            <option value={3}>3 Yıldız</option>
+            <option value={4}>4 Yıldız</option>
+            <option value={5}>5 Yıldız</option>
+          </select>
         </div>
 
         {/* Image Upload */}
@@ -311,8 +333,11 @@ const ContentTestimonials = () => {
                 </h3>
                 <p style={{ fontSize: '14px', color: '#666', margin: '0 0 16px 0', lineHeight: '1.6', minHeight: '80px' }}>
                   "{testimonial.text}"
-                </p>
-                <div style={{ display: 'flex', gap: '8px', width: '100%', marginTop: '12px' }}>
+                </p>                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '16px' }}>
+                  {[...Array(testimonial.rating || 5)].map((_, i) => (
+                    <i key={i} className="fa-solid fa-star" style={{ color: '#ffd700', fontSize: '16px' }} />
+                  ))}
+                </div>                <div style={{ display: 'flex', gap: '8px', width: '100%', marginTop: '12px' }}>
                   <button
                     onClick={() => editTestimonial(testimonial)}
                     style={{

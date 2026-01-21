@@ -2,7 +2,7 @@
     "medical": {
         "header": {
             "home": "الصفحة الرئيسية",
-            "organisation": "المؤسسات",
+            "organisation": "الفنادق",
             "results": "نتائج سعيدة",
             "form": "التقديم",
             "blog": "المدونة",
@@ -16,10 +16,10 @@
             "description": "Prince للخدمات الصحية والتجميل الطبي",
             "address": "Dap Vadisi Z Ofis, Merkez, Seçkin Sk. Z ofis, Kat 2, Daire 229, 34406 Kağıthane/İstanbul",
             "phone": "+90 212 000 00 00",
-            "email": "info@princetourismagency.com",
+            "email": "medical@princetourismagency.com",
             "medicalEmail": "medical@princetourismagency.com",
             "home": "الصفحة الرئيسية",
-            "organisation": "المؤسسات",
+            "organisation": "الفنادق",
             "blog": "المدونة",
             "about": "من نحن",
             "contact": "تواصل معنا",
@@ -183,7 +183,7 @@
                 "error": "خطأ في جلب بيانات الأسئلة الشائعة:"
             },
             "organisation": {
-                "title": "مؤسساتنا",
+                "title": "فنادقنا",
                 "subtitle": "اختر الأنسب لاحتياجاتك من بين الفنادق والمستشفيات.",
                 "filters": {
                     "all": "الكل",

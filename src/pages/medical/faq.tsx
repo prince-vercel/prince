@@ -114,7 +114,7 @@ export default function FAQPage() {
                      </h2>
 
                       {isActive && (
-                        <div className="cs_accordian_body">
+                        <div className="cs_accordian_body mt-3">
                           <p>{item.answer}</p>
                         </div>
                       )}

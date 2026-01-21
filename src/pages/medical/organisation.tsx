@@ -76,7 +76,7 @@ export default function OrganisationPage() {
             <li className="breadcrumb-item2" style={{ color: '#fff' }}>
               <Link href="/medical" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.home') : ''}</Link>
             </li>
-            <li className="breadcrumb-item2 active" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.pages.breadcrumb.organisation') : ''}</li>
+            <li className="breadcrumb-item2 active" style={{ color: '#fff' }} suppressHydrationWarning>{isReady ? t('medical.header.organisation') : ''}</li>
           </ol>
 
           <div className="cs_banner_text">
@@ -90,7 +90,7 @@ export default function OrganisationPage() {
 
       <div className="cs_height_65" />
 
-      <div className="container">
+      <div className="container" style={{marginTop:'25px'}}>
 
 
         <div className="cs_height_65" />
@@ -107,7 +107,7 @@ export default function OrganisationPage() {
           ) : (
             paginatedItems.map((item) => (
               <div key={item.id} className="col-xl-4 col-lg-4 col-md-6">
-                <div className="cs_team cs_style_1 cs_type_2 cs_radius_20 overflow-hidden">
+                <div className="cs_team cs_style_1 cs_type_2 cs_radius_10 overflow-hidden">
                   <div className="cs_member_img" style={{ height: '250px', overflow: 'hidden' }}>
                     <Image
                       src={item.image}

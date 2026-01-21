@@ -41,7 +41,7 @@ export default function HomePage() {
     <div className="page-wrapper">
       <header className="header">
         <div className="logo-wrapper">
-          <Image src="/site-header-logo.png" alt="Logo" width={500} height={270} priority />
+          <Image src="/site-header-logo.png" alt="Logo" width={480} height={250} priority />
         </div>
       </header>
 

@@ -16,12 +16,14 @@ interface Testimonial {
   name: string
   text: string
   imageUrl: string
+  rating: number
 }
 
 const ContentTestimonials = () => {
   const [name, setName] = useState('')
   const [text, setText] = useState('')
   const [imageUrl, setImageUrl] = useState('')
+  const [rating, setRating] = useState(5)
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -87,6 +89,7 @@ const ContentTestimonials = () => {
           name,
           text,
           imageUrl,
+          rating,
           updatedAt: serverTimestamp(),
           ...(editingTestimonialId ? {} : { createdAt: serverTimestamp() })
         },
@@ -133,6 +136,7 @@ const ContentTestimonials = () => {
     setName(testimonial.name)
     setText(testimonial.text)
     setImageUrl(testimonial.imageUrl)
+    setRating(testimonial.rating || 5)
     setIsEditMode(true)
   }
 

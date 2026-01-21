@@ -16,10 +16,10 @@ export default function VisaFooter() {
                 }
             `}</style>
             <div className="visa-footer-wrapper">
-                <footer className="cs_footer cs_style_1 cs_heading_color" style={{ padding: '80px 0 0', backgroundColor: '#f8f9fa' }}>
+                <footer className="cs_footer cs_style_1 cs_heading_color" style={{ padding: '80px 0 0', backgroundColor: '#fff'}}>
                     <div className="cs_footer_main" style={{ padding: '60px 0' }}>
                         <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 15px' }}>
-                            <div className="row" style={{ display: 'flex', flexWrap: 'wrap', margin: '0 -15px' }}>
+                            <div className="row" style={{ display: 'flex', flexWrap: 'wrap', margin: '0 -15px', gap:'150px' }}>
                                 <div className="col-lg-4" style={{ flex: '0 0 33.333333%', maxWidth: '33.333333%', padding: '0 15px' }}>
                                     <div className="cs_footer_item" style={{ marginBottom: '30px' }}>
                                         <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333', marginBottom: '20px' }} suppressHydrationWarning>
@@ -95,66 +95,13 @@ export default function VisaFooter() {
                                                 {isReady ? t('visa.footer.kvkk') : ''}
                                             </Link>
                                         </li>
+                                         <div className="d-flex justify-content-center">
+                                                      <Image src="/visa/assets/img/prince-logo-red.png" alt="Logo" width={120} height={80} className="img-fluid" style={{marginRight:'40px'}} />
+                                                    </div>
                                     </ul>
                                 </div>
 
-                                <div className="col-lg-4" style={{ flex: '0 0 33.333333%', maxWidth: '33.333333%', padding: '0 15px' }}>
-                                    <div className="cs_newsletter cs_style1">
-                                        <h2 className="cs_newsletter_title" style={{ fontSize: '42px', fontWeight: 700, marginBottom: '11px', color: '#333' }} suppressHydrationWarning>
-                                            {isReady ? t('visa.footer.newsletter.title') : ''}
-                                        </h2>
-                                        <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#666', marginBottom: '25px' }} suppressHydrationWarning>
-                                            {isReady ? t('visa.footer.newsletter.description').split('\n').map((line: string, i: number) => (
-                                                <span key={i}>{line}{i === 0 && <br />}</span>
-                                            )) : ''}
-                                        </p>
-                                        <form
-                                            className="cs_newsletter_form"
-                                            onSubmit={(e) => e.preventDefault()}
-                                            style={{ position: 'relative', marginTop: '25px' }}
-                                        >
-                                            <div style={{ position: 'relative', width: '100%' }}>
-                                                <input
-                                                    type="email"
-                                                    className="cs_newsletter_input"
-                                                    placeholder={isReady ? t('visa.footer.newsletter.placeholder') : ''}
-                                                    style={{
-                                                        width: '100%',
-                                                        border: '2px solid #C42127',
-                                                        borderRadius: '32px',
-                                                        padding: '15px 140px 15px 32px',
-                                                        outline: 'none',
-                                                        fontSize: '16px',
-                                                        height: '60px',
-                                                        transition: 'border-color 0.3s'
-                                                    }}
-                                                />
-                                                <button
-                                                    type="submit"
-                                                    style={{
-                                                        position: 'absolute',
-                                                        top: '50%',
-                                                        right: '6px',
-                                                        transform: 'translateY(-50%)',
-                                                        background: '#C42127',
-                                                        color: '#fff',
-                                                        borderRadius: '24px',
-                                                        padding: '10px 28px',
-                                                        border: 'none',
-                                                        fontWeight: 500,
-                                                        cursor: 'pointer',
-                                                        whiteSpace: 'nowrap',
-                                                        fontSize: '16px',
-                                                        transition: 'background 0.3s'
-                                                    }}
-                                                    suppressHydrationWarning
-                                                >
-                                                    {isReady ? t('visa.footer.newsletter.submit') : ''}
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                               
                             </div>
                         </div>
                     </div>

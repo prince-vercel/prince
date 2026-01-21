@@ -55,21 +55,23 @@ export default function Header() {
   return (
     <>
       {/* HEADER */}
-      <header className="cs_site_header cs_style1 cs_sticky_header cs_heading_color">
-        <div className="cs_main_header">
-          <div className="container">
-            <div className="cs_main_header_in">
+ <header className="cs_site_header cs_style1 cs_sticky_header cs_heading_color" style={{ width: '100%' }}>
+        <div className="cs_main_header" style={{ width: '100%' }}>
+          <div className="cs_main_header_in" style={{ width: '100%', maxWidth: '100%', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+
+
+
 
               {/* LEFT */}
               <div className="cs_main_header_left">
-                <Link href="/" className="cs_site_branding" style={{ textAlign: 'left', justifyContent: 'flex-start', marginRight: 'auto' }}>
+                <Link href="/" className="cs_site_branding" >
                   <Image src="/assets/logo/logo-goldd.png" alt="Logo" width={110} height={35} />
                 </Link>
 
                 <nav className="cs_nav">
                   <ul className="cs_nav_list">
                     <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.home') : ''}</Link></li>
-                    <li><Link href="/travel/all" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/all' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.tours') : ''}</Link></li>
+                    <li><Link href="/travel/countries" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/countries' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.tours') : ''}</Link></li>
                     <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/form' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.reservation') : ''}</Link></li>
                     <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/blog' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.blog') : ''}</Link></li>
                     <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/about' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.about') : ''}</Link></li>
@@ -282,7 +284,6 @@ export default function Header() {
                 </div>
               </div>
 
-            </div>
           </div>
         </div>
       </header>
@@ -299,7 +300,7 @@ export default function Header() {
           {/* MOBILE MENU */}
           <ul className="cs_mobile_menu">
             <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.home') : ''}</Link></li>
-            <li><Link href="/travel/all" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.tours') : ''}</Link></li>
+            <li><Link href="/travel/countries" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.tours') : ''}</Link></li>
             <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.reservation') : ''}</Link></li>
             <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.blog') : ''}</Link></li>
             <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.about') : ''}</Link></li>
@@ -332,6 +333,28 @@ export default function Header() {
         </div>
         <div className="cs_sidenav_overlay" onClick={() => setIsSearchOpen(false)} />
       </div>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @media (max-width: 1300px) {
+            .cs_nav {
+              display: none !important;
+            }
+            .cs_sidebar_toggle_btn {
+              display: inline-flex !important;
+              align-items: center;
+              justify-content: center;
+            }
+            .cs_social_desktop {
+              display: none !important;
+            }
+          }
+          @media (min-width: 1301px) {
+            .cs_sidenav {
+              display: none !important;
+            }
+          }
+        `
+      }} />
     </>
   )
 }

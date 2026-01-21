@@ -325,6 +325,28 @@ export default function Header() {
         </div>
         <div className="cs_sidenav_overlay" onClick={() => setIsSearchOpen(false)} />
       </div>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @media (max-width: 1199px) {
+            .cs_nav {
+              display: none !important;
+            }
+            .cs_sidebar_toggle_btn {
+              display: inline-flex !important;
+              align-items: center;
+              justify-content: center;
+            }
+            .cs_social_desktop {
+              display: none !important;
+            }
+          }
+          @media (min-width: 1200px) {
+            .cs_sidenav {
+              display: none !important;
+            }
+          }
+        `
+      }} />
     </>
   )
 }

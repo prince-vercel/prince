@@ -1,10 +1,15 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import '../../i18n'
+import { db } from '@/src/lib/firebase'
+import { collection, getDocs, query, orderBy } from 'firebase/firestore'
+import { getCollectionName } from '../../lib/localization'
 
 interface HeroSlide {
     title: string
@@ -17,68 +22,48 @@ interface HeroSlide {
 export default function HeroSection() {
     const { t, i18n } = useTranslation()
     const [mounted, setMounted] = useState(false)
+    const [slides, setSlides] = useState<HeroSlide[]>([])
 
     // Client-side mount kontrolü
     useEffect(() => {
         setMounted(true)
     }, [])
 
-    const heroSlides: HeroSlide[] = useMemo(() => {
-        if (!mounted || !i18n.isInitialized) {
-            return [
-                { title: '', description: '', image: '', link: '/visa/basvuru-yap' },
-                { title: '', description: '', image: '', link: '/visa/basvuru-yap' },
-                { title: '', description: '', image: '', link: '/visa/basvuru-yap' },
-                { title: '', description: '', image: '', link: '/visa/basvuru-yap' },
-                { title: '', description: '', image: '', link: '/visa/basvuru-yap' },
-                { title: '', description: '', image: '', link: '/visa/basvuru-yap' }
-            ]
-        }
-        return [
-            {
-                title: t('visa.hero.slides.0.title'),
-                description: t('visa.hero.slides.0.description'),
-                image: "/visa/uploads/contents/cover/banner prince.jpg",
-                imageMobile: "/visa/uploads/contents/cover/banner prince.jpg",
-                link: "/visa/basvuru-yap"
-            },
-            {
-                title: t('visa.hero.slides.1.title'),
-                description: t('visa.hero.slides.1.description'),
-                image: "/visa/uploads/contents/cover/banner prince.jpg",
-                imageMobile: "/visa/uploads/contents/cover/banner prince.jpg",
-                link: "/visa/basvuru-yap"
-            },
-            {
-                title: t('visa.hero.slides.2.title'),
-                description: t('visa.hero.slides.2.description'),
-                image: "/visa/uploads/contents/cover/banner prince.jpg",
-                imageMobile: "/visa/uploads/contents/cover/banner prince.jpg",
-                link: "/visa/basvuru-yap"
-            },
-            {
-                title: t('visa.hero.slides.3.title'),
-                description: t('visa.hero.slides.3.description'),
-                image: "/visa/uploads/contents/cover/banner prince.jpg",
-                imageMobile: "/visa/uploads/contents/cover/banner prince.jpg",
-                link: "/visa/basvuru-yap"
-            },
-            {
-                title: t('visa.hero.slides.4.title'),
-                description: t('visa.hero.slides.4.description'),
-                image: "/visa/uploads/contents/cover/banner prince.jpg",
-                imageMobile: "/visa/uploads/contents/cover/banner prince.jpg",
-                link: "/visa/basvuru-yap"
-            },
-            {
-                title: t('visa.hero.slides.5.title'),
-                description: t('visa.hero.slides.5.description'),
-                image: "/visa/uploads/contents/cover/banner prince.jpg",
-                imageMobile: "/visa/uploads/contents/cover/banner prince.jpg",
-                link: "/visa/basvuru-yap"
+    // Fetch slides from Firebase
+    useEffect(() => {
+        const fetchSlides = async () => {
+            try {
+                const q = query(collection(db, getCollectionName('visabannercontents', i18n.language), 'images', 'banner'), orderBy('createdAt', 'desc'))
+                const querySnapshot = await getDocs(q)
+                const slidesData: HeroSlide[] = []
+                
+                querySnapshot.docs.forEach(doc => {
+                    const data = doc.data()
+                    if (data.descriptions && data.descriptions.length > 0) {
+                        data.descriptions.forEach((desc: { title: string; desc: string }) => {
+                            slidesData.push({
+                                title: desc.title,
+                                description: desc.desc,
+                                image: data.imageUrl,
+                                imageMobile: data.imageUrl,
+                                link: '/visa/basvuru-yap'
+                            })
+                        })
+                    }
+                })
+                
+                setSlides(slidesData)
+            } catch (error) {
+                console.error('Error fetching slides:', error)
+                // No fallback, just empty
+                setSlides([])
             }
-        ]
-    }, [t, i18n.language, i18n.isInitialized, mounted])
+        }
+        
+        if (mounted && i18n.isInitialized) {
+            fetchSlides()
+        }
+    }, [mounted, i18n.language, i18n.isInitialized])
 
     // main.js'teki heroSlider init fonksiyonunu çağır
     useEffect(() => {
@@ -117,7 +102,7 @@ export default function HeroSection() {
             <div className="container">
                 <div id="hero-slider" className="swiper">
                     <div className="swiper-wrapper">
-                        {heroSlides.map((slide, index) => (
+                        {slides.map((slide, index) => (
                             <div key={index} className="swiper-slide">
                                 <div className="hero-slide-card">
                                     <div className="image-background">

@@ -329,6 +329,12 @@ export default function AboutPage() {
                       {item.name}
                     </h5>
 
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '4px', marginTop: '10px' }}>
+                      {[...Array(item.rating || 5)].map((_, i) => (
+                        <i key={i} className="fa-solid fa-star" style={{ color: '#ffd700', fontSize: '16px' }} />
+                      ))}
+                    </div>
+
                     <div className="relative inline-block mt-6">
                       <div className="h-[38px] w-[38px] bg-primary-1 rounded-full border-2 border-white absolute top-0 left-0 -translate-x-1/3 text-white flex justify-center items-center">
 

@@ -2,7 +2,7 @@
     "medical": {
         "header": {
             "home": "Página de inicio",
-            "organisation": "Organizaciones",
+            "organisation": "Hoteles",
             "results": "Resultados felices",
             "form": "Solicitud",
             "blog": "Blog",
@@ -13,13 +13,13 @@
             "searchPlaceholder": "Buscar médico"
         },
         "footer": {
-            "description": "Prince Medical Aesthetics & Health Services",
+            "description": "Prince Invest Group",
             "address": "Dap Vadisi Z Ofis, Merkez, Seçkin Sk. Z ofis, Kat 2, Daire 229, 34406 Kağıthane/İstanbul",
             "phone": "+90 212 000 00 00",
-            "email": "info@princetourismagency.com",
+            "email": "medical@princetourismagency.com",
             "medicalEmail": "medical@princetourismagency.com",
             "home": "Página de inicio",
-            "organisation": "Organizaciones",
+            "organisation": "Hoteles",
             "blog": "Blog",
             "about": "Sobre nosotros",
             "contact": "Contacto",
@@ -183,7 +183,7 @@
                 "error": "Error al obtener los datos de FAQ:"
             },
             "organisation": {
-                "title": "Nuestras organizaciones",
+                "title": "Nuestros Hoteles",
                 "subtitle": "Elige la opción que se adapte a tus necesidades entre hoteles y hospitales.",
                 "filters": {
                     "all": "Todos",

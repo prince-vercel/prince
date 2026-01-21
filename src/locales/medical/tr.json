@@ -2,7 +2,7 @@
   "medical": {
     "header": {
       "home": "Anasayfa",
-      "organisation": "Kurumlar",
+      "organisation": "Oteller",
       "results": "Mutlu Sonuçlar",
       "form": "Başvuru",
       "blog": "Blog",
@@ -13,13 +13,13 @@
       "searchPlaceholder": "Doktor Ara"
     },
     "footer": {
-      "description": "Prince Medical Aesthetics & Health Services",
+      "description": "Prince Invest Group",
       "address": "Dap Vadisi Z Ofis, Merkez, Seçkin Sk. Z ofis, Kat 2, Daire 229, 34406 Kağıthane/İstanbul",
       "phone": "+90 212 000 00 00",
-      "email": "info@princetourismagency.com",
+      "email": "medical@princetourismagency.com",
       "medicalEmail": "medical@princetourismagency.com",
       "home": "Anasayfa",
-      "organisation": "Kurumlar",
+      "organisation": "Oteller",
       "blog": "Blog",
       "about": "Hakkımızda",
       "contact": "İletişim",
@@ -80,7 +80,7 @@
         }
       },
       "languages": {
-        "title": "Dilinizi Konuşuyoruz !"
+        "title": "Dilinizi Konuşuyoruz!"
       },
       "results": {
         "title": "Mutlu Sonuçlar",
@@ -183,7 +183,7 @@
         "error": "FAQ verileri çekilirken hata:"
       },
       "organisation": {
-        "title": "Kurumlarımız",
+        "title": "Otellerimiz",
         "subtitle": "Oteller ve hastaneler arasından ihtiyacınıza uygun olanı seçin.",
         "filters": {
           "all": "Tümü",

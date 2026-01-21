@@ -474,7 +474,7 @@ export default function HomePage() {
                 <p suppressHydrationWarning>{isReady ? t('medical.homePage.results.loading') : ''}</p>
               </div>
             ) : results.length === 0 ? (
-              <div style={{ textAlign: 'center', width: '100%', padding: '40px' }}>
+              <div style={{ textAlign: 'center', width: '100%'}}>
                 <p suppressHydrationWarning>{isReady ? t('medical.homePage.results.noResults') : ''}</p>
               </div>
             ) : (
@@ -522,7 +522,7 @@ export default function HomePage() {
 
       {/* BLOG */}
       <section>
-        <div className="container">
+        <div className="container" style={{ padding: '0 0' }}>
           {/* HEADING */}
           <div className="cs_section_heading cs_style_1 text-center " style={{ marginTop: '5vh' }}>
             <h2 className="cs_section_title cs_fs_72 m-0 " suppressHydrationWarning>
@@ -598,7 +598,7 @@ export default function HomePage() {
 
       {/* PARTNERS */}
       <section>
-        <div className="container" style={{ marginTop: '20vh' }}>
+        <div className="container" style={{ marginTop: '20vh' ,padding: '0 0px'}}>
           <div className="cs_brands cs_style_1 cs_brand_marquee">
             <div className="cs_brands_track">
               {loadingPartners ? (

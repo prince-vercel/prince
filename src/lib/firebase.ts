@@ -1,4 +1,4 @@
-
+// @ts-ignore
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
@@ -12,7 +12,6 @@ const firebaseConfig = {
   messagingSenderId: "123456789012",
   appId: "1:123456789012:web:abcdef1234567890abcdef"
 }
-
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);

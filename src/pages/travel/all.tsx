@@ -16,7 +16,9 @@ export default function PackageList() {
   const { destination } = router.query
   const [tours, setTours] = useState<any[]>([])
   const [loadingTours, setLoadingTours] = useState(true)
+  const [countries, setCountries] = useState<any[]>([])
   const [selectedDestinations, setSelectedDestinations] = useState<string[]>([])
+  const [selectedCities, setSelectedCities] = useState<string[]>([])
   const [selectedDurations, setSelectedDurations] = useState<string[]>([])
   const [selectedMaxPeople, setSelectedMaxPeople] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000])
@@ -45,7 +47,23 @@ export default function PackageList() {
       }
     }
 
+    const fetchCountries = async () => {
+      try {
+        const collectionName = getCollectionName('travelcountries', i18n.language)
+        const q = query(collection(db, collectionName), orderBy('createdAt', 'desc'))
+        const snap = await getDocs(q)
+        const countriesData = snap.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setCountries(countriesData)
+      } catch (error) {
+        console.error('Ülke yükleme hatası:', error)
+      }
+    }
+
     fetchTours()
+    fetchCountries()
   }, [i18n.language])
 
   useEffect(() => {
@@ -78,12 +96,23 @@ export default function PackageList() {
   };
 
   const filteredPackages = useMemo(() => {
-    return tours.filter((tour) => {
+    const filtered = tours.filter((tour) => {
       const destinationOk =
         selectedDestinations.length === 0 ||
-        selectedDestinations.some(dest =>
-          normalizeText(dest) === normalizeText(tour.location || '')
-        )
+        selectedDestinations.some(dest => {
+          const country = countries.find(c => c.id === dest || c.title === dest)
+          return country && (tour.countryId === dest || tour.countryId === country.title || tour.countryId === country.id)
+        })
+
+      const cityOk =
+        selectedCities.length === 0 ||
+        selectedCities.some(city => {
+          if (tour.location && typeof tour.location === 'string') {
+            const cities = tour.location.split(',').map((c: string) => c.trim())
+            return cities.some((tourCity: string) => tourCity === city)
+          }
+          return false
+        })
 
       const durationOk =
         selectedDurations.length === 0 ||
@@ -150,20 +179,33 @@ export default function PackageList() {
 
       const statusOk = tour.status !== 'pasif'
 
-      return destinationOk && durationOk && maxPeopleOk && priceOk && daysOk && dateOk && inclusionsOk && pricedOk && statusOk
+      const allOk = destinationOk && cityOk && durationOk && maxPeopleOk && priceOk && daysOk && dateOk && inclusionsOk && pricedOk && statusOk
+
+      if (!allOk) {
+        console.log('Tour filtered out:', tour.title, { destinationOk, cityOk, durationOk, maxPeopleOk, priceOk, daysOk, dateOk, inclusionsOk, pricedOk, statusOk })
+      }
+
+      return allOk
     })
-  }, [tours, selectedDestinations, selectedDurations, selectedMaxPeople, priceRange, selectedDays, selectedStartDate, selectedEndDate, selectedInclusions, showPricedOnly])
+    console.log('Filtered packages count:', filtered.length, 'selectedDestinations:', selectedDestinations)
+    return filtered
+  }, [tours, selectedDestinations, selectedCities, selectedDurations, selectedMaxPeople, priceRange, selectedDays, selectedStartDate, selectedEndDate, selectedInclusions, showPricedOnly, countries])
 
   const uniqueDestinations = useMemo(() => {
-    const dbDestinations = new Set(tours.map(tour => tour.location).filter(Boolean))
+    const dbDestinations = new Set(tours.map(tour => tour.countryId).filter(Boolean))
     const combined = new Set([ ...Array.from(dbDestinations)])
     return Array.from(combined).sort()
   }, [tours])
 
-  const uniqueDurations = useMemo(() => {
-    const dbDurations = new Set(tours.map(tour => tour.duration).filter(Boolean))
-    const combined = new Set([...Array.from(dbDurations)])
-    return Array.from(combined)
+  const uniqueCities = useMemo(() => {
+    const dbCities = new Set<string>()
+    tours.forEach(tour => {
+      if (tour.location && typeof tour.location === 'string') {
+        const cities = tour.location.split(',').map((city: string) => city.trim()).filter(Boolean)
+        cities.forEach((city: string) => dbCities.add(city))
+      }
+    })
+    return Array.from(dbCities).sort()
   }, [tours])
 
   const uniqueInclusions = useMemo(() => {
@@ -262,7 +304,7 @@ export default function PackageList() {
 
               {/* DESTINATIONS */}
               <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.destination') : ''}</h5>
+                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>ÜLKE</h5>
                 <select
                   value={selectedDestinations[0] || ''}
                   onChange={(e) => {
@@ -275,8 +317,36 @@ export default function PackageList() {
                   className="w-full  h-12 border border-dark-1 border-opacity-20  outline-0"
                   style={{ backgroundColor: '#fff', color: '#333' }}
                 >
-                  <option value="" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.allDestinations') : ''}</option>
-                  {uniqueDestinations.map((item, i) => (
+                  {uniqueDestinations.map((item, i) => {
+                    const country = countries.find(c => c.id === item)
+                    return (
+                      <option key={i} value={item}>
+                        {country ? country.title : item}
+                      </option>
+                    )
+                  })}
+                </select>
+              </aside>
+
+              <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
+
+              {/* CITIES */}
+              <aside>
+                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.destination') : ''}</h5>
+                <select
+                  value={selectedCities[0] || ''}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      setSelectedCities([e.target.value])
+                    } else {
+                      setSelectedCities([])
+                    }
+                  }}
+                  className="w-full  h-12 border border-dark-1 border-opacity-20  outline-0"
+                  style={{ backgroundColor: '#fff', color: '#333' }}
+                >
+                  <option value="">Tüm Şehirler</option>
+                  {uniqueCities.map((item, i) => (
                     <option key={i} value={item}>{item}</option>
                   ))}
                 </select>

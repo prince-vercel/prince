@@ -194,7 +194,7 @@ export default function TravelDetailPage() {
                 </h5>
 
                 <ul className="pack__list mt-4">
-                  <li><i className="bi bi-clock"></i> {tour?.days || ''}</li>
+                  <li><i className="bi bi-clock"></i> {tour?.startDate || ''}</li>
                   <li><i className="bi bi-map"></i> {tour?.location || 'Lokasyon'}</li>
                 </ul>
 

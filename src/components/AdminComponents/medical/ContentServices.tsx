@@ -34,7 +34,7 @@ const medicalSpecialties = {
 type SpecialtyKey = keyof typeof medicalSpecialties
 
 const ContentServices = () => {
-  const [activeTab, setActiveTab] = useState<SpecialtyKey>('dis')
+  const [activeTab, setActiveTab] = useState<SpecialtyKey | null>(null)
   const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -120,6 +120,7 @@ const ContentServices = () => {
   }
 
   const deleteService = async () => {
+    if (!activeTab) return
     if (confirm('Bu hizmeti ve tüm tedavilerini silmek istediğinizden emin misiniz?')) {
       try {
         const collectionName = getCollectionName('medicalcontents', selectedLanguage)
@@ -140,6 +141,7 @@ const ContentServices = () => {
   }
 
   const handleSave = async () => {
+    if (!activeTab) return
     if (!title || (!imageFile && !existingImageUrl)) {
       alert('Başlık ve görsel gereklidir')
       return
@@ -215,7 +217,7 @@ const ContentServices = () => {
         selectedLanguage={selectedLanguage}
         onLanguageChange={(lang) => {
           setSelectedLanguage(lang)
-          fetchContentBySlug(activeTab)
+          if (activeTab) fetchContentBySlug(activeTab)
         }}
       />
 
@@ -261,228 +263,241 @@ const ContentServices = () => {
         </p>
       </div>
 
-      {/* Form Section */}
-      <div className={styles.contentServicesFormSection}>
-        {/* Title */}
-        <div className={styles.contentServicesFieldGroup}>
-          <label className={styles.contentServicesLabel}>
-            Hizmet Başlığı
-          </label>
-          <input
-            type="text"
-            placeholder="Hizmet başlığını girin"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className={styles.contentServicesInput}
-          />
+      {!activeTab ? (
+        <div style={{
+          textAlign: 'center',
+          padding: '40px',
+          color: '#666',
+          fontSize: '16px'
+        }}>
+          Lütfen yönetmek için bir hizmet seçin
         </div>
+      ) : (
+        <>
+          {/* Form Section */}
+          <div className={styles.contentServicesFormSection}>
+            {/* Title */}
+            <div className={styles.contentServicesFieldGroup}>
+              <label className={styles.contentServicesLabel}>
+                Hizmet Başlığı
+              </label>
+              <input
+                type="text"
+                placeholder="Hizmet başlığını girin"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className={styles.contentServicesInput}
+              />
+            </div>
 
-        {/* Description */}
-        <div className={styles.contentServicesFieldGroup}>
-          <label className={styles.contentServicesLabel}>
-            Açıklama
-          </label>
-          <textarea
-            placeholder="Hizmet hakkında detaylı açıklama yazın"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className={styles.contentServicesTextarea}
-          />
-        </div>
+            {/* Description */}
+            <div className={styles.contentServicesFieldGroup}>
+              <label className={styles.contentServicesLabel}>
+                Açıklama
+              </label>
+              <textarea
+                placeholder="Hizmet hakkında detaylı açıklama yazın"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className={styles.contentServicesTextarea}
+              />
+            </div>
 
-        {/* Image */}
-        <div className={styles.contentServicesFieldGroup}>
-          <label className={styles.contentServicesLabel}>
-            Ana Görsel
-          </label>
-          <div
-            onClick={() => document.getElementById('imageInput')?.click()}
-            className={styles.contentServicesImageUploadContainer}
-            style={imagePreview ? { background: '#f0f9ff' } : {}}
-          >
-            {imagePreview ? (
-              <div>
-                <div className={styles.contentServicesImagePreviewWrapper}>
-                  <img
-                    src={imagePreview}
-                    alt="Preview"
-                    className={styles.contentServicesImagePreview}
-                  />
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleImageReset()
-                    }}
-                    className={styles.contentServicesImageRemoveBtn}
-                  >
-                    ✕
-                  </button>
-                </div>
-                <p className={styles.contentServicesImageFileName}>
-                  {imageFile?.name}
-                </p>
-              </div>
-            ) : (
-              <div>
-                <MdCloudUpload size={32} className={styles.contentServicesImageUploadIcon} />
-                <p className={styles.contentServicesImageUploadText}>
-                  Görsel yüklemek için tıklayın
-                </p>
-                <p className={styles.contentServicesImageUploadSubtext}>
-                  PNG, JPG, GIF (Max 5MB)
-                </p>
-              </div>
-            )}
-            <input
-              id="imageInput"
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className={styles.contentServicesImageInput}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Treatments Section */}
-      <div className={styles.contentServicesTreatmentsSection}>
-        <div className={styles.contentServicesTreatmentsHeader}>
-          <h2 className={styles.contentServicesTreatmentsTitle}>
-            Tedaviler
-          </h2>
-          <button
-            onClick={addTreatment}
-            className={styles.contentServicesAddBtn}
-          >
-            <MdAdd size={18} />
-            Tedavi Ekle
-          </button>
-        </div>
-
-        <div className={styles.contentServicesTreatmentsList}>
-          {treatments.map((t, i) => (
-            <div
-              key={i}
-              className={styles.contentServicesTreatmentCard}
-            >
-              <div className={styles.contentServicesTreatmentCardHeader}>
-                <h3 className={styles.contentServicesTreatmentCardTitle}>
-                  Tedavi #{i + 1}
-                </h3>
-                <button
-                  onClick={() => removeTreatment(i)}
-                  className={styles.contentServicesDeleteBtn}
-                >
-                  <MdDelete size={16} />
-                  Sil
-                </button>
-              </div>
-
-              {/* Treatment Title */}
-              <div className={styles.contentServicesTreatmentFieldGroup}>
-                <label className={styles.contentServicesTreatmentLabel}>
-                  Tedavi Başlığı
-                </label>
-                <input
-                  type="text"
-                  placeholder="Tedavi adı"
-                  value={t.title}
-                  onChange={(e) => updateTreatment(i, 'title', e.target.value)}
-                  className={styles.contentServicesTreatmentInput}
-                />
-              </div>
-
-              {/* Treatment Description */}
-              <div className={styles.contentServicesTreatmentFieldGroup}>
-                <label className={styles.contentServicesTreatmentLabel}>
-                  Tedavi Açıklaması
-                </label>
-                <textarea
-                  placeholder="Tedavi hakkında detaylı açıklama"
-                  value={t.description}
-                  onChange={(e) => updateTreatment(i, 'description', e.target.value)}
-                  className={styles.contentServicesTreatmentTextarea}
-                />
-              </div>
-
-              {/* Treatment Image */}
-              <div>
-                <label className={styles.contentServicesTreatmentLabel}>
-                  Tedavi Görseli
-                </label>
-                
-                {t.image && !treatments[i].imageFile && (
-                  <div className={styles.contentServicesTreatmentExistingImage}>
-                    <img
-                      src={t.image}
-                      alt="Mevcut Görsel"
-                      className={styles.contentServicesTreatmentExistingImageImg}
-                    />
-                    <p className={styles.contentServicesTreatmentExistingImageText}>
-                      Mevcut görsel
+            {/* Image */}
+            <div className={styles.contentServicesFieldGroup}>
+              <label className={styles.contentServicesLabel}>
+                Ana Görsel
+              </label>
+              <div
+                onClick={() => document.getElementById('imageInput')?.click()}
+                className={styles.contentServicesImageUploadContainer}
+                style={imagePreview ? { background: '#f0f9ff' } : {}}
+              >
+                {imagePreview ? (
+                  <div>
+                    <div className={styles.contentServicesImagePreviewWrapper}>
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
+                        className={styles.contentServicesImagePreview}
+                      />
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleImageReset()
+                        }}
+                        className={styles.contentServicesImageRemoveBtn}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    <p className={styles.contentServicesImageFileName}>
+                      {imageFile?.name}
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <MdCloudUpload size={32} className={styles.contentServicesImageUploadIcon} />
+                    <p className={styles.contentServicesImageUploadText}>
+                      Görsel yüklemek için tıklayın
+                    </p>
+                    <p className={styles.contentServicesImageUploadSubtext}>
+                      PNG, JPG, GIF (Max 5MB)
                     </p>
                   </div>
                 )}
-
                 <input
+                  id="imageInput"
                   type="file"
                   accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0]
-                    if (file) {
-                      handleTreatmentImageChange(i, file)
-                    }
-                  }}
-                  className={styles.contentServicesTreatmentImageFile}
+                  onChange={handleImageChange}
+                  className={styles.contentServicesImageInput}
                 />
-                {treatments[i].imageFile && (
-                  <div className={styles.contentServicesTreatmentNewImageNotice}>
-                    <p className={styles.contentServicesTreatmentNewImageText}>
-                      ✓ Yeni: {treatments[i].imageFile?.name}
-                    </p>
-                  </div>
-                )}
               </div>
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      {/* Save Button */}
-      <div className={styles.contentServicesSaveButtonContainer}>
-        <button
-          onClick={handleSave}
-          disabled={loading || !title || (!imageFile && !existingImageUrl)}
-          className={styles.contentServicesSaveBtn}
-        >
-          <MdSave size={18} />
-          {loading ? 'Kaydediliyor...' : 'Kaydet'}
-        </button>
-        <button
-          onClick={deleteService}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '12px 28px',
-            background: '#fee2e2',
-            color: '#dc2626',
-            border: 'none',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: '600',
-            transition: 'background 0.2s',
-            marginLeft: '12px'
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.background = '#fecaca'}
-          onMouseLeave={(e) => e.currentTarget.style.background = '#fee2e2'}
-        >
-          <MdDelete size={18} />
-          Hizmeti Sil
-        </button>
-      </div>
+          {/* Treatments Section */}
+          <div className={styles.contentServicesTreatmentsSection}>
+            <div className={styles.contentServicesTreatmentsHeader}>
+              <h2 className={styles.contentServicesTreatmentsTitle}>
+                Tedaviler
+              </h2>
+              <button
+                onClick={addTreatment}
+                className={styles.contentServicesAddBtn}
+              >
+                <MdAdd size={18} />
+                Tedavi Ekle
+              </button>
+            </div>
+
+            <div className={styles.contentServicesTreatmentsList}>
+              {treatments.map((t, i) => (
+                <div
+                  key={i}
+                  className={styles.contentServicesTreatmentCard}
+                >
+                  <div className={styles.contentServicesTreatmentCardHeader}>
+                    <h3 className={styles.contentServicesTreatmentCardTitle}>
+                      Tedavi #{i + 1}
+                    </h3>
+                    <button
+                      onClick={() => removeTreatment(i)}
+                      className={styles.contentServicesDeleteBtn}
+                    >
+                      <MdDelete size={16} />
+                      Sil
+                    </button>
+                  </div>
+
+                  {/* Treatment Title */}
+                  <div className={styles.contentServicesTreatmentFieldGroup}>
+                    <label className={styles.contentServicesTreatmentLabel}>
+                      Tedavi Başlığı
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Tedavi adı"
+                      value={t.title}
+                      onChange={(e) => updateTreatment(i, 'title', e.target.value)}
+                      className={styles.contentServicesTreatmentInput}
+                    />
+                  </div>
+
+                  {/* Treatment Description */}
+                  <div className={styles.contentServicesTreatmentFieldGroup}>
+                    <label className={styles.contentServicesTreatmentLabel}>
+                      Tedavi Açıklaması
+                    </label>
+                    <textarea
+                      placeholder="Tedavi hakkında detaylı açıklama"
+                      value={t.description}
+                      onChange={(e) => updateTreatment(i, 'description', e.target.value)}
+                      className={styles.contentServicesTreatmentTextarea}
+                    />
+                  </div>
+
+                  {/* Treatment Image */}
+                  <div>
+                    <label className={styles.contentServicesTreatmentLabel}>
+                      Tedavi Görseli
+                    </label>
+                    
+                    {t.image && !treatments[i].imageFile && (
+                      <div className={styles.contentServicesTreatmentExistingImage}>
+                        <img
+                          src={t.image}
+                          alt="Mevcut Görsel"
+                          className={styles.contentServicesTreatmentExistingImageImg}
+                        />
+                        <p className={styles.contentServicesTreatmentExistingImageText}>
+                          Mevcut görsel
+                        </p>
+                      </div>
+                    )}
+
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0]
+                        if (file) {
+                          handleTreatmentImageChange(i, file)
+                        }
+                      }}
+                      className={styles.contentServicesTreatmentImageFile}
+                    />
+                    {treatments[i].imageFile && (
+                      <div className={styles.contentServicesTreatmentNewImageNotice}>
+                        <p className={styles.contentServicesTreatmentNewImageText}>
+                          ✓ Yeni: {treatments[i].imageFile?.name}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Save Button */}
+          <div className={styles.contentServicesSaveButtonContainer}>
+            <button
+              onClick={handleSave}
+              disabled={loading || !title || (!imageFile && !existingImageUrl)}
+              className={styles.contentServicesSaveBtn}
+            >
+              <MdSave size={18} />
+              {loading ? 'Kaydediliyor...' : 'Kaydet'}
+            </button>
+            <button
+              onClick={deleteService}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 28px',
+                background: '#fee2e2',
+                color: '#dc2626',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '600',
+                transition: 'background 0.2s',
+                marginLeft: '12px'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = '#fecaca'}
+              onMouseLeave={(e) => e.currentTarget.style.background = '#fee2e2'}
+            >
+              <MdDelete size={18} />
+              Hizmeti Sil
+            </button>
+          </div>
+        </>
+      )}
     </div>
   )
 }

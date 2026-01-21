@@ -381,7 +381,7 @@ export default function ResultsPage() {
                         </div>
 
                         <div className="cs_rating cs_accent_color">
-                          {[...Array(5)].map((_, i) => (
+                          {[...Array(item.rating || 5)].map((_, i) => (
                             <i key={i} className="fa-solid fa-star" />
                           ))}
                         </div>

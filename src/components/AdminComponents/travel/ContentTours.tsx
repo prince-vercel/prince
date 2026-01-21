@@ -11,7 +11,8 @@ import {
   doc,
   serverTimestamp,
   query,
-  orderBy
+  orderBy,
+  setDoc
 } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import { storage } from '@/src/lib/firebase'
@@ -28,6 +29,7 @@ interface Tour {
   description: string
   duration: string
   maxPeople: number
+  countryId: string
   location: string
   price: number
   includedInPrice: string
@@ -45,11 +47,20 @@ interface Tour {
   createdAt: any
 }
 
+interface Country {
+  id: string
+  title: string
+  imageUrl: string
+  createdAt: any
+}
+
 interface FormData {
+  id: string
   title: string
   description: string
   duration: string
   maxPeople: number
+  countryId: string
   location: string
   price: number
   includedInPrice: string
@@ -78,10 +89,12 @@ const ContentTours = () => {
   const [selectedEmail, setSelectedEmail] = useState<{ email: string; name: string } | null>(null)
   const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
   const [formData, setFormData] = useState<FormData>({
+    id: '',
     title: '',
     description: '',
     duration: '4 Gün 5 Gece',
     maxPeople: 10,
+    countryId: '',
     location: '',
     price: 0,
     includedInPrice: '',
@@ -96,10 +109,17 @@ const ContentTours = () => {
     status: 'aktif'
   })
 
+  const [countries, setCountries] = useState<Country[]>([])
+  const [showCountryForm, setShowCountryForm] = useState(false)
+  const [countryTitle, setCountryTitle] = useState('')
+  const [countryImage, setCountryImage] = useState('')
+  const [uploadingCountryImage, setUploadingCountryImage] = useState(false)
+
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     fetchTours()
+    fetchCountries()
   }, [selectedLanguage])
 
   const fetchTours = async () => {
@@ -112,6 +132,16 @@ const ContentTours = () => {
     }
   }
 
+  const fetchCountries = async () => {
+    const snap = await getDocs(
+      query(
+        collection(db, getCollectionName('travelcountries', selectedLanguage)),
+        orderBy('createdAt', 'desc')
+      )
+    )
+    setCountries(snap.docs.map(d => ({ id: d.id, ...d.data() })) as Country[])
+  }
+
   const fetchEnquiries = async (tourId: string) => {
     try {
       const q = query(collection(db, getCollectionName('traveltours', selectedLanguage), tourId, 'enquiries'), orderBy('createdAt', 'desc'))
@@ -121,6 +151,17 @@ const ContentTours = () => {
       console.error('Enquiry yükleme hatası:', error)
     }
   }
+
+  const generateId = (title: string) =>
+    title
+      .toLowerCase()
+      .replace(/ğ/g, 'g')
+      .replace(/ü/g, 'u')
+      .replace(/ş/g, 's')
+      .replace(/ı/g, 'i')
+      .replace(/ö/g, 'o')
+      .replace(/ç/g, 'c')
+      .replace(/[^a-z0-9]+/g, '')
 
   const handleInputChange = (field: keyof FormData, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -228,6 +269,15 @@ const ContentTours = () => {
     }))
   }
 
+  const uploadCountryImage = async (file: File) => {
+    setUploadingCountryImage(true)
+    const storageRef = ref(storage, `countries/${Date.now()}_${file.name}`)
+    const snap = await uploadBytes(storageRef, file)
+    const url = await getDownloadURL(snap.ref)
+    setCountryImage(url)
+    setUploadingCountryImage(false)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -240,18 +290,22 @@ const ContentTours = () => {
         })
         setSuccess('Tur başarıyla güncellendi!')
       } else {
-        await addDoc(collection(db, getCollectionName('traveltours', selectedLanguage)), {
+        const tourId = generateId(formData.title)
+        await setDoc(doc(db, getCollectionName('traveltours', selectedLanguage), tourId), {
           ...formData,
+          id: tourId,
           createdAt: serverTimestamp()
         })
         setSuccess('Tur başarıyla eklendi!')
       }
 
       setFormData({
+        id: '',
         title: '',
         description: '',
         duration: '4 Gün 5 Gece',
         maxPeople: 10,
+        countryId: '',
         location: '',
         price: 0,
         includedInPrice: '',
@@ -278,13 +332,33 @@ const ContentTours = () => {
     }
   }
 
+  const saveCountry = async () => {
+    if (!countryTitle || !countryImage) return alert('Alanlar zorunlu')
+
+    await addDoc(
+      collection(db, getCollectionName('travelcountries', selectedLanguage)),
+      {
+        title: countryTitle,
+        imageUrl: countryImage,
+        createdAt: serverTimestamp()
+      }
+    )
+
+    setCountryTitle('')
+    setCountryImage('')
+    setShowCountryForm(false)
+    fetchCountries()
+  }
+
   const handleEdit = (tour: Tour) => {
     setFormData({
+      id: tour.id,
       title: tour.title,
       description: tour.description,
       duration: tour.duration,
       maxPeople: tour.maxPeople,
-      location: tour.location,
+      countryId: tour.countryId || '',
+      location: tour.location || '',
       price: tour.price,
       includedInPrice: tour.includedInPrice,
       notIncludedInPrice: tour.notIncludedInPrice,
@@ -336,34 +410,142 @@ const ContentTours = () => {
         <div>
           <div className={styles.tourHeader}>
             <h2 className={styles.tourTitle}>Turlar</h2>
-            <button
-              onClick={() => {
-                setShowForm(true)
-                setEditingId(null)
-                setFormData({
-                  title: '',
-                  description: '',
-                  duration: '4 Gün 5 Gece',
-                  maxPeople: 10,
-                  location: '',
-                  price: 0,
-                  includedInPrice: '',
-                  notIncludedInPrice: '',
-                  days: ['Her Gün'],
-                  startDate: '',
-                  endDate: '',
-                  tourPlan: [{ day: 1, content: '' }],
-                  faq: [{ question: '', answer: '' }],
-                  mainImageUrl: '',
-                  galleryImageUrls: [],
-                  status: 'aktif'
-                })
-              }}
-              className={styles.tourAddBtn} 
-            >
-              + Yeni Tur Ekle
-            </button>
+            <div>
+              <button
+                onClick={() => setShowCountryForm(!showCountryForm)}
+                className={styles.tourAddBtn}
+                style={{ marginRight: 8 }}
+              >
+                + Ülke Ekle
+              </button>
+              <button
+                onClick={() => {
+                  setShowForm(true)
+                  setEditingId(null)
+                  setFormData({
+                    id: '',
+                    title: '',
+                    description: '',
+                    duration: '4 Gün 5 Gece',
+                    maxPeople: 10,
+                    countryId: '',
+                    location: '',
+                    price: 0,
+                    includedInPrice: '',
+                    notIncludedInPrice: '',
+                    days: ['Her Gün'],
+                    startDate: '',
+                    endDate: '',
+                    tourPlan: [{ day: 1, content: '' }],
+                    faq: [{ question: '', answer: '' }],
+                    mainImageUrl: '',
+                    galleryImageUrls: [],
+                    status: 'aktif'
+                  })
+                }}
+                className={styles.tourAddBtn} 
+              >
+                + Yeni Tur Ekle
+              </button>
+            </div>
           </div>
+
+          {/* Ülke Ekle Formu */}
+          {showCountryForm && (
+            <div style={{
+              marginTop: '20px',
+              padding: '20px',
+              backgroundColor: '#f9f9f9',
+              borderRadius: '8px',
+              border: '1px solid #eee'
+            }}>
+              <h3 style={{ marginBottom: '16px' }}>Ülke Ekle</h3>
+
+              <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '16px' }}>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '4px' }}>Ülke Adı</label>
+                  <input
+                    type="text"
+                    value={countryTitle}
+                    onChange={e => setCountryTitle(e.target.value)}
+                    placeholder="Ülke adı"
+                    style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', marginBottom: '4px' }}>ID</label>
+                  <input
+                    type="text"
+                    value={generateId(countryTitle)}
+                    readOnly
+                    style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px', backgroundColor: '#f5f5f5' }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', marginBottom: '4px' }}>Görsel</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={e => e.target.files && uploadCountryImage(e.target.files[0])}
+                    style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
+                  />
+                </div>
+
+                <div>
+                  <button
+                    onClick={saveCountry}
+                    style={{
+                      padding: '8px 16px',
+                      backgroundColor: '#d7b76e',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      marginTop: '20px'
+                    }}
+                  >
+                    Kaydet
+                  </button>
+                </div>
+              </div>
+
+              {countryImage && (
+                <div style={{ marginBottom: '16px' }}>
+                  <img src={countryImage} alt="Ülke" style={{ width: '120px', height: 'auto' }} />
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Ülkeler Listesi */}
+          {countries.length > 0 && (
+            <div style={{
+              marginTop: '20px',
+              padding: '20px',
+              backgroundColor: '#f9f9f9',
+              borderRadius: '8px',
+              border: '1px solid #eee'
+            }}>
+              <h3 style={{ marginBottom: '16px' }}>Eklenen Ülkeler</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
+                {countries.map(country => (
+                  <div key={country.id} style={{
+                    padding: '12px',
+                    border: '1px solid #ddd',
+                    borderRadius: '8px',
+                    backgroundColor: 'white',
+                    textAlign: 'center'
+                  }}>
+                    <img src={country.imageUrl} alt={country.title} style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '4px', marginBottom: '8px' }} />
+                    <h4 style={{ margin: '0 0 4px 0', fontSize: '16px' }}>{country.title}</h4>
+                    <p style={{ margin: 0, fontSize: '12px', color: '#666' }}>ID: {generateId(country.title)}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className={styles.tourList}>
             {tours.length === 0 ? (
@@ -376,7 +558,8 @@ const ContentTours = () => {
                       <h3 className={styles.tourCardTitle}>{tour.title}</h3>
                       <p className={styles.tourCardLocation}>
                         <MdLocationOn style={{ display: 'inline', marginRight: '4px', verticalAlign: 'middle' }} />
-                        {tour.location}
+                        {countries.find(c => c.id === tour.countryId)?.title || 'Bilinmiyor'}
+                        {tour.location && ` - ${tour.location}`}
                       </p>
                       {(tour.startDate || tour.endDate) && (
                         <p className={styles.tourCardLocation} style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
@@ -700,6 +883,33 @@ const ContentTours = () => {
               />
             </div>
 
+            {/* Ülke Seçimi */}
+            <div className={styles.tourFormGroup}>
+              <label>Ülke</label>
+              <select
+                value={formData.countryId}
+                onChange={e => handleInputChange('countryId', e.target.value)}
+              >
+                <option value="">Ülke seç</option>
+                {countries.map(c => (
+                  <option key={c.id} value={c.id}>
+                    {c.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Şehir */}
+            <div className={styles.tourFormGroup}>
+              <label>Şehir</label>
+              <input
+                type="text"
+                value={formData.location}
+                onChange={e => handleInputChange('location', e.target.value)}
+                placeholder="Şehir adını girin"
+              />
+            </div>
+
             {/* Açıklama */}
             <div className={styles.tourFormGroup}>
               <label>Açıklama</label>
@@ -713,21 +923,6 @@ const ContentTours = () => {
 
             {/* 2 Kolon */}
             <div className={styles.tourFormRow}>
-              <div className={styles.tourFormGroup}>
-                <label>Konum/Şehir</label>
-                <input
-                  type="text"
-                  value={formData.location}
-                  onChange={e => {
-                    const capitalized = e.target.value
-                      .split(' ')
-                      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                      .join(' ')
-                    handleInputChange('location', capitalized)
-                  }}
-                  placeholder="Şehir/Destinasyon"
-                />
-              </div>
               <div className={styles.tourFormGroup}>
                 <label>Fiyat (€)</label>
                 <input

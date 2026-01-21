@@ -92,22 +92,7 @@ export default function BlogDetailPage() {
 
         <div className="cs_height_54" />
 
-        <div className="cs_blog_details_info" style={{margin:'15px'}}>
-          <div className="cs_blog_details_info_left">
-            <div className="cs_blog_details_date" suppressHydrationWarning>
-              {blog.createdAt?.toLocaleDateString('tr-TR')} | {isReady ? t('medical.pages.blog.detail.blogManager') : 'Blog Yöneticisi'}
-            </div>
-          </div>
 
-          <div className="cs_social_links_wrap">
-            <h2 suppressHydrationWarning>{isReady ? t('medical.pages.blog.detail.share') : 'Paylaş:'}</h2>
-            <div className="cs_social_links">
-              <a href="#"><i className="fa-brands fa-facebook-f" /></a>
-              <a href="#"><i className="fa-brands fa-linkedin-in" /></a>
-              <a href="#"><i className="fa-brands fa-twitter" /></a>
-            </div>
-          </div>
-        </div>
 
         <div className="cs_height_55" />
 
