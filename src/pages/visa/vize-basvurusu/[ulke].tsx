@@ -44,7 +44,7 @@ interface CountryData {
 const countriesData: Record<string, CountryData> = {
     ingiltere: {
         slug: 'ingiltere',
-        name: '', // Will be set dynamically with translation
+        name: 'visa.countries.ingiltere',
         icon: '/visa/uploads/icons/1764382446_54d42ca992ddf99b4289.svg',
         heroImage: '/visa/uploads/contents/main/1764382497_103fbb272638992bc7ed.jpg',
         heroImageMobile: '/visa/uploads/contents/main/mobile/1764382512_91fad356020f88b602c2.webp',
@@ -98,7 +98,7 @@ const countriesData: Record<string, CountryData> = {
     },
     fransa: {
         slug: 'fransa',
-        name: '', // Will be set dynamically with translation
+        name: 'visa.countries.fransa',
         icon: '/visa/uploads/icons/fransa.svg',
         heroImage: '/visa/uploads/contents/main/fransa.webp',
         excerpt: '', // Will be set dynamically with translation
@@ -126,7 +126,7 @@ const countriesData: Record<string, CountryData> = {
     },
     abd: {
         slug: 'abd',
-        name: '', // Will be set dynamically with translation
+        name: 'visa.countries.amerika',
         icon: '/visa/uploads/icons/abd.svg',
         heroImage: '/visa/uploads/contents/main/abd.webp',
         excerpt: '', // Will be set dynamically with translation
@@ -134,6 +134,344 @@ const countriesData: Record<string, CountryData> = {
         navLinks: [
             { title: '', href: '/visa/vize-basvurusu/abd', key: 'generalInfo' },
             { title: '', href: '/visa/abd-turist-vizesi', key: 'touristVisa' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    danimarka: {
+        slug: 'danimarka',
+        name: '',
+        icon: '/visa/uploads/icons/1765153526_f83b8a07cc28aaa369b4.svg',
+        heroImage: '/visa/uploads/contents/main/danimarka.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/danimarka', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    belcika: {
+        slug: 'belcika',
+        name: 'visa.countries.belcika',
+        icon: '/visa/uploads/icons/1765153595_1f0fef4d753b5d02bda5.svg',
+        heroImage: '/visa/uploads/contents/main/belcika.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/belcika', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    italya: {
+        slug: 'italya',
+        name: '',
+        icon: '/visa/uploads/icons/1765154006_1b24e4173c6457dafbea.svg',
+        heroImage: '/visa/uploads/contents/main/italya.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/italya', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    malta: {
+        slug: 'malta',
+        name: 'visa.countries.malta',
+        icon: '/visa/uploads/icons/1765154164_af71177c207646d19b62.svg',
+        heroImage: '/visa/uploads/contents/main/malta.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/malta', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    irlanda: {
+        slug: 'irlanda',
+        name: '',
+        icon: '/visa/uploads/icons/1765154399_b928e004b98217490022.svg',
+        heroImage: '/visa/uploads/contents/main/irlanda.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/irlanda', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    ispanya: {
+        slug: 'ispanya',
+        name: 'visa.countries.ispanya',
+        icon: '/visa/uploads/icons/1765155530_9abaf74373a4eecfd706.svg',
+        heroImage: '/visa/uploads/contents/main/ispanya.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/ispanya', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    portekiz: {
+        slug: 'portekiz',
+        name: '',
+        icon: '/visa/uploads/icons/1765155591_3ba19bc8145dbfd3876b.svg',
+        heroImage: '/visa/uploads/contents/main/portekiz.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/portekiz', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    hollanda: {
+        slug: 'hollanda',
+        name: 'visa.countries.hollanda',
+        icon: '/visa/uploads/icons/1765155654_8f0736e95d6e49fe7998.svg',
+        heroImage: '/visa/uploads/contents/main/hollanda.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/hollanda', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    macaristan: {
+        slug: 'macaristan',
+        name: '',
+        icon: '/visa/uploads/icons/1765156553_55ca44c8baaeda593769.svg',
+        heroImage: '/visa/uploads/contents/main/macaristan.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/macaristan', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    yunanistan: {
+        slug: 'yunanistan',
+        name: 'visa.countries.yunanistan',
+        icon: '/visa/uploads/icons/1765155714_7b5121cce9ec1be37381.svg',
+        heroImage: '/visa/uploads/contents/main/yunanistan.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/yunanistan', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    dubai: {
+        slug: 'dubai',
+        name: '',
+        icon: '/visa/uploads/icons/1765156599_8f91678f3d6e03ab19dd.svg',
+        heroImage: '/visa/uploads/contents/main/dubai.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/dubai', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    polonya: {
+        slug: 'polonya',
+        name: 'visa.countries.polonya',
+        icon: '/visa/uploads/icons/1765156449_300b43b0d93d6295e952.svg',
+        heroImage: '/visa/uploads/contents/main/polonya.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/polonya', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    bulgaristan: {
+        slug: 'bulgaristan',
+        name: '',
+        icon: '/visa/uploads/icons/1765156654_99758b8dda0ff9a6a5c0.svg',
+        heroImage: '/visa/uploads/contents/main/bulgaristan.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/bulgaristan', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    luksemburg: {
+        slug: 'luksemburg',
+        name: 'visa.countries.luksemburg',
+        icon: '/visa/uploads/icons/1765156400_dd6a1f256550f2ebc30d.svg',
+        heroImage: '/visa/uploads/contents/main/luksemburg.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/luksemburg', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    isvec: {
+        slug: 'isvec',
+        name: '',
+        icon: '/visa/uploads/icons/1765156702_68c6cc075f185cba9715.svg',
+        heroImage: '/visa/uploads/contents/main/isvec.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/isvec', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    romanya: {
+        slug: 'romanya',
+        name: 'visa.countries.romanya',
+        icon: '/visa/uploads/icons/1765156347_b10c8e55fde9dbf02cd3.svg',
+        heroImage: '/visa/uploads/contents/main/romanya.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/romanya', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    slovenya: {
+        slug: 'slovenya',
+        name: '',
+        icon: '/visa/uploads/icons/1765156758_e95fed42dde3a2def473.svg',
+        heroImage: '/visa/uploads/contents/main/slovenya.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/slovenya', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    estonya: {
+        slug: 'estonya',
+        name: 'visa.countries.estonya',
+        icon: '/visa/uploads/icons/1765156166_747261185a0c4ec0ed26.svg',
+        heroImage: '/visa/uploads/contents/main/estonya.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/estonya', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    letonya: {
+        slug: 'letonya',
+        name: '',
+        icon: '/visa/uploads/icons/1765155770_7f1aa009192a673c1d96.svg',
+        heroImage: '/visa/uploads/contents/main/letonya.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/letonya', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    litvanya: {
+        slug: 'litvanya',
+        name: 'visa.countries.litvanya',
+        icon: '/visa/uploads/icons/1765156120_6bc007e4d7b63fcf7e7d.svg',
+        heroImage: '/visa/uploads/contents/main/litvanya.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/litvanya', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    finlandiya: {
+        slug: 'finlandiya',
+        name: '',
+        icon: '/visa/uploads/icons/1765155829_76dd3c52c1570b53661b.svg',
+        heroImage: '/visa/uploads/contents/main/finlandiya.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/finlandiya', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    norvec: {
+        slug: 'norvec',
+        name: 'visa.countries.norvec',
+        icon: '/visa/uploads/icons/1765156064_02bb911d41b9a01b0209.svg',
+        heroImage: '/visa/uploads/contents/main/norvec.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/norvec', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    rusya: {
+        slug: 'rusya',
+        name: '',
+        icon: '/visa/uploads/icons/1765155895_edf7adbc9cb1ac93d6ab.svg',
+        heroImage: '/visa/uploads/contents/main/rusya.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/rusya', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    'suudi-arabistan': {
+        slug: 'suudi-arabistan',
+        name: 'visa.countries.suudiArabistan',
+        icon: '/visa/uploads/icons/1765156004_6e94b6b2adef49267a44.svg',
+        heroImage: '/visa/uploads/contents/main/suudi-arabistan.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/suudi-arabistan', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    cin: {
+        slug: 'cin',
+        name: 'visa.countries.cin',
+        icon: '/visa/uploads/icons/1765155942_671bb6e4477d27983ee7.svg',
+        heroImage: '/visa/uploads/contents/main/cin.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/cin', key: 'generalInfo' },
+        ],
+        videos: [],
+        gallery: []
+    },
+    'guney-kore': {
+        slug: 'guney-kore',
+        name: 'visa.countries.guneyKore',
+        icon: '/visa/uploads/icons/1765156857_f5c725d2d8679f239407.svg',
+        heroImage: '/visa/uploads/contents/main/guney-kore.webp',
+        excerpt: '',
+        content: '',
+        navLinks: [
+            { title: '', href: '/visa/vize-basvurusu/guney-kore', key: 'generalInfo' },
         ],
         videos: [],
         gallery: []
@@ -194,7 +532,7 @@ export default function UlkeVizeBasvurusuPage() {
 
         return {
             ...countryData,
-            name: getTranslation(`visa.pages.countryApplication.countries.${countrySlug}`, countrySlug),
+            name: getTranslation(countryData.name || `visa.countries.${countrySlug}`, countrySlug),
             excerpt: getTranslation(`visa.pages.countryApplication.content.${countrySlug}.excerpt`, countryData.excerpt || ''),
             content: getTranslation(`visa.pages.countryApplication.content.${countrySlug}.content`, countryData.content || ''),
             navLinks: countryData.navLinks.map(link => {

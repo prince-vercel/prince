@@ -1,4 +1,19 @@
 {
+  "home": {
+    "medicalTitle": {
+      "line1": "Prince",
+      "line2": "Estética Médica &",
+      "line3": "Servicios de Salud"
+    },
+    "visaTitle": {
+      "line1": "Prince",
+      "line2": "Consultoría de Visas"
+    },
+    "travelTitle": {
+      "line1": "Prince",
+      "line2": "Turismo & Travel"
+    }
+  },
   "visa": {
     "header": {
       "home": "Inicio",
@@ -113,6 +128,39 @@
       "selectPurpose": "Seleccione el propósito del viaje",
       "selectCountryFirst": "Por favor seleccione el país",
       "startButton": "Iniciar solicitud"
+    },
+    "countries": {
+      "ingiltere": "Reino Unido",
+      "danimarka": "Dinamarca",
+      "belcika": "Bélgica",
+      "kanada": "Canadá",
+      "almanya": "Alemania",
+      "fransa": "Francia",
+      "italya": "Italia",
+      "malta": "Malta",
+      "irlanda": "Irlanda",
+      "ispanya": "España",
+      "portekiz": "Portugal",
+      "amerika": "Estados Unidos",
+      "hollanda": "Países Bajos",
+      "macaristan": "Hungría",
+      "yunanistan": "Grecia",
+      "dubai": "Dubái",
+      "polonya": "Polonia",
+      "bulgaristan": "Bulgaria",
+      "luksemburg": "Luxemburgo",
+      "isvec": "Suecia",
+      "romanya": "Rumania",
+      "slovenya": "Eslovenia",
+      "estonya": "Estonia",
+      "letonya": "Letonia",
+      "litvanya": "Lituania",
+      "finlandiya": "Finlandia",
+      "norvec": "Noruega",
+      "rusya": "Rusia",
+      "suudiArabistan": "Arabia Saudí",
+      "cin": "China",
+      "guneyKore": "Corea del Sur"
     },
     "services": {
       "title": "Prince que reúne todas tus necesidades de viaje\nbajo un mismo techo para que explores",

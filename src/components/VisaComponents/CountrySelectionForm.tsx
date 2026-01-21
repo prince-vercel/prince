@@ -66,9 +66,9 @@ export default function CountrySelectionForm() {
             <form className="selection-form" onSubmit={handleSubmit}>
               <div className="form-grid">
                 {/* Ülke Seçimi */}
-                <div className="select-wrapper" id="country-select-wrapper">
+                <div>
                   <label className="select-label">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                       <circle cx="12" cy="10" r="3" />
                     </svg>
@@ -76,27 +76,29 @@ export default function CountrySelectionForm() {
                       {mounted && i18n.isInitialized ? t('visa.countrySelection.countryLabel', 'Yolculuk Nereye?') : ''}
                     </span>
                   </label>
-                  <div className="custom-select-container">
-                    <select
-                      name="country"
-                      id="country-select"
-                      className="hidden-select"
-                      value={selectedCountry}
-                      onChange={(e) => setSelectedCountry(e.target.value)}
-                      required
-                    >
-                      <option value="" disabled>
-                        {mounted && i18n.isInitialized ? t('visa.countrySelection.selectCountry', 'Ülke Seçiniz') : ''}
-                      </option>
-                      {countries.map(country => (
-                        <option key={country} value={country}>{country}</option>
-                      ))}
-                    </select>
+                  <div className="select-wrapper" id="country-select-wrapper">
+                    <div className="custom-select-container">
+                      <select
+                        name="country"
+                        id="country-select"
+                        className="hidden-select"
+                        value={selectedCountry}
+                        onChange={(e) => setSelectedCountry(e.target.value)}
+                        required
+                      >
+                        <option value="" disabled>
+                          {mounted && i18n.isInitialized ? t('visa.countrySelection.countryLabel', 'Yolculuk Nereye?') : ''}
+                        </option>
+                        {countries.map(country => (
+                          <option key={country} value={country}>{country}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
 
                 {/* Seyahat Amacı */}
-                <div className="select-wrapper" id="purpose-select-wrapper">
+                <div>
                   <label className="select-label">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
@@ -108,26 +110,25 @@ export default function CountrySelectionForm() {
                       {mounted && i18n.isInitialized ? t('visa.countrySelection.purposeLabel', 'Seyahat Amacınız Nedir?') : ''}
                     </span>
                   </label>
-                  <div className="custom-select-container">
-                    <select
-                      name="purpose"
-                      id="purpose-select"
-                      className="hidden-select"
-                      value={selectedPurpose}
-                      onChange={(e) => setSelectedPurpose(e.target.value)}
-                      disabled={!selectedCountry}
-                      required
-                    >
-                      <option value="" disabled>
-                        {selectedCountry
-                          ? (mounted && i18n.isInitialized ? t('visa.countrySelection.selectPurpose', 'Seyahat Amacı Seçiniz') : '')
-                          : (mounted && i18n.isInitialized ? t('visa.countrySelection.selectCountryFirst', 'Lütfen Ülke Seçiniz') : '')
-                        }
-                      </option>
-                      {visaTypes.map((type, index) => (
-                        <option key={index} value={type}>{type}</option>
-                      ))}
-                    </select>
+                  <div className="select-wrapper" id="purpose-select-wrapper">
+                    <div className="custom-select-container">
+                      <select
+                        name="purpose"
+                        id="purpose-select"
+                        className="hidden-select"
+                        value={selectedPurpose}
+                        onChange={(e) => setSelectedPurpose(e.target.value)}
+                        disabled={!selectedCountry}
+                        required
+                      >
+                        <option value="" disabled>
+                          {mounted && i18n.isInitialized ? t('visa.countrySelection.purposeLabel', 'Seyahat Amacınız Nedir?') : ''}
+                        </option>
+                        {visaTypes.map((type, index) => (
+                          <option key={index} value={type}>{type}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -211,9 +212,7 @@ export default function CountrySelectionForm() {
         }
 
         .select-wrapper {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
+          margin-top: 0;
         }
 
         .select-label {
@@ -221,12 +220,17 @@ export default function CountrySelectionForm() {
           align-items: center;
           gap: 8px;
           color: #fff;
-          font-size: 14px;
+          font-size: 15px;
           font-weight: 600;
+          margin-bottom: 8px;
         }
 
         .select-label svg {
           flex-shrink: 0;
+          min-width: 32px;
+          min-height: 32px;
+          width: 32px;
+          height: 32px;
         }
 
         .custom-select-container {
@@ -235,7 +239,8 @@ export default function CountrySelectionForm() {
 
         .hidden-select {
           width: 100%;
-          padding: 14px 16px;
+          padding: 11px 16px;
+          height: 56px;
           padding-right: 40px;
           border: none;
           border-radius: 12px;
@@ -243,6 +248,7 @@ export default function CountrySelectionForm() {
           color: #1a1a2e;
           font-size: 15px;
           font-weight: 500;
+          line-height: 1.35;
           appearance: none;
           cursor: pointer;
           transition: all 0.2s ease;
@@ -281,7 +287,8 @@ export default function CountrySelectionForm() {
           display: flex;
           align-items: center;
           gap: 8px;
-          padding: 14px 24px;
+          height: 56px;
+          padding: 0 24px;
           background: rgba(255, 255, 255, 0.15);
           border: none;
           border-radius: 12px;

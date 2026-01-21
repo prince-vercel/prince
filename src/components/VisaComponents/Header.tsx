@@ -49,19 +49,71 @@ export default function VisaHeader() {
     const countries = useMemo(() => {
         if (!mounted || !i18n.isInitialized) {
             return [
-                { title: '', href: '/visa/vize-basvurusu/ingiltere' },
-                { title: '', href: '/visa/vize-basvurusu/almanya' },
-                { title: '', href: '/visa/vize-basvurusu/fransa' },
-                { title: '', href: '/visa/vize-basvurusu/kanada' },
-                { title: '', href: '/visa/vize-basvurusu/abd' },
+                { title: '', href: '/visa/vize-basvurusu/ingiltere', key: 'ingiltere' },
+                { title: '', href: '/visa/vize-basvurusu/danimarka', key: 'danimarka' },
+                { title: '', href: '/visa/vize-basvurusu/belcika', key: 'belcika' },
+                { title: '', href: '/visa/vize-basvurusu/kanada', key: 'kanada' },
+                { title: '', href: '/visa/vize-basvurusu/almanya', key: 'almanya' },
+                { title: '', href: '/visa/vize-basvurusu/fransa', key: 'fransa' },
+                { title: '', href: '/visa/vize-basvurusu/italya', key: 'italya' },
+                { title: '', href: '/visa/vize-basvurusu/malta', key: 'malta' },
+                { title: '', href: '/visa/vize-basvurusu/irlanda', key: 'irlanda' },
+                { title: '', href: '/visa/vize-basvurusu/ispanya', key: 'ispanya' },
+                { title: '', href: '/visa/vize-basvurusu/portekiz', key: 'portekiz' },
+                { title: '', href: '/visa/vize-basvurusu/abd', key: 'amerika' },
+                { title: '', href: '/visa/vize-basvurusu/hollanda', key: 'hollanda' },
+                { title: '', href: '/visa/vize-basvurusu/macaristan', key: 'macaristan' },
+                { title: '', href: '/visa/vize-basvurusu/yunanistan', key: 'yunanistan' },
+                { title: '', href: '/visa/vize-basvurusu/dubai', key: 'dubai' },
+                { title: '', href: '/visa/vize-basvurusu/polonya', key: 'polonya' },
+                { title: '', href: '/visa/vize-basvurusu/bulgaristan', key: 'bulgaristan' },
+                { title: '', href: '/visa/vize-basvurusu/luksemburg', key: 'luksemburg' },
+                { title: '', href: '/visa/vize-basvurusu/isvec', key: 'isvec' },
+                { title: '', href: '/visa/vize-basvurusu/romanya', key: 'romanya' },
+                { title: '', href: '/visa/vize-basvurusu/slovenya', key: 'slovenya' },
+                { title: '', href: '/visa/vize-basvurusu/estonya', key: 'estonya' },
+                { title: '', href: '/visa/vize-basvurusu/letonya', key: 'letonya' },
+                { title: '', href: '/visa/vize-basvurusu/litvanya', key: 'litvanya' },
+                { title: '', href: '/visa/vize-basvurusu/finlandiya', key: 'finlandiya' },
+                { title: '', href: '/visa/vize-basvurusu/norvec', key: 'norvec' },
+                { title: '', href: '/visa/vize-basvurusu/rusya', key: 'rusya' },
+                { title: '', href: '/visa/vize-basvurusu/suudi-arabistan', key: 'suudiArabistan' },
+                { title: '', href: '/visa/vize-basvurusu/cin', key: 'cin' },
+                { title: '', href: '/visa/vize-basvurusu/guney-kore', key: 'guneyKore' },
             ]
         }
         return [
-            { title: t('visa.header.countriesList.uk'), href: '/visa/vize-basvurusu/ingiltere' },
-            { title: t('visa.header.countriesList.germany'), href: '/visa/vize-basvurusu/almanya' },
-            { title: t('visa.header.countriesList.france'), href: '/visa/vize-basvurusu/fransa' },
-            { title: t('visa.header.countriesList.canada'), href: '/visa/vize-basvurusu/kanada' },
-            { title: t('visa.header.countriesList.usa'), href: '/visa/vize-basvurusu/abd' },
+            { title: t('visa.countries.ingiltere'), href: '/visa/vize-basvurusu/ingiltere', key: 'ingiltere' },
+            { title: t('visa.countries.danimarka'), href: '/visa/vize-basvurusu/danimarka', key: 'danimarka' },
+            { title: t('visa.countries.belcika'), href: '/visa/vize-basvurusu/belcika', key: 'belcika' },
+            { title: t('visa.countries.kanada'), href: '/visa/vize-basvurusu/kanada', key: 'kanada' },
+            { title: t('visa.countries.almanya'), href: '/visa/vize-basvurusu/almanya', key: 'almanya' },
+            { title: t('visa.countries.fransa'), href: '/visa/vize-basvurusu/fransa', key: 'fransa' },
+            { title: t('visa.countries.italya'), href: '/visa/vize-basvurusu/italya', key: 'italya' },
+            { title: t('visa.countries.malta'), href: '/visa/vize-basvurusu/malta', key: 'malta' },
+            { title: t('visa.countries.irlanda'), href: '/visa/vize-basvurusu/irlanda', key: 'irlanda' },
+            { title: t('visa.countries.ispanya'), href: '/visa/vize-basvurusu/ispanya', key: 'ispanya' },
+            { title: t('visa.countries.portekiz'), href: '/visa/vize-basvurusu/portekiz', key: 'portekiz' },
+            { title: t('visa.countries.amerika'), href: '/visa/vize-basvurusu/abd', key: 'amerika' },
+            { title: t('visa.countries.hollanda'), href: '/visa/vize-basvurusu/hollanda', key: 'hollanda' },
+            { title: t('visa.countries.macaristan'), href: '/visa/vize-basvurusu/macaristan', key: 'macaristan' },
+            { title: t('visa.countries.yunanistan'), href: '/visa/vize-basvurusu/yunanistan', key: 'yunanistan' },
+            { title: t('visa.countries.dubai'), href: '/visa/vize-basvurusu/dubai', key: 'dubai' },
+            { title: t('visa.countries.polonya'), href: '/visa/vize-basvurusu/polonya', key: 'polonya' },
+            { title: t('visa.countries.bulgaristan'), href: '/visa/vize-basvurusu/bulgaristan', key: 'bulgaristan' },
+            { title: t('visa.countries.luksemburg'), href: '/visa/vize-basvurusu/luksemburg', key: 'luksemburg' },
+            { title: t('visa.countries.isvec'), href: '/visa/vize-basvurusu/isvec', key: 'isvec' },
+            { title: t('visa.countries.romanya'), href: '/visa/vize-basvurusu/romanya', key: 'romanya' },
+            { title: t('visa.countries.slovenya'), href: '/visa/vize-basvurusu/slovenya', key: 'slovenya' },
+            { title: t('visa.countries.estonya'), href: '/visa/vize-basvurusu/estonya', key: 'estonya' },
+            { title: t('visa.countries.letonya'), href: '/visa/vize-basvurusu/letonya', key: 'letonya' },
+            { title: t('visa.countries.litvanya'), href: '/visa/vize-basvurusu/litvanya', key: 'litvanya' },
+            { title: t('visa.countries.finlandiya'), href: '/visa/vize-basvurusu/finlandiya', key: 'finlandiya' },
+            { title: t('visa.countries.norvec'), href: '/visa/vize-basvurusu/norvec', key: 'norvec' },
+            { title: t('visa.countries.rusya'), href: '/visa/vize-basvurusu/rusya', key: 'rusya' },
+            { title: t('visa.countries.suudiArabistan'), href: '/visa/vize-basvurusu/suudi-arabistan', key: 'suudiArabistan' },
+            { title: t('visa.countries.cin'), href: '/visa/vize-basvurusu/cin', key: 'cin' },
+            { title: t('visa.countries.guneyKore'), href: '/visa/vize-basvurusu/guney-kore', key: 'guneyKore' },
         ]
     }, [t, i18n.language, i18n.isInitialized, mounted])
 
@@ -360,6 +412,16 @@ export default function VisaHeader() {
                                         }}
                                     >
                                         RU
+                                    </button>
+                                    <button
+                                        className={`language-option ${selectedLanguage === 'AR' ? 'active' : ''}`}
+                                        onClick={() => {
+                                            setSelectedLanguage('AR')
+                                            i18n.changeLanguage('ar')
+                                            setIsLanguageDropdownOpen(false)
+                                        }}
+                                    >
+                                        AR
                                     </button>
                                 </div>
                             )}

@@ -1,4 +1,19 @@
 {
+  "home": {
+    "medicalTitle": {
+      "line1": "Prince",
+      "line2": "Медицинская эстетика &",
+      "line3": "Медицинские услуги"
+    },
+    "visaTitle": {
+      "line1": "Prince",
+      "line2": "Визовый консалтинг"
+    },
+    "travelTitle": {
+      "line1": "Prince",
+      "line2": "Туризм & Travel"
+    }
+  },
   "visa": {
     "header": {
       "home": "Главная",
@@ -113,6 +128,39 @@
       "selectPurpose": "Выберите цель поездки",
       "selectCountryFirst": "Пожалуйста, выберите страну",
       "startButton": "Начать заявку"
+    },
+    "countries": {
+      "ingiltere": "Великобритания",
+      "danimarka": "Дания",
+      "belcika": "Бельгия",
+      "kanada": "Канада",
+      "almanya": "Германия",
+      "fransa": "Франция",
+      "italya": "Италия",
+      "malta": "Мальта",
+      "irlanda": "Ирландия",
+      "ispanya": "Испания",
+      "portekiz": "Португалия",
+      "amerika": "Соединенные Штаты",
+      "hollanda": "Нидерланды",
+      "macaristan": "Венгрия",
+      "yunanistan": "Греция",
+      "dubai": "Дубай",
+      "polonya": "Польша",
+      "bulgaristan": "Болгария",
+      "luksemburg": "Люксембург",
+      "isvec": "Швеция",
+      "romanya": "Румыния",
+      "slovenya": "Словения",
+      "estonya": "Эстония",
+      "letonya": "Латвия",
+      "litvanya": "Литва",
+      "finlandiya": "Финляндия",
+      "norvec": "Норвегия",
+      "rusya": "Россия",
+      "suudiArabistan": "Саудовская Аравия",
+      "cin": "Китай",
+      "guneyKore": "Южная Корея"
     },
     "services": {
       "title": "Prince, который собирает все ваши потребности в путешествиях\nпод одной крышей — чтобы вы могли исследовать мир!",

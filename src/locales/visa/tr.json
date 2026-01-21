@@ -1,4 +1,19 @@
 {
+  "home": {
+    "medicalTitle": {
+      "line1": "Prince",
+      "line2": "Medikal Estetik &",
+      "line3": "Sağlık Hizmetleri"
+    },
+    "visaTitle": {
+      "line1": "Prince",
+      "line2": "Vize Danışmanlığı"
+    },
+    "travelTitle": {
+      "line1": "Prince",
+      "line2": "Turizm & Travel"
+    }
+  },
   "visa": {
     "header": {
       "home": "Anasayfa",
@@ -113,6 +128,39 @@
       "selectPurpose": "Seyahat Amacı Seçiniz",
       "selectCountryFirst": "Lütfen Ülke Seçiniz",
       "startButton": "Başvuruyu Başlat"
+    },
+    "countries": {
+      "ingiltere": "İngiltere",
+      "danimarka": "Danimarka",
+      "belcika": "Belçika",
+      "kanada": "Kanada",
+      "almanya": "Almanya",
+      "fransa": "Fransa",
+      "italya": "İtalya",
+      "malta": "Malta",
+      "irlanda": "İrlanda",
+      "ispanya": "İspanya",
+      "portekiz": "Portekiz",
+      "amerika": "Amerika",
+      "hollanda": "Hollanda",
+      "macaristan": "Macaristan",
+      "yunanistan": "Yunanistan",
+      "dubai": "Dubai",
+      "polonya": "Polonya",
+      "bulgaristan": "Bulgaristan",
+      "luksemburg": "Lüksemburg",
+      "isvec": "İsveç",
+      "romanya": "Romanya",
+      "slovenya": "Slovenya",
+      "estonya": "Estonya",
+      "letonya": "Letonya",
+      "litvanya": "Litvanya",
+      "finlandiya": "Finlandiya",
+      "norvec": "Norveç",
+      "rusya": "Rusya",
+      "suudiArabistan": "Suudi Arabistan",
+      "cin": "Çin",
+      "guneyKore": "Güney Kore"
     },
     "services": {
       "title": "Keşfetmeniz için tüm seyahat ihtiyaçlarınızı\ntek bir çatı altında karşılayan Prince !",
