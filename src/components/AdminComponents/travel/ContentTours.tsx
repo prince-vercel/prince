@@ -287,7 +287,7 @@ const ContentTours = () => {
     try {
       const submitData = { ...formData }
       if (!formData.priceEnabled) {
-        submitData.price = null
+        submitData.price = undefined
       }
 
       if (editingId) {
