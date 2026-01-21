@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -56,9 +57,17 @@ export default function HomePage() {
   return (
     <div className="page-wrapper">
       <header className="header">
-        <div className="logo-wrapper">
-          <Image src="/site-header-logo.png" alt="Logo" width={480} height={250} priority />
-        </div>
+      <div
+  className="logo-wrapper"
+  style={{
+    position: 'absolute',
+    left: '50%',
+    transform: 'translateX(-50%)',
+  }}
+>
+  <Image src="/site-header-logo.png" alt="Logo" width={500} height={250} priority />
+</div>
+
         <div className="header-actions">
           <div className="language-selector">
             <button
