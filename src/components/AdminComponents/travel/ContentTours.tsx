@@ -31,7 +31,7 @@ interface Tour {
   maxPeople: number
   countryId: string
   location: string
-  price: number
+  price?: number
   includedInPrice: string
   notIncludedInPrice: string
   days?: string[]
@@ -62,7 +62,7 @@ interface FormData {
   maxPeople: number
   countryId: string
   location: string
-  price: number
+  price?: number
   includedInPrice: string
   notIncludedInPrice: string
   days: string[]
@@ -73,6 +73,7 @@ interface FormData {
   mainImageUrl: string
   galleryImageUrls: string[]
   status: string
+  priceEnabled: boolean
 }
 
 const ContentTours = () => {
@@ -106,7 +107,8 @@ const ContentTours = () => {
     faq: [{ question: '', answer: '' }],
     mainImageUrl: '',
     galleryImageUrls: [],
-    status: 'aktif'
+    status: 'aktif',
+    priceEnabled: true
   })
 
   const [countries, setCountries] = useState<Country[]>([])
@@ -283,16 +285,21 @@ const ContentTours = () => {
     setLoading(true)
 
     try {
+      const submitData = { ...formData }
+      if (!formData.priceEnabled) {
+        submitData.price = null
+      }
+
       if (editingId) {
         await updateDoc(doc(db, getCollectionName('traveltours', selectedLanguage), editingId), {
-          ...formData,
+          ...submitData,
           updatedAt: serverTimestamp()
         })
         setSuccess('Tur başarıyla güncellendi!')
       } else {
         const tourId = generateId(formData.title)
         await setDoc(doc(db, getCollectionName('traveltours', selectedLanguage), tourId), {
-          ...formData,
+          ...submitData,
           id: tourId,
           createdAt: serverTimestamp()
         })
@@ -317,7 +324,8 @@ const ContentTours = () => {
         faq: [{ question: '', answer: '' }],
         mainImageUrl: '',
         galleryImageUrls: [],
-        status: 'aktif'
+        status: 'aktif',
+        priceEnabled: true
       })
       setEditingId(null)
       setShowForm(false)
@@ -359,7 +367,7 @@ const ContentTours = () => {
       maxPeople: tour.maxPeople,
       countryId: tour.countryId || '',
       location: tour.location || '',
-      price: tour.price,
+      price: tour.price || 0,
       includedInPrice: tour.includedInPrice,
       notIncludedInPrice: tour.notIncludedInPrice,
       days: tour.days || ['Her Gün'],
@@ -369,7 +377,8 @@ const ContentTours = () => {
       faq: tour.faq,
       mainImageUrl: tour.mainImageUrl || tour.imageUrl || '',
       galleryImageUrls: tour.galleryImageUrls || [],
-      status: tour.status || 'aktif'
+      status: tour.status || 'aktif',
+      priceEnabled: tour.price !== null && tour.price !== undefined
     })
     setEditingId(tour.id)
     setShowForm(true)
@@ -440,7 +449,8 @@ const ContentTours = () => {
                     faq: [{ question: '', answer: '' }],
                     mainImageUrl: '',
                     galleryImageUrls: [],
-                    status: 'aktif'
+                    status: 'aktif',
+                    priceEnabled: true
                   })
                 }}
                 className={styles.tourAddBtn} 
@@ -646,6 +656,11 @@ const ContentTours = () => {
                     </div>
                   </div>
                   <p className={styles.tourCardDesc}>{tour.description.substring(0, 150)}...</p>
+                  {tour.price !== null && tour.price !== undefined && (
+                    <p style={{ fontSize: '14px', color: '#d7b76e', fontWeight: 'bold', marginTop: '8px' }}>
+                      Fiyat: {tour.price} €
+                    </p>
+                  )}
 
                   {/* ENQUİRİES SECTION */}
                   {selectedTourEnquiries === tour.id && (
@@ -925,12 +940,23 @@ const ContentTours = () => {
             <div className={styles.tourFormRow}>
               <div className={styles.tourFormGroup}>
                 <label>Fiyat (€)</label>
-                <input
-                  type="number"
-                  value={formData.price}
-                  onChange={e => handleInputChange('price', parseInt(e.target.value))}
-                  placeholder="500"
-                />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <input
+                    type="number"
+                    value={formData.price || ''}
+                    onChange={e => handleInputChange('price', parseInt(e.target.value) || 0)}
+                    placeholder="500"
+                    disabled={!formData.priceEnabled}
+                  />
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '14px' }}>
+                    <input
+                      type="checkbox"
+                      checked={!formData.priceEnabled}
+                      onChange={() => setFormData(prev => ({ ...prev, priceEnabled: !prev.priceEnabled }))}
+                    />
+                    Fiyat Yok
+                  </label>
+                </div>
               </div>
             </div>
 
