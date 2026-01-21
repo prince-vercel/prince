@@ -63,6 +63,7 @@ export default function BasvuruYapPage() {
         })
         ticking = false
       })
+
       ticking = true
     }
 
