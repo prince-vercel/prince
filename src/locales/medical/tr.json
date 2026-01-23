@@ -25,7 +25,7 @@
       "contact": "İletişim",
       "faqs": "Sık Sorulan Sorular",
       "privacyPolicy": "Gizlilik Politikası",
-      "kvkk": "KVKK & Aydınlatma",
+      "kvkk": "KVKK Aydınlatma Metni",
       "newsletter": {
         "title": "Bize Katılın",
         "description": "Kampanyalar, yenilikler ve sağlık içerikleri için e-posta listemize kayıt olun.",
@@ -157,6 +157,12 @@
         "partners": {
           "loading": "İş ortakları yükleniyor...",
           "noPartners": "Henüz iş ortağı yok."
+        },
+        "sections": {
+          "groupDescription": "Prince Invest Group; Avrupa, Afrika, Orta Doğu ve Körfez bölgelerinde Sağlık Hizmetleri ve Sağlık Turizmi, Turizm & Seyahat ve Vize Danışmanlığı alanlarında faaliyet gösteren çok uluslu bir holdingdir.",
+          "healthServices": "Sağlık Hizmetleri ve Sağlık Turizmi Dünyada medikal turizmin kalbi haline gelen Türkiye'de, dünya standartlarında sağlık tesisleri ve branşlarının en iyisi kabul edilen sağlık profesyonelleriyle çalışmayı ilke edinen Prince Medical; yurt dışından konuk ettiği hasta ve danışanlarına; ulaşım, konaklama ve transfer dahil bir paket hizmet sunmakta ve tedavi sürecinin tüm aşamalarında rehberlik etmektedir.",
+          "medicalCenter": "Dünya genelinde medikal turizmin merkezi haline gelen Türkiye'de Prince Medical, uluslararası akreditasyona sahip hastaneler ve alanında lider sağlık profesyonelleriyle iş birliği yaparak yüksek standartlarda sağlık hizmetleri sunmaktadır. Diş tedavileri, plastik ve estetik cerrahi, saç ekimi alanlarında uzmanlaşmış olan Prince Medical; bunun yanı sıra genel cerrahi operasyonlar ve ileri teknolojiye sahip robo-rehabilitasyon uygulamalarıyla desteklenen fizyoterapi programları da sağlamaktadır.",
+          "patientJourney": "Her hastanın yolculuğu; tıbbi geçmiş, fotoğraflar ve gerekli durumlarda röntgen görüntülerine dayalı olarak gerçekleştirilen ücretsiz online medikal danışmanlık ile başlamaktadır. Hastanın Türkiye'ye gelmesiyle birlikte, uçak biletleri, konaklama, VIP transferler ve tüm tedavi sürecinin profesyonel koordinasyonunu kapsayan, kişiye özel ve her şey dahil sağlık paketleri sunulmaktadır. İlk danışmanlıktan tedavi sonrası iyileşme sürecine kadar, Prince Medical her aşamada güven, konfor ve profesyonel rehberlik sağlamaktadır."
         }
       },
       "blog": {

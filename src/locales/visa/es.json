@@ -11,7 +11,7 @@
     },
     "travelTitle": {
       "line1": "Prince",
-      "line2": "Turismo & Travel"
+      "line2": "Turismo & Viajes"
     }
   },
   "visa": {
@@ -53,7 +53,7 @@
       "contact": "Contacto",
       "faq": "Preguntas frecuentes",
       "privacy": "Política de privacidad",
-      "kvkk": "KVKK y divulgación",
+      "kvkk": "Aviso informativo RGPD",
       "newsletter": {
         "title": "Únete a nosotros",
         "description": "Suscríbete a nuestra lista de correo para campañas, novedades y contenido sobre visas.",
@@ -315,6 +315,7 @@
     "featured": {
       "title": "Acelerar los documentos de visa nunca fue tan fácil.",
       "description": "¡Ya no tendrás que buscar durante horas la lista correcta de documentos! Con Prince, puedes organizar todos tus documentos oficiales de forma rápida, fácil y desde una sola institución y solicitar tu visa. Obtén información de expertos en visas de inmediato.",
+      "highlight": "rápida, fácil y desde una sola institución",
       "features": [
         "Atención al cliente",
         "Contrato de servicio",
@@ -756,7 +757,7 @@
               "description": "Nuestro cliente que fue al Reino Unido con su familia obteniendo el servicio de visa de trabajo."
             },
             "11": {
-              "title": "PROCESO DE SOLICITUD DE VISA EN LÍNEA con ÇİLEK VİZE – ¡Fácil y rápido!",
+              "title": "PROCESO DE SOLICITUD DE VISA EN LÍNEA con PRINCE VİZE – ¡Fácil y rápido!",
               "description": "¡Solicitar una visa en línea con Prince ahora es muy fácil!\r\nEn este video, brindamos una guía paso a paso para completar tus trámites de forma rápida y sin problemas."
             },
             "12": {
@@ -960,69 +961,69 @@
         "intro": "Los conductores TIR que se dedican al transporte internacional deben obtener visas para ingresar a los países donde trabajan. Una visa de conductor TIR es una autorización requerida para que los conductores profesionales trabajen legalmente en el extranjero.",
         "generalInfo": {
           "title": "Información General sobre la Visa de Conductor TIR",
-            "description": "Una visa de conductor TIR es una autorización requerida para que los conductores profesionales trabajen legalmente en el extranjero. Este tipo de visa está específicamente diseñado para conductores que trabajan en el sector de transporte internacional."
-          },
+          "description": "Una visa de conductor TIR es una autorización requerida para que los conductores profesionales trabajen legalmente en el extranjero. Este tipo de visa está específicamente diseñado para conductores que trabajan en el sector de transporte internacional."
+        },
         "visaType": {
           "title": "Tipo de Visa y Condiciones de Solicitud",
           "typeC": {
             "title": "Visa Tipo C (Corto Plazo)",
-              "description": "Este es un tipo de visa de corto plazo. Generalmente válida por hasta 90 días en áreas Schengen, este tipo de visa se utiliza para viajes de negocios."
-            },
+            "description": "Este es un tipo de visa de corto plazo. Generalmente válida por hasta 90 días en áreas Schengen, este tipo de visa se utiliza para viajes de negocios."
+          },
           "typeD": {
             "title": "Visa Tipo D (Largo Plazo)",
-              "description": "En algunos casos, los conductores TIR pueden necesitar una visa de largo plazo. Generalmente requerida para trabajos de transporte que exceden los 90 días."
-            }
-          },
+            "description": "En algunos casos, los conductores TIR pueden necesitar una visa de largo plazo. Generalmente requerida para trabajos de transporte que exceden los 90 días."
+          }
+        },
         "requiredDocuments": {
           "title": "Documentos Requeridos",
           "passport": {
             "title": "Pasaporte",
-              "description": "Pasaporte válido por al menos 6 meses, sin daños."
-            },
+            "description": "Pasaporte válido por al menos 6 meses, sin daños."
+          },
           "applicationForm": {
             "title": "Formulario de Solicitud de Visa",
-              "description": "Formulario de solicitud de visa completado y firmado."
-            },
+            "description": "Formulario de solicitud de visa completado y firmado."
+          },
           "photo": {
             "title": "Foto",
-              "description": "Foto biométrica."
-            },
+            "description": "Foto biométrica."
+          },
           "workCertificate": {
             "title": "Certificado de Trabajo",
-              "description": "Documentos oficiales que prueban que el solicitante trabaja como conductor TIR."
-            },
+            "description": "Documentos oficiales que prueban que el solicitante trabaja como conductor TIR."
+          },
           "invitation": {
             "title": "Carta de Invitación",
-              "description": "Una carta de invitación de una empresa en el país de destino (requerida para algunos países)."
-            },
+            "description": "Una carta de invitación de una empresa en el país de destino (requerida para algunos países)."
+          },
           "insurance": {
             "title": "Seguro",
-              "description": "Seguro de salud de viaje que cubra el período de viaje."
-            },
+            "description": "Seguro de salud de viaje que cubra el período de viaje."
+          },
           "vehicleDocuments": {
             "title": "Documentos del Vehículo",
-              "description": "Documentos relacionados con el vehículo TIR y su licencia."
-            },
+            "description": "Documentos relacionados con el vehículo TIR y su licencia."
+          },
           "workPermit": {
             "title": "Permiso de Trabajo",
-              "description": "Documentos de permiso de trabajo, si se requieren."
-            }
-          },
+            "description": "Documentos de permiso de trabajo, si se requieren."
+          }
+        },
         "applicationProcess": {
           "title": "Proceso de Solicitud",
-            "description": "Las solicitudes generalmente son realizadas por la empresa afiliada del conductor, a través de centros de solicitud de visas o consulados. Dado que el proceso puede tomar varias semanas, se recomienda solicitar con anticipación. Después de que la solicitud sea aprobada, el conductor obtiene el derecho de trabajar en países especificados por un período especificado."
-          },
+          "description": "Las solicitudes generalmente son realizadas por la empresa afiliada del conductor, a través de centros de solicitud de visas o consulados. Dado que el proceso puede tomar varias semanas, se recomienda solicitar con anticipación. Después de que la solicitud sea aprobada, el conductor obtiene el derecho de trabajar en países especificados por un período especificado."
+        },
         "visaDuration": {
           "title": "Duración de la Visa y Renovación",
-            "description": "La duración de la visa generalmente se determina según la duración del trabajo de transporte. Las visas de corto plazo suelen ser de 90 días, mientras que las visas de largo plazo pueden ser más largas. La renovación es posible si es necesario cuando la visa expire, pero el proceso de renovación puede variar según el país y puede requerir una nueva solicitud."
-          },
+          "description": "La duración de la visa generalmente se determina según la duración del trabajo de transporte. Las visas de corto plazo suelen ser de 90 días, mientras que las visas de largo plazo pueden ser más largas. La renovación es posible si es necesario cuando la visa expire, pero el proceso de renovación puede variar según el país y puede requerir una nueva solicitud."
+        },
         "specialCases": {
           "title": "Casos Especiales",
-            "description": "Algunos países pueden ofrecer programas de visa especiales para conductores TIR. Para obtener información detallada sobre estos casos, se recomienda obtener información de consulados o servicios de consultoría de visas."
-          },
+          "description": "Algunos países pueden ofrecer programas de visa especiales para conductores TIR. Para obtener información detallada sobre estos casos, se recomienda obtener información de consulados o servicios de consultoría de visas."
+        },
         "note": {
           "title": "Nota",
-          "description": "Como Çilek Vize, proporcionamos servicios de visa de conductor TIR junto con servicios de cita rápida (VIP)."
+          "description": "Como Prince Vize, proporcionamos servicios de visa de conductor TIR junto con servicios de cita rápida (VIP)."
         }
       },
       "residencePermit": {
@@ -1122,7 +1123,78 @@
         },
         "note": {
           "title": "Nota",
-          "description": "Como Çilek Vize, proporcionamos servicios de consultoría a nacionales extranjeros para obtener permisos de residencia en Turquía. Para obtener información detallada, se recomienda a las personas que se pongan en contacto con su especialista en permisos de residencia."
+          "description": "Como Prince Vize, proporcionamos servicios de consultoría a nacionales extranjeros para obtener permisos de residencia en Turquía. Para obtener información detallada, se recomienda a las personas que se pongan en contacto con su especialista en permisos de residencia."
+        }
+      },
+      "kisiselVerilerinKorunmaKanunu": {
+        "title": "Ley de Protección de Datos Personales",
+        "heading": "RGPD",
+        "content": "Como Prince Vize, la seguridad de sus datos personales es importante para nosotros. De acuerdo con la Ley No. 6698 sobre la Protección de Datos Personales (\"RGPD\"), tomamos todas las medidas necesarias con respecto al procesamiento, almacenamiento y protección de sus datos personales."
+      },
+      "gizlilikPolitikasi": {
+        "title": "Política de Privacidad",
+        "companyName": "PRINCE GRUP DANIŞMANLIK TURİZM SEYAHAT EĞİTİM MEDYA SANAYİ VE TİCARET LİMİTED ŞİRKETİ",
+        "mainTitle": "Información Corporativa y Política de Privacidad",
+        "intro1": "PRINCE GRUP DANIŞMANLIK TURİZM SEYAHAT EĞİTİM MEDYA SANAYİ VE TİCARET LİMİTED ŞİRKETİ (denominada \"Prince Vize\") opera en el campo de consultoría de visas y servicios de viajes y otorga gran importancia a la privacidad y seguridad de los datos personales de sus clientes.",
+        "intro2": "Este texto ha sido preparado para explicar con qué fines se procesan los datos personales recopilados a través de nuestro sitio web, formularios digitales, llamadas telefónicas y canales publicitarios, cómo se protegen y sus derechos.",
+        "section1": {
+          "title": "1. Datos Personales Recopilados",
+          "intro": "Los siguientes datos personales pueden ser procesados por nosotros:",
+          "item1": "Nombre y apellido",
+          "item2": "Número de teléfono",
+          "item3": "Dirección de correo electrónico",
+          "item4": "Tipo de visa e información del país solicitado",
+          "item5": "Preferencia de sucursal (Izmir, Bursa, etc.)",
+          "item6": "Contenido de solicitudes y mensajes",
+          "item7": "Datos técnicos de fuentes del sitio web y publicidad (UTM, tipo de dispositivo, etc.)"
+        },
+        "section2": {
+          "title": "2. Método de Recopilación de Datos Personales",
+          "intro": "Sus datos personales;",
+          "item1": "Formularios de solicitud e información en nuestro sitio web",
+          "item2": "Anuncios de Google Ads (búsqueda, teléfono, extensiones de formulario)",
+          "item3": "Llamadas telefónicas",
+          "item4": "WhatsApp y otros canales de comunicación",
+          "outro": "se recopilan a través de medios automáticos o parcialmente automáticos."
+        },
+        "section3": {
+          "title": "3. Propósitos del Procesamiento de Datos Personales",
+          "intro": "Sus datos personales recopilados:",
+          "item1": "Prestación de servicios de consultoría de visas",
+          "item2": "Inicio y seguimiento del proceso de cita",
+          "item3": "Proporcionar información sobre el servicio solicitado",
+          "item4": "Proporcionar devolución de llamada por teléfono",
+          "item5": "Mejora de la calidad del servicio",
+          "item6": "Cumplimiento de obligaciones legales",
+          "outro": "se procesan limitados a estos propósitos."
+        },
+        "section4": {
+          "title": "4. Protección de Datos Personales",
+          "brand": "Prince Vize:",
+          "item1": "Protección de datos personales contra acceso no autorizado",
+          "item2": "Garantizar la seguridad de los datos",
+          "item3": "Prevenir usos ilegales",
+          "outro1": "toma todas las medidas técnicas y administrativas necesarias.",
+          "outro2": "Sus datos personales no se comparten con terceros sin permiso y solo pueden compartirse en caso de obligaciones legales o requisitos del servicio."
+        },
+        "section5": {
+          "title": "5. Sus Derechos Bajo el RGPD",
+          "intro": "Bajo la Ley No. 6698 sobre la Protección de Datos Personales (RGPD);",
+          "item1": "Aprender si sus datos personales son procesados",
+          "item2": "Solicitar información si han sido procesados",
+          "item3": "Solicitar corrección de datos procesados incorrecta o incompletamente",
+          "item4": "Solicitar eliminación o destrucción de datos",
+          "item5": "Solicitar compensación por daños si el procesamiento es contrario a la ley",
+          "outro1": "usted tiene el derecho.",
+          "outro2": "Puede contactarnos para ejercer estos derechos."
+        },
+        "section6": {
+          "title": "6. Información de Contacto",
+          "label1": "Nombre de la Empresa:",
+          "label2": "Marca:",
+          "label3": "Web:",
+          "label4": "Teléfono:",
+          "brand": "Prince Vize"
         }
       }
     },
@@ -1176,11 +1248,11 @@
         "readTime": "15 min de lectura"
       },
       "readPost": "Leer artículo",
-        "all": "Todos",
-        "popular": "Artículos populares",
-        "read": "Leer",
-        "noPosts": "Aún no hay publicaciones de blog.",
-        "noPopularPosts": "Aún no hay publicaciones populares.",
+      "all": "Todos",
+      "popular": "Artículos populares",
+      "read": "Leer",
+      "noPosts": "Aún no hay publicaciones de blog.",
+      "noPopularPosts": "Aún no hay publicaciones populares.",
       "detail": {
         "notFound": "Artículo de blog no encontrado",
         "readTime": "lectura",

@@ -11,7 +11,7 @@
     },
     "travelTitle": {
       "line1": "Prince",
-      "line2": "Tourisme & Travel"
+      "line2": "Tourisme & Voyages"
     }
   },
   "visa": {
@@ -53,7 +53,7 @@
       "contact": "Contact",
       "faq": "Foire aux questions",
       "privacy": "Politique de confidentialité",
-      "kvkk": "KVKK & Informations",
+      "kvkk": "Notice d'information RGPD",
       "newsletter": {
         "title": "Rejoignez-nous",
         "description": "Abonnez-vous à notre liste e-mail pour recevoir nos campagnes, mises à jour et contenus sur les visas.",
@@ -315,6 +315,7 @@
     "featured": {
       "title": "Accélérer vos documents de visa n’a jamais été aussi facile.",
       "description": "Plus besoin de chercher pendant des heures la bonne liste de documents ! Avec Prince, vous pouvez organiser tous vos documents officiels rapidement, facilement et auprès d’une seule institution, puis faire une demande de visa. Obtenez immédiatement des informations auprès d’experts en visas.",
+      "highlight": "rapidement, facilement et auprès d’une seule institution",
       "features": [
         "Service client",
         "Contrat de service",
@@ -756,7 +757,7 @@
               "description": "Notre client parti au Royaume-Uni avec sa famille en obtenant un service de visa de travail."
             },
             "11": {
-              "title": "PROCÉDURE DE DEMANDE DE VISA EN LIGNE avec ÇİLEK VİZE – Simple et rapide !",
+              "title": "PROCÉDURE DE DEMANDE DE VISA EN LIGNE avec PRINCE VİZE – Simple et rapide !",
               "description": "La demande de visa en ligne avec Prince est désormais très facile !\r\nDans cette vidéo, nous expliquons étape par étape comment finaliser vos démarches rapidement et sans accroc."
             },
             "12": {
@@ -1022,7 +1023,7 @@
         },
         "note": {
           "title": "Note",
-          "description": "En tant que Çilek Vize, nous fournissons des services de visa de conducteur TIR ainsi que des services de rendez-vous rapide (VIP)."
+          "description": "En tant que Prince Vize, nous fournissons des services de visa de conducteur TIR ainsi que des services de rendez-vous rapide (VIP)."
         }
       },
       "residencePermit": {
@@ -1122,7 +1123,78 @@
         },
         "note": {
           "title": "Note",
-          "description": "En tant que Çilek Vize, nous fournissons des services de conseil aux ressortissants étrangers pour obtenir des permis de séjour en Turquie. Pour des informations détaillées, il est conseillé aux personnes de contacter leur spécialiste en permis de séjour."
+          "description": "En tant que Prince Vize, nous fournissons des services de conseil aux ressortissants étrangers pour obtenir des permis de séjour en Turquie. Pour des informations détaillées, il est conseillé aux personnes de contacter leur spécialiste en permis de séjour."
+        }
+      },
+      "kisiselVerilerinKorunmaKanunu": {
+        "title": "Loi sur la Protection des Données Personnelles",
+        "heading": "RGPD",
+        "content": "En tant que Prince Vize, la sécurité de vos données personnelles est importante pour nous. Conformément à la loi n° 6698 sur la protection des données personnelles (\"RGPD\"), nous prenons toutes les mesures nécessaires concernant le traitement, le stockage et la protection de vos données personnelles."
+      },
+      "gizlilikPolitikasi": {
+        "title": "Politique de Confidentialité",
+        "companyName": "PRINCE GRUP DANIŞMANLIK TURİZM SEYAHAT EĞİTİM MEDYA SANAYİ VE TİCARET LİMİTED ŞİRKETİ",
+        "mainTitle": "Information d'Entreprise et Politique de Confidentialité",
+        "intro1": "PRINCE GRUP DANIŞMANLIK TURİZM SEYAHAT EĞİTİM MEDYA SANAYİ VE TİCARET LİMİTED ŞİRKETİ (appelée \"Prince Vize\") opère dans le domaine du conseil en visas et des services de voyage et attache une grande importance à la confidentialité et à la sécurité des données personnelles de ses clients.",
+        "intro2": "Ce texte a été préparé pour expliquer à quelles fins les données personnelles collectées via notre site web, nos formulaires numériques, nos appels téléphoniques et nos canaux publicitaires sont traitées, comment elles sont protégées et vos droits.",
+        "section1": {
+          "title": "1. Données Personnelles Collectées",
+          "intro": "Les données personnelles suivantes peuvent être traitées par nous :",
+          "item1": "Nom et prénom",
+          "item2": "Numéro de téléphone",
+          "item3": "Adresse e-mail",
+          "item4": "Type de visa et informations sur le pays demandé",
+          "item5": "Préférence de succursale (Izmir, Bursa, etc.)",
+          "item6": "Contenu des demandes et messages",
+          "item7": "Données techniques provenant du site web et des sources publicitaires (UTM, type d'appareil, etc.)"
+        },
+        "section2": {
+          "title": "2. Méthode de Collecte des Données Personnelles",
+          "intro": "Vos données personnelles ;",
+          "item1": "Formulaires de demande et d'information sur notre site web",
+          "item2": "Publicités Google Ads (recherche, téléphone, extensions de formulaire)",
+          "item3": "Appels téléphoniques",
+          "item4": "WhatsApp et autres canaux de communication",
+          "outro": "sont collectées par des moyens automatiques ou partiellement automatiques."
+        },
+        "section3": {
+          "title": "3. Finalités du Traitement des Données Personnelles",
+          "intro": "Vos données personnelles collectées :",
+          "item1": "Prestation de services de conseil en visas",
+          "item2": "Démarrage et suivi du processus de rendez-vous",
+          "item3": "Fourniture d'informations sur le service demandé",
+          "item4": "Fourniture de rappel par téléphone",
+          "item5": "Amélioration de la qualité du service",
+          "item6": "Respect des obligations légales",
+          "outro": "sont traitées limitées à ces finalités."
+        },
+        "section4": {
+          "title": "4. Protection des Données Personnelles",
+          "brand": "Prince Vize :",
+          "item1": "Protection des données personnelles contre l'accès non autorisé",
+          "item2": "Assurance de la sécurité des données",
+          "item3": "Prévention des utilisations illégales",
+          "outro1": "prend toutes les mesures techniques et administratives nécessaires.",
+          "outro2": "Vos données personnelles ne sont pas partagées avec des tiers sans autorisation et ne peuvent être partagées qu'en cas d'obligations légales ou de nécessité de service."
+        },
+        "section5": {
+          "title": "5. Vos Droits en Vertu du RGPD",
+          "intro": "En vertu de la loi n° 6698 sur la protection des données personnelles (RGPD) ;",
+          "item1": "Apprendre si vos données personnelles sont traitées",
+          "item2": "Demander des informations si elles ont été traitées",
+          "item3": "Demander la correction de données traitées incorrectement ou incomplètement",
+          "item4": "Demander la suppression ou la destruction des données",
+          "item5": "Demander une indemnisation pour les dommages si le traitement est contraire à la loi",
+          "outro1": "vous avez le droit.",
+          "outro2": "Vous pouvez nous contacter pour exercer ces droits."
+        },
+        "section6": {
+          "title": "6. Informations de Contact",
+          "label1": "Nom de l'Entreprise :",
+          "label2": "Marque :",
+          "label3": "Web :",
+          "label4": "Téléphone :",
+          "brand": "Prince Vize"
         }
       }
     },
@@ -1175,12 +1247,12 @@
         "title": "Points à considérer lors d'une demande de visa",
         "readTime": "15 min de lecture"
       },
-        "readPost": "Lire l'article",
-        "all": "Tous",
-        "popular": "Articles populaires",
-        "read": "Lire",
-        "noPosts": "Aucun article de blog trouvé pour le moment.",
-        "noPopularPosts": "Aucun article populaire trouvé pour le moment.",
+      "readPost": "Lire l'article",
+      "all": "Tous",
+      "popular": "Articles populaires",
+      "read": "Lire",
+      "noPosts": "Aucun article de blog trouvé pour le moment.",
+      "noPopularPosts": "Aucun article populaire trouvé pour le moment.",
       "detail": {
         "notFound": "Article de blog introuvable",
         "readTime": "lecture",
