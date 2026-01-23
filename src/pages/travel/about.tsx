@@ -162,25 +162,15 @@ export default function AboutPage() {
 
               <div className="mt-7 xl:pl-24 lg:pl-20 relative before:content-[''] before:left-0 before:top-4 before:bg-[#d9d9d9] before:w-[10%] before:h-[1px] lg:before:absolute">
                 <p className="regular-text-v1" suppressHydrationWarning>
-                  {isReady ? t('travel.pages.about.description') : ''}
+                  Prince Invest Group; Avrupa, Afrika, Orta Doğu ve Körfez bölgelerinde Sağlık Hizmetleri ve Sağlık Turizmi, Turizm & Travel ve Vize Danışmanlığı alanlarında faaliyet gösteren çok uluslu bir holdingdir.
                 </p>
                 <h5 className="font-sans text-dark-1 text-md font-medium mt-4" suppressHydrationWarning>
-                  {isReady ? t('travel.pages.about.contactExpert') : ''}
+                  Türkiye'nin büyüleyici güzelliğine keyifli bir kaçış arayanlar için, turizm & travel hizmetlerimiz ile ülkemizin zengin kültürünü, tarihini ve doğa harikalarını sergileyen özenle hazırlanmış deneyimler sunar. Uzman rehberliğimizle Türkiye'nin büyüleyici destinasyonlarını keşfedin. Prince Tourism & Travel, dünyanın en seçkin destinasyonlarına da en uygun fiyatlarla paket turlar, tatiller ve kültür turları düzenlemektedir. Prince Tourism & Travel, 16472 belge numarasıyla TÜRSAB'a kayıtlıdır.
                 </h5>
               </div>
 
-              <ul className="pt-6 lg:text-md text-base">
-                {(isReady ? t('travel.pages.about.features', { returnObjects: true }) as string[] : []).map((item, i) => (
-                  <li
-                    key={i}
-                    className="flex items-center font-sans text-dark-3 mt-4"
-                  >
-                    <div className="text-primary-1 flex-shrink-0 text-2md">
-                      <i className="bi bi-check-circle"></i>
-                    </div>
-                    <span className="ml-3" suppressHydrationWarning>{item}</span>
-                  </li>
-                ))}
+              <ul className="pt-6 lg:text-md text-base text-dark-1">
+               Prince Tourism & Travel, bireysel (münferit) ve kurumsal misafirlerine yönelik olarak, yurt içi ve yurt dışı seyahatlerde uçtan uca profesyonel hizmetler sunan, yetkili bir seyahat acentesidir.
               </ul>
 
               <div className="mt-10">
@@ -205,61 +195,45 @@ export default function AboutPage() {
 
       {/*========== FEATURED PACKAGE STYLE ONE START==========*/}
       <div className="featured_package__style lg:pt-30 pt-24 relative z-1">
-        <div className="absolute top-[10%] left-[2%] max-w-[9%] z-minus lg:inline-block hidden">
+        <div className="absolute top-[10%] left-[2%] max-w-[12%] z-minus lg:inline-block hidden">
           <img src="/assets/images/illustration/leaf-illustration.png" alt="leaf" />
         </div>
 
         <div className="container">
           <div className="text-center lg:pb-[60px] pb-[40px]">
-            <h5 className="section-sub-title-v1" suppressHydrationWarning>{isReady ? t('travel.pages.about.featuredPackages.subtitle') : ''}</h5>
             <h2 className="section-title-v1" suppressHydrationWarning>{isReady ? t('travel.pages.about.featuredPackages.title') : ''}</h2>
           </div>
         </div>
 
-        <div className="px-3 overflow-hidden">
+        <div className="pb-3 overflow-hidden">
           {/* FIRST PACKAGE */}
           <div className="flex 2xl:gap-x-12 gap-base lg:items-center col-span-10 2xl:ml-right-container lg:flex-row flex-col">
             <div className="xl:max-w-xl lg:max-w-lg shrink-0 order-2 lg:order-1 wow fadeInLeft">
-              <h5 className="text-2md text-primary-1 leading-1.5 font-sans font-bold" suppressHydrationWarning>
-                {isReady ? t('travel.pages.about.featuredPackages.startingFrom') : ''}
-              </h5>
-
-              <h3 className="font-serif font-medium lg:text-xl text-lg leading-1.35 mt-2 text-dark-1" suppressHydrationWarning>
-                {isReady ? t('travel.pages.about.featuredPackages.packageTitle') : ''}
-              </h3>
-
               <p className="text-dark-2 leading-1.7 font-medium mt-5" suppressHydrationWarning>
-                {isReady ? t('travel.pages.about.featuredPackages.packageDescription') : ''}
+                Yurt içi ve yurt dışı paket turlar, kişiye özel seyahat planlamaları, şirketlere özel tur ve organizasyonlar ile her ölçekte seyahat ihtiyacına uygun çözümler üretmekteyiz.
               </p>
 
               <p className="regular-text-v1 mt-[14px]" suppressHydrationWarning>
-                {isReady ? t('travel.pages.about.featuredPackages.packageDetails') : ''}
+               Tatil amaçlı seyahatlerden iş gezilerine, kısa süreli kaçamaklardan uzun süreli konaklamalara kadar tüm süreçler, deneyimli ekibimiz tarafından titizlikle planlanır.
               </p>
 
-              <ul className="pt-2 lg:text-md text-base">
-                {(isReady ? t('travel.pages.about.featuredPackages.inclusions', { returnObjects: true }) as string[] : []).map((item, i) => (
-                  <li key={i} className="flex items-center font-sans text-dark-3 mt-4">
-                    <div className="text-primary-1 text-2md flex-shrink-0">
-                      <i className="bi bi-check-circle"></i>
-                    </div>
-                    <span className="ml-3" suppressHydrationWarning>{item}</span>
-                  </li>
-                ))}
+              <ul className="pt-2 font-medium text-dark-2 text-base">
+                <li>- Yurt içi ve yurt dışı turlar</li>
+                <li>- Günlük İstanbul turları (rehberlik hizmeti ücretsizdir)</li>
+                <li>- Kişiye özel turlar ve seyahat programları</li>
+                <li>- Şirketlere özel turlar ve kurumsal seyahat organizasyonları</li>
+                <li>- Kurumsal seyahat ve iş gezisi planlamaları</li>
+                <li>- İstanbul içi ve Türkiye genelinde otel rezervasyonları</li>
+                <li>- Sapanca, bungalov ve doğa konseptli konaklamalar</li>
+                <li>Yurt dışı otel rezervasyonları</li>
+                <li>Yurt içi ve yurt dışı uçak biletleri</li>
+                <li>Havalimanı ve şehir içi transfer hizmetleri</li>
               </ul>
 
-              <div className="mt-12">
-                <a href="package-details.html" className="btn_primary__v1" suppressHydrationWarning>
-                  {isReady ? t('travel.pages.about.featuredPackages.bookNow') : ''}
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path
-                      d="M7.42505 16.5999L12.8584 11.1666C13.5 10.5249 13.5 9.4749 12.8584 8.83324L7.42505 3.3999"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </a>
+              <div className="mt-2 font-medium text-dark-2">
+                Her seyahat, misafirlerimizin beklenti ve ihtiyaçları doğrultusunda; konfor, zaman ve bütçe dengesi gözetilerek planlanır. İster bireysel ister kurumsal olsun, tüm organizasyonlarda güvenilir ve sorunsuz bir hizmet anlayışı sunmayı hedefliyoruz.
+
+Prince Tourism & Travel, 16472 belge numarası ile TÜRSAB’a kayıtlı, yetkili ve güvenilir bir seyahat acentesidir.
               </div>
             </div>
 

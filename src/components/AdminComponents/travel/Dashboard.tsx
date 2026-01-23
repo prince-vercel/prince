@@ -98,7 +98,7 @@ const Dashboard = () => {
       const destinationMap: { [key: string]: number } = {}
       formsSnapshot.docs.forEach((doc) => {
         const data = doc.data()
-        const location = data.answers?.['2PbarmXMOjCuAQNFLpbA'] || data.destination || 'Belirtilmemiş'
+        const location = data.answers?.['globalId'] || data.destination || 'Belirtilmemiş'
         destinationMap[location] = (destinationMap[location] || 0) + 1
       })
 
@@ -195,7 +195,7 @@ const Dashboard = () => {
     const destinationMap: { [key: string]: number } = {}
     formsFiltered.forEach((doc) => {
       const data = doc.data()
-      const location = data.answers?.['2PbarmXMOjCuAQNFLpbA'] || data.destination || 'Belirtilmemiş'
+      const location = data.answers?.['destination'] || data.destination || 'Belirtilmemiş'
       destinationMap[location] = (destinationMap[location] || 0) + 1
     })
     const topDestinations = Object.entries(destinationMap)

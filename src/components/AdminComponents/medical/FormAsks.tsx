@@ -10,6 +10,7 @@ import {
   deleteDoc,
   doc,
   updateDoc,
+  writeBatch,
 } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
@@ -53,6 +54,7 @@ const FormAsks = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru' | 'es' | 'ar' | 'ru'>('tr')
 
   const [formData, setFormData] = useState({
+    id: '', // Added question ID field
     questionText: '',
     type: 'select' as 'select' | 'checkbox' | 'text' | 'date' | 'radio',
     options: '',
@@ -124,6 +126,11 @@ const FormAsks = () => {
       return
     }
 
+    if (!formData.id.trim()) {
+      showNotification('error', 'Soru ID zorunludur')
+      return
+    }
+
     const options = formData.type !== 'text' && formData.type !== 'date' ? parseOptions(formData.options) : []
 
     if (formData.type !== 'text' && formData.type !== 'date' && options.length === 0) {
@@ -134,6 +141,7 @@ const FormAsks = () => {
     setLoading(true)
     try {
       const questionData: any = {
+        id: formData.id, // Added question ID
         questionText: formData.questionText,
         type: formData.type,
         options: options,
@@ -167,6 +175,7 @@ const FormAsks = () => {
       }
 
       setFormData({
+        id: '', // Reset question ID
         questionText: '',
         type: 'select',
         options: '',
@@ -205,6 +214,7 @@ const FormAsks = () => {
   const handleEdit = (question: Question) => {
     setEditingId(question.id)
     setFormData({
+      id: question.id, // Set question ID for editing
       questionText: question.questionText,
       type: question.type,
       options: question.options.join(', '),
@@ -247,7 +257,48 @@ const FormAsks = () => {
   }
 
   // JSON İçe Aktar
- 
+  const handleImportJSON = async (jsonData: any) => {
+    if (!Array.isArray(jsonData)) {
+      showNotification('error', 'Geçersiz JSON formatı. Bir dizi bekleniyor.')
+      return
+    }
+
+    setLoading(true)
+    try {
+      const collectionName = getCollectionName('questions', selectedLanguage)
+      const batch = writeBatch(db)
+
+      jsonData.forEach((item) => {
+        const docRef = doc(collection(db, collectionName))
+        batch.set(docRef, {
+          ...item,
+          createdAt: new Date(),
+        })
+      })
+
+      await batch.commit()
+      showNotification('success', 'JSON başarıyla içe aktarıldı')
+      loadQuestions()
+    } catch (error) {
+      console.error('JSON içe aktarma hatası:', error)
+      showNotification('error', 'JSON içe aktarılırken bir hata oluştu')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleExportJSON = () => {
+    const dataStr = JSON.stringify(questions, null, 2)
+    const blob = new Blob([dataStr], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'questions.json'
+    link.click()
+
+    URL.revokeObjectURL(url)
+  }
 
   const groupedQuestions = questions.reduce(
     (acc, q) => {
@@ -316,6 +367,7 @@ const FormAsks = () => {
             onClick={() => {
               setEditingId(null)
               setFormData({
+                id: '', // Reset question ID
                 questionText: '',
                 type: 'select',
                 options: '',
@@ -449,6 +501,27 @@ const FormAsks = () => {
           }}
         >
           <form onSubmit={handleSubmit}>
+            {/* Soru ID */}
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', fontWeight: '500', marginBottom: '8px', fontSize: '14px' }}>
+                Soru ID *
+              </label>
+              <input
+                type="text"
+                placeholder="Soru ID giriniz..."
+                value={formData.id}
+                onChange={(e) => setFormData({ ...formData, id: e.target.value })}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  border: '1px solid #ddd',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  boxSizing: 'border-box',
+                }}
+              />
+            </div>
+
             {/* Soru Metni */}
             <div style={{ marginBottom: '20px' }}>
               <label style={{ display: 'block', fontWeight: '500', marginBottom: '8px', fontSize: '14px' }}>
@@ -659,6 +732,7 @@ const FormAsks = () => {
                   setShowForm(false)
                   setEditingId(null)
                   setFormData({
+                    id: '', // Reset question ID
                     questionText: '',
                     type: 'select',
                     options: '',
@@ -695,6 +769,9 @@ const FormAsks = () => {
           </form>
         </div>
       )}
+
+     
+     
 
       {/* Soruları Step'e Göre Gruplandır */}
       <div>

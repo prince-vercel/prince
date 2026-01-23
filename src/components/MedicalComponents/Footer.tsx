@@ -21,8 +21,8 @@ export default function Footer() {
                   </p>
 
                   <ul className="cs_contact_widget">
-                    <li suppressHydrationWarning>{isReady ? t('medical.footer.address') : ''}</li>
-                    <li suppressHydrationWarning>{isReady ? t('medical.footer.phone') : ''}</li>
+                    <li suppressHydrationWarning>{isReady ? t('visa.footer.address') : ''}</li>
+                    <li suppressHydrationWarning>+90 212 999 77 20</li>
                     <li suppressHydrationWarning>{isReady ? t('medical.footer.email') : ''}</li>
                   </ul>
                 </div>
@@ -68,6 +68,14 @@ export default function Footer() {
               <div className="cs_copyright" suppressHydrationWarning>
                 {isReady ? t('medical.footer.copyright', { year: currentYear }) : ''}
               </div>
+               <Image
+                                                      src="/assets/images/tursab.png" // Görsel yolunu buraya koy
+                                                      alt="Small Logo"
+                                                      width={100}
+                                                      height={60}
+                                                      style={{ objectFit: 'contain' }}
+                                                      loading="lazy"
+                                                  />
             </div>
           </div>
         </div>

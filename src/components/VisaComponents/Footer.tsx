@@ -32,7 +32,8 @@ export default function VisaFooter() {
                                                 {isReady ? t('visa.footer.address') : ''}
                                             </li>
                                             <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }} suppressHydrationWarning>
-                                                {isReady ? t('visa.footer.phone') : ''}
+                                               +90 212 931 27 20
+
                                             </li>
                                             <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }} suppressHydrationWarning>
                                                 <a href={`mailto:${isReady ? t('visa.footer.email') : ''}`} style={{ color: '#666', textDecoration: 'none' }}>
@@ -40,9 +41,7 @@ export default function VisaFooter() {
                                                 </a>
                                             </li>
                                             <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }} suppressHydrationWarning>
-                                                <a href={`mailto:${isReady ? t('visa.footer.email2') : ''}`} style={{ color: '#666', textDecoration: 'none' }}>
-                                                    {isReady ? t('visa.footer.email2') : ''}
-                                                </a>
+
                                             </li>
                                         </ul>
                                     </div>
@@ -207,15 +206,16 @@ export default function VisaFooter() {
 
                                 <div className="cs_copyright" style={{ color: 'white', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '10px' }} suppressHydrationWarning>
                                     {isReady ? t('visa.footer.copyright', { year: currentYear }) : ''}
-                                    <Image
-                                        src="/assets/images/tursab.jpeg" // Görsel yolunu buraya koy
+                                  
+                                </div>
+                                  <Image
+                                        src="/assets/images/tursab.png" // Görsel yolunu buraya koy
                                         alt="Small Logo"
                                         width={100}
                                         height={60}
                                         style={{ objectFit: 'contain' }}
                                         loading="lazy"
                                     />
-                                </div>
                             </div>
                         </div>
                     </div>

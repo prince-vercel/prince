@@ -10,6 +10,7 @@ import {
   deleteDoc,
   doc,
   updateDoc,
+  writeBatch,
 } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
@@ -38,6 +39,11 @@ interface StepName {
 }
 
 const FormAsks = () => {
+    // Step name helper
+    const getStepName = (stepNum: number) => {
+      const step = steps.find((s) => s.number === stepNum)
+      return step?.name || `Adım ${stepNum}`
+    }
   const [questions, setQuestions] = useState<Question[]>([])
   const [steps, setSteps] = useState<StepName[]>([])
   const [loading, setLoading] = useState(false)
@@ -45,9 +51,10 @@ const FormAsks = () => {
   const [showStepsForm, setShowStepsForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
-  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'ru' | 'es' | 'ar'>('tr')
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
 
   const [formData, setFormData] = useState({
+    id: '', // Added question ID field
     questionText: '',
     type: 'select' as 'select' | 'checkbox' | 'text' | 'date' | 'radio',
     options: '',
@@ -61,7 +68,8 @@ const FormAsks = () => {
 
   const loadQuestions = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, getCollectionName('travelquestions', selectedLanguage)))
+      const collectionName = getCollectionName('travelquestions', selectedLanguage)
+      const querySnapshot = await getDocs(collection(db, collectionName))
       const questionsData: Question[] = []
       querySnapshot.forEach((doc) => {
         questionsData.push({
@@ -79,7 +87,8 @@ const FormAsks = () => {
 
   const loadSteps = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, getCollectionName('travelsteps', selectedLanguage)))
+      const collectionName = getCollectionName('travelsteps', selectedLanguage)
+      const querySnapshot = await getDocs(collection(db, collectionName))
       const stepsData: StepName[] = []
       querySnapshot.forEach((doc) => {
         stepsData.push({
@@ -97,7 +106,7 @@ const FormAsks = () => {
   useEffect(() => {
     loadQuestions()
     loadSteps()
-  }, [selectedLanguage])
+  }, [loadQuestions, loadSteps])
 
   const showNotification = (type: 'success' | 'error', message: string) => {
     setNotification({ type, message })
@@ -117,6 +126,11 @@ const FormAsks = () => {
       return
     }
 
+    if (!formData.id.trim()) {
+      showNotification('error', 'Soru ID zorunludur')
+      return
+    }
+
     const options = formData.type !== 'text' && formData.type !== 'date' ? parseOptions(formData.options) : []
 
     if (formData.type !== 'text' && formData.type !== 'date' && options.length === 0) {
@@ -127,6 +141,7 @@ const FormAsks = () => {
     setLoading(true)
     try {
       const questionData: any = {
+        id: formData.id, // Added question ID
         questionText: formData.questionText,
         type: formData.type,
         options: options,
@@ -147,10 +162,12 @@ const FormAsks = () => {
       }
 
       if (editingId) {
-        await updateDoc(doc(db, getCollectionName('travelquestions', selectedLanguage), editingId), questionData)
+        const collectionName = getCollectionName('travelquestions', selectedLanguage)
+        await updateDoc(doc(db, collectionName, editingId), questionData)
         showNotification('success', 'Soru başarıyla güncellendi')
       } else {
-        await addDoc(collection(db, getCollectionName('travelquestions', selectedLanguage)), {
+        const collectionName = getCollectionName('travelquestions', selectedLanguage)
+        await addDoc(collection(db, collectionName), {
           ...questionData,
           createdAt: new Date(),
         })
@@ -158,6 +175,7 @@ const FormAsks = () => {
       }
 
       setFormData({
+        id: '', // Reset question ID
         questionText: '',
         type: 'select',
         options: '',
@@ -183,7 +201,8 @@ const FormAsks = () => {
     if (!confirm('Bu soruyu silmek istediğinize emin misiniz?')) return
 
     try {
-      await deleteDoc(doc(db, getCollectionName('travelquestions', selectedLanguage), questionId))
+      const collectionName = getCollectionName('travelquestions', selectedLanguage)
+      await deleteDoc(doc(db, collectionName, questionId))
       showNotification('success', 'Soru başarıyla silindi')
       loadQuestions()
     } catch (error) {
@@ -195,6 +214,7 @@ const FormAsks = () => {
   const handleEdit = (question: Question) => {
     setEditingId(question.id)
     setFormData({
+      id: question.id, // Set question ID for editing
       questionText: question.questionText,
       type: question.type,
       options: question.options.join(', '),
@@ -208,79 +228,25 @@ const FormAsks = () => {
     setShowForm(true)
   }
 
-  // JSON İçe Aktar
-  const handleImportJSON = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (!file) return
-
-    try {
-      const text = await file.text()
-      const data = JSON.parse(text)
-      
-      // Steps'i işle
-      if (data.steps && Array.isArray(data.steps)) {
-        for (const step of data.steps) {
-          const existing = steps.find(s => s.number === step.number)
-          if (existing) {
-            await updateDoc(doc(db, getCollectionName('travelsteps', selectedLanguage), existing.id), {
-              name: step.name,
-            })
-          } else {
-            await addDoc(collection(db, getCollectionName('travelsteps', selectedLanguage)), {
-              number: step.number,
-              name: step.name,
-            })
-          }
-        }
-      }
-
-      // Questions'ları işle
-      if (data.questions && Array.isArray(data.questions)) {
-        for (const question of data.questions) {
-          const questionData: any = {
-            questionText: question.questionText,
-            type: question.type,
-            options: question.options || [],
-            step: question.step,
-            required: question.required !== undefined ? question.required : true,
-            order: question.order || 1,
-            createdAt: new Date(),
-          }
-
-          if (question.triggerValue) questionData.triggerValue = question.triggerValue
-          if (question.additionalInputLabel) questionData.additionalInputLabel = question.additionalInputLabel
-          if (question.additionalInputType) questionData.additionalInputType = question.additionalInputType
-
-          await addDoc(collection(db, getCollectionName('travelquestions', selectedLanguage)), questionData)
-        }
-      }
-
-      showNotification('success', `${data.questions?.length || 0} soru başarıyla yüklendi!`)
-      loadQuestions()
-      loadSteps()
-      
-      // Input'u sıfırla
-      if (event.target) event.target.value = ''
-    } catch (error) {
-      console.error('JSON içe aktarma hatası:', error)
-      showNotification('error', 'JSON dosyası geçersiz. Lütfen kontrol ediniz.')
-    }
-  }
-
   const handleSaveSteps = async () => {
     try {
-      for (const step of steps) {
+      const collectionName = getCollectionName('travelsteps', selectedLanguage)
+      const updatedSteps = [...steps]
+      for (let i = 0; i < steps.length; i++) {
+        const step = steps[i]
         if (step.id) {
-          await updateDoc(doc(db, getCollectionName('travelsteps', selectedLanguage), step.id), {
+          await updateDoc(doc(db, collectionName, step.id), {
             name: step.name,
           })
         } else {
-          await addDoc(collection(db, getCollectionName('travelsteps', selectedLanguage)), {
+          const docRef = await addDoc(collection(db, collectionName), {
             number: step.number,
             name: step.name,
           })
+          updatedSteps[i] = { ...step, id: docRef.id }
         }
       }
+      setSteps(updatedSteps)
       showNotification('success', 'Adım isimleri başarıyla kaydedildi')
       setShowStepsForm(false)
       loadSteps()
@@ -290,13 +256,66 @@ const FormAsks = () => {
     }
   }
 
-  const getStepName = (stepNumber: number): string => {
-    const step = steps.find((s) => s.number === stepNumber)
-    return step ? step.name : `Adım ${stepNumber}`
+  // JSON İçe Aktar
+  const handleImportJSON = async (jsonData: any) => {
+    if (!Array.isArray(jsonData)) {
+      showNotification('error', 'Geçersiz JSON formatı. Bir dizi bekleniyor.')
+      return
+    }
+
+    setLoading(true)
+    try {
+      const collectionName = getCollectionName('travelquestions', selectedLanguage)
+      const batch = writeBatch(db)
+
+      jsonData.forEach((item) => {
+        const docRef = doc(collection(db, collectionName))
+        batch.set(docRef, {
+          ...item,
+          createdAt: new Date(),
+        })
+      })
+
+      await batch.commit()
+      showNotification('success', 'JSON başarıyla içe aktarıldı')
+      loadQuestions()
+    } catch (error) {
+      console.error('JSON içe aktarma hatası:', error)
+      showNotification('error', 'JSON içe aktarılırken bir hata oluştu')
+    } finally {
+      setLoading(false)
+    }
   }
 
-  // JSON İçe Aktar
- 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      try {
+        const jsonData = JSON.parse(event.target?.result as string)
+        handleImportJSON(jsonData)
+      } catch (error) {
+        console.error('JSON parse hatası:', error)
+        showNotification('error', 'Geçersiz JSON dosyası')
+      }
+    }
+    reader.readAsText(file)
+  }
+
+  const handleExportJSON = () => {
+    const dataStr = JSON.stringify(questions, null, 2)
+    const blob = new Blob([dataStr], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'questions.json'
+    link.click()
+
+    URL.revokeObjectURL(url)
+  }
 
   const groupedQuestions = questions.reduce(
     (acc, q) => {
@@ -330,35 +349,25 @@ const FormAsks = () => {
           {notification.message}
         </div>
       )}
-        <LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
-
+  <LanguageSelector
+        selectedLanguage={selectedLanguage}
+        onLanguageChange={(lang) => {
+          setSelectedLanguage(lang)
+          loadQuestions()
+          loadSteps()
+        }}
+      />
       {/* Başlık ve Butonlar */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', gap: '10px', flexWrap: 'wrap' }}>
-        <h2 style={{ margin: 0, fontSize: '24px', fontWeight: 'bold' }}>Soru Yönetimi</h2>
+    
+        <h2 style={{ margin: 0, fontSize: '28px', fontWeight: 'bold' }}>Soru Yönetimi</h2>
         <div style={{ display: 'flex', gap: '10px' }}>
-        
-          <button
-            onClick={() => setShowStepsForm(!showStepsForm)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '10px 20px',
-              backgroundColor: '#6b7280',
-              color: 'white',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontWeight: '600',
-            }}
-          >
-            <MdEdit size={18} />
-            Adım İsimleri Düzenle
-          </button>
+       
           <button
             onClick={() => {
               setEditingId(null)
               setFormData({
+                id: '', // Reset question ID
                 questionText: '',
                 type: 'select',
                 options: '',
@@ -403,7 +412,7 @@ const FormAsks = () => {
         >
           <h3 style={{ marginTop: 0, marginBottom: '20px' }}>Adım İsimleri</h3>
           <div style={{ display: 'grid', gap: '16px', marginBottom: '20px' }}>
-            {Array.from({ length: 3 }).map((_, i) => {
+            {Array.from({ length: 7 }).map((_, i) => {
               const stepNum = i + 1
               const currentStep = steps.find((s) => s.number === stepNum)
               return (
@@ -465,7 +474,7 @@ const FormAsks = () => {
                 alignItems: 'center',
                 gap: '8px',
                 padding: '10px 24px',
-                backgroundColor: '#d7b76e',
+                backgroundColor: '#10b981',
                 color: 'white',
                 border: 'none',
                 borderRadius: '6px',
@@ -492,6 +501,27 @@ const FormAsks = () => {
           }}
         >
           <form onSubmit={handleSubmit}>
+            {/* Soru ID */}
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', fontWeight: '500', marginBottom: '8px', fontSize: '14px' }}>
+                Soru ID *
+              </label>
+              <input
+                type="text"
+                placeholder="Soru ID giriniz..."
+                value={formData.id}
+                onChange={(e) => setFormData({ ...formData, id: e.target.value })}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  border: '1px solid #ddd',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  boxSizing: 'border-box',
+                }}
+              />
+            </div>
+
             {/* Soru Metni */}
             <div style={{ marginBottom: '20px' }}>
               <label style={{ display: 'block', fontWeight: '500', marginBottom: '8px', fontSize: '14px' }}>
@@ -584,10 +614,9 @@ const FormAsks = () => {
                 >
                   {Array.from({ length: 7 }).map((_, i) => {
                     const stepNum = i + 1
-                    const stepName = getStepName(stepNum)
                     return (
                       <option key={stepNum} value={stepNum}>
-                        {stepName}
+                        {getStepName(stepNum)}
                       </option>
                     )
                   })}
@@ -695,6 +724,7 @@ const FormAsks = () => {
               </div>
             </div>
 
+          
             {/* Butonlar */}
             <div className={styles.contentServicesSaveButtonContainer}>
               <button
@@ -703,6 +733,7 @@ const FormAsks = () => {
                   setShowForm(false)
                   setEditingId(null)
                   setFormData({
+                    id: '', // Reset question ID
                     questionText: '',
                     type: 'select',
                     options: '',
@@ -730,7 +761,7 @@ const FormAsks = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={styles.contentServicesSaveBtn} style={{backgroundColor:'#d7b76e'}}
+                className={styles.contentServicesSaveBtn} style={{backgroundColor: '#d7b76e'}}
               >
                 <MdSave size={18} />
                 {loading ? 'Yükleniyor...' : editingId ? 'Güncelle' : 'Kaydet'}
@@ -789,7 +820,7 @@ const FormAsks = () => {
                         <div style={{ display: 'flex', gap: '12px', fontSize: '12px', color: '#6b7280' }}>
                           <span
                             style={{
-                              backgroundColor: '#fef3e2',
+                               backgroundColor: 'rgb(255, 248, 228)',
                               color: '#d7b76e',
                               padding: '4px 8px',
                               borderRadius: '4px',
@@ -809,6 +840,7 @@ const FormAsks = () => {
                           {question.required && (
                             <span
                               style={{
+                                backgroundColor: 'rgb(254, 226, 226)',
                                 color: '#dc2626',
                                 padding: '4px 8px',
                                 borderRadius: '4px',
@@ -835,7 +867,7 @@ const FormAsks = () => {
                             justifyContent: 'center',
                             gap: '4px',
                             padding: '6px 12px',
-                            background: '#fef3e2',
+                             backgroundColor: 'rgb(255, 248, 228)',
                             color: '#d7b76e',
                             border: 'none',
                             borderRadius: '4px',

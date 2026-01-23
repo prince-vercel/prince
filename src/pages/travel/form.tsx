@@ -10,8 +10,10 @@ import { getCollectionName } from '../../lib/localization'
 import i18n from '../../i18n'
 import '../../i18n'
 
+// Update Question interface to include globalId
 interface Question {
   id: string
+  globalId: string // Added globalId as the primary key
   questionText: string
   type: 'select' | 'checkbox' | 'text' | 'date' | 'radio'
   options: string[]
@@ -49,10 +51,20 @@ const Form = () => {
         const stepsCollection = getCollectionName('travelsteps', i18n.language)
         const stepsRef = collection(db, stepsCollection)
         const stepsSnapshot = await getDocs(stepsRef)
-        const stepsData = stepsSnapshot.docs.map(doc => ({
+        let stepsData = stepsSnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         })) as StepName[]
+
+        // Add default step names if missing
+        if (stepsData.length === 0) {
+          stepsData = Array.from({ length: 5 }, (_, i) => ({
+            id: `default-step-${i + 1}`,
+            number: i + 1,
+            name: `Adım ${i + 1}` // Updated to "Adım X" instead of just the number
+          }))
+        }
+
         setSteps(stepsData.sort((a, b) => a.number - b.number))
 
         // Fetch questions
@@ -66,23 +78,12 @@ const Form = () => {
         questionsData.sort((a, b) => (a.step === b.step ? a.order - b.order : a.step - b.step))
         setQuestions(questionsData)
 
-        // Initialize formData with empty strings for all questions
+        // Initialize formData with globalId
         const initialData: Record<string, string> = {}
         questionsData.forEach(q => {
-          initialData[q.id] = ''
+          initialData[q.globalId] = ''
         })
         setFormData(initialData)
-
-        // Fetch unique cities from traveltours for future use if needed
-        // const toursRef = collection(db, 'traveltours')
-        // const toursSnapshot = await getDocs(toursRef)
-        // const uniqueCities = new Set<string>()
-        // toursSnapshot.docs.forEach((doc) => {
-        //   const data = doc.data()
-        //   if (data.location) {
-        //     uniqueCities.add(data.location)
-        //   }
-        // })
 
         setLoading(false)
       } catch (error) {
@@ -124,7 +125,7 @@ const Form = () => {
 
   const handleSubmit = async () => {
     // Check all required fields
-    const missingRequired = requiredQuestions.some(q => !formData[q.id] || formData[q.id].trim() === '')
+    const missingRequired = requiredQuestions.some(q => !formData[q.globalId] || formData[q.globalId].trim() === '')
     if (missingRequired) {
       setError(true)
       setTimeout(() => setError(false), 3000)
@@ -132,12 +133,11 @@ const Form = () => {
     }
 
     try {
-      const submitData = {
-        answers: { ...formData },
+      await addDoc(collection(db, 'travelforms'), {
+        answers: formData, // Use formData directly
         createdAt: serverTimestamp(),
-      }
-
-      await addDoc(collection(db, 'travelforms'), submitData)
+        lang: i18n.language // Include language in the submission
+      })
 
       // Email gönderme
       const emailContent = generateEmailContent(formData)
@@ -147,7 +147,7 @@ const Form = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          to: 'happencodedestek@gmail.com',
+          to: 'tourism@princetourismagency.com',
           subject: 'Yeni Turizm Form Başvurusu',
           message: emailContent,
           recipientName: 'Prince'
@@ -158,7 +158,7 @@ const Form = () => {
       // Reset form data
       const initialData: Record<string, string> = {}
       questions.forEach(q => {
-        initialData[q.id] = ''
+        initialData[q.globalId] = ''
       })
       setFormData(initialData)
       setStep(0)
@@ -253,8 +253,8 @@ const Form = () => {
                         {question.type === 'text' && (
                           <input
                             type="text"
-                            name={question.id}
-                            value={formData[question.id] || ''}
+                            name={question.globalId} // Updated to globalId
+                            value={formData[question.globalId] || ''} // Updated to globalId
                             onChange={handleInputChange}
                             className="input_style__primary w-full"
                             placeholder={question.questionText}
@@ -264,8 +264,8 @@ const Form = () => {
                         {question.type === 'date' && (
                           <input
                             type="date"
-                            name={question.id}
-                            value={formData[question.id] || ''}
+                            name={question.globalId} // Updated to globalId
+                            value={formData[question.globalId] || ''} // Updated to globalId
                             onChange={handleInputChange}
                             className="input_style__primary w-full"
                           />
@@ -273,8 +273,8 @@ const Form = () => {
 
                         {question.type === 'select' && (
                           <select
-                            name={question.id}
-                            value={formData[question.id] || ''}
+                            name={question.globalId} // Updated to globalId
+                            value={formData[question.globalId] || ''} // Updated to globalId
                             onChange={handleInputChange}
                             className="input_style__primary w-full"
                           >
@@ -293,9 +293,9 @@ const Form = () => {
                               <label key={option} className="flex items-center gap-2 cursor-pointer">
                                 <input
                                   type="radio"
-                                  name={question.id}
+                                  name={question.globalId} // Updated to globalId
                                   value={option}
-                                  checked={formData[question.id] === option}
+                                  checked={formData[question.globalId] === option}
                                   onChange={handleInputChange}
                                   className="cursor-pointer"
                                 />
@@ -308,7 +308,7 @@ const Form = () => {
                         {question.type === 'checkbox' && (
                           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-start', marginTop: '8px' }}>
                             {question.options.map((opt) => {
-                              const selectedValues = formData[question.id]?.split(',').filter(v => v) || []
+                              const selectedValues = formData[question.globalId]?.split(',').filter(Boolean) || []
                               const isSelected = selectedValues.includes(opt)
                               return (
                                 <label
@@ -335,7 +335,7 @@ const Form = () => {
                                         : [...selectedValues, opt]
                                       setFormData(prev => ({
                                         ...prev,
-                                        [question.id]: newValues.join(',')
+                                        [question.globalId]: newValues.join(',') // Updated to globalId
                                       }))
                                     }}
                                     style={{ display: 'none' }}

@@ -11,7 +11,8 @@ import '../../i18n'
 import '../../styles/visa/BasvuruYap.css'
 
 interface Question {
-  id: string
+  id: string // Firestore doc id (snapshot only)
+  globalId: string // Unique identifier for forms and answers
   questionText: string
   type: 'select' | 'checkbox' | 'text' | 'date' | 'radio'
   options: string[]
@@ -82,7 +83,8 @@ export default function BasvuruYapPage() {
         .map((d) => {
           const data = d.data() as any
           return {
-            id: d.id,
+            id: d.id, // Firestore doc id
+            globalId: data.id, // Unique identifier
             questionText: data.questionText || '',
             type: data.type,
             options: Array.isArray(data.options) ? data.options : [],
@@ -130,18 +132,29 @@ export default function BasvuruYapPage() {
 
   const getStepName = (n: number) => steps.find((s) => s.number === n)?.name || `Adım ${n}`
 
-  const setAnswerValue = (questionId: string, value: any) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: value }))
+  const setAnswerValue = (globalId: string, value: any) => {
+    setAnswers((prev) => ({ ...prev, [globalId]: value }))
   }
 
-  const setExtraValue = (questionId: string, value: any) => {
-    setAnswers((prev) => ({ ...prev, [`${questionId}__extra`]: value }))
+  const setExtraValue = (globalId: string, value: any) => {
+    setAnswers((prev) => ({ ...prev, [`${globalId}__extra`]: value }))
   }
 
-  const getExtraValue = (questionId: string) => answers[`${questionId}__extra`]
+  const getExtraValue = (globalId: string) => answers[`${globalId}__extra`]
+
+  const getQuestionText = (globalId: string): string => {
+    if (globalId.endsWith('__extra')) {
+      const base = globalId.replace('__extra', '')
+      const q = questions.find((q) => q.globalId === base)
+      return q?.additionalInputLabel || 'Ek Bilgi'
+    }
+
+    const q = questions.find((q) => q.globalId === globalId)
+    return q ? q.questionText : globalId
+  }
 
   const isFilled = (q: Question) => {
-    const v = answers[q.id]
+    const v = answers[q.globalId]
     if (q.type === 'checkbox') return Array.isArray(v) && v.length > 0
     return v !== undefined && v !== null && String(v).trim() !== ''
   }
@@ -152,13 +165,13 @@ export default function BasvuruYapPage() {
     if (!q.triggerValue) return true
 
     if (q.type === 'checkbox') {
-      if (Array.isArray(answers[q.id]) && answers[q.id].includes(q.triggerValue)) {
-        const extra = getExtraValue(q.id)
+      if (Array.isArray(answers[q.globalId]) && answers[q.globalId].includes(q.triggerValue)) {
+        const extra = getExtraValue(q.globalId)
         return extra !== undefined && extra !== null && String(extra).trim() !== ''
       }
     } else {
-      if (answers[q.id] === q.triggerValue) {
-        const extra = getExtraValue(q.id)
+      if (answers[q.globalId] === q.triggerValue) {
+        const extra = getExtraValue(q.globalId)
         return extra !== undefined && extra !== null && String(extra).trim() !== ''
       }
     }
@@ -181,12 +194,12 @@ export default function BasvuruYapPage() {
       if (!isFilled(q)) return false
       if (q.triggerValue) {
         if (q.type === 'checkbox') {
-          if (Array.isArray(answers[q.id]) && answers[q.id].includes(q.triggerValue)) {
-            const extra = getExtraValue(q.id)
+          if (Array.isArray(answers[q.globalId]) && answers[q.globalId].includes(q.triggerValue)) {
+            const extra = getExtraValue(q.globalId)
             return extra !== undefined && extra !== null && String(extra).trim() !== ''
           }
-        } else if (answers[q.id] === q.triggerValue) {
-          const extra = getExtraValue(q.id)
+        } else if (answers[q.globalId] === q.triggerValue) {
+          const extra = getExtraValue(q.globalId)
           return extra !== undefined && extra !== null && String(extra).trim() !== ''
         }
       }
@@ -204,7 +217,7 @@ export default function BasvuruYapPage() {
     const filled: Array<{ key: string; label: string; value: string }> = []
 
     questions.forEach((q) => {
-      const v = answers[q.id]
+      const v = answers[q.globalId]
       if (v === undefined || v === null) return
       if (Array.isArray(v) && v.length === 0) return
       if (!Array.isArray(v) && String(v).trim() === '') return
@@ -221,28 +234,28 @@ export default function BasvuruYapPage() {
       if (displayValue.length > 70) displayValue = displayValue.substring(0, 70) + '...'
 
       filled.push({
-        key: q.id,
+        key: q.globalId,
         label: q.questionText,
         value: displayValue,
       })
 
       if (q.triggerValue) {
         if (q.type === 'checkbox') {
-          if (Array.isArray(answers[q.id]) && answers[q.id].includes(q.triggerValue)) {
-            const extra = getExtraValue(q.id)
+          if (Array.isArray(answers[q.globalId]) && answers[q.globalId].includes(q.triggerValue)) {
+            const extra = getExtraValue(q.globalId)
             if (extra !== undefined && extra !== null && String(extra).trim() !== '') {
               filled.push({
-                key: `${q.id}__extra`,
+                key: `${q.globalId}__extra`,
                 label: q.additionalInputLabel || t('visa.pages.basvuruYap.fields.message', 'Ek bilgi'),
                 value: String(extra),
               })
             }
           }
-        } else if (answers[q.id] === q.triggerValue) {
-          const extra = getExtraValue(q.id)
+        } else if (answers[q.globalId] === q.triggerValue) {
+          const extra = getExtraValue(q.globalId)
           if (extra !== undefined && extra !== null && String(extra).trim() !== '') {
             filled.push({
-              key: `${q.id}__extra`,
+              key: `${q.globalId}__extra`,
               label: q.additionalInputLabel || t('visa.pages.basvuruYap.fields.message', 'Ek bilgi'),
               value: String(extra),
             })
@@ -259,8 +272,8 @@ export default function BasvuruYapPage() {
     let content = '<h2>Yeni Vize Başvurusu</h2><p>Aşağıda form detayları bulunmaktadır:</p><ul>'
 
     questions.forEach((question) => {
-      const answer = values[question.id]
-      const additionalAnswer = values[`${question.id}__extra`]
+      const answer = values[question.globalId]
+      const additionalAnswer = values[`${question.globalId}__extra`]
 
       if (answer) {
         let displayAnswer = Array.isArray(answer) ? answer.join(', ') : answer
@@ -276,21 +289,21 @@ export default function BasvuruYapPage() {
   }
 
   const renderQuestion = (q: Question) => {
-    const v = answers[q.id]
+    const v = answers[q.globalId]
 
     if (q.type === 'text') {
       return (
         <div className="form-group full-width">
-          <label htmlFor={q.id}>
+          <label htmlFor={q.globalId}>
             {q.questionText} {q.required ? <span className="required">*</span> : null}
           </label>
           <div className="input-wrapper">
             <input
               type="text"
-              name={q.id}
-              id={q.id}
+              name={q.globalId}
+              id={q.globalId}
               value={v || ''}
-              onChange={(e) => setAnswerValue(q.id, e.target.value)}
+              onChange={(e) => setAnswerValue(q.globalId, e.target.value)}
               placeholder={q.questionText}
               required={q.required}
             />
@@ -300,14 +313,14 @@ export default function BasvuruYapPage() {
             <div className="input-wrapper" style={{ marginTop: '12px' }}>
               <input
                 type={q.additionalInputType || 'text'}
-                name={`${q.id}__extra`}
-                id={`${q.id}__extra`}
-                value={getExtraValue(q.id) || ''}
-                onChange={(e) => setExtraValue(q.id, e.target.value)}
+                name={`${q.globalId}__extra`}
+                id={`${q.globalId}__extra`}
+                value={getExtraValue(q.globalId) || ''}
+                onChange={(e) => setExtraValue(q.globalId, e.target.value)}
                 placeholder=" "
                 required
               />
-              <label htmlFor={`${q.id}__extra`}>{q.additionalInputLabel || t('visa.pages.basvuruYap.fields.message', 'Ek bilgi')}</label>
+              <label htmlFor={`${q.globalId}__extra`}>{q.additionalInputLabel || 'Ek bilgi'}</label>
             </div>
           ) : null}
         </div>
@@ -317,16 +330,16 @@ export default function BasvuruYapPage() {
     if (q.type === 'date') {
       return (
         <div className="form-group">
-          <label htmlFor={q.id}>
+          <label htmlFor={q.globalId}>
             {q.questionText} {q.required ? <span className="required">*</span> : null}
           </label>
           <div className="input-wrapper">
             <input
               type="date"
-              name={q.id}
-              id={q.id}
+              name={q.globalId}
+              id={q.globalId}
               value={v || ''}
-              onChange={(e) => setAnswerValue(q.id, e.target.value)}
+              onChange={(e) => setAnswerValue(q.globalId, e.target.value)}
               placeholder={q.questionText}
               required={q.required}
             />
@@ -337,14 +350,14 @@ export default function BasvuruYapPage() {
             <div className="input-wrapper" style={{ marginTop: '12px' }}>
               <input
                 type={q.additionalInputType || 'text'}
-                name={`${q.id}__extra`}
-                id={`${q.id}__extra`}
-                value={getExtraValue(q.id) || ''}
-                onChange={(e) => setExtraValue(q.id, e.target.value)}
+                name={`${q.globalId}__extra`}
+                id={`${q.globalId}__extra`}
+                value={getExtraValue(q.globalId) || ''}
+                onChange={(e) => setExtraValue(q.globalId, e.target.value)}
                 placeholder=" "
                 required
               />
-              <label htmlFor={`${q.id}__extra`}>{q.additionalInputLabel || t('visa.pages.basvuruYap.fields.message', 'Ek bilgi')}</label>
+              <label htmlFor={`${q.globalId}__extra`}>{q.additionalInputLabel || 'Ek bilgi'}</label>
             </div>
           ) : null}
         </div>
@@ -354,15 +367,15 @@ export default function BasvuruYapPage() {
     if (q.type === 'select') {
       return (
         <div className="form-group">
-          <label htmlFor={q.id}>
+          <label htmlFor={q.globalId}>
             {q.questionText} {q.required ? <span className="required">*</span> : null}
           </label>
           <div className="select-wrapper">
             <select
-              name={q.id}
-              id={q.id}
+              name={q.globalId}
+              id={q.globalId}
               value={v || ''}
-              onChange={(e) => setAnswerValue(q.id, e.target.value)}
+              onChange={(e) => setAnswerValue(q.globalId, e.target.value)}
               required={q.required}
             >
               <option value="" disabled>
@@ -385,14 +398,14 @@ export default function BasvuruYapPage() {
             <div className="input-wrapper" style={{ marginTop: '12px' }}>
               <input
                 type={q.additionalInputType || 'text'}
-                name={`${q.id}__extra`}
-                id={`${q.id}__extra`}
-                value={getExtraValue(q.id) || ''}
-                onChange={(e) => setExtraValue(q.id, e.target.value)}
+                name={`${q.globalId}__extra`}
+                id={`${q.globalId}__extra`}
+                value={getExtraValue(q.globalId) || ''}
+                onChange={(e) => setExtraValue(q.globalId, e.target.value)}
                 placeholder=" "
                 required
               />
-              <label htmlFor={`${q.id}__extra`}>{q.additionalInputLabel || t('visa.pages.basvuruYap.fields.message', 'Ek bilgi')}</label>
+              <label htmlFor={`${q.globalId}__extra`}>{q.additionalInputLabel || 'Ek bilgi'}</label>
             </div>
           ) : null}
         </div>
@@ -410,10 +423,10 @@ export default function BasvuruYapPage() {
               <label key={opt} className="radio-card">
                 <input
                   type="radio"
-                  name={q.id}
+                  name={q.globalId}
                   value={opt}
                   checked={v === opt}
-                  onChange={() => setAnswerValue(q.id, opt)}
+                  onChange={() => setAnswerValue(q.globalId, opt)}
                   required={q.required}
                 />
                 <span className="radio-card-content">
@@ -428,14 +441,14 @@ export default function BasvuruYapPage() {
             <div className="input-wrapper" style={{ marginTop: '12px' }}>
               <input
                 type={q.additionalInputType || 'text'}
-                name={`${q.id}__extra`}
-                id={`${q.id}__extra`}
-                value={getExtraValue(q.id) || ''}
-                onChange={(e) => setExtraValue(q.id, e.target.value)}
+                name={`${q.globalId}__extra`}
+                id={`${q.globalId}__extra`}
+                value={getExtraValue(q.globalId) || ''}
+                onChange={(e) => setExtraValue(q.globalId, e.target.value)}
                 placeholder=" "
                 required
               />
-              <label htmlFor={`${q.id}__extra`}>{q.additionalInputLabel || t('visa.pages.basvuruYap.fields.message', 'Ek bilgi')}</label>
+              <label htmlFor={`${q.globalId}__extra`}>{q.additionalInputLabel || 'Ek bilgi'}</label>
             </div>
           ) : null}
         </div>
@@ -455,11 +468,11 @@ export default function BasvuruYapPage() {
               <label key={opt} className="radio-card">
                 <input
                   type="checkbox"
-                  name={`${q.id}[]`}
+                  name={`${q.globalId}[]`}
                   checked={checked}
                   onChange={() => {
                     const next = checked ? arr.filter((x) => x !== opt) : [...arr, opt]
-                    setAnswerValue(q.id, next)
+                    setAnswerValue(q.globalId, next)
                   }}
                 />
                 <span className="radio-card-content">
@@ -475,14 +488,14 @@ export default function BasvuruYapPage() {
           <div className="input-wrapper" style={{ marginTop: '12px' }}>
             <input
               type={q.additionalInputType || 'text'}
-              name={`${q.id}__extra`}
-              id={`${q.id}__extra`}
-              value={getExtraValue(q.id) || ''}
-              onChange={(e) => setExtraValue(q.id, e.target.value)}
+              name={`${q.globalId}__extra`}
+              id={`${q.globalId}__extra`}
+              value={getExtraValue(q.globalId) || ''}
+              onChange={(e) => setExtraValue(q.globalId, e.target.value)}
               placeholder=" "
               required
             />
-            <label htmlFor={`${q.id}__extra`}>{q.additionalInputLabel || t('visa.pages.basvuruYap.fields.message', 'Ek bilgi')}</label>
+            <label htmlFor={`${q.globalId}__extra`}>{q.additionalInputLabel || 'Ek bilgi'}</label>
           </div>
         ) : null}
       </div>
@@ -521,7 +534,7 @@ export default function BasvuruYapPage() {
     const requiredMissing = questions.some((q) => q.required && !isQuestionCompleted(q))
     if (requiredMissing) {
       setToastType('error')
-      setToastMessage(t('visa.pages.basvuruYap.error', 'Lütfen zorunlu alanları doldurun.'))
+      setToastMessage('Lütfen zorunlu alanları doldurun.')
       setShowToast(true)
       return
     }
@@ -537,7 +550,7 @@ export default function BasvuruYapPage() {
         createdAt: serverTimestamp(),
         answers,
         questionsSnapshot: questions.map((q) => ({
-          id: q.id,
+          globalId: q.globalId,
           questionText: q.questionText,
           type: q.type,
           step: q.step,
@@ -558,7 +571,7 @@ export default function BasvuruYapPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          to: 'happencodedestek@gmail.com',
+          to: 'visas@princetourismagency.com',
           subject: 'Yeni Vize Başvurusu',
           message: emailContent,
           recipientName: 'Prince'
@@ -581,7 +594,7 @@ export default function BasvuruYapPage() {
       setCurrentStep(stepNumbers[0] || 1)
     } catch (error) {
       setToastType('error')
-      setToastMessage(t('visa.pages.basvuruYap.error', 'Bir hata oluştu. Lütfen tekrar deneyin.'))
+      setToastMessage('Bir hata oluştu. Lütfen tekrar deneyin.')
       setShowToast(true)
     } finally {
       setIsLoading(false)
@@ -659,17 +672,17 @@ export default function BasvuruYapPage() {
                     <div className="form-grid">
                       {currentStepQuestions.map((q) => {
                         if (q.type === 'text' && (q.questionText || '').toLowerCase().includes('telefon')) {
-                          const v = answers[q.id] || ''
+                          const v = answers[q.globalId] || ''
                           return (
                             <div key={q.id} className="form-group">
-                              <label htmlFor={q.id}>
+                              <label htmlFor={q.globalId}>
                                 {q.questionText} {q.required ? <span className="required">*</span> : null}
                               </label>
                               <div className="input-wrapper">
                                 <input
                                   type="tel"
-                                  name={q.id}
-                                  id={q.id}
+                                  name={q.globalId}
+                                  id={q.globalId}
                                   value={v}
                                   onChange={handlePhoneInput}
                                   placeholder={q.questionText}

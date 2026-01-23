@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/preserve-manual-memoization */
 /* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
@@ -9,13 +8,12 @@ import {
   getDocs,
   query,
   orderBy,
-  limit,
-  startAfter,
   getCountFromServer,
   deleteDoc,
   doc
 } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
+import { getCollectionName } from '@/src/lib/localization'
 import styles from '@/src/styles/admin.module.css'
 import SendEmail from '@/src/components/SendEmail'
 import { MdDelete, MdEmail, MdExpandMore, MdExpandLess } from 'react-icons/md'
@@ -23,6 +21,7 @@ import { AdminTravelLayout } from '@/src/components/AdminComponents/travel/Admin
 
 interface Question {
   id: string
+  globalId: string // Added globalId as the primary key
   questionText: string
   type: 'select' | 'checkbox' | 'text' | 'date' | 'radio'
   options: string[]
@@ -70,7 +69,9 @@ const GetForms = () => {
 
   const fetchQuestions = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'travelquestions'))
+      const querySnapshot = await getDocs(
+        collection(db, getCollectionName('travelquestions', 'tr')) // Always fetch from Turkish collection
+      )
       const questionsData: Question[] = []
       querySnapshot.forEach((doc) => {
         questionsData.push({
@@ -83,11 +84,6 @@ const GetForms = () => {
     } catch (error) {
       console.error('Soru yükleme hatası:', error)
     }
-  }
-
-  const getQuestionText = (questionId: string): string => {
-    const question = questions.find(q => q.id === questionId)
-    return question ? question.questionText : questionId
   }
 
   const deleteMedicalForm = async (id: string) => {
@@ -121,16 +117,16 @@ const GetForms = () => {
     setForms(list)
   }, [])
 
-const hasFetched = useRef(false)
+  const hasFetched = useRef(false)
 
-useEffect(() => {
-  if (hasFetched.current) return
-  hasFetched.current = true
+  useEffect(() => {
+    if (hasFetched.current) return
+    hasFetched.current = true
 
-  fetchQuestions()
-  fetchForms()
-  fetchCount()
-}, [])
+    fetchQuestions()
+    fetchForms()
+    fetchCount()
+  }, [fetchForms])
 
 
   return (
@@ -209,8 +205,8 @@ useEffect(() => {
                       return String(nameData).toLowerCase().includes(filterName.toLowerCase())
                     })
                     .map((item, index) => {
-                      const nameData = item.answers?.['3Ep6SK3ytFKskW6XacTN'] || item.name || 'İsim Bilinmiyor'
-                      const locationData = item.answers?.['2PbarmXMOjCuAQNFLpbA'] || item.destination || 'Yer Bilinmiyor'
+                      const nameData = getAnswerByGlobalId(item.answers || {}, 'full_name') || 'İsim Yok'
+                      const locationData = getAnswerByGlobalId(item.answers || {}, 'destination') || 'Yer Yok'
                       
                       const email = item.email || ''
 
@@ -292,23 +288,14 @@ useEffect(() => {
                                 <div className={styles.gfSection}>
                                   <h3>Başvuru Detayları</h3>
                                   <div className={styles.gfFields}>
-                                    {questions.map(question => {
-                                      const answer = item.answers?.[question.id]
-                                      const additionalAnswer = item.answers?.[`${question.id}_additional`]
-                                      
+                                    {questions.map(q => {
+                                      const answer = getAnswerByGlobalId(item.answers || {}, q.globalId)
                                       if (!answer) return null
 
                                       return (
-                                        <div key={question.id} className={styles.gfField}>
-                                          <label>{question.questionText}</label>
-                                          <div>
-                                            {Array.isArray(answer) ? answer.join(', ') : String(answer)}
-                                            {additionalAnswer && (
-                                              <div style={{ marginTop: '8px', fontSize: '12px', color: '#666', fontStyle: 'italic' }}>
-                                                ({question.additionalInputLabel}: {additionalAnswer})
-                                              </div>
-                                            )}
-                                          </div>
+                                        <div key={q.globalId} className={styles.gfField}>
+                                          <label>{q.questionText}</label>
+                                          <div>{answer}</div>
                                         </div>
                                       )
                                     })}
@@ -366,3 +353,13 @@ useEffect(() => {
 }
 
 export default GetForms
+
+// Define getAnswerByGlobalId helper function
+const getAnswerByGlobalId = (
+  answers: Record<string, any>,
+  globalId: string
+): string => {
+  const value = answers?.[globalId]
+  if (!value) return ''
+  return Array.isArray(value) ? value.join(', ') : String(value)
+}

@@ -228,7 +228,7 @@ export default function AppointmentSection() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          to: 'happencodedestek@gmail.com',
+          to: 'medical@princetourismagency.com',
           subject: 'Yeni Medikal Form Başvurusu',
           message: emailContent,
           recipientName: 'Prince'
