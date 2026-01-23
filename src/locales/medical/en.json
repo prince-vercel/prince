@@ -14,7 +14,7 @@
         },
         "footer": {
             "description": "Prince Invest Group",
-            "address": "Dap Vadisi Z Ofis, Merkez, Seçkin Sk. Z ofis, Kat 2, Daire 229, 34406 Kağıthane/İstanbul",
+            "address": "Dap Valley Z Office, Center, Seçkin St. Z office, Floor 2, Apartment 229, 34406 Kağıthane/Istanbul",
             "phone": "+90 212 000 00 00",
             "email": "medical@princetourismagency.com",
             "medicalEmail": "medical@princetourismagency.com",
@@ -25,7 +25,7 @@
             "contact": "Contact",
             "faqs": "Frequently Asked Questions",
             "privacyPolicy": "Privacy Policy",
-            "kvkk": "KVKK & Clarification",
+            "kvkk": "GDPR Information Notice",
             "newsletter": {
                 "title": "Join Us",
                 "description": "Sign up for our email list for campaigns, innovations, and health content.",
@@ -118,7 +118,7 @@
                 "about": "About Us",
                 "faqs": "Frequently Asked Questions",
                 "privacy": "Privacy Policy",
-                "kvkk": "KVKK & Clarification",
+                "kvkk": "GDPR Information Notice",
                 "organisation": "Organizations",
                 "results": "Happy Results",
                 "form": "Application"
@@ -157,6 +157,12 @@
                 "partners": {
                     "loading": "Loading partners...",
                     "noPartners": "No partners yet."
+                },
+                "sections": {
+                    "groupDescription": "Prince Invest Group is a multinational holding company operating in the fields of Healthcare Services and Health Tourism, Tourism & Travel, and Visa Consultancy in Europe, Africa, Middle East and Gulf regions.",
+                    "healthServices": "Healthcare Services and Health Tourism In Turkey, which has become the heart of medical tourism in the world, Prince Medical, which adopts the principle of working with world-class healthcare facilities and the best healthcare professionals in their fields, offers a package service including transportation, accommodation and transfer to the patients and clients it hosts from abroad, and guides them through all stages of the treatment process.",
+                    "medicalCenter": "In Turkey, which has become the center of medical tourism worldwide, Prince Medical provides high-standard healthcare services by collaborating with internationally accredited hospitals and leading healthcare professionals in their fields. Prince Medical, which specializes in dental treatments, plastic and aesthetic surgery, and hair transplantation, also provides general surgical operations and physiotherapy programs supported by advanced technology robo-rehabilitation applications.",
+                    "patientJourney": "Each patient's journey begins with free online medical consultation based on medical history, photos and, when necessary, X-ray images. With the patient's arrival in Turkey, personalized and all-inclusive health packages are offered, covering flight tickets, accommodation, VIP transfers and professional coordination of the entire treatment process. From the initial consultation to the post-treatment recovery process, Prince Medical provides trust, comfort and professional guidance at every stage."
                 }
             },
             "blog": {

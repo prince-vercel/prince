@@ -53,7 +53,7 @@
       "contact": "Contact",
       "faq": "Frequently Asked Questions",
       "privacy": "Privacy Policy",
-      "kvkk": "KVKK & Disclosure",
+      "kvkk": "GDPR Information Notice",
       "newsletter": {
         "title": "Join Us",
         "description": "Subscribe to our email list for campaigns, updates and visa content.",
@@ -315,6 +315,7 @@
     "featured": {
       "title": "Speeding up visa documents has never been this easy.",
       "description": "No more searching for the right document list for hours! With Prince, you can arrange all your official documents quickly, easily and from a single institution and apply for a visa. Get information from visa experts immediately.",
+      "highlight": "quickly, easily and from a single institution",
       "features": [
         "Customer Service",
         "Service Contract",
@@ -756,7 +757,7 @@
               "description": "Our client who went to the UK with his family by getting work visa service."
             },
             "11": {
-              "title": "ONLINE VISA APPLICATION PROCESS with ÇİLEK VİZE – Easy and Fast!",
+              "title": "ONLINE VISA APPLICATION PROCESS with PRINCE VİZE – Easy and Fast!",
               "description": "Online visa application with Prince is now very easy!\r\nIn this video, we provide step-by-step guidance to complete your visa procedures quickly and smoothly."
             },
             "12": {
@@ -1022,7 +1023,7 @@
         },
         "note": {
           "title": "Note",
-          "description": "As Çilek Vize, we provide TIR driver visa services along with fast appointment (VIP) services."
+          "description": "As Prince Vize, we provide TIR driver visa services along with fast appointment (VIP) services."
         }
       },
       "residencePermit": {
@@ -1122,7 +1123,78 @@
         },
         "note": {
           "title": "Note",
-          "description": "As Çilek Vize, we provide consultancy services to foreign nationals for obtaining residence permits in Turkey. For detailed information, individuals are advised to contact their residence permit specialist."
+          "description": "As Prince Vize, we provide consultancy services to foreign nationals for obtaining residence permits in Turkey. For detailed information, individuals are advised to contact their residence permit specialist."
+        }
+      },
+      "kisiselVerilerinKorunmaKanunu": {
+        "title": "Personal Data Protection Law",
+        "heading": "GDPR",
+        "content": "As Prince Vize, the security of your personal data is important to us. In accordance with Law No. 6698 on the Protection of Personal Data (\"GDPR\"), we take all necessary measures regarding the processing, storage and protection of your personal data."
+      },
+      "gizlilikPolitikasi": {
+        "title": "Privacy Policy",
+        "companyName": "PRINCE GRUP DANIŞMANLIK TURİZM SEYAHAT EĞİTİM MEDYA SANAYİ VE TİCARET LİMİTED ŞİRKETİ",
+        "mainTitle": "Corporate Information and Privacy Policy",
+        "intro1": "PRINCE GRUP DANIŞMANLIK TURİZM SEYAHAT EĞİTİM MEDYA SANAYİ VE TİCARET LİMİTED ŞİRKETİ (referred to as \"Prince Vize\") operates in the field of visa consultancy and travel services and attaches great importance to the privacy and security of its customers' personal data.",
+        "intro2": "This text has been prepared to explain for what purposes personal data collected through our website, digital forms, phone calls and advertising channels are processed, how they are protected and your rights.",
+        "section1": {
+          "title": "1. Personal Data Collected",
+          "intro": "The following personal data may be processed by us:",
+          "item1": "Name and surname",
+          "item2": "Phone number",
+          "item3": "Email address",
+          "item4": "Visa type and country information applied for",
+          "item5": "Branch preference (Izmir, Bursa, etc.)",
+          "item6": "Request and message contents",
+          "item7": "Technical data from website and advertising sources (UTM, device type, etc.)"
+        },
+        "section2": {
+          "title": "2. Method of Collection of Personal Data",
+          "intro": "Your personal data;",
+          "item1": "Application and information forms on our website",
+          "item2": "Google Ads advertisements (search, phone, form extensions)",
+          "item3": "Phone calls",
+          "item4": "WhatsApp and other communication channels",
+          "outro": "is collected through automatic or partially automatic means."
+        },
+        "section3": {
+          "title": "3. Purposes of Processing Personal Data",
+          "intro": "Your collected personal data:",
+          "item1": "Providing visa consultancy services",
+          "item2": "Initiating and tracking the appointment process",
+          "item3": "Providing information about the requested service",
+          "item4": "Providing callback by phone",
+          "item5": "Improving service quality",
+          "item6": "Fulfilling legal obligations",
+          "outro": "is processed limited to these purposes."
+        },
+        "section4": {
+          "title": "4. Protection of Personal Data",
+          "brand": "Prince Vize:",
+          "item1": "Protection of personal data against unauthorized access",
+          "item2": "Ensuring data security",
+          "item3": "Preventing illegal uses",
+          "outro1": "takes all necessary technical and administrative measures.",
+          "outro2": "Your personal data is not shared with third parties without permission, and can only be shared in case of legal obligations or service requirements."
+        },
+        "section5": {
+          "title": "5. Your Rights Under GDPR",
+          "intro": "Under Law No. 6698 on the Protection of Personal Data (GDPR);",
+          "item1": "Learning whether your personal data is processed",
+          "item2": "Requesting information if it has been processed",
+          "item3": "Requesting correction of incorrectly or incompletely processed data",
+          "item4": "Requesting deletion or destruction of data",
+          "item5": "Requesting compensation for damages if processing is contrary to the law",
+          "outro1": "you have the right.",
+          "outro2": "You can contact us to exercise these rights."
+        },
+        "section6": {
+          "title": "6. Contact Information",
+          "label1": "Company Name:",
+          "label2": "Brand:",
+          "label3": "Web:",
+          "label4": "Phone:",
+          "brand": "Prince Vize"
         }
       }
     },
@@ -1175,12 +1247,12 @@
         "title": "Things to Consider When Getting a Visa",
         "readTime": "15 min read"
       },
-        "readPost": "Read Post",
-        "all": "All",
-        "popular": "Popular Posts",
-        "read": "Read",
-        "noPosts": "No blog posts found yet.",
-        "noPopularPosts": "No popular posts found yet.",
+      "readPost": "Read Post",
+      "all": "All",
+      "popular": "Popular Posts",
+      "read": "Read",
+      "noPosts": "No blog posts found yet.",
+      "noPopularPosts": "No popular posts found yet.",
       "detail": {
         "notFound": "Blog post not found",
         "readTime": "read",

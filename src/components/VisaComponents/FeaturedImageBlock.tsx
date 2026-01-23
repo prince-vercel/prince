@@ -66,17 +66,36 @@ export default function FeaturedImageBlock() {
             <div className="heading-3 colorfull">
               <p>
                 <strong suppressHydrationWarning>
-                  {mounted && i18n.isInitialized ? (() => {
-                    const desc = t('visa.featured.description')
-                    const parts = desc.split('hızlı, kolay ve tek')
-                    return (
-                      <>
-                        {parts[0]}
-                        <span style={{ color: '#ff0000' }}>hızlı, kolay ve tek</span>
-                        {parts[1]}
-                      </>
-                    )
-                  })() : ''}
+                  {mounted && i18n.isInitialized
+                    ? (() => {
+                      const desc = t('visa.featured.description') as string
+                      const highlight = t('visa.featured.highlight') as string
+
+                      const index = desc.indexOf(highlight)
+
+                      // Eğer highlight metni description içinde yoksa,
+                      // sonuna ekleyerek göster.
+                      if (index === -1) {
+                        return (
+                          <>
+                            {desc}{' '}
+                            <span style={{ color: '#ff0000' }}>{highlight}</span>
+                          </>
+                        )
+                      }
+
+                      const before = desc.slice(0, index)
+                      const after = desc.slice(index + highlight.length)
+
+                      return (
+                        <>
+                          {before}
+                          <span style={{ color: '#ff0000' }}>{highlight}</span>
+                          {after}
+                        </>
+                      )
+                    })()
+                    : ''}
                 </strong>
               </p>
             </div>

@@ -1,5 +1,5 @@
-import Link from "next/link"
 import Image from "next/image"
+import Link from "next/link"
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
 import '../../i18n'
 
@@ -11,8 +11,8 @@ export default function Footer() {
       <footer className="cs_footer cs_style_1 cs_heading_color">
         <div className="cs_footer_main"  >
           <div className="container d-flex flex-column align-items-center">
-      
-            <div className="row align-items-start" style={{gap:'150px', }}>
+
+            <div className="row align-items-start" style={{ gap: '150px', }}>
 
               <div className="col-lg-4">
                 <div className="cs_footer_item">
@@ -21,7 +21,7 @@ export default function Footer() {
                   </p>
 
                   <ul className="cs_contact_widget">
-                    <li suppressHydrationWarning>{isReady ? t('visa.footer.address') : ''}</li>
+                    <li suppressHydrationWarning>{isReady ? t('medical.footer.address') : ''}</li>
                     <li suppressHydrationWarning>+90 212 999 77 20</li>
                     <li suppressHydrationWarning>{isReady ? t('medical.footer.email') : ''}</li>
                   </ul>
@@ -43,13 +43,13 @@ export default function Footer() {
                   <li><Link href="/medical/faq" suppressHydrationWarning>{isReady ? t('medical.footer.faqs') : ''}</Link></li>
                   <li><Link href="/medical/privacy" suppressHydrationWarning>{isReady ? t('medical.footer.privacyPolicy') : ''}</Link></li>
                   <li><Link href="/medical/kvkk" suppressHydrationWarning>{isReady ? t('medical.footer.kvkk') : ''}</Link></li>
-                      <div className="d-flex justify-content-center mb-4">
-              <Image src="/assets/logo/logo-mavi.png" alt="Logo" width={120} height={80} className="img-fluid" style={{marginRight:'40px'}} />
-            </div>
+                  <div className="d-flex justify-content-center mb-4">
+                    <Image src="/assets/logo/logo-mavi.png" alt="Logo" width={120} height={80} className="img-fluid" style={{ marginRight: '40px' }} />
+                  </div>
                 </ul>
               </div>
 
-      
+
 
             </div>
           </div>
@@ -61,7 +61,7 @@ export default function Footer() {
               <div className="cs_social_links">
                 <Link href="#"><i className="fa-brands fa-facebook-f"></i></Link>
                 <Link href="#"><i className="fa-brands fa-instagram"></i></Link>
-                 <Link href="#"><i className="fa-brands fa-whatsapp"></i></Link>
+                <Link href="#"><i className="fa-brands fa-whatsapp"></i></Link>
 
               </div>
 
@@ -76,6 +76,7 @@ export default function Footer() {
                  style={{ objectFit: 'contain' }}
                  loading="lazy"
                />
+
             </div>
           </div>
         </div>

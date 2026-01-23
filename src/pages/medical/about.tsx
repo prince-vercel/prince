@@ -3,14 +3,14 @@
 
 import Image from "next/image";
 
+import { useSafeTranslation } from "@/src/hooks/useSafeTranslation";
+import "@/src/i18n";
+import i18n from "@/src/i18n";
 import { db } from "@/src/lib/firebase";
+import { getCollectionName } from "@/src/lib/localization";
 import { collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { useSafeTranslation } from "@/src/hooks/useSafeTranslation";
-import { getCollectionName } from "@/src/lib/localization";
-import i18n from "@/src/i18n";
-import "@/src/i18n";
 
 
 export default function AboutPage() {
@@ -133,8 +133,7 @@ export default function AboutPage() {
                     </div>
 
                     <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }} suppressHydrationWarning>
-                      Prince Invest Group; Avrupa, Afrika, Orta Doğu ve Körfez bölgelerinde Sağlık Hizmetleri ve Sağlık Turizmi, Turizm & Travel ve Vize Danışmanlığı alanlarında faaliyet gösteren çok uluslu bir holdingdir.
-
+                      {isReady ? t('medical.pages.about.sections.groupDescription') : ''}
                     </p>
                   </div>
                   <div className="cs_height_85 cs_height_xl_60 cs_height_lg_35"></div>
@@ -151,9 +150,7 @@ export default function AboutPage() {
                       />
                     </div>
                     <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }} suppressHydrationWarning>
-                      Sağlık Hizmetleri ve Sağlık Turizmi 
-Dünyada medikal turizmin kalbi haline gelen Türkiye'de, dünya standartlarında sağlık tesisleri ve branşlarının en iyisi kabul edilen sağlık profesyonelleriyle çalışmayı ilke edinen Prince Medical; yurt dışından konuk ettiği hasta ve danışanlarına; ulaşım, konaklama ve transfer dahil bir paket hizmet sunmakta ve tedavi sürecinin tüm aşamalarında rehberlik etmektedir.
-
+                      {isReady ? t('medical.pages.about.sections.healthServices') : ''}
                     </p>
                   </div>
                   <div className="cs_height_85 cs_height_xl_60 cs_height_lg_35"></div>
@@ -164,9 +161,7 @@ Dünyada medikal turizmin kalbi haline gelen Türkiye'de, dünya standartlarınd
                       <Image src="/assets/img/icons/patient.svg" alt="" width={32} height={32} />
                     </div>
                     <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }} suppressHydrationWarning>
-                      Dünya genelinde medikal turizmin merkezi haline gelen Türkiye’de Prince Medical, uluslararası akreditasyona sahip hastaneler ve alanında lider sağlık profesyonelleriyle iş birliği yaparak yüksek standartlarda sağlık hizmetleri sunmaktadır. Diş tedavileri, plastik ve estetik cerrahi, saç ekimi alanlarında uzmanlaşmış olan Prince Medical; bunun yanı sıra genel cerrahi operasyonlar ve ileri teknolojiye sahip robo-rehabilitasyon uygulamalarıyla desteklenen fizyoterapi programları da sağlamaktadır.
-
-
+                      {isReady ? t('medical.pages.about.sections.medicalCenter') : ''}
                     </p>
                   </div>
                   <div className="cs_height_85 cs_height_xl_60 cs_height_lg_35"></div>
@@ -183,8 +178,7 @@ Dünyada medikal turizmin kalbi haline gelen Türkiye'de, dünya standartlarınd
                       />
                     </div>
                     <p className="cs_iconbox_subtitle m-0" style={{ fontSize: '15px' }} suppressHydrationWarning>
-                      Her hastanın yolculuğu; tıbbi geçmiş, fotoğraflar ve gerekli durumlarda röntgen görüntülerine dayalı olarak gerçekleştirilen ücretsiz online medikal danışmanlık ile başlamaktadır. Hastanın Türkiye’ye gelmesiyle birlikte, uçak biletleri, konaklama, VIP transferler ve tüm tedavi sürecinin profesyonel koordinasyonunu kapsayan, kişiye özel ve her şey dahil sağlık paketleri sunulmaktadır. İlk danışmanlıktan tedavi sonrası iyileşme sürecine kadar, Prince Medical her aşamada güven, konfor ve profesyonel rehberlik sağlamaktadır.
-                      
+                      {isReady ? t('medical.pages.about.sections.patientJourney') : ''}
                     </p>
                   </div>
                 </div>

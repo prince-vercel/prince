@@ -14,18 +14,18 @@
         },
         "footer": {
             "description": "Prince Invest Group",
-            "address": "Dap Vadisi Z Ofis, Merkez, Seçkin Sk. Z ofis, Kat 2, Daire 229, 34406 Kağıthane/İstanbul",
+            "address": "Dap Valley Z Bureau, Centre, Rue Seçkin Z bureau, Étage 2, Appartement 229, 34406 Kağıthane/Istanbul",
             "phone": "+90 212 000 00 00",
             "email": "medical@princetourismagency.com",
             "medicalEmail": "medical@princetourismagency.com",
             "home": "Page d’accueil",
             "organisation": "Hôtels",
-            "blog": "Blog",
-            "about": "À propos de nous",
-            "contact": "Contact",
-            "faqs": "Questions fréquentes",
-            "privacyPolicy": "Politique de confidentialité",
-            "kvkk": "KVKK & Informations",
+        "blog": "Blog",
+        "about": "À propos de nous",
+        "contact": "Contact",
+        "faqs": "Questions fréquentes",
+        "privacyPolicy": "Politique de confidentialité",
+        "kvkk": "Notice d’information RGPD",
             "newsletter": {
                 "title": "Rejoignez-nous",
                 "description": "Inscrivez-vous à notre liste de diffusion pour recevoir nos campagnes, innovations et contenus de santé.",
@@ -118,7 +118,7 @@
                 "about": "À propos de nous",
                 "faqs": "Questions fréquentes",
                 "privacy": "Politique de confidentialité",
-                "kvkk": "KVKK & Informations",
+                "kvkk": "Notice d’information RGPD",
                 "organisation": "Organisations",
                 "results": "Résultats heureux",
                 "form": "Demande"
@@ -157,6 +157,12 @@
                 "partners": {
                     "loading": "Chargement des partenaires...",
                     "noPartners": "Aucun partenaire pour le moment."
+                },
+                "sections": {
+                    "groupDescription": "Prince Invest Group est une société multinationale opérant dans les domaines des Services de Santé et du Tourisme Médical, du Tourisme et des Voyages, et du Conseil en Visas dans les régions d'Europe, d'Afrique, du Moyen-Orient et du Golfe.",
+                    "healthServices": "Services de Santé et Tourisme Médical En Turquie, devenue le cœur du tourisme médical dans le monde, Prince Medical, qui adopte le principe de travailler avec des installations de santé de classe mondiale et les meilleurs professionnels de la santé dans leurs domaines, offre un service de forfait comprenant le transport, l'hébergement et le transfert aux patients et clients qu'il accueille de l'étranger, et les guide à travers toutes les étapes du processus de traitement.",
+                    "medicalCenter": "En Turquie, devenue le centre du tourisme médical dans le monde entier, Prince Medical fournit des services de santé de haut niveau en collaborant avec des hôpitaux accrédités internationalement et des professionnels de la santé leaders dans leurs domaines. Prince Medical, spécialisé dans les traitements dentaires, la chirurgie plastique et esthétique, et la greffe de cheveux, fournit également des opérations chirurgicales générales et des programmes de physiothérapie soutenus par des applications avancées de robo-réadaptation.",
+                    "patientJourney": "Le parcours de chaque patient commence par une consultation médicale en ligne gratuite basée sur les antécédents médicaux, les photos et, si nécessaire, les images radiographiques. Avec l'arrivée du patient en Turquie, des forfaits de santé personnalisés et tout compris sont proposés, couvrant les billets d'avion, l'hébergement, les transferts VIP et la coordination professionnelle de tout le processus de traitement. De la consultation initiale au processus de récupération post-traitement, Prince Medical fournit confiance, confort et orientation professionnelle à chaque étape."
                 }
             },
             "blog": {

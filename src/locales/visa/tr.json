@@ -11,7 +11,7 @@
     },
     "travelTitle": {
       "line1": "Prince",
-      "line2": "Turizm & Travel"
+      "line2": "Turizm & Seyahat"
     }
   },
   "visa": {
@@ -315,6 +315,7 @@
     "featured": {
       "title": "Vize belgelerini hızlandırmak hiç bu kadar kolay olmamıştı.",
       "description": "Saatlerce doğru evrak listesini aramaya son! Prince ile tüm resmi belgelerinizi hızlı, kolay ve tek bir kurumdan ayarlayıp vizeye başvurabilirsiniz. Vize uzmanlarından hemen bilgi alın.",
+      "highlight": "hızlı, kolay ve tek",
       "features": [
         "Müşteri Hizmetleri",
         "Hizmet Sözleşmesi",
@@ -758,7 +759,7 @@
               "description": "Çalışma vizesi hizmeti alarak ailesiyle birlikte İngiltere'ya giden danışanımız."
             },
             "11": {
-              "title": "ÇİLEK VİZE ile ONLİNE VİZE BAŞVURU SÜRECİ – Kolay ve Hızlı!",
+              "title": "PRINCE VİZE ile ONLİNE VİZE BAŞVURU SÜRECİ – Kolay ve Hızlı!",
               "description": "Prince ile online vize başvurusu artık çok kolay!\r\nBu videoda, vize işlemlerinizi hızlı ve sorunsuz bir şekilde tamamlamanız için adım adım rehberlik sunuyoruz."
             },
             "12": {
@@ -1156,7 +1157,7 @@
         },
         "note": {
           "title": "Not",
-          "description": "Çilek Vize olarak tırcı (şoför) vizesi hizmeti vermek ile beraber hızlı randevu (VIP) hizmeti de vermekteyiz."
+          "description": "Prince Vize olarak tırcı (şoför) vizesi hizmeti vermek ile beraber hızlı randevu (VIP) hizmeti de vermekteyiz."
         }
       },
       "residencePermit": {
@@ -1256,7 +1257,78 @@
         },
         "note": {
           "title": "Not",
-          "description": "Çilek Vize olarak yabancı uyruklu kişilere Türkiye'de oturum izni almak için danışmanlık hizmeti vermekteyiz. Detaylı bilgi için oturum izni uzmanımızla iletişime geçebilirsiniz."
+          "description": "Prince Vize olarak yabancı uyruklu kişilere Türkiye'de oturum izni almak için danışmanlık hizmeti vermekteyiz. Detaylı bilgi için oturum izni uzmanımızla iletişime geçebilirsiniz."
+        }
+      },
+      "kisiselVerilerinKorunmaKanunu": {
+        "title": "Kişisel Verilerin Korunması Kanunu",
+        "heading": "KVKK",
+        "content": "Prince Vize olarak, kişisel verilerinizin güvenliği bizim için önemlidir. 6698 sayılı Kişisel Verilerin Korunması Kanunu (\"KVKK\") uyarınca, kişisel verilerinizin işlenmesi, saklanması ve korunması konusunda gerekli tüm önlemleri almaktayız."
+      },
+      "gizlilikPolitikasi": {
+        "title": "Gizlilik Politikası",
+        "companyName": "PRINCE GRUP DANIŞMANLIK TURİZM SEYAHAT EĞİTİM MEDYA SANAYİ VE TİCARET LİMİTED ŞİRKETİ",
+        "mainTitle": "Kurumsal Bilgilendirme ve Gizlilik Politikası",
+        "intro1": "PRINCE GRUP DANIŞMANLIK TURİZM SEYAHAT EĞİTİM MEDYA SANAYİ VE TİCARET LİMİTED ŞİRKETİ (\"Prince Vize\" olarak anılacaktır), vize danışmanlığı ve seyahat hizmetleri alanında faaliyet göstermekte olup, müşterilerinin kişisel verilerinin gizliliğine ve güvenliğine büyük önem vermektedir.",
+        "intro2": "Bu metin; web sitemiz, dijital formlarımız, telefon görüşmeleri ve reklam kanalları aracılığıyla toplanan kişisel verilerin hangi amaçlarla İşlendiğini, nasıl korunduğunu ve haklarınızı açıklamak amacıyla hazırlanmıştır.",
+        "section1": {
+          "title": "1. Toplanan Kişisel Veriler",
+          "intro": "Tarafımızca aşağıdaki kişisel veriler işlenebilmektedir:",
+          "item1": "Ad ve soyad",
+          "item2": "Telefon numarası",
+          "item3": "E-posta adresi",
+          "item4": "Başvurulan vize türü ve ülke bilgisi",
+          "item5": "Şube tercihi (İzmir, Bursa vb.)",
+          "item6": "Talep ve mesaj içerikleri",
+          "item7": "Web sitesi ve reklam kaynaklı teknik veriler (UTM, cihaz türü vb.)"
+        },
+        "section2": {
+          "title": "2. Kişisel Verilerin Toplanma Yöntemi",
+          "intro": "Kişisel verileriniz;",
+          "item1": "Web sitemizde yer alan başvuru ve bilgi formları",
+          "item2": "Google Ads reklamları (arama, telefon, form uzantıları)",
+          "item3": "Telefon görüşmeleri",
+          "item4": "WhatsApp ve diğer iletişim kanalları",
+          "outro": "aracılığıyla otomatik veya kısmen otomatik yollarla toplanmaktadır."
+        },
+        "section3": {
+          "title": "3. Kişisel Verilerin İşlenme Amaçları",
+          "intro": "Toplanan kişisel verileriniz:",
+          "item1": "Vize danışmanlığı hizmeti sunulması",
+          "item2": "Randevu sürecinin başlatılması ve takibi",
+          "item3": "Talep edilen hizmet hakkında bilgilendirme yapılması",
+          "item4": "Telefon ile geri dönüş sağlanması",
+          "item5": "Hizmet kalitesinin artırılması",
+          "item6": "Yasal yükümlülüklerin yerine getirilmesi",
+          "outro": "amaçlarıyla sınırlı olarak işlenmektedir."
+        },
+        "section4": {
+          "title": "4. Kişisel Verilerin Korunması",
+          "brand": "Prince Vize:",
+          "item1": "Kişisel verilerin yetkisiz erişime karşı korunması",
+          "item2": "Veri güvenliğinin sağlanması",
+          "item3": "Hukuka aykırı kullanımların önlenmesi",
+          "outro1": "amacıyla gerekli tüm teknik ve idari tedbirleri almaktadır.",
+          "outro2": "Kişisel verileriniz, üçüncü kişilerle İzinsiz paylaşılmaz, yalnızca yasal zorunluluklar veya hizmetin gereği halinde paylaşılabilir."
+        },
+        "section5": {
+          "title": "5. KVKK Kapsamındaki Haklarınız",
+          "intro": "6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında;",
+          "item1": "Kişisel verilerinizin işlenip işlenmediğini öğrenme",
+          "item2": "İşlenmişse buna ilişkin bilgi talep etme",
+          "item3": "Yanlış veya eksik işlenmiş verilerin düzeltilmesini isteme",
+          "item4": "Verilerin silinmesini veya yok edilmesini talep etme",
+          "item5": "İşlemenin kanuna aykırı olması halinde zararın giderilmesini talep etme",
+          "outro1": "haklarına sahipsiniz.",
+          "outro2": "Bu haklarınızı kullanmak için bizimle iletişime geçebilirsiniz."
+        },
+        "section6": {
+          "title": "6. İletişim Bilgileri",
+          "label1": "Şirket Ünvanı:",
+          "label2": "Marka:",
+          "label3": "Web:",
+          "label4": "Telefon:",
+          "brand": "Prince Vize"
         }
       }
     }

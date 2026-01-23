@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
-import { useLayoutEffect, useMemo } from 'react'
+import { useLayoutEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useClientOnly } from '@/src/hooks/useClientOnly'
@@ -80,12 +80,30 @@ export default function App({ Component, pageProps }: AppProps) {
   // CSS dosyaları değiştiğinde (sayfa değiştiğinde) loading durumu otomatik olarak sıfırlanır
   const cssLoaded = useCSSLoader(cssFiles)
 
-  // CSS'leri temizle - sadece sayfa değiştiğinde diğer bölümlerin CSS'lerini kaldır
-  // Bu işlem CSS'lerin yüklenmesinden ÖNCE yapılmalı
+  // Önceki sayfa tipini takip et
+  const prevPageTypeRef = useRef<string | null>(null)
+  
+  // Mevcut sayfa tipini belirle
+  const currentPageType = isTravelPage ? 'travel' : isMedicalPage ? 'medical' : isVisaPage ? 'visa' : null
+
+  // CSS'leri temizle - sadece farklı bölüme geçildiğinde ve yeni CSS'ler yüklendikten SONRA eski CSS'leri kaldır
+  // ÖNEMLİ: Yeni CSS'ler yüklenene kadar eski CSS'leri kaldırmayalım
   useLayoutEffect(() => {
-    // Tüm bölüm CSS'lerini kaldır
-    const removeAllSectionCSS = () => {
-      Object.values(CSS_PREFIXES).forEach((prefix) => {
+    // Eğer sayfa tipi değişmediyse (aynı bölüm içinde gezinme), CSS'leri kaldırma
+    if (prevPageTypeRef.current === currentPageType) {
+      prevPageTypeRef.current = currentPageType
+      return
+    }
+
+    // Sayfa tipi değişti - yeni CSS'lerin yüklenmesini bekle, sonra gereksiz CSS'leri kaldır
+    const cleanupOldCSS = () => {
+      // Sadece mevcut sayfa tipine ait olmayan CSS'leri kaldır
+      Object.entries(CSS_PREFIXES).forEach(([section, prefix]) => {
+        // Mevcut sayfa tipine ait CSS'leri kaldırma
+        if (section === currentPageType) {
+          return
+        }
+        
         const links = document.querySelectorAll(`link[id^="${prefix}"]`)
         links.forEach((linkElement) => {
           const link = linkElement as HTMLLinkElement
@@ -99,14 +117,26 @@ export default function App({ Component, pageProps }: AppProps) {
       })
     }
 
-    // Önce temizle - bu işlem CSS'lerin yeniden yüklenmesini tetikler
-    removeAllSectionCSS()
-
-    // Cleanup: Sayfa değiştiğinde tüm bölüm CSS'lerini kaldır
-    return () => {
-      removeAllSectionCSS()
+    // Yeni CSS'lerin yüklenmesini bekle
+    // cssLoaded true olduğunda (yani yeni CSS'ler yüklendiğinde) eski CSS'leri kaldır
+    if (cssLoaded && prevPageTypeRef.current !== null) {
+      // Yeni CSS'ler yüklendi, eski CSS'leri kaldırabiliriz
+      // Kısa bir gecikme ekle (CSS'in uygulanması için)
+      const timeout = setTimeout(() => {
+        cleanupOldCSS()
+      }, 100)
+      
+      // Önceki sayfa tipini güncelle
+      prevPageTypeRef.current = currentPageType
+      
+      return () => {
+        clearTimeout(timeout)
+      }
+    } else {
+      // Önceki sayfa tipini güncelle (ilk yükleme veya CSS'ler henüz yüklenmedi)
+      prevPageTypeRef.current = currentPageType
     }
-  }, [isTravelPage, isMedicalPage, isVisaPage, router.pathname])
+  }, [isTravelPage, isMedicalPage, isVisaPage, router.pathname, currentPageType, cssLoaded])
 
   // Head render logları için useEffect
   useLayoutEffect(() => {
