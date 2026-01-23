@@ -581,7 +581,49 @@ const ContentTours = () => {
                   }}>
                     <img src={country.imageUrl} alt={country.title} style={{ width: '100px', height: '60px', objectFit: 'cover', borderRadius: '4px', marginBottom: '8px' }} />
                     <h4 style={{ margin: '0 0 4px 0', fontSize: '16px' }}>{country.title}</h4>
-                    <p style={{ margin: 0, fontSize: '12px', color: '#666' }}>ID: {generateId(country.title)}</p>
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '8px' }}>
+                      <button
+                        onClick={() => {
+                          setCountryTitle(country.title);
+                          setCountryImage(country.imageUrl);
+                          setShowCountryForm(true);
+                        }}
+                        style={{
+                          padding: '6px 12px',
+                          color: 'black',
+                          border: 'none',
+                          borderRadius: '4px',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Düzenle
+                      </button>
+                      <button
+                        onClick={async () => {
+                          if (confirm('Bu ülkeyi silmek istediğinizden emin misiniz?')) {
+                            try {
+                              await deleteDoc(doc(db, getCollectionName('travelcountries', selectedLanguage), country.id));
+                              fetchCountries();
+                              setSuccess('Ülke başarıyla silindi!');
+                              setTimeout(() => setSuccess(''), 3000);
+                            } catch (error) {
+                              console.error('Ülke silme hatası:', error);
+                              alert('Ülke silme başarısız oldu');
+                            }
+                          }
+                        }}
+                        style={{
+                          padding: '6px 12px',
+                          backgroundColor: '#e74c3c',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '4px',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Sil
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -874,8 +916,8 @@ const ContentTours = () => {
               <label>Ek Görsel (Kapak Görselinin Altında Gösterilecek (1920:1080))</label>
               <div className={styles.tourImageUploadBox}>
                 {formData.additionalImageUrl ? (
-                  <div className={styles.imagePreview}>
-                    <img src={formData.additionalImageUrl} alt="Additional" />
+                  <div className={styles.imagePreview} style={{ maxWidth: '150px', maxHeight: '100px', overflow: 'hidden' }}>
+                    <img src={formData.additionalImageUrl} alt="Additional" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
                     <button type="button" onClick={removeAdditionalImage} className={styles.removeImageBtn}>
                       Remove
                     </button>
@@ -974,7 +1016,7 @@ const ContentTours = () => {
                 type="text"
                 value={formData.location}
                 onChange={e => handleInputChange('location', e.target.value)}
-                placeholder="Şehir adını girin"
+                placeholder="Şehir adını girin (Birden fazlaysa virgülle ayırın.)"
               />
             </div>
 
@@ -984,7 +1026,7 @@ const ContentTours = () => {
               <textarea
                 value={formData.description}
                 onChange={e => handleInputChange('description', e.target.value)}
-                placeholder="Tur açıklamasını girin"
+                placeholder="Tur açıklaması girin"
                 rows={4}
               />
             </div>

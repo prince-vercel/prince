@@ -127,8 +127,11 @@ export default function TravelHomePage() {
           ...doc.data()
         } as Tour))
         // Sadece favorilere eklediğim turları göster
-        const favoriteTours = tours.filter(tour => tour.isFavorite === true).slice(0, 3)
-        setPackages(favoriteTours)
+        const favoriteTours = tours.filter(tour => tour.isFavorite === true).slice(0, 3).map(tour => ({
+          ...tour,
+          price: tour.price || 'Fiyat Al'
+        }));
+        setPackages(favoriteTours);
       } catch (error) {
         const errorMsg = isReady ? t('travel.homePage.errors.loadingTours') : 'Tur yükleme hatası:'
         console.error(errorMsg, error)
@@ -197,7 +200,6 @@ export default function TravelHomePage() {
               ))
             ) : (
               <>
-
 
 
               </>
@@ -409,7 +411,7 @@ export default function TravelHomePage() {
                 <div
                   key={item.id}
                   className="wow fadeInUp overflow-hidden bg-white"
-                  style={{ borderRadius: '16px' }}
+                  style={{ borderRadius: '16px', height: '450px' }}
                   data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}
                 >
                   {/* IMAGE */}
@@ -422,19 +424,10 @@ export default function TravelHomePage() {
                         className="hover:scale-105 duration-300"
                       />
                     </a>
-
-                    {item.discount && (
-                      <span
-                        className="absolute top-4 left-4 bg-red-600 text-white font-bold px-3 py-1"
-                        style={{ borderRadius: '8px' }}
-                      >
-                        -{item.discount} €
-                      </span>
-                    )}
                   </div>
 
                   {/* CONTENT */}
-                  <div className="p-4 text-center">
+                  <div className="p-4 text-center" style={{ height: '140px' }}>
                     <h3 className="font-bold text-xl mb-2">
                       {item.title}
                     </h3>
@@ -461,14 +454,9 @@ export default function TravelHomePage() {
                     className="flex justify-center items-center gap-4 text-white"
                     style={{
                       background: '#d7b76e',
-                      padding: '14px'
+                      height: '60px'
                     }}
                   >
-                    {item.oldPrice && (
-                      <span className="line-through opacity-80 text-base">
-                        {item.oldPrice} €
-                      </span>
-                    )}
                     <span className="text-xl font-extrabold" style={{ fontSize: '25px' }}>
                       {item.price} €
                     </span>

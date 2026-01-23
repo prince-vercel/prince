@@ -208,14 +208,14 @@ export default function VisaFooter() {
                                     {isReady ? t('visa.footer.copyright', { year: currentYear }) : ''}
                                   
                                 </div>
-                                  <Image
-                                        src="/assets/images/tursab.png" // Görsel yolunu buraya koy
-                                        alt="Small Logo"
-                                        width={100}
-                                        height={60}
-                                        style={{ objectFit: 'contain' }}
-                                        loading="lazy"
-                                    />
+                                   <Image
+                                                  src="/assets/images/tursab.png" // Görsel yolunu buraya koy
+                                                  alt="Small Logo"
+                                                  width={150} // Increased width
+                                                  height={100} // Increased height
+                                                  style={{ objectFit: 'contain' }}
+                                                  loading="lazy"
+                                                />
                             </div>
                         </div>
                     </div>

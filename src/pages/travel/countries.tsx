@@ -52,13 +52,25 @@ const Countries = () => {
               {country.title}
             </div>
             <div className="w-full h-48 overflow-hidden relative">
-              <Image
-                src={country.imageUrl}
-                alt={country.title}
-                width={400}
-                height={192}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-              />
+             <div
+  style={{
+    position: 'relative',
+    width: '100%',
+    height: '250px',
+    overflow: 'hidden'
+  }}
+>
+  <Image
+    src={country.imageUrl}
+    alt={country.title}
+    fill
+    style={{
+      objectFit: 'cover'
+    }}
+  />
+</div>
+
+
             </div>
           </div>
         ))}

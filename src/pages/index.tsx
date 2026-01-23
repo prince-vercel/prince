@@ -160,7 +160,6 @@ export default function HomePage() {
         >
           <div className="overlay-dark" />
           <div className="title">
-            {i18n.t('home.medicalTitle.line1', 'Prince')} <br />
             {i18n.t('home.medicalTitle.line2', 'Medikal Estetik &')} <br />
             {i18n.t('home.medicalTitle.line3', 'Sağlık Hizmetleri')}
           </div>
@@ -175,7 +174,6 @@ export default function HomePage() {
         >
           <div className="overlay-dark" />
           <div className="title">
-            {i18n.t('home.visaTitle.line1', 'Prince')} <br />
             {i18n.t('home.visaTitle.line2', 'Vize Danışmanlığı')}
           </div>
         </Link>
@@ -188,7 +186,6 @@ export default function HomePage() {
         >
           <div className="overlay-dark" />
           <div className="title">
-            {i18n.t('home.travelTitle.line1', 'Prince')} <br />
             {i18n.t('home.travelTitle.line2', 'Turizm & Travel')}
           </div>
         </Link>

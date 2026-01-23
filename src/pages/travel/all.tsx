@@ -209,17 +209,19 @@ export default function PackageList() {
   }, [tours])
 
   const uniqueInclusions = useMemo(() => {
-    const dbInclusions = new Set<string>()
+    const inclusionMap = new Map<string, string>()
     tours.forEach(tour => {
       if (tour.includedInPrice && typeof tour.includedInPrice === 'string') {
         const items = tour.includedInPrice.split('\n').map((item: string) => item.trim())
         items.forEach((inc: string) => {
-          if (inc) dbInclusions.add(inc)
+          const lower = inc.toLowerCase()
+          if (lower && !inclusionMap.has(lower)) {
+            inclusionMap.set(lower, inc)
+          }
         })
       }
     })
-    const combined = new Set([ ...Array.from(dbInclusions)])
-    return Array.from(combined).sort()
+    return Array.from(inclusionMap.values()).sort().slice(0, 10)
   }, [tours])
 
   return (
@@ -410,7 +412,7 @@ export default function PackageList() {
             </div>
 
             {/* LIST (AYNI STİL) */}
-            <div className="lg:w-2/3 w-full grid md:grid-cols-2 grid-cols-1 gap-base">
+            <div className="lg:w-2/3 grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-base">
               {loadingTours ? (
                 <div className="col-span-2 text-center py-20">
                   <p className="text-lg text-gray-500" suppressHydrationWarning>{isReady ? t('travel.pages.all.results.loading') : ''}</p>
@@ -423,8 +425,8 @@ export default function PackageList() {
              filteredPackages.map((tour) => (
   <div
     key={tour.id}
-    className="wow fadeInUp overflow-hidden bg-white relative"
-    style={{ borderRadius: '16px' }}
+    className="overflow-hidden bg-white relative mb-5"
+    style={{ borderRadius: '16px', height: '450px' }}
     onMouseEnter={() => setHoveredCardId(tour.id)}
     onMouseLeave={() => setHoveredCardId(null)}
   >
@@ -478,7 +480,7 @@ export default function PackageList() {
     </div>
 
     {/* CONTENT */}
-    <div className="p-4 text-center">
+    <div className="p-3 text-center" style={{ height: '140px' }}>
       <h3 className="font-bold text-xl mb-2">
         {tour.title}
       </h3>
@@ -505,7 +507,7 @@ export default function PackageList() {
       className="flex justify-center items-center gap-4 text-white"
       style={{
         background: '#d7b76e',
-        padding: '14px'
+        height: '60px'
       }}
     >
       {tour.oldPrice && (
