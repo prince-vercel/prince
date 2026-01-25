@@ -257,9 +257,9 @@ export default function Header() {
 
               {/* SOCIALS – DESKTOP */}
               <div className="cs_social_links cs_social_desktop">
-                <a href="#"><i className="fa-brands fa-facebook-f" style={{ color: '#307BC4' }}></i></a>
-                <a href="#"><i className="fa-brands fa-youtube" style={{ color: '#307BC4' }}></i></a>
-                <a href="#"><i className="fa-brands fa-instagram" style={{ color: '#307BC4' }}></i></a>
+                <a href="https://facebook.com/princemedical.tr"><i className="fa-brands fa-facebook-f" style={{ color: '#307BC4' }}></i></a>
+                <a href="https://instagram.com/princemedical.tr"><i className="fa-brands fa-instagram" style={{ color: '#307BC4' }}></i></a>
+                <a href="https://wa.me/905457709777"><i className="fa-brands fa-whatsapp" style={{ color: '#307BC4' }}></i></a>
               </div>
 
               {/* MOBILE MENU TOGGLE */}
@@ -301,9 +301,9 @@ export default function Header() {
 
           {/* SOCIALS – MOBILE (EN ALTTA) */}
           <div className="cs_social_links cs_social_mobile">
-            <a href="#"><i className="fa-brands fa-facebook-f"></i></a>
-            <a href="#"><i className="fa-brands fa-youtube"></i></a>
-            <a href="#"><i className="fa-brands fa-instagram"></i></a>
+            <a href="https://facebook.com/princemedical.tr"><i className="fa-brands fa-facebook-f"></i></a>
+            <a href="https://instagram.com/princemedical.tr"><i className="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/905457709777"><i className="fa-brands fa-whatsapp"></i></a>
           </div>
         </div>
       </div>

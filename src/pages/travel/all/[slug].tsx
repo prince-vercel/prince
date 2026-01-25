@@ -184,20 +184,20 @@ export default function TravelDetailPage() {
 
 
               <div className="pack__disc" id="Information">
-                <div className="flex justify-between items-center gap-2 flex-wrap lg:pt-12 pt-8 lg:pb-4">
-                  <h2 className="font-sans lg:text-[45px] md:text-xl text-lg font-semibold">
-                    {tour?.price ? `€${tour.price}` : 'Fiyat Al'}
-                  </h2>
-                </div>
 
-                <h5 className="lg:text-lg text-base text-dark-1 font-semibold leading-[1.5] mb-6">
-                  {tour?.description || 'Tur açıklaması yükleniyor...'}
-                </h5>
 
-                <ul className="pack__list mt-4">
+                <ul className="pack__list mb-4 mt-4">
                   <li><i className="bi bi-clock"></i> {tour?.startDate || ''}</li>
                   <li><i className="bi bi-map"></i> {tour?.location || 'Lokasyon'}</li>
+                  {tour?.airlineName && <li><i className="bi bi-airplane"></i> {tour.airlineName}</li>}
+                  {tour?.visaStatus && <li><i className="bi bi-passport"></i> {tour.visaStatus}</li>}
+                  {tour?.category && <li><i className="bi bi-tag"></i> {tour.category}</li>}
+                  {tour?.region && <li><i className="bi bi-globe"></i> {tour.region}</li>}
                 </ul>
+
+                <h5 className="md:text-md text-base text-dark-1 font-semibold leading-[1.5] mb-6">
+                  {tour?.description || ''}
+                </h5>
 
                 {/* PRICE INCLUDES */}
                 <ul className="mt-base">
@@ -240,10 +240,10 @@ export default function TravelDetailPage() {
                       <div key={d.day} className="flex single__count mt-6">
                         <div className="day__count shrink-0 relative z-10" style={{ paddingTop: '20px' }}>
                           <style>{`
-              .single__count .day__count::before {
-                top: 20px !important;
-              }
-            `}</style>
+                        .single__count .day__count::before {
+                          top: 20px !important;
+                        }
+                      `}</style>
                           <div className="w-10 h-10 rounded-full border border-primary-1 flex items-center justify-center font-semibold text-primary-1 bg-white">
                             {String(d.day).padStart(2, '0')}
                           </div>
@@ -359,17 +359,17 @@ export default function TravelDetailPage() {
                   Bilgi Talep
                 </li>
               </ul>
-
+                <div className="flex justify-between items-center gap-2 flex-wrap lg:pt-12 pt-8 lg:pb-4">
+                  <h2 className="font-sans lg:text-[45px] md:text-xl text-lg font-semibold text-dark">
+                    {tour?.price ? `€ ${tour.price}` : 'Fiyat Al'}
+                  </h2>
+                </div>
               {activeTab === 'booking' && (
                 <div className="tab-content active">
                   <form
                     autoComplete="off"
                     className="lg:px-base px-5 lg:pt-6 lg:pb-base pt-4 pb-5 bg-white border-primary-1 border"
                   >
-
-
-
-
                     <a href="/travel/form" className="btn_primary__v1 !w-full justify-center mt-5 hover:text-white">
                       Şimdi Rezervasyon Yap
                     </a>
@@ -455,10 +455,10 @@ export default function TravelDetailPage() {
                     <i className="fa-brands fa-facebook-f" style={{ color: '#d7b76e' }}></i>
                   </a>
                   <a href="#">
-                    <i className="fa-brands fa-youtube" style={{ color: '#d7b76e' }}></i>
+                    <i className="fa-brands fa-instagram" style={{ color: '#d7b76e' }}></i>
                   </a>
                   <a href="#">
-                    <i className="fa-brands fa-instagram" style={{ color: '#d7b76e' }}></i>
+                    <i className="fa-brands fa-whatsapp" style={{ color: '#d7b76e' }}></i>
                   </a>
                 </div>
               </aside>

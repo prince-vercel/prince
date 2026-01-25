@@ -11,6 +11,8 @@ import {
   doc,
   updateDoc,
   writeBatch,
+  query,
+  where,
 } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
@@ -106,7 +108,7 @@ const FormAsks = () => {
   useEffect(() => {
     loadQuestions()
     loadSteps()
-  }, [loadQuestions, loadSteps])
+  }, [selectedLanguage])
 
   const showNotification = (type: 'success' | 'error', message: string) => {
     setNotification({ type, message })
@@ -201,9 +203,19 @@ const FormAsks = () => {
     if (!confirm('Bu soruyu silmek istediğinize emin misiniz?')) return
 
     try {
-      const collectionName = getCollectionName('questions', selectedLanguage)
-      await deleteDoc(doc(db, collectionName, questionId))
-      showNotification('success', 'Soru başarıyla silindi')
+      const languages = ['tr', 'en', 'fr', 'es', 'ar', 'ru']
+
+      for (const lang of languages) {
+        const collectionName = getCollectionName('questions', lang as any)
+        const q = query(collection(db, collectionName), where('id', '==', questionId))
+        const snap = await getDocs(q)
+
+        for (const d of snap.docs) {
+          await deleteDoc(d.ref)
+        }
+      }
+
+      showNotification('success', 'Soru tüm dillerden silindi')
       loadQuestions()
     } catch (error) {
       console.error('Soru silme hatası:', error)

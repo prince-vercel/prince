@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { collection, addDoc, serverTimestamp, getDocs } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
-import { MedicalFormData } from '@/src/types/types'
 import Toast from '@/src/components/Toast'
 import { useSafeTranslation } from '@/src/hooks/useSafeTranslation'
 import { getCollectionName } from '@/src/lib/localization'
@@ -31,16 +30,6 @@ interface StepName {
   name: string
 }
 
-// CheckboxOption component'ini dışarıda tanımla
-const CheckboxOption = ({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) => (
-  <div 
-    onClick={onClick}
-    className={`medical-checkbox-option ${selected ? 'selected' : ''}`}
-  >
-    {label}
-  </div>
-)
-
 // Step Indicator Component
 const StepIndicator = ({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) => (
   <div className="medical-step-indicator">
@@ -60,11 +49,14 @@ const StepIndicator = ({ currentStep, totalSteps }: { currentStep: number; total
 export default function AppointmentSection() {
   const { t, isReady } = useSafeTranslation()
   const [currentStep, setCurrentStep] = useState(1)
-  const totalSteps = 7
+  const totalSteps = 3
   const [questions, setQuestions] = useState<Question[]>([])
   const [steps, setSteps] = useState<StepName[]>([])
   const [formValues, setFormValues] = useState<Record<string, any>>({})
   const [loadingQuestions, setLoadingQuestions] = useState(true)
+  const [showSuccess, setShowSuccess] = useState(false)
+  const [showError, setShowError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   // Soruları ve adımları yükle
   useEffect(() => {
@@ -100,68 +92,8 @@ export default function AppointmentSection() {
       }
     }
     loadData()
-  }, [i18n.language])
-
-  // Form states - Personal Information
-  const [fullName, setFullName] = useState('')
-  const [birthDate, setBirthDate] = useState('')
-  const [nationality, setNationality] = useState('')
-  const [phone, setPhone] = useState('')
-  const [email, setEmail] = useState('')
-
-  // Form states - Other
-  const [travelTime, setTravelTime] = useState('')
-  const [chronicDisease, setChronicDisease] = useState('')
-  const [airport, setAirport] = useState('')
-  const [operation, setOperation] = useState('')
-  const [gender, setGender] = useState('')
-  const [heartDisease, setHeartDisease] = useState('')
-  const [diabetes, setDiabetes] = useState('')
-  const [bloodClotting, setBloodClotting] = useState('')
-  const [hypertension, setHypertension] = useState('')
-  const [cancer, setCancer] = useState('')
-  const [smoking, setSmoking] = useState('')
-  const [alcohol, setAlcohol] = useState('')
-  const [drugs, setDrugs] = useState('')
-  const [medication, setMedication] = useState('')
-  const [allergy, setAllergy] = useState('')
-  const [surgery, setSurgery] = useState('')
-  const [anesthesia, setAnesthesia] = useState('')
-  const [pregnancy, setPregnancy] = useState('')
-  const [breastfeeding, setBreastfeeding] = useState('')
-  const [personCount, setPersonCount] = useState('')
-  const [ticketStatus, setTicketStatus] = useState('')
-  const [hotelNeed, setHotelNeed] = useState('')
-  const [vipTransfer, setVipTransfer] = useState('')
-  const [vehicleChoice, setVehicleChoice] = useState('')
-  const [consultation, setConsultation] = useState('')
-  const [firstSurgery, setFirstSurgery] = useState('')
-  const [showSuccess, setShowSuccess] = useState(false)
-  const [showError, setShowError] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
-  const [travelDate, setTravelDate] = useState('')
-  const [chronicDiseaseDetail, setChronicDiseaseDetail] = useState('')
-  const [otherAirport, setOtherAirport] = useState('')
-  const [otherOperation, setOtherOperation] = useState('')
-  const [extraInfo, setExtraInfo] = useState('')
-
-  const validateForm = (formData: any) => {
-    const required = [
-      { name: 'fullName', label: 'Ad Soyad', value: fullName },
-      { name: 'birthDate', label: 'Doğum Tarihi', value: birthDate },
-      { name: 'phone', label: 'Telefon', value: phone },
-      { name: 'email', label: 'E-posta', value: email },
-      { name: 'nationality', label: 'Uyruk', value: nationality }
-    ]
-
-    for (const field of required) {
-      if (!field.value) {
-        return false
-      }
-    }
-
-    return true
-  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [i18n.language, isReady, t])
 
   const validateStep = (step: number): boolean => {
     const stepQuestions = getQuestionsForStep(step)
@@ -254,11 +186,15 @@ export default function AppointmentSection() {
   }
 
   const getQuestionsForStep = (step: number): Question[] => {
-    return questions.filter((q) => q.step === step).sort((a, b) => a.order - b.order)
+    const stepMapping = {1:1, 2:2, 3:7}
+    const mappedStep = stepMapping[step as keyof typeof stepMapping] || step
+    return questions.filter((q) => q.step === mappedStep).sort((a, b) => a.order - b.order)
   }
 
   const getStepName = (stepNumber: number): string => {
-    const step = steps.find((s) => s.number === stepNumber)
+    const stepNameMapping = {1:1, 2:2, 3:7}
+    const mappedStep = stepNameMapping[stepNumber as keyof typeof stepNameMapping] || stepNumber
+    const step = steps.find((s) => s.number === mappedStep)
     return step ? step.name : `Adım ${stepNumber}`
   }
 
@@ -584,512 +520,14 @@ export default function AppointmentSection() {
                   }}
                 >
                 {/* Dinamik Steps */}
-                {getQuestionsForStep(currentStep).length > 0 ? (
-                  <>
-                    <div className="col-12">
-                      <h3 className="medical-step-title">{getStepName(currentStep)}</h3>
-                    </div>
-                    <div className="row">
-                      {getQuestionsForStep(currentStep).map((question) => renderQuestion(question))}
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    {/* Fallback - eski içerik */}
-                {/* Step 1: Kişisel Bilgiler */}
-                {currentStep === 1 && (
-                  <>
-                    <div className="col-12">
-                      <h3 className="medical-step-title" suppressHydrationWarning>{isReady ? t('medical.pages.form.stepTitle') : ''}</h3>
-                    </div>
-                <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color" suppressHydrationWarning>{isReady ? t('medical.pages.form.labels.fullName') : ''} <span style={{ color: '#ff0000' }}>*</span></label>
-                  <input 
-                    type="text" 
-                    className="cs_form_field" 
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    required 
-                  />
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color" suppressHydrationWarning>{isReady ? t('medical.pages.form.labels.birthDate') : ''} <span style={{ color: '#ff0000' }}>*</span></label>
-                  <input 
-                    type="date" 
-                    className="cs_form_field" 
-                    value={birthDate}
-                    onChange={(e) => setBirthDate(e.target.value)}
-                    required 
-                  />
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }} suppressHydrationWarning>{isReady ? t('medical.pages.form.labels.gender') : ''} <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label={isReady ? t('medical.pages.form.genderOptions.female') : 'Kadın'} selected={gender === 'Kadın'} onClick={() => setGender('Kadın')} />
-                      <CheckboxOption label={isReady ? t('medical.pages.form.genderOptions.male') : 'Erkek'} selected={gender === 'Erkek'} onClick={() => setGender('Erkek')} />
-                      <CheckboxOption label={isReady ? t('medical.pages.form.genderOptions.preferNotToSay') : 'Belirtmek İstemiyorum'} selected={gender === 'Belirtmek İstemiyorum'} onClick={() => setGender('Belirtmek İstemiyorum')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color">Uyruk <span style={{ color: '#ff0000' }}>*</span></label>
-                  <input 
-                    type="text" 
-                    className="cs_form_field" 
-                    value={nationality}
-                    onChange={(e) => setNationality(e.target.value)}
-                    required 
-                  />
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color">Telefon (WhatsApp) <span style={{ color: '#ff0000' }}>*</span></label>
-                  <input 
-                    type="text" 
-                    className="cs_form_field" 
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    required 
-                  />
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color">E-posta <span style={{ color: '#ff0000' }}>*</span></label>
-                  <input 
-                    type="email" 
-                    className="cs_form_field" 
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required 
-                  />
-                  <div className="cs_height_42"></div>
-                </div>
-              </>
-            )}
-
-            {/* Step 2: Operasyon Detayları */}
-            {currentStep === 2 && (
-              <>
                 <div className="col-12">
-                  <h3 className="medical-step-title">Operasyon Detayları</h3>
+                  <h3 className="medical-step-title">{getStepName(currentStep)}</h3>
                 </div>
-                <div className="col-lg-6">
-                  <label className="cs_input_label cs_heading_color">İlgilenilen İşlem <span style={{ color: '#ff0000' }}>*</span></label>
-                  <select 
-                    className="cs_select cs_select_fix"
-                    value={operation}
-                    onChange={(e) => setOperation(e.target.value)}
-                    required
-                  >
-                    <option value="">Lütfen Seçiniz</option>
-                    <option>Saç Ekimi</option>
-                    <option>Burun Estetiği</option>
-                    <option>Meme Estetiği</option>
-                    <option>Liposuction</option>
-                    <option>BBL</option>
-                    <option>Yüz Germe</option>
-                    <option>Diş Tedavisi</option>
-                    <option>Diğer</option>
-                  </select>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                {operation === 'Diğer' && (
-                  <div className="col-lg-6">
-                    <label className="cs_input_label cs_heading_color">İşlem Detayı <span style={{ color: '#ff0000' }}>*</span></label>
-                    <input
-                      type="text"
-                      className="cs_form_field"
-                      value={otherOperation}
-                      onChange={(e) => setOtherOperation(e.target.value)}
-                      placeholder="İşlemi belirtiniz..."
-                    />
-                    <div className="cs_height_42"></div>
-                  </div>
-                )}
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Daha Önce Danışma Aldınız mı? <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={consultation === 'Hayır'} onClick={() => setConsultation('Hayır')} />
-                      <CheckboxOption label="Evet" selected={consultation === 'Evet'} onClick={() => setConsultation('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>İlk Ameliyatınız mı? <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Evet" selected={firstSurgery === 'Evet'} onClick={() => setFirstSurgery('Evet')} />
-                      <CheckboxOption label="Hayır" selected={firstSurgery === 'Hayır'} onClick={() => setFirstSurgery('Hayır')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-              </>
-            )}
-
-            {/* Step 3: Medikal Geçmiş */}
-            {currentStep === 3 && (
-              <>
-                <div className="col-12">
-                  <h3 className="medical-step-title">Medikal Geçmiş</h3>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kronik Hastalığınız Var mı? <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={chronicDisease === 'Hayır'} onClick={() => setChronicDisease('Hayır')} />
-                      <CheckboxOption label="Evet" selected={chronicDisease === 'Evet'} onClick={() => setChronicDisease('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                {chronicDisease === 'Evet' && (
-                  <div className="col-lg-6">
-                    <label className="cs_input_label cs_heading_color">Kronik Hastalık Detayı <span style={{ color: '#ff0000' }}>*</span></label>
-                    <input
-                      type="text"
-                      className="cs_form_field"
-                      value={chronicDiseaseDetail}
-                      onChange={(e) => setChronicDiseaseDetail(e.target.value)}
-                      placeholder="Lütfen belirtiniz..."
-                    />
-                    <div className="cs_height_42"></div>
-                  </div>
-                )}
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kalp Rahatsızlığı <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={heartDisease === 'Hayır'} onClick={() => setHeartDisease('Hayır')} />
-                      <CheckboxOption label="Evet" selected={heartDisease === 'Evet'} onClick={() => setHeartDisease('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kan Pıhtılaşması Problemi <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={bloodClotting === 'Hayır'} onClick={() => setBloodClotting('Hayır')} />
-                      <CheckboxOption label="Evet" selected={bloodClotting === 'Evet'} onClick={() => setBloodClotting('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Yüksek Tansiyon <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={hypertension === 'Hayır'} onClick={() => setHypertension('Hayır')} />
-                      <CheckboxOption label="Evet" selected={hypertension === 'Evet'} onClick={() => setHypertension('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kanser Geçmişi <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={cancer === 'Hayır'} onClick={() => setCancer('Hayır')} />
-                      <CheckboxOption label="Evet" selected={cancer === 'Evet'} onClick={() => setCancer('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-              </>
-            )}
-
-            {/* Step 4: Yaşam Alışkanlıkları */}
-            {currentStep === 4 && (
-              <>
-                <div className="col-12">
-                  <h3 className="medical-step-title">Yaşam Alışkanlıkları</h3>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Sigara Kullanımı <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={smoking === 'Hayır'} onClick={() => setSmoking('Hayır')} />
-                      <CheckboxOption label="Evet" selected={smoking === 'Evet'} onClick={() => setSmoking('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Alkol Kullanımı <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={alcohol === 'Hayır'} onClick={() => setAlcohol('Hayır')} />
-                      <CheckboxOption label="Ara Sıra" selected={alcohol === 'Ara Sıra'} onClick={() => setAlcohol('Ara Sıra')} />
-                      <CheckboxOption label="Düzenli" selected={alcohol === 'Düzenli'} onClick={() => setAlcohol('Düzenli')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Uyuşturucu Madde Kullanımı <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={drugs === 'Hayır'} onClick={() => setDrugs('Hayır')} />
-                      <CheckboxOption label="Evet" selected={drugs === 'Evet'} onClick={() => setDrugs('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-              </>
-            )}
-
-            {/* Step 5: İlaçlar & Alerjiler */}
-            {currentStep === 5 && (
-              <>
-                <div className="col-12">
-                  <h3 className="medical-step-title">İlaçlar, Alerjiler & Cerrahi Geçmiş</h3>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Düzenli İlaç Kullanımı <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={medication === 'Hayır'} onClick={() => setMedication('Hayır')} />
-                      <CheckboxOption label="Evet" selected={medication === 'Evet'} onClick={() => setMedication('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>İlaç / Anestezi Alerjisi <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={allergy === 'Hayır'} onClick={() => setAllergy('Hayır')} />
-                      <CheckboxOption label="Evet" selected={allergy === 'Evet'} onClick={() => setAllergy('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
+                <div className="row">
+                  {getQuestionsForStep(currentStep).map((question) => renderQuestion(question))}
                 </div>
 
-                <div className="col-12">
-                  <h3 className="medical-step-title-secondary">Cerrahi Geçmiş</h3>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Daha Önce Ameliyat Oldunuz mu? <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={surgery === 'Hayır'} onClick={() => setSurgery('Hayır')} />
-                      <CheckboxOption label="Evet" selected={surgery === 'Evet'} onClick={() => setSurgery('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Anestezi Komplikasyonu <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={anesthesia === 'Hayır'} onClick={() => setAnesthesia('Hayır')} />
-                      <CheckboxOption label="Evet" selected={anesthesia === 'Evet'} onClick={() => setAnesthesia('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
 
-                <div className="col-12">
-                  <h3 className="medical-step-title-secondary">Kadın Hastalar İçin</h3>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Hamilelik Durumu</label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={pregnancy === 'Hayır'} onClick={() => setPregnancy('Hayır')} />
-                      <CheckboxOption label="Evet" selected={pregnancy === 'Evet'} onClick={() => setPregnancy('Evet')} />
-                      <CheckboxOption label="Şüpheli" selected={pregnancy === 'Şüpheli'} onClick={() => setPregnancy('Şüpheli')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Emzirme Durumu</label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Hayır" selected={breastfeeding === 'Hayır'} onClick={() => setBreastfeeding('Hayır')} />
-                      <CheckboxOption label="Evet" selected={breastfeeding === 'Evet'} onClick={() => setBreastfeeding('Evet')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-              </>
-            )}
-
-            {/* Step 6: Seyahat & Konaklama */}
-            {currentStep === 6 && (
-              <>
-                <div className="col-12">
-                  <h3 className="medical-step-title">Seyahat Bilgileri</h3>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Türkiye Seyahat Zamanı <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Net Tarih" selected={travelTime === 'Net Tarih'} onClick={() => setTravelTime('Net Tarih')} />
-                      <CheckboxOption label="Esnek" selected={travelTime === 'Esnek'} onClick={() => setTravelTime('Esnek')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                {travelTime === 'Net Tarih' && (
-                  <div className="col-lg-6">
-                    <label className="cs_input_label cs_heading_color">Seyahat Tarihi <span style={{ color: '#ff0000' }}>*</span></label>
-                    <input
-                      type="date"
-                      className="cs_form_field"
-                      value={travelDate}
-                      onChange={(e) => setTravelDate(e.target.value)}
-                    />
-                    <div className="cs_height_42"></div>
-                  </div>
-                )}
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Kişi Sayısı <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Yalnız" selected={personCount === 'Yalnız'} onClick={() => setPersonCount('Yalnız')} />
-                      <CheckboxOption label="1 Refakatçi" selected={personCount === '1 Refakatçi'} onClick={() => setPersonCount('1 Refakatçi')} />
-                      <CheckboxOption label="2 veya Daha Fazla" selected={personCount === '2 veya Daha Fazla'} onClick={() => setPersonCount('2 veya Daha Fazla')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Uçak Bileti Durumu <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Var" selected={ticketStatus === 'Var'} onClick={() => setTicketStatus('Var')} />
-                      <CheckboxOption label="Yok" selected={ticketStatus === 'Yok'} onClick={() => setTicketStatus('Yok')} />
-                      <CheckboxOption label="Almayı Planlıyorum" selected={ticketStatus === 'Almayı Planlıyorum'} onClick={() => setTicketStatus('Almayı Planlıyorum')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Havalimanı <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="İstanbul Havalimanı" selected={airport === 'İstanbul Havalimanı'} onClick={() => setAirport('İstanbul Havalimanı')} />
-                      <CheckboxOption label="Sabiha Gökçen" selected={airport === 'Sabiha Gökçen'} onClick={() => setAirport('Sabiha Gökçen')} />
-                      <CheckboxOption label="Diğer" selected={airport === 'Diğer'} onClick={() => setAirport('Diğer')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                {airport === 'Diğer' && (
-                  <div className="col-lg-6">
-                    <label className="cs_input_label cs_heading_color">Havalimanı Adı <span style={{ color: '#ff0000' }}>*</span></label>
-                    <input
-                      type="text"
-                      className="cs_form_field"
-                      value={otherAirport}
-                      onChange={(e) => setOtherAirport(e.target.value)}
-                      placeholder="Havalimanı adını giriniz..."
-                    />
-                    <div className="cs_height_42"></div>
-                    <div className="cs_height_24"></div>
-                  </div>
-                )}
-
-                <div className="col-12">
-                  <h3 className="medical-step-title-secondary">Konaklama & Transfer</h3>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Otel İhtiyacı <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Evet" selected={hotelNeed === 'Evet'} onClick={() => setHotelNeed('Evet')} />
-                      <CheckboxOption label="Hayır" selected={hotelNeed === 'Hayır'} onClick={() => setHotelNeed('Hayır')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>VIP Transfer <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Evet" selected={vipTransfer === 'Evet'} onClick={() => setVipTransfer('Evet')} />
-                      <CheckboxOption label="Hayır" selected={vipTransfer === 'Hayır'} onClick={() => setVipTransfer('Hayır')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-                
-                <div className="col-lg-6">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
-                    <label className="cs_input_label cs_heading_color" style={{ marginBottom: 0 }}>Araç Tercihi <span style={{ color: '#ff0000' }}>*</span></label>
-                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', justifyContent: 'flex-end', flex: 1 }}>
-                      <CheckboxOption label="Vito" selected={vehicleChoice === 'Vito'} onClick={() => setVehicleChoice('Vito')} />
-                      <CheckboxOption label="Sprinter" selected={vehicleChoice === 'Sprinter'} onClick={() => setVehicleChoice('Sprinter')} />
-                      <CheckboxOption label="Fark Etmez" selected={vehicleChoice === 'Fark Etmez'} onClick={() => setVehicleChoice('Fark Etmez')} />
-                    </div>
-                  </div>
-                  <div className="cs_height_42"></div>
-                </div>
-              </>
-            )}
-
-            {/* Step 7: Ek Bilgiler */}
-            {currentStep === 7 && (
-              <>
-                <div className="col-12">
-                  <h3 className="medical-step-title">Ek Bilgiler</h3>
-                </div>
-                
-                <div className="col-lg-12">
-                  <label className="cs_input_label cs_heading_color">Doktorun Bilmesi Gereken Ek Bilgi</label>
-                  <textarea
-                    name="extraInfo"
-                    className="cs_form_field"
-                    rows={4}
-                    value={extraInfo}
-                    onChange={(e) => setExtraInfo(e.target.value)}
-                  ></textarea>
-                  <div className="cs_height_42"></div>
-                </div>
-              </>
-            )}
-                  </>
-                )}
 
             {/* Navigation Buttons */}
             <div className="col-12">

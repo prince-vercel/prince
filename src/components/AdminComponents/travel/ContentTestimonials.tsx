@@ -200,7 +200,7 @@ const ContentTestimonials = () => {
 
         {/* Image Upload */}
         <div className={styles.contentServicesFieldGroup}>
-          <label className={styles.contentServicesLabel} style={{fontSize:'15px',  fontWeight: '600'}}>Profil Görseli</label>
+          <label className={styles.contentServicesLabel} style={{fontSize:'15px',  fontWeight: '600'}}>Profil Görseli (1:1)</label>
           <div style={{
             border: '2px dashed #ddd',
             borderRadius: '8px',

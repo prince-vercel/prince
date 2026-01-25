@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import {
   collection,
   addDoc,
@@ -11,6 +11,8 @@ import {
   doc,
   updateDoc,
   writeBatch,
+  query,
+  where,
 } from 'firebase/firestore'
 import { db } from '@/src/lib/firebase'
 import styles from '@/src/styles/admin.module.css'
@@ -53,6 +55,12 @@ const FormAsks = () => {
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
   const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
 
+  const loadingRef = useRef(false)
+
+  const handleLanguageChange = useCallback((lang: 'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru') => {
+    setSelectedLanguage(lang)
+  }, [])
+
   const [formData, setFormData] = useState({
     id: '', // Added question ID field
     questionText: '',
@@ -66,11 +74,15 @@ const FormAsks = () => {
     additionalInputType: 'text' as 'text' | 'date',
   })
 
-  const loadQuestions = async () => {
+  const loadQuestions = useCallback(async () => {
+    if (loadingRef.current) return
+    loadingRef.current = true
     try {
       const collectionName = getCollectionName('travelquestions', selectedLanguage)
       const querySnapshot = await getDocs(collection(db, collectionName))
+
       const questionsData: Question[] = []
+
       querySnapshot.forEach((doc) => {
         questionsData.push({
           id: doc.id,
@@ -78,34 +90,49 @@ const FormAsks = () => {
           createdAt: doc.data().createdAt?.toDate(),
         } as Question)
       })
-      setQuestions(questionsData.sort((a, b) => a.step - b.step || a.order - b.order))
+
+      setQuestions(
+        questionsData.sort((a, b) => a.step - b.step || a.order - b.order)
+      )
     } catch (error) {
       console.error('Soru yükleme hatası:', error)
-      showNotification('error', 'Sorular yüklenirken hata oluştu')
+    } finally {
+      loadingRef.current = false
     }
-  }
+  }, [selectedLanguage])
 
-  const loadSteps = async () => {
+  const loadSteps = useCallback(async () => {
+    if (loadingRef.current) return
+    loadingRef.current = true
     try {
       const collectionName = getCollectionName('travelsteps', selectedLanguage)
       const querySnapshot = await getDocs(collection(db, collectionName))
+
       const stepsData: StepName[] = []
+
       querySnapshot.forEach((doc) => {
         stepsData.push({
           id: doc.id,
           ...doc.data(),
         } as StepName)
       })
+
       setSteps(stepsData.sort((a, b) => a.number - b.number))
     } catch (error) {
       console.error('Adımlar yükleme hatası:', error)
+    } finally {
+      loadingRef.current = false
     }
-  }
+  }, [selectedLanguage])
 
   // Soruları ve adımları yükle
   useEffect(() => {
     loadQuestions()
     loadSteps()
+
+    return () => {
+      // Cleanup if needed
+    }
   }, [loadQuestions, loadSteps])
 
   const showNotification = (type: 'success' | 'error', message: string) => {
@@ -196,31 +223,32 @@ const FormAsks = () => {
       setLoading(false)
     }
   }
+const handleDelete = async (questionId: string) => {
+  if (!confirm('Bu soruyu silmek istediğinize emin misiniz?')) return
 
-  const handleDelete = async (questionId: string) => {
-    if (!confirm('Bu soruyu silmek istediğinize emin misiniz?')) return
-
-    try {
-      const collectionName = getCollectionName('travelquestions', selectedLanguage)
-      await deleteDoc(doc(db, collectionName, questionId))
-      showNotification('success', 'Soru başarıyla silindi')
-      loadQuestions()
-    } catch (error) {
-      console.error('Soru silme hatası:', error)
-      showNotification('error', 'Soru silinirken hata oluştu')
-    }
+  try {
+    const collectionName = getCollectionName('travelquestions', selectedLanguage)
+    await deleteDoc(doc(db, collectionName, questionId))
+    showNotification('success', 'Soru silindi')
+    loadQuestions()
+  } catch (error) {
+    console.error('Soru silme hatası:', error)
+    showNotification('error', 'Soru silinirken hata oluştu')
   }
+}
 
+
+  // Soru düzenleme fonksiyonu
   const handleEdit = (question: Question) => {
     setEditingId(question.id)
     setFormData({
-      id: question.id, // Set question ID for editing
-      questionText: question.questionText,
-      type: question.type,
-      options: question.options.join(', '),
-      step: question.step,
-      required: question.required,
-      order: question.order,
+      id: question.id || '',
+      questionText: question.questionText || '',
+      type: question.type || 'select',
+      options: (question.options || []).join(', '),
+      step: question.step || 1,
+      required: question.required ?? true,
+      order: question.order || 1,
       triggerValue: question.triggerValue || '',
       additionalInputLabel: question.additionalInputLabel || '',
       additionalInputType: question.additionalInputType || 'text',
@@ -317,15 +345,17 @@ const FormAsks = () => {
     URL.revokeObjectURL(url)
   }
 
-  const groupedQuestions = questions.reduce(
-    (acc, q) => {
-      const stepKey = q.step
-      if (!acc[stepKey]) acc[stepKey] = []
-      acc[stepKey].push(q)
-      return acc
-    },
-    {} as Record<number, Question[]>
-  )
+  const groupedQuestions = useMemo(() => {
+    return questions.reduce(
+      (acc, q) => {
+        const stepKey = q.step
+        if (!acc[stepKey]) acc[stepKey] = []
+        acc[stepKey].push(q)
+        return acc
+      },
+      {} as Record<number, Question[]>
+    )
+  }, [questions])
 
   return (
     <div style={{ padding: '20px' }}>
@@ -349,13 +379,9 @@ const FormAsks = () => {
           {notification.message}
         </div>
       )}
-  <LanguageSelector
+      <LanguageSelector
         selectedLanguage={selectedLanguage}
-        onLanguageChange={(lang) => {
-          setSelectedLanguage(lang)
-          loadQuestions()
-          loadSteps()
-        }}
+        onLanguageChange={handleLanguageChange}
       />
       {/* Başlık ve Butonlar */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', gap: '10px', flexWrap: 'wrap' }}>

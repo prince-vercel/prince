@@ -345,7 +345,7 @@ export default function IletisimPage() {
                                     </h4>
                                     <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
                                         <li suppressHydrationWarning>
-                                            {t('visa.footer.address', 'Dap Vadisi Z Ofis, Merkez, Seçkin Sk. Z ofis, Kat 2, Daire 229, 34406 Kağıthane/İstanbul')}
+                                            {t('visa.footer.address', 'Dap Vadisi Z Ofis, Merkez, Seçkin Sk. Z ofis, Kat 2, Daire 232, 34406 Kağıthane/İstanbul')}
                                         </li>
                                     </ul>
                                 </div>

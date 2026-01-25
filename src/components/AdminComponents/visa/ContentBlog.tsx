@@ -198,7 +198,7 @@ const ContentBlog = () => {
 
         {/* Image Upload */}
         <div className={styles.contentServicesFieldGroup}>
-          <label className={styles.contentServicesLabel} style={{fontSize:'15px', fontWeight: '600'}}>Ana Blog Görseli</label>
+          <label className={styles.contentServicesLabel} style={{fontSize:'15px', fontWeight: '600'}}>Ana Blog Görseli (16:9)</label>
           <div style={{
             border: '2px dashed #ddd',
             borderRadius: '8px',

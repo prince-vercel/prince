@@ -59,12 +59,12 @@ export default function Footer() {
           <div className="container">
             <div className="cs_footer_bottom_in">
               <div className="cs_social_links">
-                <Link href="#"><i className="fa-brands fa-facebook-f"></i></Link>
-                <Link href="#"><i className="fa-brands fa-instagram"></i></Link>
-                <Link href="#"><i className="fa-brands fa-whatsapp"></i></Link>
+                <Link href="https://facebook.com/princemedical.tr"><i className="fa-brands fa-facebook-f"></i></Link>
+                <Link href="https://instagram.com/princemedical.tr"><i className="fa-brands fa-instagram"></i></Link>
+                <Link href="https://wa.me/905457709777"><i className="fa-brands fa-whatsapp"></i></Link>
 
               </div>
-
+ 
               <div className="cs_copyright" suppressHydrationWarning>
                 {isReady ? t('medical.footer.copyright', { year: currentYear }) : ''}
               </div>

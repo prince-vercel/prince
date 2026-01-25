@@ -225,7 +225,7 @@ export default function ContentCountries() {
       </div>
 
       <div className={styles.formGroup}>
-        <label className={styles.label}>Ana Görsel *</label>
+        <label className={styles.label}>Ana Görsel (16:9) *</label>
         <input
           type="file"
           accept="image/*"

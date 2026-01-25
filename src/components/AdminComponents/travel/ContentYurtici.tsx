@@ -43,13 +43,10 @@ interface Tour {
   galleryImageUrls?: string[]
   imageUrl?: string
   additionalImageUrl?: string
-   airlineName?: string
+  airlineName?: string
   airlineLogoUrl?: string
   isFavorite?: boolean
   status?: string
-  visaStatus?: string
-  category?: string
-  region?: string
   createdAt: any
 }
 
@@ -79,18 +76,13 @@ interface FormData {
   mainImageUrl: string
   galleryImageUrls: string[]
   additionalImageUrl?: string
-  airlineName?: string
-  airlineLogoUrl?: string
+  airlineName: string
+  airlineLogoUrl: string
   status: string
   priceEnabled: boolean
-  visaStatus: string
-  category: string
-  region: string
-  customCategory: string
-  customRegion: string
 }
 
-const ContentTours = () => {
+const ContentYurtici = () => {
   const [tours, setTours] = useState<Tour[]>([])
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -125,12 +117,7 @@ const ContentTours = () => {
     airlineName: '',
     airlineLogoUrl: '',
     status: 'aktif',
-    priceEnabled: true,
-    visaStatus: '',
-    category: '',
-    region: '',
-    customCategory: '',
-    customRegion: ''
+    priceEnabled: true
   })
 
   const [countries, setCountries] = useState<Country[]>([])
@@ -148,7 +135,7 @@ const ContentTours = () => {
 
   const fetchTours = async () => {
     try {
-      const q = query(collection(db, getCollectionName('traveltours', selectedLanguage)), orderBy('createdAt', 'desc'))
+      const q = query(collection(db, getCollectionName('travelyurtici', selectedLanguage)), orderBy('createdAt', 'desc'))
       const snap = await getDocs(q)
       setTours(snap.docs.map(d => ({ id: d.id, ...d.data() })) as Tour[])
     } catch (error) {
@@ -159,7 +146,7 @@ const ContentTours = () => {
   const fetchCountries = async () => {
     const snap = await getDocs(
       query(
-        collection(db, getCollectionName('travelcountries', selectedLanguage)),
+        collection(db, getCollectionName('travelturkiye', selectedLanguage)),
         orderBy('createdAt', 'desc')
       )
     )
@@ -168,7 +155,7 @@ const ContentTours = () => {
 
   const fetchEnquiries = async (tourId: string) => {
     try {
-      const q = query(collection(db, getCollectionName('traveltours', selectedLanguage), tourId, 'enquiries'), orderBy('createdAt', 'desc'))
+      const q = query(collection(db, getCollectionName('travelyurtici', selectedLanguage), tourId, 'enquiries'), orderBy('createdAt', 'desc'))
       const snap = await getDocs(q)
       setEnquiries(snap.docs.map(d => ({ id: d.id, ...d.data() })))
     } catch (error) {
@@ -211,24 +198,6 @@ const ContentTours = () => {
     }))
   }
 
-  const handleAirlineLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setUploadingImage(true);
-      try {
-        const timestamp = Date.now();
-        const storageRef = ref(storage, `tours/${timestamp}_airline_${file.name}`);
-        const snapshot = await uploadBytes(storageRef, file);
-        const downloadUrl = await getDownloadURL(snapshot.ref);
-        setFormData((prev) => ({ ...prev, airlineLogoUrl: downloadUrl }));
-      } catch (error) {
-        console.error('Airline logo upload error:', error);
-        alert('Failed to upload airline logo');
-      } finally {
-        setUploadingImage(false);
-      }
-    }
-  };
   const handleTourPlanChange = (index: number, field: 'day' | 'content', value: any) => {
     const newPlan = [...formData.tourPlan]
     if (field === 'day') {
@@ -316,6 +285,25 @@ const ContentTours = () => {
     }
   };
 
+  const handleAirlineLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setUploadingImage(true);
+      try {
+        const timestamp = Date.now();
+        const storageRef = ref(storage, `tours/${timestamp}_airline_${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        const downloadUrl = await getDownloadURL(snapshot.ref);
+        setFormData((prev) => ({ ...prev, airlineLogoUrl: downloadUrl }));
+      } catch (error) {
+        console.error('Airline logo upload error:', error);
+        alert('Failed to upload airline logo');
+      } finally {
+        setUploadingImage(false);
+      }
+    }
+  };
+
   const removeImage = () => {
     setFormData(prev => ({ ...prev, mainImageUrl: '' }))
     if (fileInputRef.current) {
@@ -339,7 +327,7 @@ const ContentTours = () => {
 
   const uploadCountryImage = async (file: File) => {
     setUploadingCountryImage(true)
-    const storageRef = ref(storage, `countries/${Date.now()}_${file.name}`)
+    const storageRef = ref(storage, `travelturkiye/${Date.now()}_${file.name}`)
     const snap = await uploadBytes(storageRef, file)
     const url = await getDownloadURL(snap.ref)
     setCountryImage(url)
@@ -356,19 +344,15 @@ const ContentTours = () => {
         delete submitData.price; // Explicitly remove the price field
       }
 
-      // Handle custom category and region
-      submitData.category = formData.category === 'Diğer' ? formData.customCategory : formData.category;
-      submitData.region = formData.region === 'Diğer' ? formData.customRegion : formData.region;
-
       if (editingId) {
-        await updateDoc(doc(db, getCollectionName('traveltours', selectedLanguage), editingId), {
+        await updateDoc(doc(db, getCollectionName('travelyurtici', selectedLanguage), editingId), {
           ...submitData,
           updatedAt: serverTimestamp()
         })
         setSuccess('Tur başarıyla güncellendi!')
       } else {
         const tourId = generateId(formData.title)
-        await setDoc(doc(db, getCollectionName('traveltours', selectedLanguage), tourId), {
+        await setDoc(doc(db, getCollectionName('travelyurtici', selectedLanguage), tourId), {
           ...submitData,
           id: tourId,
           createdAt: serverTimestamp()
@@ -394,15 +378,11 @@ const ContentTours = () => {
         faq: [{ question: '', answer: '' }],
         mainImageUrl: '',
         galleryImageUrls: [],
-       airlineName: '',
+        additionalImageUrl: '',
+        airlineName: '',
         airlineLogoUrl: '',
         status: 'aktif',
-        priceEnabled: true,
-        visaStatus: '',
-        category: '',
-        region: '',
-        customCategory: '',
-        customRegion: ''
+        priceEnabled: true
       })
       setEditingId(null)
       setShowForm(false)
@@ -421,7 +401,7 @@ const ContentTours = () => {
     if (!countryTitle || !countryImage) return alert('Alanlar zorunlu')
 
     await addDoc(
-      collection(db, getCollectionName('travelcountries', selectedLanguage)),
+      collection(db, getCollectionName('travelturkiye', selectedLanguage)),
       {
         title: countryTitle,
         imageUrl: countryImage,
@@ -455,15 +435,10 @@ const ContentTours = () => {
       mainImageUrl: tour.mainImageUrl || tour.imageUrl || '',
       galleryImageUrls: tour.galleryImageUrls || [],
       additionalImageUrl: tour.additionalImageUrl || '',
-         airlineName: tour.airlineName || '',
+      airlineName: tour.airlineName || '',
       airlineLogoUrl: tour.airlineLogoUrl || '',
       status: tour.status || 'aktif',
-      priceEnabled: tour.price !== null && tour.price !== undefined,
-      visaStatus: tour.visaStatus || '',
-      category: tour.category || '',
-      region: tour.region || '',
-      customCategory: '',
-      customRegion: ''
+      priceEnabled: tour.price !== null && tour.price !== undefined
     })
     setEditingId(tour.id)
     setShowForm(true)
@@ -472,7 +447,7 @@ const ContentTours = () => {
   const handleDelete = async (id: string) => {
     if (confirm('Bu turu silmek istediğinizden emin misiniz?')) {
       try {
-        await deleteDoc(doc(db, getCollectionName('traveltours', selectedLanguage), id))
+        await deleteDoc(doc(db, getCollectionName('travelyurtici', selectedLanguage), id))
         setSuccess('Tur silindi!')
         fetchTours()
         setTimeout(() => setSuccess(''), 3000)
@@ -485,7 +460,7 @@ const ContentTours = () => {
 
   const toggleFavorite = async (id: string, currentFavorite: boolean) => {
     try {
-      await updateDoc(doc(db, getCollectionName('traveltours', selectedLanguage), id), {
+      await updateDoc(doc(db, getCollectionName('travelyurtici', selectedLanguage), id), {
         isFavorite: !currentFavorite
       })
       fetchTours()
@@ -503,14 +478,14 @@ const ContentTours = () => {
       {!showForm ? (
         <div>
           <div className={styles.tourHeader}>
-            <h2 className={styles.tourTitle}>Yurt Dışı Turları</h2>
+            <h2 className={styles.tourTitle}>Yurt İçi Turları</h2>
             <div>
               <button
                 onClick={() => setShowCountryForm(!showCountryForm)}
                 className={styles.tourAddBtn}
                 style={{ marginRight: 8 }}
               >
-                + Ülke Ekle
+                + Kategori Ekle
               </button>
               <button
                 onClick={() => {
@@ -535,15 +510,10 @@ const ContentTours = () => {
                     mainImageUrl: '',
                     galleryImageUrls: [],
                     additionalImageUrl: '',
-                     airlineName: '',
+                    airlineName: '',
                     airlineLogoUrl: '',
                     status: 'aktif',
-                    priceEnabled: true,
-                    visaStatus: '',
-                    category: '',
-                    region: '',
-                    customCategory: '',
-                    customRegion: ''
+                    priceEnabled: true
                   })
                 }}
                 className={styles.tourAddBtn} 
@@ -553,7 +523,7 @@ const ContentTours = () => {
             </div>
           </div>
 
-          {/* Ülke Ekle Formu */}
+          {/* Kategori Ekle Formu */}
           {showCountryForm && (
             <div style={{
               marginTop: '20px',
@@ -562,16 +532,16 @@ const ContentTours = () => {
               borderRadius: '8px',
               border: '1px solid #eee'
             }}>
-              <h3 style={{ marginBottom: '16px' }}>Ülke Ekle</h3>
+              <h3 style={{ marginBottom: '16px' }}>Kategori Ekle</h3>
 
               <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '16px' }}>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '4px' }}>Ülke Adı</label>
+                  <label style={{ display: 'block', marginBottom: '4px' }}>Kategori Adı</label>
                   <input
                     type="text"
                     value={countryTitle}
                     onChange={e => setCountryTitle(e.target.value)}
-                    placeholder="Ülke adı"
+                    placeholder="Kategori adı"
                     style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
                   />
                 </div>
@@ -587,7 +557,7 @@ const ContentTours = () => {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', marginBottom: '4px' }}>Görsel (16:9)</label>
+                  <label style={{ display: 'block', marginBottom: '4px' }}>Görsel</label>
                   <input
                     type="file"
                     accept="image/*"
@@ -616,13 +586,13 @@ const ContentTours = () => {
 
               {countryImage && (
                 <div style={{ marginBottom: '16px' }}>
-                  <img src={countryImage} alt="Ülke" style={{ width: '120px', height: 'auto' }} />
+                  <img src={countryImage} alt="Kategori" style={{ width: '120px', height: 'auto' }} />
                 </div>
               )}
             </div>
           )}
 
-          {/* Ülkeler Listesi */}
+          {/* Kategori Listesi */}
           {countries.length > 0 && (
             <div style={{
               marginTop: '20px',
@@ -631,7 +601,7 @@ const ContentTours = () => {
               borderRadius: '8px',
               border: '1px solid #eee'
             }}>
-              <h3 style={{ marginBottom: '16px' }}>Eklenen Ülkeler</h3>
+              <h3 style={{ marginBottom: '16px' }}>Eklenen Kategoriler</h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
                 {countries.map(country => (
                   <div key={country.id} style={{
@@ -662,15 +632,15 @@ const ContentTours = () => {
                       </button>
                       <button
                         onClick={async () => {
-                          if (confirm('Bu ülkeyi silmek istediğinizden emin misiniz?')) {
+                          if (confirm('Bu kategori silmek istediğinizden emin misiniz?')) {
                             try {
-                              await deleteDoc(doc(db, getCollectionName('travelcountries', selectedLanguage), country.id));
+                              await deleteDoc(doc(db, getCollectionName('travelturkiye', selectedLanguage), country.id));
                               fetchCountries();
-                              setSuccess('Ülke başarıyla silindi!');
+                              setSuccess('Kategori başarıyla silindi!');
                               setTimeout(() => setSuccess(''), 3000);
                             } catch (error) {
-                              console.error('Ülke silme hatası:', error);
-                              alert('Ülke silme başarısız oldu');
+                              console.error('Kategori silme hatası:', error);
+                              alert('Kategori silme başarısız oldu');
                             }
                           }
                         }}
@@ -764,7 +734,7 @@ const ContentTours = () => {
                         value={tour.status || 'aktif'}
                         onChange={async (e) => {
                           try {
-                            await updateDoc(doc(db, getCollectionName('traveltours', selectedLanguage), tour.id), {
+                            await updateDoc(doc(db, getCollectionName('travelyurtici', selectedLanguage), tour.id), {
                               status: e.target.value
                             })
                             fetchTours()
@@ -942,7 +912,7 @@ const ContentTours = () => {
           <div className={styles.tourFormContent}>
             {/* Kapak Görseli */}
             <div className={styles.tourFormGroup}>
-              <label>Kapak Görseli (En Üstte Gösterilecek) (16:9)</label>
+              <label>Kapak Görseli (En Üstte Gösterilecek)</label>
               <div className={styles.tourImageUploadBox}>
                 {formData.mainImageUrl ? (
                   <div className={styles.tourImagePreview}>
@@ -975,13 +945,13 @@ const ContentTours = () => {
 
             {/* Ek Görsel */}
             <div className={styles.tourFormGroup}>
-              <label>Ek Görsel (Kapak Görselinin Altında Gösterilecek) (16:9)</label>
+              <label>Ek Görsel (Kapak Görselinin Altında Gösterilecek (1920:1080))</label>
               <div className={styles.tourImageUploadBox}>
                 {formData.additionalImageUrl ? (
-                  <div className={styles.imagePreview} style={{ maxWidth: '150px', maxHeight: '100px', overflow: 'hidden' }}>
+                  <div className={styles.imagePreview} style={{ maxWidth: '150px', maxHeight: '100px', overflow: 'hidden', position: 'relative' }}>
                     <img src={formData.additionalImageUrl} alt="Additional" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
-                    <button type="button" onClick={removeAdditionalImage} className={styles.removeImageBtn}>
-                      Remove
+                    <button type="button" onClick={removeAdditionalImage} className={styles.tourImageRemoveBtn} style={{ position: 'absolute', top: '0', right: '0' }}>
+                      X
                     </button>
                   </div>
                 ) : (
@@ -997,7 +967,7 @@ const ContentTours = () => {
 
             {/* Galeri Görselleri */}
             <div className={styles.tourFormGroup}>
-              <label>Galeri Görselleri (Birden Fazla Eklenebilir) (16:9)</label>
+              <label>Galeri Görselleri (Birden Fazla Eklenebilir)</label>
               <div className={styles.tourImageUploadBox}>
                 {formData.galleryImageUrls.length > 0 ? (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '12px' }}>
@@ -1055,94 +1025,34 @@ const ContentTours = () => {
               />
             </div>
 
+            {/* Kategori Seçimi */}
+            <div className={styles.tourFormGroup}>
+              <label>Kategori</label>
+              <select
+                value={formData.countryId}
+                onChange={e => handleInputChange('countryId', e.target.value)}
+              >
+                <option value="">Kategori seç</option>
+                {countries.map(c => (
+                  <option key={c.id} value={c.id}>
+                    {c.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             {/* Şehir */}
             <div className={styles.tourFormGroup}>
-              <label>Şehir</label>
+              <label>Gidilecek Yerler</label>
               <input
                 type="text"
                 value={formData.location}
                 onChange={e => handleInputChange('location', e.target.value)}
-                placeholder="Şehir adını girin (Birden fazlaysa virgülle ayırın.)"
+                placeholder="Yer adını girin (Birden fazlaysa virgülle ayırın.)"
               />
             </div>
 
-            {/* Vize Durumu, Kategori, Bölge ve Ülke */}
-            <div className={styles.tourFormRow}>
-              <div className={styles.tourFormGroup}>
-                <label>Vize Durumu</label>
-                <select
-                  value={formData.visaStatus}
-                  onChange={e => handleInputChange('visaStatus', e.target.value)}
-                >
-                  <option value="">Seç</option>
-                  <option value="Vizesiz">Vizesiz</option>
-                  <option value="Vizeli">Vizeli</option>
-                </select>
-              </div>
-
-              <div className={styles.tourFormGroup}>
-                <label>Kategori</label>
-                <select
-                  value={formData.category}
-                  onChange={e => handleInputChange('category', e.target.value)}
-                >
-                  <option value="">Seç</option>
-                  <option value="Gemi turu">Gemi turu</option>
-                  <option value="Kültür turu">Kültür turu</option>
-                  <option value="Diğer">Diğer</option>
-                </select>
-                {formData.category === 'Diğer' && (
-                  <input
-                    type="text"
-                    value={formData.customCategory}
-                    onChange={e => handleInputChange('customCategory', e.target.value)}
-                    placeholder="Kategori girin"
-                    style={{ marginTop: '8px' }}
-                  />
-                )}
-              </div>
-
-              <div className={styles.tourFormGroup}>
-                <label>Bölge</label>
-                <select
-                  value={formData.region}
-                  onChange={e => handleInputChange('region', e.target.value)}
-                >
-                  <option value="">Seç</option>
-                  <option value="Orta Doğu">Orta Doğu</option>
-                  <option value="Avrupa">Avrupa</option>
-                  <option value="Asya">Asya</option>
-                  <option value="Amerika">Amerika</option>
-                  <option value="Afrika">Afrika</option>
-                  <option value="Diğer">Diğer</option>
-                </select>
-                {formData.region === 'Diğer' && (
-                  <input
-                    type="text"
-                    value={formData.customRegion}
-                    onChange={e => handleInputChange('customRegion', e.target.value)}
-                    placeholder="Bölge girin"
-                    style={{ marginTop: '8px' }}
-                  />
-                )}
-              </div>
-
-              <div className={styles.tourFormGroup}>
-                <label>Ülke</label>
-                <select
-                  value={formData.countryId}
-                  onChange={e => handleInputChange('countryId', e.target.value)}
-                >
-                  <option value="">Ülke seç</option>
-                  {countries.map(c => (
-                    <option key={c.id} value={c.id}>
-                      {c.title}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-    {/* Havayolu Adı ve Logosu */}
+            {/* Havayolu Adı ve Logosu */}
             <div className={styles.tourFormRow}>
               <div className={styles.tourFormGroup}>
                 <label>Havayolu Adı</label>
@@ -1185,6 +1095,7 @@ const ContentTours = () => {
                 </div>
               </div>
             </div>
+
             {/* Açıklama */}
             <div className={styles.tourFormGroup}>
               <label>Açıklama</label>
@@ -1214,7 +1125,7 @@ const ContentTours = () => {
                       checked={!formData.priceEnabled}
                       onChange={() => setFormData(prev => ({ ...prev, priceEnabled: !prev.priceEnabled }))}
                     />
-                    Fiyat Al
+                    Fiyat Yok
                   </label>
                 </div>
               </div>
@@ -1409,4 +1320,4 @@ const ContentTours = () => {
   )
 }
 
-export default ContentTours
+export default ContentYurtici

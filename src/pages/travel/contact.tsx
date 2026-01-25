@@ -107,7 +107,8 @@ export default function ContactPage() {
                         className="hover:text-primary-1 duration-200"
                         suppressHydrationWarning
                       >
-                        {isReady ? t('travel.pages.contact.email.address') : ''}
+                        info@princetourismagency.com
+
                       </a>
                     </li>
                     <li>
@@ -116,7 +117,8 @@ export default function ContactPage() {
                         className="hover:text-primary-1 duration-200"
                         suppressHydrationWarning
                       >
-                        {isReady ? t('travel.pages.contact.email.address') : ''}
+                       tourisim@princetourismagency.com
+
                       </a>
                     </li>
                   </ul>
@@ -139,20 +141,20 @@ export default function ContactPage() {
                   <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
                     <li>
                       <a
-                        href={`tel:${isReady ? t('travel.pages.contact.phone.number') : ''}`}
+                        href="tel:+902129997720"
                         className="hover:text-primary-1 duration-200"
                         suppressHydrationWarning
                       >
-                        {isReady ? t('travel.pages.contact.phone.number') : ''}
+                        +90 212 999 77 20
                       </a>
                     </li>
                     <li>
                       <a
-                        href={`tel:${isReady ? t('travel.pages.contact.phone.number') : ''}`}
+                        href="tel:+905457709777"
                         className="hover:text-primary-1 duration-200"
                         suppressHydrationWarning
                       >
-                        {isReady ? t('travel.pages.contact.phone.number') : ''}
+                        +90 545 770 97 77
                       </a>
                     </li>
                   </ul>
@@ -170,11 +172,11 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h4 className="text-dark-1 lg:text-2md text-md font-semibold" suppressHydrationWarning>
-                    {isReady ? t('travel.pages.contact.address.title') : ''}
+                    {isReady ? t('medical.pages.contact.addressTitle') : ''}
                   </h4>
                   <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
                     <li suppressHydrationWarning>
-                      {isReady ? t('travel.pages.contact.address.location') : ''}
+                      {isReady ? t('medical.pages.contact.address') : ''}
                     </li>
                   </ul>
                 </div>

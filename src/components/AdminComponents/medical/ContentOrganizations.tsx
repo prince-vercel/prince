@@ -348,7 +348,7 @@ const ContentOrganizations = () => {
       
             {/* Hotel Image */}
             <div className={styles.contentServicesFieldGroup}>
-              <label className={styles.contentServicesLabel}>Otel Görseli</label>
+              <label className={styles.contentServicesLabel}>Otel Görseli (16:9)</label>
               <div
                 onClick={() => document.getElementById('hotelImageInput')?.click()}
                 className={styles.contentServicesImageUploadContainer}
@@ -551,7 +551,7 @@ const ContentOrganizations = () => {
 
             {/* Hospital Image */}
             <div className={styles.contentServicesFieldGroup}>
-              <label className={styles.contentServicesLabel}>Hastane Görseli</label>
+              <label className={styles.contentServicesLabel}>Hastane Görseli (16:9)</label>
               <div
                 onClick={() => document.getElementById('hospitalImageInput')?.click()}
                 className={styles.contentServicesImageUploadContainer}

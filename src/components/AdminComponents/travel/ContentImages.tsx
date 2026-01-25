@@ -552,7 +552,7 @@ const ContentImages = () => {
 
             <div style={{ marginBottom: '20px' }}>
               <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#333' }}>
-                Görsel
+                Görsel (16:9)
               </label>
               {formData.imageUrl && !selectedFile && (
                 <div style={{ marginBottom: '12px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>

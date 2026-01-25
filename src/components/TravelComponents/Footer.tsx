@@ -29,6 +29,8 @@ export default function Footer() {
                   <ul className="cs_contact_widget">
                     <li suppressHydrationWarning>{isReady ? t('visa.footer.address') : ''}</li>
                     <li suppressHydrationWarning>+90 212 931 27 20</li>
+                    <li suppressHydrationWarning>+90 545 770 67 77</li>
+
                     <li suppressHydrationWarning>{isReady ? t('travel.footer.email') : ''}</li>
                   </ul>
                 </div>
@@ -67,8 +69,8 @@ export default function Footer() {
             <div className="cs_footer_bottom_in">
               <div className="cs_social_links">
                 <Link href="#"><i className="fa-brands fa-facebook-f" style={{ color: 'white' }}></i></Link>
-                <Link href="#"><i className="fa-brands fa-instagram" style={{ color: 'white' }}></i></Link>
-                <Link href="#"><i className="fa-brands fa-whatsapp" style={{ color: 'white' }}></i></Link>
+                <Link href="https://instagram.com/princetourism.tr"><i className="fa-brands fa-instagram" style={{ color: 'white' }}></i></Link>
+                <Link href="https://wa.me/5457706777"><i className="fa-brands fa-whatsapp" style={{ color: 'white' }}></i></Link>
               </div>
 
               <div className="cs_copyright" suppressHydrationWarning>

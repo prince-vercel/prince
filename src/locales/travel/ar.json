@@ -3,6 +3,8 @@
         "header": {
             "home": "الرئيسية",
             "tours": "الجولات",
+            "toursDomestic": "داخلي",
+            "toursInternational": "خارجي",
             "reservation": "الحجز",
             "blog": "المدونة",
             "about": "من نحن",

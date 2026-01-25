@@ -21,17 +21,23 @@ import ContentImages from '@/src/components/AdminComponents/travel/ContentImages
 import ContentPartner from '@/src/components/AdminComponents/travel/ContentPartner'
 import FormAsks from '@/src/components/AdminComponents/travel/FormAsks'
 import ContentAdmin from '@/src/components/AdminComponents/travel/ContentChatBot'
+import ContentYurtici from '@/src/components/AdminComponents/travel/ContentYurtici'
 
 const ContentsPage = () => {
   const [activeTab, setActiveTab] = useState<
-    'tours' | 'reviews' | 'blog' | 'faq' | 'testimonials' | 'images' | 'partners' | 'questions' | 'chatbot' | null
+    'tours' |'yurtici' | 'reviews' | 'blog' | 'faq' | 'testimonials' | 'images' | 'partners' | 'questions' | 'chatbot' | null
   >(null)
   const [hoveredBox, setHoveredBox] = useState<string | null>(null)
 
   const contentBoxes = [
     {
       id: 'tours',
-      title: 'Turlar',
+      title: 'Yurt Dışı Turlar',
+      icon: <MdAdd size={40} />
+    },
+     {
+      id: 'yurtici',
+      title: 'Yurt İçi Turlar',
       icon: <MdAdd size={40} />
     },
     {
@@ -75,6 +81,8 @@ const ContentsPage = () => {
     switch (activeTab) {
       case 'tours':
         return <ContentTours />
+      case 'yurtici':
+        return <ContentYurtici />
       case 'images':
         return <ContentImages />
       case 'testimonials':

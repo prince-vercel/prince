@@ -3,6 +3,8 @@
         "header": {
             "home": "Inicio",
             "tours": "Tours",
+            "toursDomestic": "Nacional",
+            "toursInternational": "Internacional",
             "reservation": "Reservación",
             "blog": "Blog",
             "about": "Acerca de",

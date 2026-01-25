@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-as-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 import { db } from "@/src/lib/firebase";
@@ -14,6 +15,14 @@ export default function PackageList() {
   const router = useRouter()
   const { t, isReady } = useSafeTranslation()
   const { destination } = router.query
+
+  const clampStyle = {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    WebkitLineClamp: 1,
+    WebkitBoxOrient: 'vertical' as 'vertical'
+  }
   const [tours, setTours] = useState<any[]>([])
   const [loadingTours, setLoadingTours] = useState(true)
   const [countries, setCountries] = useState<any[]>([])
@@ -27,6 +36,7 @@ export default function PackageList() {
   const [selectedStartDate, setSelectedStartDate] = useState<string>('')
   const [selectedEndDate, setSelectedEndDate] = useState<string>('')
   const [selectedInclusions, setSelectedInclusions] = useState<string[]>([])
+  const [selectedAirlines, setSelectedAirlines] = useState<string[]>([])
   const [showPricedOnly, setShowPricedOnly] = useState(false)
 
   useEffect(() => {
@@ -175,11 +185,15 @@ export default function PackageList() {
           return false
         })
 
+      const airlineOk =
+        selectedAirlines.length === 0 ||
+        selectedAirlines.includes(tour.airline || '')
+
       const pricedOk = !showPricedOnly || !tour.price || tour.price === 0
 
       const statusOk = tour.status !== 'pasif'
 
-      const allOk = destinationOk && cityOk && durationOk && maxPeopleOk && priceOk && daysOk && dateOk && inclusionsOk && pricedOk && statusOk
+      const allOk = destinationOk && cityOk && durationOk && maxPeopleOk && priceOk && daysOk && dateOk && inclusionsOk && airlineOk && pricedOk && statusOk
 
       if (!allOk) {
         console.log('Tour filtered out:', tour.title, { destinationOk, cityOk, durationOk, maxPeopleOk, priceOk, daysOk, dateOk, inclusionsOk, pricedOk, statusOk })
@@ -189,7 +203,7 @@ export default function PackageList() {
     })
     console.log('Filtered packages count:', filtered.length, 'selectedDestinations:', selectedDestinations)
     return filtered
-  }, [tours, selectedDestinations, selectedCities, selectedDurations, selectedMaxPeople, priceRange, selectedDays, selectedStartDate, selectedEndDate, selectedInclusions, showPricedOnly, countries])
+  }, [tours, selectedDestinations, selectedCities, selectedDurations, selectedMaxPeople, priceRange, selectedDays, selectedStartDate, selectedEndDate, selectedInclusions, selectedAirlines, showPricedOnly, countries])
 
   const uniqueDestinations = useMemo(() => {
     const dbDestinations = new Set(tours.map(tour => tour.countryId).filter(Boolean))
@@ -199,14 +213,18 @@ export default function PackageList() {
 
   const uniqueCities = useMemo(() => {
     const dbCities = new Set<string>()
-    tours.forEach(tour => {
+    const filteredTours = selectedDestinations.length > 0 ? tours.filter(tour => {
+      const country = countries.find(c => c.id === tour.countryId || c.title === tour.countryId)
+      return country && (selectedDestinations.includes(country.id) || selectedDestinations.includes(country.title))
+    }) : tours
+    filteredTours.forEach(tour => {
       if (tour.location && typeof tour.location === 'string') {
         const cities = tour.location.split(',').map((city: string) => city.trim()).filter(Boolean)
         cities.forEach((city: string) => dbCities.add(city))
       }
     })
     return Array.from(dbCities).sort()
-  }, [tours])
+  }, [tours, selectedDestinations, countries])
 
   const uniqueInclusions = useMemo(() => {
     const inclusionMap = new Map<string, string>()
@@ -222,6 +240,11 @@ export default function PackageList() {
       }
     })
     return Array.from(inclusionMap.values()).sort().slice(0, 10)
+  }, [tours])
+
+  const uniqueAirlines = useMemo(() => {
+    const airlines = new Set(tours.map(tour => tour.airline).filter(Boolean))
+    return Array.from(airlines).sort()
   }, [tours])
 
   return (
@@ -259,13 +282,61 @@ export default function PackageList() {
                 <h4 className="text-lg font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.title') : ''}</h4>
               </div>
 
+              {/* CITIES */}
+              <aside>
+                <h5 className="md:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.destination') : ''}</h5>
+                <select
+                  value={selectedCities[0] || ''}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      setSelectedCities([e.target.value])
+                    } else {
+                      setSelectedCities([])
+                    }
+                  }}
+                  className="w-full  h-12 border border-dark-1 border-opacity-20  outline-0"
+                  style={{ backgroundColor: '#fff', color: '#333' }}
+                >
+                  <option value="">Tüm Şehirler</option>
+                  {uniqueCities.map((item, i) => (
+                    <option key={i} value={item}>{item}</option>
+                  ))}
+                </select>
+              </aside>
+
+              <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
+
+              {/* AIRLINES */}
+              <aside>
+                <h5 className="md:text-md text-base pb-2 font-semibold text-dark-1">Havayolu Şirketi</h5>
+                <select
+                  value={selectedAirlines[0] || ''}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      setSelectedAirlines([e.target.value])
+                    } else {
+                      setSelectedAirlines([])
+                    }
+                  }}
+                  className="w-full h-12 border border-dark-1 border-opacity-20 outline-0"
+                  style={{ backgroundColor: '#fff', color: '#333' }}
+                >
+                  <option value="">Tüm Havayolu Şirketleri</option>
+                  {uniqueAirlines.map((item, i) => (
+                    <option key={i} value={item}>{item}</option>
+                  ))}
+                </select>
+              </aside>
+
+              <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
+
               {/* PRICE FILTER */}
               <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>
+                <h5 className="md:text-md text-base font-semibold text-dark-1" suppressHydrationWarning>
                   {isReady ? t('travel.pages.all.filters.priceRange') : ''}
                 </h5>
 
-                <div className="pt-4 flex gap-3 items-center">
+                <div className="pt-2 flex gap-3 items-center">
                   <input
                     type="number"
                     placeholder={isReady ? t('travel.pages.all.filters.priceRangeMin') : ''}
@@ -303,63 +374,11 @@ export default function PackageList() {
               </aside>
 
               <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
-
-              {/* DESTINATIONS */}
-              <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>ÜLKE</h5>
-                <select
-                  value={selectedDestinations[0] || ''}
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      setSelectedDestinations([e.target.value])
-                    } else {
-                      setSelectedDestinations([])
-                    }
-                  }}
-                  className="w-full  h-12 border border-dark-1 border-opacity-20  outline-0"
-                  style={{ backgroundColor: '#fff', color: '#333' }}
-                >
-                  {uniqueDestinations.map((item, i) => {
-                    const country = countries.find(c => c.id === item)
-                    return (
-                      <option key={i} value={item}>
-                        {country ? country.title : item}
-                      </option>
-                    )
-                  })}
-                </select>
-              </aside>
-
-              <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
-
-              {/* CITIES */}
-              <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.destination') : ''}</h5>
-                <select
-                  value={selectedCities[0] || ''}
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      setSelectedCities([e.target.value])
-                    } else {
-                      setSelectedCities([])
-                    }
-                  }}
-                  className="w-full  h-12 border border-dark-1 border-opacity-20  outline-0"
-                  style={{ backgroundColor: '#fff', color: '#333' }}
-                >
-                  <option value="">Tüm Şehirler</option>
-                  {uniqueCities.map((item, i) => (
-                    <option key={i} value={item}>{item}</option>
-                  ))}
-                </select>
-              </aside>
-
-              <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
-
+              
               {/* DATE FILTER */}
               <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.days') : ''}</h5>
-                 <div className="pt-4 space-y-3">
+                <h5 className="md:text-md text-base font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.days') : ''}</h5>
+                 <div className="pt-2 space-y-3">
                   <div className="flex items-center mb-2">
                     <i className="bi bi-calendar mr-2 text-gray-500"></i>
                     <span className="text-sm font-medium mr-2">Başlangıç:</span>
@@ -373,95 +392,64 @@ export default function PackageList() {
                   </div>
                   <div className="flex items-center">
                     <i className="bi bi-calendar mr-2 text-gray-500"></i>
-                    <span className="text-sm font-medium mr-2">Bitiş:</span>
+                    <span className="text-sm font-medium mr-8">Bitiş:</span>
                     <input
                       type="date"
                       value={selectedEndDate}
                       onChange={(e) => setSelectedEndDate(e.target.value)}
-                      className="flex-1 h-12 border border-dark-1 border-opacity-20 px-3 outline-0"
+                      className="flex-1 h-12 border border-dark-1 border-opacity-20 px-3 outline-0 ml-3"
                       style={{ backgroundColor: '#fff', color: '#333' }}
                     />
                   </div>
                 </div>
               </aside>
-
-              <div className="my-8 h-[3px] bg-[url('../images/illustration/wave.svg')] bg-repeat"></div>
-
-            
-              {/* INCLUSIONS */}
-              <aside>
-                <h5 className="lg:text-md text-base pb-2 font-semibold text-dark-1" suppressHydrationWarning>{isReady ? t('travel.pages.all.filters.inclusions') : ''}</h5>
-                <ul className="pt-4">
-                  {uniqueInclusions.map((item, i) => (
-                    <li key={i} className="pt-3 first:pt-0">
-                      <div className="custom-checkbox">
-                        <input
-                          type="checkbox"
-                          id={`inc-${i}`}
-                          checked={selectedInclusions.includes(item)}
-                          onChange={() =>
-                            toggleValue(item, selectedInclusions, setSelectedInclusions)
-                          }
-                        />
-                        <label htmlFor={`inc-${i}`}>{item}</label>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </aside>
+         
             </div>
 
             {/* LIST (AYNI STİL) */}
-            <div className="lg:w-2/3 grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-base">
+            <div className="gap-base">
               {loadingTours ? (
                 <div className="col-span-2 text-center py-20">
                   <p className="text-lg text-gray-500" suppressHydrationWarning>{isReady ? t('travel.pages.all.results.loading') : ''}</p>
                 </div>
               ) : filteredPackages.length === 0 ? (
-                <div className="col-span-2 text-center py-20">
+                <div className="col-span-2 text-czenter py-20">
                   <p className="text-lg text-gray-500" suppressHydrationWarning>{isReady ? t('travel.pages.all.results.noTours') : ''}</p>
                 </div>
               ) : (
              filteredPackages.map((tour) => (
   <div
     key={tour.id}
-    className="overflow-hidden bg-white relative mb-5"
-    style={{ borderRadius: '16px', height: '450px' }}
+    className="overflow-hidden relative mb-5 flex bg-gray-50 border border-gray-200"
+    style={{ borderRadius: '16px', height: '200px' }}
     onMouseEnter={() => setHoveredCardId(tour.id)}
     onMouseLeave={() => setHoveredCardId(null)}
   >
     {/* IMAGE */}
-    <div className="relative" style={{ height: '250px' }}>
+    <div className="relative" style={{ width: '300px', height: '200px', flexShrink: 0 }}>
       <a href={`/travel/all/${tour.id}`} className="block w-full h-full">
-    
         {tour.mainImageUrl || tour.imageUrl ? (
           <img
             src={tour.mainImageUrl || tour.imageUrl}
             alt={tour.title}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            className="hover:scale-105 duration-300"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
+            }}
           />
         ) : (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-            <span className="text-gray-400" suppressHydrationWarning>
-              {isReady ? t('travel.pages.all.results.noImage') : ''}
+            <span className="text-gray-400">
+              Görsel Yok
             </span>
           </div>
         )}
       </a>
 
-      {tour.discount && (
-        <span
-          className="absolute top-4 left-4 bg-red-600 text-white font-bold px-3 py-1"
-          style={{ borderRadius: '8px' }}
-        >
-          -{tour.discount} €
-        </span>
-      )}
-
       {tour.status === 'tükendi' && (
         <span
-          className=" text-lg font-bold"
+          className="text-lg font-bold"
           style={{
             fontSize: '16px',
             backgroundColor: '#f8d9d9',
@@ -470,7 +458,7 @@ export default function PackageList() {
             borderRadius: '4px',
             opacity: 0.8,
             position:'absolute',
-            right:'4%',
+            left:'4%',
             top:'5%',
           }}
         >
@@ -480,45 +468,44 @@ export default function PackageList() {
     </div>
 
     {/* CONTENT */}
-    <div className="p-3 text-center" style={{ height: '140px' }}>
-      <h3 className="font-bold text-xl mb-2">
-        {tour.title}
-      </h3>
-      <h4 className="font-extrabold text-lg">
-        {tour.country}
-      </h4>
-
-      <p className="text-sm font-semibold mt-1">
-        {tour.route}
-      </p>
-
-      <div className="mt-1 text-sm font-semibold">
-        <i className="bi bi-geo-alt mr-1"></i> {tour.location}
-      </div>
-
-      <div className="flex justify-between mt-2 text-xs font-semibold">
-        <span><strong>GİDİŞ:</strong> {tour.startDate ? new Date(tour.startDate).toLocaleDateString('tr-TR') : '-'}</span>
-        <span><strong>DÖNÜŞ:</strong> {tour.endDate ? new Date(tour.endDate).toLocaleDateString('tr-TR') : '-'}</span>
-      </div>
-    </div>
-
-    {/* PRICE BAR */}
     <div
-      className="flex justify-center items-center gap-4 text-white"
-      style={{
-        background: '#d7b76e',
-        height: '60px'
-      }}
+      className="p-4 flex flex-col justify-between"
+      style={{ width: '550px', minHeight: '200px', maxHeight: '200px' }}
     >
-      {tour.oldPrice && (
-        <span className="line-through opacity-80 text-base">
-          {tour.oldPrice} €
+      <div>
+        <h3 className="font-bold text-md mb-1 flex items-center gap-2">
+          {tour.title}
+     
+        </h3>
+
+        <p className="text-sm font-semibold mb-1" style={clampStyle}>
+          {tour.route}
+        </p>
+
+        <div className="text-sm font-semibold mb-2" style={clampStyle}>
+          <i className="bi bi-geo-alt mr-1"></i> {tour.location}
+        </div>
+
+        <div className="text-xs font-semibold whitespace-nowrap">
+          GİDİŞ: {tour.startDate ? new Date(tour.startDate).toLocaleDateString('tr-TR') : '-'}
+          {' '}–{' '}
+          DÖNÜŞ: {tour.endDate ? new Date(tour.endDate).toLocaleDateString('tr-TR') : '-'}
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between mt-3">
+        <span className="text-lg font-extrabold">
+          {tour.price ? `${tour.price} €` : 'Fiyat Al'}
         </span>
-      )}
-      <span className="text-xl font-extrabold" style={{ fontSize: '20px' }}>
-        {tour.price ? `${tour.price} €` : 'Fiyat Al'}
-      </span>
-      
+     {tour.airlineLogoUrl && (
+            <img src={tour.airlineLogoUrl} alt={tour.airlineName || 'Airline'} style={{ width: '30px', height: '30px', borderRadius: '50%', objectFit: 'cover' }} />
+          )}
+        <button
+          onClick={() => router.push(`/travel/all/${tour.id}`)}
+        >
+          Detay
+        </button>
+      </div>
     </div>
   </div>
 ))

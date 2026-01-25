@@ -306,7 +306,7 @@ const ContentServices = () => {
             {/* Image */}
             <div className={styles.contentServicesFieldGroup}>
               <label className={styles.contentServicesLabel}>
-                Ana Görsel
+                Ana Görsel (16:9)
               </label>
               <div
                 onClick={() => document.getElementById('imageInput')?.click()}
@@ -422,7 +422,7 @@ const ContentServices = () => {
                   {/* Treatment Image */}
                   <div>
                     <label className={styles.contentServicesTreatmentLabel}>
-                      Tedavi Görseli
+                      Tedavi Görseli (16:9)
                     </label>
                     
                     {t.image && !treatments[i].imageFile && (

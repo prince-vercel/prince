@@ -10,6 +10,10 @@ import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore'
 import i18n from 'i18next'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/autoplay'
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
 import '../../i18n'
 import Chatbot from './Chatbot'
@@ -127,7 +131,7 @@ export default function TravelHomePage() {
           ...doc.data()
         } as Tour))
         // Sadece favorilere eklediğim turları göster
-        const favoriteTours = tours.filter(tour => tour.isFavorite === true).slice(0, 3).map(tour => ({
+        const favoriteTours = tours.filter(tour => tour.isFavorite === true).map(tour => ({
           ...tour,
           price: tour.price || 'Fiyat Al'
         }));
@@ -400,71 +404,87 @@ export default function TravelHomePage() {
             <h2 className="section-title-v1" suppressHydrationWarning>{isReady ? t('travel.homePage.packages.title') : ''}</h2>
           </div>
 
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-base">
-
-            {packages.length === 0 ? (
-              <div className="col-span-full text-center py-10 text-gray-500" suppressHydrationWarning>
-                {isReady ? t('travel.homePage.packages.noTours') : ''}
-              </div>
-            ) : (
-              packages.map((item, index) => (
-                <div
-                  key={item.id}
-                  className="wow fadeInUp overflow-hidden bg-white"
-                  style={{ borderRadius: '16px', height: '450px' }}
-                  data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}
-                >
-                  {/* IMAGE */}
-                  <div className="relative" style={{ height: '250px' }}>
-                    <a href={`/travel/all/${item.id}`} className="block w-full h-full">
-                      <img
-                        src={item.mainImageUrl || item.imageUrl}
-                        alt={item.title}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        className="hover:scale-105 duration-300"
-                      />
-                    </a>
-                  </div>
-
-                  {/* CONTENT */}
-                  <div className="p-4 text-center" style={{ height: '140px' }}>
-                    <h3 className="font-bold text-xl mb-2">
-                      {item.title}
-                    </h3>
-                    <h4 className="font-extrabold text-lg">
-                      {item.country}
-                    </h4>
-
-                    <p className="text-sm font-semibold mt-1">
-                      {item.route}
-                    </p>
-
-                    <div className="mt-1 text-sm font-semibold">
-                      <i className="bi bi-geo-alt mr-1"></i> {item.location}
-                    </div>
-
-                    <div className="flex justify-between mt-2 text-xs font-semibold">
-                      <span><strong>GİDİŞ:</strong> {item.startDate}</span>
-                      <span><strong>DÖNÜŞ:</strong> {item.endDate}</span>
-                    </div>
-                  </div>
-
-                  {/* PRICE BAR */}
-                  <div
-                    className="flex justify-center items-center gap-4 text-white"
-                    style={{
-                      background: '#d7b76e',
-                      height: '60px'
-                    }}
-                  >
-                    <span className="text-xl font-extrabold" style={{ fontSize: '25px' }}>
-                      {item.price} €
-                    </span>
-                  </div>
+          <div className="relative">
+            <Swiper
+              modules={[Autoplay]}
+              spaceBetween={20}
+              slidesPerView={1}
+              breakpoints={{
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+              }}
+              autoplay={{
+                delay: 1000,
+                disableOnInteraction: false,
+                reverseDirection: true,
+              }}
+              loop={true}
+              className="pb-10"
+            >
+              {packages.length === 0 ? (
+                <div className="text-center py-10 text-gray-500" suppressHydrationWarning>
+                  {isReady ? t('travel.homePage.packages.noTours') : ''}
                 </div>
-              ))
-            )}
+              ) : (
+                packages.map((item, index) => (
+                  <SwiperSlide key={item.id}>
+                    <div
+                      className="wow fadeInUp overflow-hidden bg-white mx-auto"
+                      style={{ borderRadius: '16px', height: '450px', maxWidth: '350px' }}
+                      data-wow-delay={index > 0 ? `${index * 0.2}s` : undefined}
+                    >
+                      {/* IMAGE */}
+                      <div className="relative" style={{ height: '250px' }}>
+                        <a href={`/travel/all/${item.id}`} className="block w-full h-full">
+                          <img
+                            src={item.mainImageUrl || item.imageUrl}
+                            alt={item.title}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            className="hover:scale-105 duration-300"
+                          />
+                        </a>
+                      </div>
 
+                      {/* CONTENT */}
+                      <div className="p-4 text-center" style={{ height: '140px' }}>
+                        <h3 className="font-bold text-xl mb-2">
+                          {item.title}
+                        </h3>
+                        <h4 className="font-extrabold text-lg">
+                          {item.country}
+                        </h4>
+
+                        <p className="text-sm font-semibold mt-1">
+                          {item.route}
+                        </p>
+
+                        <div className="mt-1 text-sm font-semibold">
+                          <i className="bi bi-geo-alt mr-1"></i> {item.location}
+                        </div>
+
+                        <div className="flex justify-between mt-2 text-xs font-semibold">
+                          <span><strong>GİDİŞ:</strong> {item.startDate}</span>
+                          <span><strong>DÖNÜŞ:</strong> {item.endDate}</span>
+                        </div>
+                      </div>
+
+                      {/* PRICE BAR */}
+                      <div
+                        className="flex justify-center items-center gap-4 text-white"
+                        style={{
+                          background: '#d7b76e',
+                          height: '60px',marginTop:'3px'
+                        }}
+                      >
+                        <span className="text-xl font-extrabold" style={{ fontSize: '25px' }}>
+                          {item.price} €
+                        </span>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))
+              )}
+            </Swiper>
           </div>
         </div>
       </div>

@@ -130,7 +130,7 @@ export default function ContactPage() {
                         href="tel:+770434501097"
                         className="hover:text-primary-1 duration-200"
                       >
-                        +7704345017
+                        +90 212 999 77 20
                       </a>
                     </li>
                     <li>
@@ -138,7 +138,7 @@ export default function ContactPage() {
                         href="tel:+866-398-5917"
                         className="hover:text-primary-1 duration-200"
                       >
-                        +866-398-5917
+                        +90 545 770 97 77
                       </a>
                     </li>
                   </ul>

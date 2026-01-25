@@ -3,6 +3,8 @@
     "header": {
       "home": "Anasayfa",
       "tours": "Seyahatler",
+      "toursDomestic": "Yurtiçi",
+      "toursInternational": "Yurtdışı",
       "reservation": "Rezervasyon",
       "blog": "Blog",
       "about": "Hakkımızda",

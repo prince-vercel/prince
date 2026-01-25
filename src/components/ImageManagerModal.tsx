@@ -61,6 +61,7 @@ const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
           </button>
         </div>
         <div className={styles.modalBody}>
+          <label className={styles.label}>Görsel Seçiniz</label>
           <input
             type="file"
             accept="image/*"

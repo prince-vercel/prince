@@ -12,14 +12,16 @@ export default function Header() {
   const { t, isReady, i18n } = useSafeTranslation()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isToursDropdownOpen, setIsToursDropdownOpen] = useState(false)
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
   const [selectedLanguage, setSelectedLanguage] = useState('TR')
 
   useEffect(() => {
     // Sidebar ve search'ü kapat
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsSidebarOpen(false)
     setIsSearchOpen(false)
+    setIsToursDropdownOpen(false)
+    setIsLanguageDropdownOpen(false)
 
     // Sayfayı en üste scroll et - çoklu yöntem
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
@@ -71,7 +73,46 @@ export default function Header() {
                 <nav className="cs_nav">
                   <ul className="cs_nav_list">
                     <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.home') : ''}</Link></li>
-                    <li><Link href="/travel/countries" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/countries' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.tours') : ''}</Link></li>
+                  <li className="relative">
+                    <button
+                      onClick={() => setIsToursDropdownOpen(!isToursDropdownOpen)}
+                      onBlur={() => {
+                        setTimeout(() => setIsToursDropdownOpen(false), 200)
+                      }}
+                      className="font-semibold hover:text-primary-1 transition-colors duration-200 flex items-center justify-center gap-1 mt-4"
+                      style={{ color: (pathname === '/travel/countries' || pathname === '/travel/yurtici') ? '#d7b76e' : 'inherit' }}
+                      suppressHydrationWarning
+                    >
+                      {isReady ? t('travel.header.tours') : ''}
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </button>
+                    {isToursDropdownOpen && (
+                      <ul className="absolute top-full left-0 bg-white border border-gray-300 rounded shadow-lg z-10 min-w-[150px]">
+                        <li>
+                          <Link
+                            href="/travel/countries"
+                            onClick={() => setIsToursDropdownOpen(false)}
+                            className="block px-4 py-2 hover:bg-gray-100 text-gray-800"
+                            suppressHydrationWarning
+                          >
+                            {isReady ? t('travel.header.toursInternational') : ''}
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            href="/travel/yurtici"
+                            onClick={() => setIsToursDropdownOpen(false)}
+                            className="block px-4 py-2 hover:bg-gray-100 text-gray-800"
+                            suppressHydrationWarning
+                          >
+                            {isReady ? t('travel.header.toursDomestic') : ''}
+                          </Link>
+                        </li>
+                      </ul>
+                    )}
+                  </li>
                     <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/form' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.reservation') : ''}</Link></li>
                     <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/blog' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.blog') : ''}</Link></li>
                     <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200" style={{ color: pathname === '/travel/about' ? '#d7b76e' : 'inherit' }} suppressHydrationWarning>{isReady ? t('travel.header.about') : ''}</Link></li>
@@ -260,12 +301,13 @@ export default function Header() {
                   <a href="#">
                     <i className="fa-brands fa-facebook-f" style={{ color: '#d7b76e' }}></i>
                   </a>
-                  <a href="#">
+                  <a href="https://instagram.com/princetourism.tr">
                     <i className="fa-brands fa-instagram" style={{ color: '#d7b76e' }}></i>
                   </a>
-                  <a href="#">
+                  <a href="https://wa.me/5457706777">
                     <i className="fa-brands fa-whatsapp" style={{ color: '#d7b76e' }}></i>
                   </a>
+
                 </div>
               </div>
               <div className="cs_main_header_right">
@@ -300,7 +342,42 @@ export default function Header() {
           {/* MOBILE MENU */}
           <ul className="cs_mobile_menu">
             <li><Link href="/travel" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.home') : ''}</Link></li>
-            <li><Link href="/travel/countries" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.tours') : ''}</Link></li>
+            <li>
+              <button
+                onClick={() => setIsToursDropdownOpen(!isToursDropdownOpen)}
+                className="font-semibold hover:text-primary-1 transition-colors duration-200 flex items-center justify-between w-full"
+                suppressHydrationWarning
+              >
+                {isReady ? t('travel.header.tours') : ''}
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={`transform transition-transform ${isToursDropdownOpen ? 'rotate-180' : ''}`}>
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              {isToursDropdownOpen && (
+                <ul className="ml-4 mt-2 space-y-1">
+                  <li>
+                    <Link
+                      href="/travel/countries"
+                      onClick={() => { setIsSidebarOpen(false); setIsToursDropdownOpen(false); }}
+                      className="block py-1 text-gray-700 hover:text-primary-1"
+                      suppressHydrationWarning
+                    >
+                      {isReady ? t('travel.header.toursInternational') : ''}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/travel/yurtici"
+                      onClick={() => { setIsSidebarOpen(false); setIsToursDropdownOpen(false); }}
+                      className="block py-1 text-gray-700 hover:text-primary-1"
+                      suppressHydrationWarning
+                    >
+                      {isReady ? t('travel.header.toursDomestic') : ''}
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
             <li><Link href="/travel/form" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.reservation') : ''}</Link></li>
             <li><Link href="/travel/blog" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.blog') : ''}</Link></li>
             <li><Link href="/travel/about" className="font-semibold hover:text-primary-1 transition-colors duration-200" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('travel.header.about') : ''}</Link></li>
@@ -310,8 +387,9 @@ export default function Header() {
           {/* SOCIALS – MOBILE (EN ALTTA) */}
           <div className="cs_social_links cs_social_mobile">
             <a href="#"><i className="fa-brands fa-facebook-f"></i></a>
-            <a href="#"><i className="fa-brands fa-youtube"></i></a>
-            <a href="#"><i className="fa-brands fa-instagram"></i></a>
+            <a href="https://instagram.com/princetourism.tr"><i className="fa-brands fa-instagram"></i></a>
+              <a href="https://wa.me/5457706777"><i className="fa-brands fa-whatsapp"></i></a>
+
           </div>
         </div>
       </div>

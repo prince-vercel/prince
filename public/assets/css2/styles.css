@@ -1082,6 +1082,8 @@ html{
 }
 
 .grid{
+    display: grid;
+
 }
 
 .contents{
@@ -4329,7 +4331,6 @@ Customiz Third-Party Plugins
   border-left-width: 1px;
   border-style: dashed;
   --tw-border-opacity: 1;
-  border-color: rgb(232 96 76 / var(--tw-border-opacity));
   --tw-content: '';
   content: var(--tw-content);
 }

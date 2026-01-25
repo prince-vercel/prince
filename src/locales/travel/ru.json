@@ -3,6 +3,8 @@
         "header": {
             "home": "Главная",
             "tours": "Туры",
+            "toursDomestic": "Внутренний",
+            "toursInternational": "Международный",
             "reservation": "Бронирование",
             "blog": "Блог",
             "about": "О нас",

@@ -275,10 +275,10 @@ const ContentBlog = () => {
                 }}
               />
             </div>
-    {/* Görsel Yükleme */}
+            {/* Görsel Yükleme */}
             <div style={{ marginBottom: '20px' }}>
               <label style={{ display: 'block', fontWeight: '500', marginBottom: '8px', fontSize: '14px' }}>
-                Görsel Seçiniz {!editingId && '*'}
+                Görsel Seçiniz {!editingId && '*'} (16:9)
               </label>
               <input
                 type="file"

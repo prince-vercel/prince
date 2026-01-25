@@ -244,7 +244,7 @@ const ContentResults = () => {
 
         {/* Image Upload */}
         <div className={styles.contentServicesFieldGroup}>
-          <label className={styles.contentServicesLabel} style={{fontSize:'15px'}}>Görsel</label>
+          <label className={styles.contentServicesLabel} style={{fontSize:'15px'}}>Görsel (16:9)</label>
           <div
             onClick={() => document.getElementById('resultImageInput')?.click()}
             className={styles.contentServicesImageUploadContainer}
