@@ -354,46 +354,46 @@ export default function VizeTablosuPage() {
                                 {/* Main Content */}
                                 <div className="article-prose">
                                     <div className="table-responsive">
-                                        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
+                                        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px', fontWeight: 'bold' }}>
                                             <thead>
                                                 <tr>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left', fontSize: '14px' }}>Ülke</th>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left', fontSize: '14px' }}>Lacivert</th>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left', fontSize: '14px' }}>Yeşil</th>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left', fontSize: '14px' }}>Gri</th>
-                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 600, textAlign: 'left', fontSize: '14px' }}>Kırmızı</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 'bold', textAlign: 'left', fontSize: '14px' }}>Ülke</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 'bold', textAlign: 'left', fontSize: '14px' }}>Lacivert</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 'bold', textAlign: 'left', fontSize: '14px' }}>Yeşil</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 'bold', textAlign: 'left', fontSize: '14px' }}>Gri</th>
+                                                    <th style={{ padding: '12px', border: '1px solid #E8EAF0', backgroundColor: '#F8F9FC', fontWeight: 'bold', textAlign: 'left', fontSize: '14px' }}>Kırmızı</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {loading ? (
                                                     <tr>
-                                                        <td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: '#666' }}>
+                                                        <td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: '#666', fontWeight: 'bold' }}>
                                                             Yükleniyor...
                                                         </td>
                                                     </tr>
                                                 ) : visaTableData.length === 0 ? (
                                                     <tr>
-                                                        <td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: '#666' }}>
+                                                        <td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: '#666', fontWeight: 'bold' }}>
                                                             Veri bulunamadı
                                                         </td>
                                                     </tr>
                                                 ) : (
                                                     visaTableData.map((row) => (
                                                         <tr key={row.id}>
-                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>{row.country}</td>
-                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>
+                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0', fontWeight: 'bold' }}>{row.country}</td>
+                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0', fontWeight: 'bold' }}>
                                                                 {row.passports.lacivert.status}
                                                                 {row.passports.lacivert.duration && ` (${row.passports.lacivert.duration})`}
                                                             </td>
-                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>
+                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0', fontWeight: 'bold' }}>
                                                                 {row.passports.yesil.status}
                                                                 {row.passports.yesil.duration && ` (${row.passports.yesil.duration})`}
                                                             </td>
-                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>
+                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0', fontWeight: 'bold' }}>
                                                                 {row.passports.gri.status}
                                                                 {row.passports.gri.duration && ` (${row.passports.gri.duration})`}
                                                             </td>
-                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0' }}>
+                                                            <td style={{ padding: '12px', border: '1px solid #E8EAF0', fontWeight: 'bold' }}>
                                                                 {row.passports.kırmızı.status}
                                                                 {row.passports.kırmızı.duration && ` (${row.passports.kırmızı.duration})`}
                                                             </td>

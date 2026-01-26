@@ -84,8 +84,8 @@ const countriesData: Record<string, CountryData> = {
     almanya: {
         slug: 'almanya',
         name: '', // Will be set dynamically with translation
-        icon: '/visa/uploads/icons/almanya.svg',
-        heroImage: '/visa/uploads/contents/main/almanya.webp',
+        icon: '/visa/uploads/icons/almanya_bayrak.svg',
+        heroImage: '/visa/uploads/countries/almanya.avif',
         excerpt: '', // Will be set dynamically with translation
         content: '', // Will be set dynamically with translation
         navLinks: [
@@ -100,7 +100,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'fransa',
         name: 'visa.countries.fransa',
         icon: '/visa/uploads/icons/fransa.svg',
-        heroImage: '/visa/uploads/contents/main/fransa.webp',
+        heroImage: '/visa/uploads/countries/fransa.jpg',
         excerpt: '', // Will be set dynamically with translation
         content: '', // Will be set dynamically with translation
         navLinks: [
@@ -113,8 +113,8 @@ const countriesData: Record<string, CountryData> = {
     kanada: {
         slug: 'kanada',
         name: '', // Will be set dynamically with translation
-        icon: '/visa/uploads/icons/kanada.svg',
-        heroImage: '/visa/uploads/contents/main/kanada.webp',
+        icon: '/visa/uploads/icons/kanada_bayrak.svg',
+        heroImage: '/visa/uploads/countries/kanada.png',
         excerpt: '', // Will be set dynamically with translation
         content: '', // Will be set dynamically with translation
         navLinks: [
@@ -127,8 +127,8 @@ const countriesData: Record<string, CountryData> = {
     abd: {
         slug: 'abd',
         name: 'visa.countries.amerika',
-        icon: '/visa/uploads/icons/abd.svg',
-        heroImage: '/visa/uploads/contents/main/abd.webp',
+        icon: '/visa/uploads/icons/amerika.svg',
+        heroImage: '/visa/uploads/countries/amerika.jpg',
         excerpt: '', // Will be set dynamically with translation
         content: '', // Will be set dynamically with translation
         navLinks: [
@@ -142,7 +142,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'danimarka',
         name: '',
         icon: '/visa/uploads/icons/1765153526_f83b8a07cc28aaa369b4.svg',
-        heroImage: '/visa/uploads/contents/main/danimarka.webp',
+        heroImage: '/visa/uploads/countries/danimarkajpg.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -155,7 +155,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'belcika',
         name: 'visa.countries.belcika',
         icon: '/visa/uploads/icons/1765153595_1f0fef4d753b5d02bda5.svg',
-        heroImage: '/visa/uploads/contents/main/belcika.webp',
+        heroImage: '/visa/uploads/countries/belcika.webp',
         excerpt: '',
         content: '',
         navLinks: [
@@ -168,7 +168,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'italya',
         name: '',
         icon: '/visa/uploads/icons/1765154006_1b24e4173c6457dafbea.svg',
-        heroImage: '/visa/uploads/contents/main/italya.webp',
+        heroImage: '/visa/uploads/countries/italya.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -181,7 +181,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'malta',
         name: 'visa.countries.malta',
         icon: '/visa/uploads/icons/1765154164_af71177c207646d19b62.svg',
-        heroImage: '/visa/uploads/contents/main/malta.webp',
+        heroImage: '/visa/uploads/countries/malta.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -194,7 +194,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'irlanda',
         name: '',
         icon: '/visa/uploads/icons/1765154399_b928e004b98217490022.svg',
-        heroImage: '/visa/uploads/contents/main/irlanda.webp',
+        heroImage: '/visa/uploads/countries/irlanda.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -207,7 +207,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'ispanya',
         name: 'visa.countries.ispanya',
         icon: '/visa/uploads/icons/1765155530_9abaf74373a4eecfd706.svg',
-        heroImage: '/visa/uploads/contents/main/ispanya.webp',
+        heroImage: '/visa/uploads/countries/ispanya.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -220,7 +220,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'portekiz',
         name: '',
         icon: '/visa/uploads/icons/1765155591_3ba19bc8145dbfd3876b.svg',
-        heroImage: '/visa/uploads/contents/main/portekiz.webp',
+        heroImage: '/visa/uploads/countries/portekiz.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -233,7 +233,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'hollanda',
         name: 'visa.countries.hollanda',
         icon: '/visa/uploads/icons/1765155654_8f0736e95d6e49fe7998.svg',
-        heroImage: '/visa/uploads/contents/main/hollanda.webp',
+        heroImage: '/visa/uploads/countries/hollanda.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -246,7 +246,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'macaristan',
         name: '',
         icon: '/visa/uploads/icons/1765156553_55ca44c8baaeda593769.svg',
-        heroImage: '/visa/uploads/contents/main/macaristan.webp',
+        heroImage: '/visa/uploads/countries/macaristan.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -259,7 +259,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'yunanistan',
         name: 'visa.countries.yunanistan',
         icon: '/visa/uploads/icons/1765155714_7b5121cce9ec1be37381.svg',
-        heroImage: '/visa/uploads/contents/main/yunanistan.webp',
+        heroImage: '/visa/uploads/countries/yunanistan.webp',
         excerpt: '',
         content: '',
         navLinks: [
@@ -272,7 +272,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'dubai',
         name: '',
         icon: '/visa/uploads/icons/1765156599_8f91678f3d6e03ab19dd.svg',
-        heroImage: '/visa/uploads/contents/main/dubai.webp',
+        heroImage: '/visa/uploads/countries/dubai.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -285,7 +285,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'polonya',
         name: 'visa.countries.polonya',
         icon: '/visa/uploads/icons/1765156449_300b43b0d93d6295e952.svg',
-        heroImage: '/visa/uploads/contents/main/polonya.webp',
+        heroImage: '/visa/uploads/countries/polonya.webp',
         excerpt: '',
         content: '',
         navLinks: [
@@ -298,7 +298,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'bulgaristan',
         name: '',
         icon: '/visa/uploads/icons/1765156654_99758b8dda0ff9a6a5c0.svg',
-        heroImage: '/visa/uploads/contents/main/bulgaristan.webp',
+        heroImage: '/visa/uploads/countries/bulgaristan.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -311,7 +311,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'luksemburg',
         name: 'visa.countries.luksemburg',
         icon: '/visa/uploads/icons/1765156400_dd6a1f256550f2ebc30d.svg',
-        heroImage: '/visa/uploads/contents/main/luksemburg.webp',
+        heroImage: '/visa/uploads/countries/luksemburg.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -324,7 +324,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'isvec',
         name: '',
         icon: '/visa/uploads/icons/1765156702_68c6cc075f185cba9715.svg',
-        heroImage: '/visa/uploads/contents/main/isvec.webp',
+        heroImage: '/visa/uploads/countries/isveç.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -337,7 +337,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'romanya',
         name: 'visa.countries.romanya',
         icon: '/visa/uploads/icons/1765156347_b10c8e55fde9dbf02cd3.svg',
-        heroImage: '/visa/uploads/contents/main/romanya.webp',
+        heroImage: '/visa/uploads/countries/romanya.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -350,7 +350,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'slovenya',
         name: '',
         icon: '/visa/uploads/icons/1765156758_e95fed42dde3a2def473.svg',
-        heroImage: '/visa/uploads/contents/main/slovenya.webp',
+        heroImage: '/visa/uploads/countries/slovenya.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -363,7 +363,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'estonya',
         name: 'visa.countries.estonya',
         icon: '/visa/uploads/icons/1765156166_747261185a0c4ec0ed26.svg',
-        heroImage: '/visa/uploads/contents/main/estonya.webp',
+        heroImage: '/visa/uploads/countries/estonya.webp',
         excerpt: '',
         content: '',
         navLinks: [
@@ -376,7 +376,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'letonya',
         name: '',
         icon: '/visa/uploads/icons/1765155770_7f1aa009192a673c1d96.svg',
-        heroImage: '/visa/uploads/contents/main/letonya.webp',
+        heroImage: '/visa/uploads/countries/letonya.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -389,7 +389,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'litvanya',
         name: 'visa.countries.litvanya',
         icon: '/visa/uploads/icons/1765156120_6bc007e4d7b63fcf7e7d.svg',
-        heroImage: '/visa/uploads/contents/main/litvanya.webp',
+        heroImage: '/visa/uploads/countries/litvanya.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -402,7 +402,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'finlandiya',
         name: '',
         icon: '/visa/uploads/icons/1765155829_76dd3c52c1570b53661b.svg',
-        heroImage: '/visa/uploads/contents/main/finlandiya.webp',
+        heroImage: '/visa/uploads/countries/finlandiya.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -415,7 +415,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'norvec',
         name: 'visa.countries.norvec',
         icon: '/visa/uploads/icons/1765156064_02bb911d41b9a01b0209.svg',
-        heroImage: '/visa/uploads/contents/main/norvec.webp',
+        heroImage: '/visa/uploads/countries/norvec.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -428,7 +428,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'rusya',
         name: '',
         icon: '/visa/uploads/icons/1765155895_edf7adbc9cb1ac93d6ab.svg',
-        heroImage: '/visa/uploads/contents/main/rusya.webp',
+        heroImage: '/visa/uploads/countries/rusya.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -441,7 +441,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'suudi-arabistan',
         name: 'visa.countries.suudiArabistan',
         icon: '/visa/uploads/icons/1765156004_6e94b6b2adef49267a44.svg',
-        heroImage: '/visa/uploads/contents/main/suudi-arabistan.webp',
+        heroImage: '/visa/uploads/countries/suudiarabistan.png',
         excerpt: '',
         content: '',
         navLinks: [
@@ -454,7 +454,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'cin',
         name: 'visa.countries.cin',
         icon: '/visa/uploads/icons/1765155942_671bb6e4477d27983ee7.svg',
-        heroImage: '/visa/uploads/contents/main/cin.webp',
+        heroImage: '/visa/uploads/countries/çin.jpg',
         excerpt: '',
         content: '',
         navLinks: [
@@ -467,7 +467,7 @@ const countriesData: Record<string, CountryData> = {
         slug: 'guney-kore',
         name: 'visa.countries.guneyKore',
         icon: '/visa/uploads/icons/1765156857_f5c725d2d8679f239407.svg',
-        heroImage: '/visa/uploads/contents/main/guney-kore.webp',
+        heroImage: '/visa/uploads/countries/guneykore.webp',
         excerpt: '',
         content: '',
         navLinks: [
