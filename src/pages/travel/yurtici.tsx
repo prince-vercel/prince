@@ -110,12 +110,12 @@ const Countries = () => {
              >
                {country.minPrice && (
                  <>
-                   <div style={{ fontSize: '35px', fontWeight: 700 ,marginBottom: '10px'}}>
-                     €{country.minPrice}
-                   </div>
-                   <div style={{ fontSize: '13px', lineHeight: '1' }}>
-                     'den başlayan <br /> fiyatlar
-                   </div>
+                   <div style={{ fontSize: '35px', fontWeight: 700, textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+          €{country.minPrice}
+        </div>
+        <div style={{ fontSize: '13px', lineHeight: '1', textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
+          'den başlayan <br /> fiyatlar
+        </div>
                  </>
                )}
                

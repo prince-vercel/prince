@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 'use client'
@@ -17,6 +18,7 @@ import 'swiper/css/autoplay'
 import { useSafeTranslation } from '../../hooks/useSafeTranslation'
 import '../../i18n'
 import Chatbot from './Chatbot'
+import Link from 'next/link'
 
 const normalizeText = (text: string) => {
   return text
@@ -61,6 +63,9 @@ export default function TravelHomePage() {
   const [banners, setBanners] = useState<any[]>([])
   const [partners, setPartners] = useState<any[]>([])
   const [loadingPartners, setLoadingPartners] = useState(true)
+  const [countries, setCountries] = useState<any[]>([])
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false)
+  const [filteredCountries, setFilteredCountries] = useState<any[]>([])
 
   // Chatbot state
   const [chatbotQuestions, setChatbotQuestions] = useState<any[]>([])
@@ -168,6 +173,24 @@ export default function TravelHomePage() {
     fetchBlogs()
   }, [isReady, t, i18n.language])
 
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const q = query(collection(db, getCollectionName('travelcountries', i18n.language)), orderBy('createdAt', 'desc'))
+        const snap = await getDocs(q)
+        const countriesData = snap.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setCountries(countriesData)
+      } catch (error) {
+        console.error('Ülke yükleme hatası:', error)
+      }
+    }
+
+    fetchCountries()
+  }, [i18n.language])
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const params = new URLSearchParams()
@@ -180,6 +203,27 @@ export default function TravelHomePage() {
     router.push(`/travel/all?${params.toString()}`)
   }
 
+  const handleDestinationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setDestination(value)
+    if (value.trim()) {
+      const normalizedValue = normalizeText(value)
+      const filtered = countries.filter(country =>
+        normalizeText(country.title).includes(normalizedValue)
+      )
+      setFilteredCountries(filtered)
+      setShowCountryDropdown(true)
+    } else {
+      setShowCountryDropdown(false)
+    }
+  }
+
+  const handleCountrySelect = (country: any) => {
+    setDestination(country.title)
+    setShowCountryDropdown(false)
+    router.push(`/travel/all?countryId=${country.id}`)
+  }
+
   return (
     <>
       <div className="hero_style__start" style={{ marginTop: '60px' }}>
@@ -189,7 +233,7 @@ export default function TravelHomePage() {
             {banners.length > 0 ? (
               banners.slice(0, 3).map((banner, index) => (
                 <div key={banner.id} className="group hero-card-sm" style={{ height: '260px', marginTop: index > 0 ? '15px' : '0' }}>
-                  <a href="#">
+                  <Link href={banner.countryId ? `/travel/all?countryId=${banner.countryId}` : '#'}>
                     <img
                       src={banner.imageUrl}
                       alt={banner.title}
@@ -199,7 +243,7 @@ export default function TravelHomePage() {
                       <h4 className="font-bold text-lg text-white">{banner.title}</h4>
                       <div className="h-[3px] w-9 bg-white rounded-md mx-auto mt-2"></div>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               ))
             ) : (
@@ -238,7 +282,13 @@ export default function TravelHomePage() {
                     type="text"
                     placeholder={isReady ? t('travel.homePage.search.destinationPlaceholder') : ''}
                     value={destination}
-                    onChange={(e) => setDestination(e.target.value)}
+                    onChange={handleDestinationChange}
+                    onBlur={() => setTimeout(() => setShowCountryDropdown(false), 200)}
+                    onFocus={() => {
+                      if (destination.trim() && filteredCountries.length > 0) {
+                        setShowCountryDropdown(true)
+                      }
+                    }}
                     className="
       relative z-0 w-full bg-white outline-0
       h-14 lg:h-17
@@ -246,39 +296,23 @@ export default function TravelHomePage() {
     "
                     suppressHydrationWarning
                   />
+
+                  {showCountryDropdown && filteredCountries.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-b-lg shadow-lg z-20 max-h-60 overflow-y-auto">
+                      {filteredCountries.map((country) => (
+                        <div
+                          key={country.id}
+                          className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                          onClick={() => handleCountrySelect(country)}
+                        >
+                          {country.title}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
-                {/* DATE */}
-                <div className="relative lg:mt-10 mt-6">
-                  <span className="absolute left-5 lg:left-4 top-1/2 -translate-y-1/2 text-primary-1 text-lg pointer-events-none z-10">
-                    <i className="bi bi-calendar-date"></i>
-                  </span>
-
-                  <input
-                    type="text"
-                    value={date ? date : (isReady ? t('travel.homePage.search.datePlaceholder') : '')}
-                    readOnly
-                    className="
-                relative z-0 w-full bg-white outline-0 cursor-pointer
-                h-14 lg:h-17
-                pl-12 lg:pl-[60px] pr-3
-              "  suppressHydrationWarning />
-
-                  <input
-                    ref={dateRef}
-                    type="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    onClick={(e) => e.currentTarget.showPicker?.()}
-                    className="
-                    absolute top-0 left-0 z-20 w-full h-full
-                    opacity-0 cursor-pointer
-                    pl-12 lg:pl-[60px]
-                  "  />
-                </div>
-
-
-
+           
 
 
                 <button
@@ -297,7 +331,7 @@ export default function TravelHomePage() {
             {banners.length > 0 ? (
               banners.slice(3, 6).map((banner, index) => (
                 <div key={banner.id} className="group hero-card-sm" style={{ height: '260px', marginTop: index > 0 ? '15px' : '0' }}>
-                  <a href="#">
+                  <Link href={banner.countryId ? `/travel/all?countryId=${banner.countryId}` : '#'}>
                     <img
                       src={banner.imageUrl}
                       alt={banner.title}
@@ -307,7 +341,7 @@ export default function TravelHomePage() {
                       <h4 className="font-bold text-lg text-white">{banner.title}</h4>
                       <div className="h-[3px] w-9 bg-white rounded-md mx-auto mt-2"></div>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               ))
             ) : (
@@ -326,7 +360,7 @@ export default function TravelHomePage() {
         {banners.length > 6 ? (
           banners.slice(6, 10).map((banner, index) => (
             <div key={banner.id} className="group hero-card-sm relative overflow-hidden" style={{ height: '260px' }}>
-              <a href="#">
+              <Link href={banner.countryId ? `/travel/all?countryId=${banner.countryId}` : '#'}>
                 <img
                   src={banner.imageUrl}
                   alt={banner.title}
@@ -336,7 +370,7 @@ export default function TravelHomePage() {
                   <h4 className="font-bold text-lg text-white">{banner.title}</h4>
                   <div className="h-[3px] w-9 bg-white rounded-md mx-auto mt-2"></div>
                 </div>
-              </a>
+              </Link>
             </div>
           ))
         ) : (

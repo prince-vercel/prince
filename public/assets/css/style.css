@@ -32,6 +32,7 @@
 1. Typography
 ----------------------------------------------------------------*/
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Figtree:wght@300;400;600;700&display=swap');
+/* Scroll bar gizleme */
 
 /* QUICK FIX: collapse excessive template spacing and reset heading margins
    This neutralizes the `.cs_height_*` spacing utilities and common

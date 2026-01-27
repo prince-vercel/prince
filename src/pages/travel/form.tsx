@@ -61,7 +61,7 @@ const Form = () => {
           stepsData = Array.from({ length: 5 }, (_, i) => ({
             id: `default-step-${i + 1}`,
             number: i + 1,
-            name: `Adım ${i + 1}` // Updated to "Adım X" instead of just the number
+            name: `` // Updated to "Adım X" instead of just the number
           }))
         }
 

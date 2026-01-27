@@ -26,6 +26,14 @@ interface Image {
   title: string
   imageUrl: string
   createdAt: any
+  countryId?: string
+}
+
+interface Country {
+  id: string
+  title: string
+  imageUrl: string
+  createdAt: any
 }
 
 const ContentImages = () => {
@@ -39,12 +47,14 @@ const ContentImages = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr')
   const [formData, setFormData] = useState({
     title: '',
-    imageUrl: ''
+    imageUrl: '',
+    countryId: ''
   })
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [jsonFile, setJsonFile] = useState<File | null>(null)
   const [importingJson, setImportingJson] = useState(false)
+  const [countries, setCountries] = useState<Country[]>([])
 
   // Fetch images
   useEffect(() => {
@@ -63,6 +73,24 @@ const ContentImages = () => {
       }
     }
     fetchImages()
+  }, [selectedLanguage])
+
+  // Fetch countries
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const snap = await getDocs(
+          query(
+            collection(db, getCollectionName('travelcountries', selectedLanguage)),
+            orderBy('createdAt', 'desc')
+          )
+        )
+        setCountries(snap.docs.map(d => ({ id: d.id, ...d.data() })) as Country[])
+      } catch (err: any) {
+        console.error('Error fetching countries:', err)
+      }
+    }
+    fetchCountries()
   }, [selectedLanguage])
 
   // Handle image file selection
@@ -174,6 +202,7 @@ const ContentImages = () => {
         await updateDoc(docRef, {
           title: formData.title,
           imageUrl: imageUrl,
+          countryId: formData.countryId || null,
           updatedAt: serverTimestamp()
         })
         setSuccess('Görsel güncellendi')
@@ -182,6 +211,7 @@ const ContentImages = () => {
         await addDoc(collection(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners'), {
           title: formData.title,
           imageUrl: imageUrl,
+          countryId: formData.countryId || null,
           createdAt: serverTimestamp()
         })
         setSuccess('Görsel eklendi')
@@ -197,7 +227,7 @@ const ContentImages = () => {
       setImages(imagesList)
 
       // Reset form
-      setFormData({ title: '', imageUrl: '' })
+      setFormData({ title: '', imageUrl: '', countryId: '' })
       setSelectedFile(null)
       setShowForm(false)
       setEditingId(null)
@@ -213,7 +243,8 @@ const ContentImages = () => {
   const handleEdit = (image: Image) => {
     setFormData({
       title: image.title,
-      imageUrl: image.imageUrl
+      imageUrl: image.imageUrl,
+      countryId: image.countryId || ''
     })
     setEditingId(image.id)
     setShowForm(true)
@@ -301,7 +332,7 @@ const ContentImages = () => {
   const handleCancel = () => {
     setShowForm(false)
     setEditingId(null)
-    setFormData({ title: '', imageUrl: '' })
+    setFormData({ title: '', imageUrl: '', countryId: '' })
     setSelectedFile(null)
     setError('')
   }
@@ -332,7 +363,7 @@ const ContentImages = () => {
 
       // Read JSON file
       const text = await jsonFile.text()
-      let jsonData: Array<{ title: string; imageUrl: string }>
+      let jsonData: Array<{ title: string; imageUrl: string; countryId?: string }>
 
       try {
         jsonData = JSON.parse(text)
@@ -386,6 +417,7 @@ const ContentImages = () => {
           await addDoc(collection(db, getCollectionName('travelcontents', selectedLanguage), 'images', 'banners'), {
             title: item.title.trim(),
             imageUrl: finalImageUrl,
+            countryId: item.countryId || null,
             createdAt: serverTimestamp()
           })
           importedCount++
@@ -548,6 +580,32 @@ const ContentImages = () => {
                   boxSizing: 'border-box'
                 }}
               />
+            </div>
+
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#333' }}>
+                Ülke (Opsiyonel)
+              </label>
+              <select
+                value={formData.countryId}
+                onChange={(e) => setFormData({ ...formData, countryId: e.target.value })}
+                disabled={loading || uploadingImage}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  border: '1px solid #d0d0d0',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  boxSizing: 'border-box'
+                }}
+              >
+                <option value="">Ülke Seçin (Opsiyonel)</option>
+                {countries.map((country) => (
+                  <option key={country.id} value={country.id}>
+                    {country.title}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div style={{ marginBottom: '20px' }}>

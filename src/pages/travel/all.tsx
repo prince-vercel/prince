@@ -14,7 +14,7 @@ import '../../i18n'
 export default function PackageList() {
   const router = useRouter()
   const { t, isReady } = useSafeTranslation()
-  const { destination } = router.query
+  const { destination, countryId } = router.query
 
   const clampStyle = {
     overflow: 'hidden',
@@ -107,6 +107,8 @@ export default function PackageList() {
 
   const filteredPackages = useMemo(() => {
     const filtered = tours.filter((tour) => {
+      const countryIdOk = !countryId || tour.countryId === countryId
+
       const destinationOk =
         selectedDestinations.length === 0 ||
         selectedDestinations.some(dest => {
@@ -193,17 +195,17 @@ export default function PackageList() {
 
       const statusOk = tour.status !== 'pasif'
 
-      const allOk = destinationOk && cityOk && durationOk && maxPeopleOk && priceOk && daysOk && dateOk && inclusionsOk && airlineOk && pricedOk && statusOk
+      const allOk = countryIdOk && destinationOk && cityOk && durationOk && maxPeopleOk && priceOk && daysOk && dateOk && inclusionsOk && airlineOk && pricedOk && statusOk
 
       if (!allOk) {
-        console.log('Tour filtered out:', tour.title, { destinationOk, cityOk, durationOk, maxPeopleOk, priceOk, daysOk, dateOk, inclusionsOk, pricedOk, statusOk })
+        console.log('Tour filtered out:', tour.title, { countryIdOk, destinationOk, cityOk, durationOk, maxPeopleOk, priceOk, daysOk, dateOk, inclusionsOk, pricedOk, statusOk })
       }
 
       return allOk
     })
-    console.log('Filtered packages count:', filtered.length, 'selectedDestinations:', selectedDestinations)
+    console.log('Filtered packages count:', filtered.length, 'selectedDestinations:', selectedDestinations, 'countryId:', countryId)
     return filtered
-  }, [tours, selectedDestinations, selectedCities, selectedDurations, selectedMaxPeople, priceRange, selectedDays, selectedStartDate, selectedEndDate, selectedInclusions, selectedAirlines, showPricedOnly, countries])
+  }, [tours, selectedDestinations, selectedCities, selectedDurations, selectedMaxPeople, priceRange, selectedDays, selectedStartDate, selectedEndDate, selectedInclusions, selectedAirlines, showPricedOnly, countries, countryId])
 
   const uniqueDestinations = useMemo(() => {
     const dbDestinations = new Set(tours.map(tour => tour.countryId).filter(Boolean))
@@ -498,7 +500,7 @@ export default function PackageList() {
           {tour.price ? `${tour.price} €` : 'Fiyat Al'}
         </span>
      {tour.airlineLogoUrl && (
-            <img src={tour.airlineLogoUrl} alt={tour.airlineName || 'Airline'} style={{ width: '30px', height: '30px', borderRadius: '50%', objectFit: 'cover' }} />
+            <img src={tour.airlineLogoUrl} alt={tour.airlineName || 'Airline'} style={{ width: '45px', height: '45px', borderRadius: '50%', objectFit: 'contain', imageRendering: 'auto',marginBottom: '15px' }} />
           )}
         <button
           onClick={() => router.push(`/travel/all/${tour.id}`)}
@@ -507,7 +509,7 @@ export default function PackageList() {
         </button>
       </div>
     </div>
-  </div>
+    </div>
 ))
 
               )}

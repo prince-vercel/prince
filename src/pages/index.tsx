@@ -24,7 +24,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const collectionName = getCollectionName('home_images', i18n.language)
+        const collectionName = ('home_images')
         const snapshot = await getDocs(collection(db, collectionName))
         const data: HomeImages = {}
 

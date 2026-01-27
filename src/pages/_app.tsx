@@ -14,10 +14,13 @@ import '../styles/Home.css'
 
 import MedicalFooter from '@/src/components/MedicalComponents/Footer'
 import MedicalHeader from '@/src/components/MedicalComponents/Header'
+import MedicalFormButton from '@/src/components/MedicalComponents/FormButton'
 import TravelFooter from '@/src/components/TravelComponents/Footer'
 import TravelHeader from '@/src/components/TravelComponents/Header'
 import VisaFooter from '@/src/components/VisaComponents/Footer'
 import VisaHeader from '@/src/components/VisaComponents/Header'
+import TravelFormButton from '../components/TravelComponents/FormButton'
+import VisaFormButton from '../components/VisaComponents/FormButton'
 
 // CSS ID prefix'leri
 const CSS_PREFIXES = {
@@ -583,8 +586,13 @@ export default function App({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
 
       {isTravelPage && <TravelFooter />}
+      {isTravelPage && <TravelFormButton />}
+
       {isMedicalPage && <MedicalFooter />}
+      {isMedicalPage && <MedicalFormButton />}
       {isVisaPage && <VisaFooter />}
+            {isVisaPage && <VisaFormButton />}
+
     </>
   )
 }
