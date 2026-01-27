@@ -1,8 +1,11 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { useSafeTranslation } from '../../hooks/useSafeTranslation';
+import '../../i18n';
 
 const MedicalFormButton = () => {
   const router = useRouter();
+  const { t, isReady } = useSafeTranslation();
 
   const handleClick = () => {
     router.push('/medical/form');
@@ -16,7 +19,8 @@ const MedicalFormButton = () => {
         bottom: '40%',
         right: '0px',
         width: '35px',
-        height: '120px',
+        minHeight: '120px',
+        height: 'auto',
         backgroundColor: '#307BC4',
         color: 'white',
         border: '1px solid white',
@@ -29,16 +33,19 @@ const MedicalFormButton = () => {
         justifyContent: 'center',
         writingMode: 'vertical-rl',
         textOrientation: 'mixed',
-        padding: '10px 0',
+        padding: '15px 5px',
         transform: 'rotate(180deg)',
         borderBottomRightRadius: '10%',
         borderTopRightRadius: '10%',
         fontWeight: 'bold',
-
+        whiteSpace: 'normal',
+        wordBreak: 'break-word',
+        lineHeight: '1.2',
       }}
       title="Form Sayfasına Git"
+      suppressHydrationWarning
     >
-      Başvuru Yap
+      {isReady ? t('medical.homePage.hero.applyButton') : 'Başvuru Yap'}
     </button>
   );
 };

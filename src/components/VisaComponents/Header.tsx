@@ -77,7 +77,7 @@ export default function VisaHeader() {
                 { title: '', href: '/visa/vize-basvurusu/finlandiya', key: 'finlandiya' },
                 { title: '', href: '/visa/vize-basvurusu/norvec', key: 'norvec' },
                 { title: '', href: '/visa/vize-basvurusu/rusya', key: 'rusya' },
-                { title: '', href: '/visa/vize-basvurusu/suudi-arabistan', key: 'suudiArabistan' },
+                { title: '', href: '/visa/vize-basvurusu/suudi-arabistan', key: 'suudi-arabistan' },
                 { title: '', href: '/visa/vize-basvurusu/cin', key: 'cin' },
                 { title: '', href: '/visa/vize-basvurusu/guney-kore', key: 'guneyKore' },
             ]
@@ -111,7 +111,7 @@ export default function VisaHeader() {
             { title: t('visa.countries.finlandiya'), href: '/visa/vize-basvurusu/finlandiya', key: 'finlandiya' },
             { title: t('visa.countries.norvec'), href: '/visa/vize-basvurusu/norvec', key: 'norvec' },
             { title: t('visa.countries.rusya'), href: '/visa/vize-basvurusu/rusya', key: 'rusya' },
-            { title: t('visa.countries.suudiArabistan'), href: '/visa/vize-basvurusu/suudi-arabistan', key: 'suudiArabistan' },
+            { title: t('visa.countries.suudi-arabistan'), href: '/visa/vize-basvurusu/suudi-arabistan', key: 'suudi-arabistan' },
             { title: t('visa.countries.cin'), href: '/visa/vize-basvurusu/cin', key: 'cin' },
             { title: t('visa.countries.guneyKore'), href: '/visa/vize-basvurusu/guney-kore', key: 'guneyKore' },
         ]

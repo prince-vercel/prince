@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import '../../../i18n';
 import '../../../styles/visa/UlkeVizeBasvurusu.css';
@@ -52,12 +52,6 @@ const countriesData: Record<string, CountryData> = {
         content: '', // Will be set dynamically with translation
         navLinks: [
             { title: '', href: '/visa/vize-basvurusu/ingiltere', key: 'generalInfo' },
-            { title: '', href: '/visa/ingiltere-turist-vizesi', key: 'touristVisa' },
-            { title: '', href: '/visa/ingiltere-egitim-vizesi', key: 'educationVisa' },
-            { title: '', href: '/visa/ingiltere-yatirimci-vizesi', key: 'investorVisa' },
-            { title: '', href: '/visa/ingiltere-diger-vize-turleri', key: 'otherVisas' },
-            { title: '', href: '/visa/ingiltere-calisma-vizesi', key: 'workVisa' },
-            { title: '', href: '/visa/ingiltere-aile-birlesimi-vizesi', key: 'familyVisa' },
         ],
         videos: [
             {
@@ -90,8 +84,6 @@ const countriesData: Record<string, CountryData> = {
         content: '', // Will be set dynamically with translation
         navLinks: [
             { title: '', href: '/visa/vize-basvurusu/almanya', key: 'generalInfo' },
-            { title: '', href: '/visa/almanya-schengen-vizesi', key: 'schengenVisa' },
-            { title: '', href: '/visa/almanya-calisma-vizesi', key: 'workVisa' },
         ],
         videos: [],
         gallery: []
@@ -105,21 +97,19 @@ const countriesData: Record<string, CountryData> = {
         content: '', // Will be set dynamically with translation
         navLinks: [
             { title: '', href: '/visa/vize-basvurusu/fransa', key: 'generalInfo' },
-            { title: '', href: '/visa/fransa-schengen-vizesi', key: 'schengenVisa' },
         ],
         videos: [],
         gallery: []
     },
     kanada: {
         slug: 'kanada',
-        name: '', // Will be set dynamically with translation
+        name: 'visa.countries.kanada',
         icon: '/visa/uploads/icons/kanada_bayrak.svg',
         heroImage: '/visa/uploads/countries/kanada.png',
-        excerpt: '', // Will be set dynamically with translation
-        content: '', // Will be set dynamically with translation
+        excerpt: 'visa.pages.countryApplication.content.kanada.excerpt',
+        content: 'visa.pages.countryApplication.content.kanada.content',
         navLinks: [
             { title: '', href: '/visa/vize-basvurusu/kanada', key: 'generalInfo' },
-            { title: '', href: '/visa/kanada-turist-vizesi', key: 'touristVisa' },
         ],
         videos: [],
         gallery: []
@@ -133,18 +123,17 @@ const countriesData: Record<string, CountryData> = {
         content: '', // Will be set dynamically with translation
         navLinks: [
             { title: '', href: '/visa/vize-basvurusu/abd', key: 'generalInfo' },
-            { title: '', href: '/visa/abd-turist-vizesi', key: 'touristVisa' },
         ],
         videos: [],
         gallery: []
     },
     danimarka: {
         slug: 'danimarka',
-        name: '',
+        name: 'visa.countries.danimarka',
         icon: '/visa/uploads/icons/1765153526_f83b8a07cc28aaa369b4.svg',
         heroImage: '/visa/uploads/countries/danimarkajpg.jpg',
-        excerpt: '',
-        content: '',
+        excerpt: 'visa.pages.countryApplication.content.danimarka.excerpt',
+        content: 'visa.pages.countryApplication.content.danimarka.content',
         navLinks: [
             { title: '', href: '/visa/vize-basvurusu/danimarka', key: 'generalInfo' },
         ],
@@ -394,6 +383,7 @@ const countriesData: Record<string, CountryData> = {
         content: '',
         navLinks: [
             { title: '', href: '/visa/vize-basvurusu/litvanya', key: 'generalInfo' },
+            { title: '', href: '/visa/vize-basvurusu/litvanya', key: 'vizeTurleri' },
         ],
         videos: [],
         gallery: []
@@ -439,7 +429,7 @@ const countriesData: Record<string, CountryData> = {
     },
     'suudi-arabistan': {
         slug: 'suudi-arabistan',
-        name: 'visa.countries.suudiArabistan',
+        name: 'visa.countries.suudi-arabistan',
         icon: '/visa/uploads/icons/1765156004_6e94b6b2adef49267a44.svg',
         heroImage: '/visa/uploads/countries/suudiarabistan.png',
         excerpt: '',
@@ -478,18 +468,6 @@ const countriesData: Record<string, CountryData> = {
     }
 };
 
-// Get localized content for each nav link type
-const getNavContent = (countrySlug: string, navKey: string, t: any): NavContent => {
-    const title = t(`visa.pages.countryApplication.navLinks.${countrySlug}.${navKey}`, '');
-    const comingSoon = t('visa.pages.countryApplication.contentComingSoon', 'Content will be added soon.');
-    const content = t(`visa.pages.countryApplication.navContent.${countrySlug}.${navKey}`, `<p>${comingSoon}</p>`);
-
-    return {
-        title: title || '',
-        content: content
-    };
-};
-
 export default function UlkeVizeBasvurusuPage() {
     const { t, i18n } = useTranslation();
     const router = useRouter();
@@ -503,32 +481,85 @@ export default function UlkeVizeBasvurusuPage() {
     const countrySlug = ulke && typeof ulke === 'string' ? ulke : null;
     const countryData = countrySlug ? countriesData[countrySlug] : null;
 
+    // Helper function to get translation with proper fallback
+    const getTranslation = useCallback((key: string, fallback: string = '') => {
+        if (!i18n.isInitialized) {
+            return fallback;
+        }
+
+        // Normalize language code (e.g., 'en-US' -> 'en')
+        const currentLang = i18n.language.split('-')[0];
+
+        // First, try to get from store directly (bypasses fallbackLng)
+        try {
+            const store = (i18n as any).store;
+            if (store && store.data) {
+                // Try different language code variations
+                let langData = store.data[currentLang] || store.data[i18n.language];
+
+                // For English variants, try 'en'
+                if (!langData && (currentLang.startsWith('en') || i18n.language.startsWith('en'))) {
+                    langData = store.data['en'];
+                }
+
+                if (langData && langData.translation) {
+                    // Navigate through key path
+                    const keys = key.split('.');
+                    let value: any = langData.translation;
+                    let found = true;
+
+                    for (const k of keys) {
+                        if (value && typeof value === 'object' && value !== null && k in value) {
+                            value = value[k];
+                        } else {
+                            found = false;
+                            break;
+                        }
+                    }
+
+                    // If found in current language, return it
+                    if (found && value !== undefined && value !== null && value !== '') {
+                        return String(value);
+                    }
+                }
+            }
+        } catch (e) {
+            // Silent fail, try t() function
+        }
+
+        // Fallback: use t() function but only if it's not the key itself
+        const translation = t(key, { lng: currentLang });
+        if (translation && translation !== key && typeof translation === 'string' && translation.trim() !== '') {
+            return translation;
+        }
+
+        return fallback;
+    }, [t, i18n.isInitialized, i18n.language, i18n]);
+
+    // Get localized content for each nav link type
+    const getNavContent = useCallback((countrySlug: string, navKey: string): NavContent => {
+        const titleKey = `visa.pages.countryApplication.navLinks.${countrySlug}.${navKey}`;
+        const contentKey = `visa.pages.countryApplication.navContent.${countrySlug}.${navKey}`;
+
+        // Use getTranslation for better fallback handling
+        const title = getTranslation(titleKey, '');
+        const content = getTranslation(contentKey, '');
+
+        return {
+            title: title,
+            content: content
+        };
+    }, [getTranslation]);
+
     // Get content for selected nav link
     const selectedNavContent = useMemo(() => {
         if (!countrySlug || !selectedNavKey) return null;
-        return getNavContent(countrySlug, selectedNavKey, t);
-    }, [countrySlug, selectedNavKey, t, i18n.language]);
+        return getNavContent(countrySlug, selectedNavKey);
+    }, [countrySlug, selectedNavKey, getNavContent]);
 
     // Set localized country name, nav links, excerpt and content
     const currentCountry = useMemo(() => {
         if (!countryData || !countrySlug) return null;
-
-        // Helper function to get translation with proper fallback
-        const getTranslation = (key: string, fallback: string = '') => {
-            if (!i18n.isInitialized) {
-                return fallback;
-            }
-
-            // Use t() with fallback as second parameter (react-i18next syntax)
-            const translation = t(key, fallback);
-
-            // If translation returns the key itself, it means translation not found - use fallback
-            if (translation === key) {
-                return fallback || '';
-            }
-
-            return translation || fallback || '';
-        };
 
         return {
             ...countryData,
@@ -545,7 +576,7 @@ export default function UlkeVizeBasvurusuPage() {
                 };
             })
         };
-    }, [countryData, countrySlug, t, i18n.language, i18n.isInitialized]);
+    }, [countryData, countrySlug, getTranslation]);
 
     // Scroll animation for shapes
     useEffect(() => {
