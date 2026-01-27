@@ -481,7 +481,7 @@ export default function TravelHomePage() {
 
                       {/* CONTENT */}
                       <div className="p-4 text-center" style={{ height: '140px' }}>
-                        <h3 className="font-bold text-xl mb-2">
+                        <h3 className="font-bold mb-2" style={{fontSize:'13px'}}>
                           {item.title}
                         </h3>
                         <h4 className="font-extrabold text-lg">

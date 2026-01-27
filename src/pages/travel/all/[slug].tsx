@@ -137,10 +137,10 @@ export default function TravelDetailPage() {
             <div className="lg:col-span-8 col-span-12">
 
 
-              <ul className="bg-white lg:px-base lg:py-4 py-4 flex lg:overflow-hidden lg:mt-[-40px] mt-base border">
+              <ul className="bg-white lg:px-base lg:py-4 py-4 flex flex-col md:flex-row lg:overflow-hidden lg:mt-[-40px] mt-base border">
 
                 {/* INFORMATION */}
-                <li className="grow py-1 border-r border-primary-1 last:border-none px-5">
+                <li className="grow py-1 md:border-r border-b md:border-b-0 border-primary-1 last:border-none px-5">
                   <a href="#information" className="flex items-center justify-center text-dark-2 hover:text-primary-1 font-medium duration-200">
                     <div className="shrink-0 mr-2">
                       <i className="bi bi-info-circle text-lg"></i>
@@ -150,7 +150,7 @@ export default function TravelDetailPage() {
                 </li>
 
                 {/* TOUR PLAN */}
-                <li className="grow py-1 border-r border-primary-1 last:border-none px-5">
+                <li className="grow py-1 md:border-r border-b md:border-b-0 border-primary-1 last:border-none px-5">
                   <a href="#plan" className="flex items-center justify-center text-dark-2 hover:text-primary-1 font-medium duration-200">
                     <div className="shrink-0 mr-2">
                       <i className="bi bi-calendar-check text-lg"></i>
@@ -160,7 +160,7 @@ export default function TravelDetailPage() {
                 </li>
 
                 {/* FAQ */}
-                <li className="grow py-1 border-r border-primary-1 last:border-none px-5">
+                <li className="grow py-1 md:border-r border-b md:border-b-0 border-primary-1 last:border-none px-5">
                   <a href="#faq" className="flex items-center justify-center text-dark-2 hover:text-primary-1 font-medium duration-200">
                     <div className="shrink-0 mr-2">
                       <i className="bi bi-question-circle text-lg"></i>
@@ -170,7 +170,7 @@ export default function TravelDetailPage() {
                 </li>
 
                 {/* GALLERY */}
-                <li className="grow py-1 border-r border-primary-1 last:border-none px-5">
+                <li className="grow py-1 md:border-r border-b md:border-b-0 border-primary-1 last:border-none px-5">
                   <a href="#gallery" className="flex items-center justify-center text-dark-2 hover:text-primary-1 font-medium duration-200">
                     <div className="shrink-0 mr-2">
                       <i className="bi bi-images text-lg"></i>

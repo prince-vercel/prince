@@ -21,7 +21,8 @@ export default function PackageList() {
     textOverflow: 'ellipsis',
     display: '-webkit-box',
     WebkitLineClamp: 1,
-    WebkitBoxOrient: 'vertical' as 'vertical'
+    WebkitBoxOrient: 'vertical' as 'vertical',
+    fontSize: '13px',
   }
   const [tours, setTours] = useState<any[]>([])
   const [loadingTours, setLoadingTours] = useState(true)
@@ -409,7 +410,7 @@ export default function PackageList() {
             </div>
 
             {/* LIST (AYNI STİL) */}
-            <div className="gap-base">
+            <div className="gap-base mt-2">
               {loadingTours ? (
                 <div className="col-span-2 text-center py-20">
                   <p className="text-lg text-gray-500" suppressHydrationWarning>{isReady ? t('travel.pages.all.results.loading') : ''}</p>
@@ -475,12 +476,12 @@ export default function PackageList() {
       style={{ width: '550px', minHeight: '200px', maxHeight: '200px' }}
     >
       <div>
-        <h3 className="font-bold text-md mb-1 flex items-center gap-2">
+        <h3 className="font-bold mb-1 flex items-center gap-2" style={{fontSize:'14px'}}>
           {tour.title}
      
         </h3>
 
-        <p className="text-sm font-semibold mb-1" style={clampStyle}>
+        <p className="font-semibold mb-1" style={clampStyle} >
           {tour.route}
         </p>
 
@@ -496,7 +497,7 @@ export default function PackageList() {
       </div>
 
       <div className="flex items-center justify-between mt-3">
-        <span className="text-lg font-extrabold">
+        <span className="text-md font-extrabold">
           {tour.price ? `${tour.price} €` : 'Fiyat Al'}
         </span>
      {tour.airlineLogoUrl && (
