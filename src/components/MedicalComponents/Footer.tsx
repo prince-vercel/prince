@@ -22,7 +22,8 @@ export default function Footer() {
 
                   <ul className="cs_contact_widget">
                     <li suppressHydrationWarning>{isReady ? t('medical.footer.address') : ''}</li>
-                    <li suppressHydrationWarning>+90 212 999 77 20</li>
+                    <li suppressHydrationWarning>+90 212 999 59 69 <br/>+90 545 770 97 77 </li>
+
                     <li suppressHydrationWarning>{isReady ? t('medical.footer.email') : ''}</li>
                   </ul>
                 </div>
@@ -31,7 +32,6 @@ export default function Footer() {
               <div className="col-lg-2">
                 <ul className="cs_menu_widget cs_mp0">
                   <li><Link href="/medical" suppressHydrationWarning>{isReady ? t('medical.footer.home') : ''}</Link></li>
-                  <li><Link href="/medical/organisation" suppressHydrationWarning>{isReady ? t('medical.footer.organisation') : ''}</Link></li>
                   <li><Link href="/medical/blog" suppressHydrationWarning>{isReady ? t('medical.footer.blog') : ''}</Link></li>
                   <li><Link href="/medical/about" suppressHydrationWarning>{isReady ? t('medical.footer.about') : ''}</Link></li>
                   <li><Link href="/medical/contact" suppressHydrationWarning>{isReady ? t('medical.footer.contact') : ''}</Link></li>

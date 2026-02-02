@@ -113,7 +113,7 @@ export default function MedicalDetailPage() {
               <div className="cs_section_heading cs_style_1">
                 <h2 className="cs_section_title cs_fs_72 m-0">    {content.title}</h2>
                 <div className="cs_height_54"></div>
-                <p style={{ whiteSpace: 'pre-wrap' }}>
+                <p style={{ whiteSpace: 'pre-wrap', fontSize: '16px', lineHeight: '1.6',color:'#555' }}>
                   {content.description}
                 </p>
                 <div className="cs_height_120"></div>
@@ -182,7 +182,7 @@ export default function MedicalDetailPage() {
 
                       <p
                         className="cs_iconbox_subtitle mb-0 cs_heading_color"
-                        style={{ fontSize: '13px', width: '100%', lineHeight: '1.4', whiteSpace: 'pre-wrap' }}
+                        style={{ fontSize: '14px', width: '100%', lineHeight: '1.4', whiteSpace: 'pre-wrap' }}
                       >
                         {item.description}
                       </p>

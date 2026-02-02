@@ -303,7 +303,7 @@ export default function IletisimPage() {
                                                 href="mailto:medical@princetourismagency.com"
                                                 className="hover:text-primary-1 duration-200"
                                             >
-                                                medical@princetourismagency.com
+                                                visa@princetourismagency.com
                                             </a>
                                         </li>
                                     </ul>
@@ -323,10 +323,11 @@ export default function IletisimPage() {
                                     <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
                                         <li>
                                             <a
-                                                href="tel:+902120000000"
+                                                href="tel:+902129995969"
                                                 className="hover:text-primary-1 duration-200"
                                             >
-                                                +90 212 000 00 00
+                                                +90 212 999 59 69 <br/>
+                                                05467730777
                                             </a>
                                         </li>
                                     </ul>

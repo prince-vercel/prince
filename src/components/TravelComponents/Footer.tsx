@@ -28,7 +28,7 @@ export default function Footer() {
 
                   <ul className="cs_contact_widget">
                     <li suppressHydrationWarning>{isReady ? t('visa.footer.address') : ''}</li>
-                    <li suppressHydrationWarning>+90 212 931 27 20</li>
+                    <li suppressHydrationWarning>+90 212 999 59 69</li>
                     <li suppressHydrationWarning>+90 545 770 67 77</li>
 
                     <li suppressHydrationWarning>{isReady ? t('travel.footer.email') : ''}</li>

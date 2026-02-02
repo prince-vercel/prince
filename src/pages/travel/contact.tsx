@@ -141,11 +141,11 @@ export default function ContactPage() {
                   <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
                     <li>
                       <a
-                        href="tel:+902129997720"
+                        href="tel:+902129995969"
                         className="hover:text-primary-1 duration-200"
                         suppressHydrationWarning
                       >
-                        +90 212 999 77 20
+                        +90 212 999 59 69
                       </a>
                     </li>
                     <li>

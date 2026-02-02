@@ -127,19 +127,20 @@ export default function ContactPage() {
                   <ul className="text-dark-3 space-y-1 text-base font-medium mt-2">
                     <li>
                       <a
-                        href="tel:+770434501097"
+                        href="https://wa.me/902129995969"
                         className="hover:text-primary-1 duration-200"
                       >
-                        +90 212 999 77 20
+                        +90 212 999 59 69
                       </a>
                     </li>
                     <li>
                       <a
-                        href="tel:+866-398-5917"
+                        href="https://wa.me/905457709777"
                         className="hover:text-primary-1 duration-200"
                       >
                         +90 545 770 97 77
                       </a>
+                  
                     </li>
                   </ul>
                 </div>

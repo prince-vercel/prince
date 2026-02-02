@@ -32,7 +32,7 @@ export default function VisaFooter() {
                                                 {isReady ? t('visa.footer.address') : ''}
                                             </li>
                                             <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }} suppressHydrationWarning>
-                                               +90 212 931 27 20
+                                               +90 212 999 59 69
 
                                             </li>
                                             <li style={{ fontSize: '16px', lineHeight: '1.8', color: '#666', marginBottom: '10px' }} suppressHydrationWarning>

@@ -26,7 +26,7 @@ import ContentAdmin from '@/src/components/AdminComponents/medical/ContentChatBo
 
 const ContentsPage = () => {
   const [activeTab, setActiveTab] = useState<
-    'services' | 'organizations' | 'results' | 'blog' | 'chatbot' | 'faq' | 'testimonials' | 'ortaklar' | 'questions' | null
+    'services' | 'results' | 'blog' | 'chatbot' | 'faq' | 'testimonials' | 'ortaklar' | 'questions' | null
   >(null)
 
   const contentBoxes = [
@@ -40,11 +40,7 @@ const ContentsPage = () => {
       title: 'Başvuru Soruları',
       icon: <MdQuestionAnswer size={40} />
     },
-    {
-      id: 'organizations',
-      title: 'Kuruluşlarımız',
-      icon: <MdApartment size={40} />
-    },
+   
     {
       id: 'results',
       title: 'Mutlu Sonuçlar',
@@ -83,8 +79,7 @@ const ContentsPage = () => {
         return <ContentServices />
       case 'questions':
         return <FormAsks/>
-      case 'organizations':
-        return <ContentOrganizations />
+
       case 'results':
         return <ContentResults />
       case 'chatbot':

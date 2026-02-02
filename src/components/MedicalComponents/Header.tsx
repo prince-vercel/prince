@@ -68,9 +68,8 @@ export default function Header() {
 
             {/* CENTER - Navigation */}
             <nav className="cs_nav" style={{ flex: '1', justifyContent: 'center' }}>
-              <ul className="cs_nav_list" style={{ display: 'flex', margin: 0, padding: 0 }}>
+              <ul className="cs_nav_list" style={{ display: 'flex', margin: 0, padding: 0, fontSize: '18px'}}>
                 <li><Link href="/medical" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.home') : ''}</Link></li>
-                <li><Link href="/medical/organisation" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.organisation') : ''}</Link></li>
                 <li><Link href="/medical/results" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.results') : ''}</Link></li>
                 <li><Link href="/medical/form" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.form') : ''}</Link></li>
                 <li><Link href="/medical/blog" className="font-semibold" suppressHydrationWarning>{isReady ? t('medical.header.blog') : ''}</Link></li>
@@ -291,7 +290,6 @@ export default function Header() {
           {/* MOBILE MENU */}
           <ul className="cs_mobile_menu">
             <li><Link href="/medical" className="font-semibold" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('medical.header.home') : ''}</Link></li>
-            <li><Link href="/medical/organisation" className="font-semibold" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('medical.header.organisation') : ''}</Link></li>
             <li><Link href="/medical/results" className="font-semibold" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('medical.header.results') : ''}</Link></li>
             <li><Link href="/medical/form" className="font-semibold" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('medical.header.form') : ''}</Link></li>
             <li><Link href="/medical/blog" className="font-semibold" onClick={() => setIsSidebarOpen(false)} suppressHydrationWarning>{isReady ? t('medical.header.blog') : ''}</Link></li>

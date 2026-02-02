@@ -15,32 +15,25 @@ const VisaFormButton = () => {
     <button
       onClick={handleClick}
       style={{
-        position: 'fixed',
-        bottom: '40%',
-        right: '0px',
-        width: '35px',
-        minHeight: '120px',
-        height: 'auto',
+
         backgroundColor: '#c42721',
+       position: 'fixed',
+        bottom: '12%',
+        right: '0.9%',
         color: 'white',
         border: '1px solid white',
-        fontSize: '15px',
+        fontSize: '16px',
         cursor: 'pointer',
         boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
         zIndex: 1000,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        writingMode: 'vertical-rl',
         textOrientation: 'mixed',
-        padding: '15px 5px',
-        transform: 'rotate(180deg)',
-        borderBottomRightRadius: '10%',
-        borderTopRightRadius: '10%',
+        padding: '10px',
         fontWeight: 'bold',
-        whiteSpace: 'normal',
-        wordBreak: 'break-word',
         lineHeight: '1.2',
+        borderRadius:'4px'
       }}
       title="Form Sayfasına Git"
       suppressHydrationWarning
