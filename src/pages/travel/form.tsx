@@ -34,38 +34,17 @@ interface StepName {
 
 const Form = () => {
   const { t, isReady } = useSafeTranslation()
-  const [step, setStep] = useState(0)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
   const [questions, setQuestions] = useState<Question[]>([])
-  const [steps, setSteps] = useState<StepName[]>([])
   const [loading, setLoading] = useState(true)
   const [formData, setFormData] = useState<Record<string, string>>({})
 
   // Fetch questions from Firestore
   useEffect(() => {
-    const loadQuestionsAndSteps = async () => {
+    const loadQuestions = async () => {
       try {
         setLoading(true)
-        // Fetch steps
-        const stepsCollection = getCollectionName('travelsteps', i18n.language)
-        const stepsRef = collection(db, stepsCollection)
-        const stepsSnapshot = await getDocs(stepsRef)
-        let stepsData = stepsSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        })) as StepName[]
-
-        // Add default step names if missing
-        if (stepsData.length === 0) {
-          stepsData = Array.from({ length: 5 }, (_, i) => ({
-            id: `default-step-${i + 1}`,
-            number: i + 1,
-            name: `` // Updated to "Adım X" instead of just the number
-          }))
-        }
-
-        setSteps(stepsData.sort((a, b) => a.number - b.number))
 
         // Fetch questions
         const questionsCollection = getCollectionName('travelquestions', i18n.language)
@@ -75,7 +54,7 @@ const Form = () => {
           id: doc.id,
           ...doc.data()
         })) as Question[]
-        questionsData.sort((a, b) => (a.step === b.step ? a.order - b.order : a.step - b.step))
+        questionsData.sort((a, b) => a.order - b.order)
         setQuestions(questionsData)
 
         // Initialize formData with globalId
@@ -92,12 +71,12 @@ const Form = () => {
         setLoading(false)
       }
     }
-    loadQuestionsAndSteps()
+    loadQuestions()
   }, [i18n.language])
 
   const requiredQuestions = questions.filter(q => q.required)
   const filledFields = Object.values(formData).filter(val => val !== '').length
-  const progressPercent = requiredQuestions.length > 0 ? Math.round((filledFields / requiredQuestions.length) * 100) : 0
+  const progressPercent = questions.length > 0 ? Math.round((filledFields / questions.length) * 100) : 0
 
   // Email içeriği oluşturma
   const generateEmailContent = (values: Record<string, string>): string => {
@@ -161,7 +140,6 @@ const Form = () => {
         initialData[q.globalId] = ''
       })
       setFormData(initialData)
-      setStep(0)
 
       setTimeout(() => setSuccess(false), 3000)
     } catch (error) {
@@ -211,21 +189,6 @@ const Form = () => {
           </div>
 
 
-          <div className="flex items-center justify-between pb-10 pt-10 overflow-x-auto">
-            {steps.map((s, index) => (
-              <div key={s.id}>
-                <div className="flex items-center gap-3">
-                  <span className={`inline-flex justify-center items-center lg:h-10 lg:w-10 w-9 h-9 rounded-full transition-all whitespace-nowrap
-                    ${step >= s.number - 1 ? 'bg-primary-1 text-white scale-105' : 'bg-stock-1 text-dark-3'}`}>
-                    {String(s.number).padStart(2, '0')}
-                  </span>
-                  <p className="text-sm lg:text-base whitespace-nowrap">{s.name}</p>
-                </div>
-              
-              </div>
-            ))}
-          </div>
-
           <div className="grid grid-cols-12 gap-8 lg:gap-12">
 
 
@@ -233,11 +196,9 @@ const Form = () => {
             {/* FORM */}
             <div className="lg:col-span-8 col-span-12">
               <div
-                key={step}
                 className="grid grid-cols-2 lg:gap-7 gap-5 form-step-animate"
               >
                 {questions
-                  .filter(q => q.step === step + 1)
                   .map((question) => {
                     const isRequired = question.required
                     return (
@@ -352,30 +313,10 @@ const Form = () => {
               </div>
 
               {/* BUTTONS */}
-              <div className="mt-10 flex justify-between items-center">
-                {step > 0 && (
-                  <button
-                    onClick={() => setStep(step - 1)}
-                    className="btn_primary__v1 outlined"
-                    suppressHydrationWarning
-                  >
-                    {isReady ? t('travel.pages.form.previous') : ''}
-                  </button>
-                )}
-
-                {step < steps.length - 1 ? (
-                  <button
-                    onClick={() => setStep(step + 1)}
-                    className="btn_primary__v1"
-                    suppressHydrationWarning
-                  >
-                    {isReady ? t('travel.pages.form.next') : ''}
-                  </button>
-                ) : (
-                  <button onClick={handleSubmit} className="btn_primary__v1" suppressHydrationWarning>
-                    {isReady ? t('travel.pages.form.submit') : ''}
-                  </button>
-                )}
+              <div className="mt-10 flex justify-center items-center">
+                <button onClick={handleSubmit} className="btn_primary__v1" suppressHydrationWarning>
+                  {isReady ? t('travel.pages.form.submit') : ''}
+                </button>
               </div>
 
               {/* SUCCESS TOAST NOTIFICATION */}
@@ -438,34 +379,26 @@ const Form = () => {
                 </div>
 
                 <ul className="text-sm text-dark-2 space-y-3 border-l-4 border-primary-1 pl-4">
-                  {Object.entries(formData)
-                    .filter(([_, value]) => value && value.trim() !== '')
-                    .map(([key, value]) => {
-                      const question = questions.find(q => q.id === key);
-                      const label = question ? question.questionText : key;
-                      let displayValue = value;
-                      // Checkboxlar için okunabilir gösterim ve label düzeltme
-                      if (question && question.type === 'checkbox') {
-                        const selected = value.split(',').filter(v => v);
-                        // Eğer option label'ı varsa onu göster
+                  {questions
+                    .filter(q => formData[q.globalId] && formData[q.globalId].trim() !== '')
+                    .map((question) => {
+                      const value = formData[question.globalId]
+                      let displayValue = value
+                      if (question.type === 'checkbox') {
+                        const selected = value.split(',').filter(v => v)
                         displayValue = selected.length > 0
-                          ? selected.map(opt => {
-                            // Eğer options içinde label varsa onu göster
-                            const optionLabel = question.options.find(o => o === opt) || opt;
-                            return optionLabel;
-                          }).join(', ')
-                          : '';
+                          ? selected.map(opt => question.options.find(o => o === opt) || opt).join(', ')
+                          : ''
                       }
-                      // Kısaltılmış gösterim (ör: requests)
-                      if (key === 'requests' && value.length > 30) {
-                        displayValue = value.substring(0, 30) + '...';
+                      if (question.questionText.toLowerCase().includes('requests') && value.length > 30) {
+                        displayValue = value.substring(0, 30) + '...'
                       }
                       return (
-                        <li key={key} className="flex items-center gap-2">
+                        <li key={question.globalId} className="flex items-center gap-2">
                           <i className="bi bi-check2-circle text-gray-400 text-base"></i>
-                          <span><strong>{label}:</strong> {displayValue}</span>
+                          <span><strong>{question.questionText}:</strong> {displayValue}</span>
                         </li>
-                      );
+                      )
                     })}
                   {Object.values(formData).every(val => !val || val.trim() === '') && (
                     <li className="text-dark-3 italic" suppressHydrationWarning>{isReady ? t('travel.pages.form.summary.empty') : ''}</li>

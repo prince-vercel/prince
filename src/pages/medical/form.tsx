@@ -24,48 +24,21 @@ interface Question {
   additionalInputType?: 'text' | 'date'
 }
 
-interface StepName {
-  id: string
-  number: number
-  name: string
-}
-
-// Step Indicator Component
-const StepIndicator = ({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) => (
-  <div className="medical-step-indicator">
-    {Array.from({ length: totalSteps }).map((_, index) => (
-      <div key={index} style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-        <div className={`medical-step-circle ${index < currentStep - 1 ? 'completed' : index === currentStep - 1 ? 'active' : ''}`}>
-          {index < currentStep - 1 ? '✓' : index + 1}
-        </div>
-        {index < totalSteps - 1 && (
-          <div className={`medical-step-line ${index < currentStep - 1 ? 'active' : ''}`}></div>
-        )}
-      </div>
-    ))}
-  </div>
-)
 
 export default function AppointmentSection() {
   const { t, isReady } = useSafeTranslation()
-  const [currentStep, setCurrentStep] = useState(1)
-  const totalSteps = 3
   const [questions, setQuestions] = useState<Question[]>([])
-  const [steps, setSteps] = useState<StepName[]>([])
   const [formValues, setFormValues] = useState<Record<string, any>>({})
   const [loadingQuestions, setLoadingQuestions] = useState(true)
   const [showSuccess, setShowSuccess] = useState(false)
   const [showError, setShowError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
-  // Soruları ve adımları yükle
+  // Soruları yükle
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [questionsSnapshot, stepsSnapshot] = await Promise.all([
-          getDocs(collection(db, getCollectionName('questions', i18n.language))),
-          getDocs(collection(db, getCollectionName('steps', i18n.language))),
-        ])
+        const questionsSnapshot = await getDocs(collection(db, getCollectionName('questions', i18n.language)))
 
         const questionsData: Question[] = []
         questionsSnapshot.forEach((doc) => {
@@ -76,15 +49,6 @@ export default function AppointmentSection() {
           } as Question)
         })
         setQuestions(questionsData.sort((a, b) => a.step - b.step || a.order - b.order))
-
-        const stepsData: StepName[] = []
-        stepsSnapshot.forEach((doc) => {
-          stepsData.push({
-            id: doc.id,
-            ...doc.data(),
-          } as StepName)
-        })
-        setSteps(stepsData.sort((a, b) => a.number - b.number))
       } catch (error) {
         console.error(isReady ? t('medical.pages.form.errorAlert') : 'Veriler yüklenirken hata:', error)
       } finally {
@@ -95,9 +59,8 @@ export default function AppointmentSection() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language, isReady, t])
 
-  const validateStep = (step: number): boolean => {
-    const stepQuestions = getQuestionsForStep(step)
-    const requiredQuestions = stepQuestions.filter((q) => q.required)
+  const validateForm = (): boolean => {
+    const requiredQuestions = questions.filter((q) => q.required)
 
     for (const question of requiredQuestions) {
       const value = formValues[question.id]
@@ -112,37 +75,8 @@ export default function AppointmentSection() {
     return true
   }
 
-  const handleNextStep = () => {
-    if (validateStep(currentStep)) {
-      setCurrentStep(currentStep + 1)
-      window.scrollTo(0, 0)
-    }
-  }
-
-  const handlePreviousStep = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1)
-      window.scrollTo(0, 0)
-    }
-  }
-
   const handleSubmitButton = async () => {
-    // Tüm steps'i valide et
-    for (let step = 1; step <= totalSteps; step++) {
-      const stepQuestions = getQuestionsForStep(step)
-      const requiredQuestions = stepQuestions.filter((q) => q.required)
-
-      for (const question of requiredQuestions) {
-        const value = formValues[question.id]
-        if (!value || (Array.isArray(value) && value.length === 0) || (typeof value === 'string' && !value.trim())) {
-          setCurrentStep(step)
-          setErrorMessage(`${getStepName(step)}: "${question.questionText}" ${isReady ? t('medical.pages.form.required') : 'zorunludur'}`)
-          setShowError(true)
-          setTimeout(() => setShowError(false), 3000)
-          return
-        }
-      }
-    }
+    if (!validateForm()) return
 
     const payload = {
       answers: formValues,
@@ -171,7 +105,6 @@ export default function AppointmentSection() {
       setTimeout(() => setShowSuccess(false), 3000)
 
       // Tüm state'leri reset et
-      setCurrentStep(1)
       setFormValues({})
     } catch (error) {
       console.error(isReady ? t('medical.pages.form.errorAlert') : 'Form gönderirken hata oluştu:', error)
@@ -183,19 +116,6 @@ export default function AppointmentSection() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-  }
-
-  const getQuestionsForStep = (step: number): Question[] => {
-    const stepMapping = {1:1, 2:2, 3:7}
-    const mappedStep = stepMapping[step as keyof typeof stepMapping] || step
-    return questions.filter((q) => q.step === mappedStep).sort((a, b) => a.order - b.order)
-  }
-
-  const getStepName = (stepNumber: number): string => {
-    const stepNameMapping = {1:1, 2:2, 3:7}
-    const mappedStep = stepNameMapping[stepNumber as keyof typeof stepNameMapping] || stepNumber
-    const step = steps.find((s) => s.number === mappedStep)
-    return step ? step.name : `Adım ${stepNumber}`
   }
 
   // Email içeriği oluşturma
@@ -235,7 +155,7 @@ export default function AppointmentSection() {
       case 'select':
         return (
           <div key={question.id} className="col-lg-6">
-            <label style={{ marginBottom: '8px', display: 'block', fontSize: '16px', fontWeight: '500' }}>
+            <label style={{ marginBottom: '8px', marginTop: '10px', display: 'block', fontSize: '16px', fontWeight: '500' }}>
               {question.questionText}
               {isRequired && ' *'}
             </label>
@@ -263,7 +183,7 @@ export default function AppointmentSection() {
             {/* Koşullu Ek Input */}
             {question.triggerValue && value === question.triggerValue && question.additionalInputLabel && (
               <div style={{ marginTop: '12px' }}>
-                <label style={{ marginBottom: '8px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
+                <label style={{ marginBottom: '8px',marginTop: '10px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
                   {question.additionalInputLabel}
                 </label>
                 <input
@@ -294,7 +214,7 @@ export default function AppointmentSection() {
       case 'radio':
         return (
           <div key={question.id} className="col-12">
-            <label style={{ marginBottom: '12px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
+            <label style={{ marginBottom: '12px',marginTop: '10px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
               {question.questionText}
               {isRequired && ' *'}
             </label>
@@ -317,7 +237,7 @@ export default function AppointmentSection() {
             {/* Koşullu Ek Input */}
             {question.triggerValue && value === question.triggerValue && question.additionalInputLabel && (
               <div style={{ marginTop: '16px' }}>
-                <label style={{ marginBottom: '8px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
+                <label style={{ marginBottom: '8px',marginTop: '10px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
                   {question.additionalInputLabel}
                 </label>
                 <input
@@ -348,7 +268,7 @@ export default function AppointmentSection() {
       case 'checkbox':
         return (
           <div key={question.id} className="col-12">
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', marginTop: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center',marginTop: '10px', justifyContent: 'space-between', gap: '20px',}}>
               <label style={{ marginBottom: 0, fontSize: '14px', fontWeight: '500' }}>
                 {question.questionText}
                 {isRequired && ' *'}
@@ -396,7 +316,7 @@ export default function AppointmentSection() {
       case 'text':
         return (
           <div key={question.id} className="col-lg-6">
-            <label style={{ marginBottom: '8px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
+            <label style={{ marginBottom: '16px',marginTop: '10px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
               {question.questionText}
               {isRequired && ' *'}
             </label>
@@ -421,7 +341,7 @@ export default function AppointmentSection() {
       case 'date':
         return (
           <div key={question.id} className="col-lg-6">
-            <label style={{ marginBottom: '8px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
+            <label style={{ marginBottom: '16px', marginTop: '10px', display: 'block', fontSize: '14px', fontWeight: '500' }}>
               {question.questionText}
               {isRequired && ' *'}
             </label>
@@ -505,9 +425,6 @@ export default function AppointmentSection() {
         <div className="container">
           <div className="medical-form-container ">
 
-            {/* Step Indicator */}
-            <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
-
             <div className="row g-4 justify-center">
               {/* FORM CONTENT - Left Side */}
               <div className="col-lg-8">
@@ -519,46 +436,22 @@ export default function AppointmentSection() {
                     }
                   }}
                 >
-                {/* Dinamik Steps */}
-                <div className="col-12">
-                  <h3 className="medical-step-title">{getStepName(currentStep)}</h3>
-                </div>
                 <div className="row">
-                  {getQuestionsForStep(currentStep).map((question) => renderQuestion(question))}
+                  {questions.map((question) => renderQuestion(question))}
                 </div>
 
 
 
-            {/* Navigation Buttons */}
+            {/* Submit Button */}
             <div className="col-12">
               <div className="medical-form-nav-buttons">
-                {currentStep > 1 && (
-                  <button 
-                    type="button"
-                    onClick={handlePreviousStep}
-                    className="cs_btn cs_style_1 medical-form-btn-secondary"
-                  >
-                    <span suppressHydrationWarning>← {isReady ? t('medical.pages.form.buttons.previous') : 'Geri'}</span>
-                  </button>
-                )}
-                
-                {currentStep < totalSteps ? (
-                  <button 
-                    type="button"
-                    onClick={handleNextStep}
-                    className={`cs_btn cs_style_1 ${currentStep === 1 ? 'medical-form-btn-push-right' : 'medical-form-btn-push-left'}`}
-                  >
-                    <span suppressHydrationWarning>{isReady ? t('medical.pages.form.buttons.next') : 'İleri'} →</span>
-                  </button>
-                ) : (
-                  <button 
-                    type="button"
-                    onClick={handleSubmitButton}
-                    className="cs_btn cs_style_1 medical-form-btn-push-right"
-                  >
-                    <span suppressHydrationWarning>✓ {isReady ? t('medical.pages.form.buttons.submit') : 'Formu Gönder'}</span>
-                  </button>
-                )}
+                <button 
+                  type="button"
+                  onClick={handleSubmitButton}
+                  className="cs_btn cs_style_1 medical-form-btn-push-right"
+                >
+                  <span suppressHydrationWarning>✓ {isReady ? t('medical.pages.form.buttons.submit') : 'Formu Gönder'}</span>
+                </button>
               </div>
             </div>
 
