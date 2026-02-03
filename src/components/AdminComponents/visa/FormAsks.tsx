@@ -10,6 +10,7 @@ import {
   deleteDoc,
   doc,
   updateDoc,
+  setDoc,
   writeBatch,
   query,
   where,
@@ -165,7 +166,7 @@ const FormAsks = () => {
 
       if (editingId) {
         const collectionName = getCollectionName('visaquestions', selectedLanguage)
-        await updateDoc(doc(db, collectionName, editingId), questionData)
+        await setDoc(doc(db, collectionName, editingId), questionData, { merge: true })
         showNotification('success', 'Soru başarıyla güncellendi')
       } else {
         const collectionName = getCollectionName('visaquestions', selectedLanguage)

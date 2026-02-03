@@ -17,7 +17,7 @@ const MedicalFormButton = () => {
       style={{
          backgroundColor: '#307BC4',
         position: 'fixed',
-        bottom: '12%',
+        bottom: '14%',
         right: '0.9%',
         color: 'white',
         border: '1px solid white',

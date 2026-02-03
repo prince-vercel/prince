@@ -413,7 +413,7 @@ const ContentVisa = () => {
                     disabled={loading}
                     style={{
                       padding: '8px 12px',
-                      background: '#fbbf24',
+                      background: '#c42127',
                       border: 'none',
                       borderRadius: '6px',
                       cursor: 'pointer',

@@ -11,10 +11,16 @@ import { getCollectionName } from '../../../lib/localization'
 
 
 
-
 const ContentAdmin: React.FC = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru' | 'es' | 'ar' | 'ru'>('tr');
   // Sayfa açıldığında Firestore'dan soruları çek
+
+  const [selectedLanguage, setSelectedLanguage] = useState<'tr' | 'en' | 'fr' | 'es' | 'ar' | 'ru'>('tr');
+  const [questions, setQuestions] = useState<ChatbotStep[]>([]);
+  const [importError, setImportError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [expandedQuestions, setExpandedQuestions] = useState<Set<number>>(new Set())
+  const [saving, setSaving] = useState(false)
+
   useEffect(() => {
     import('firebase/firestore').then(({ collection, getDocs }) => {
       getDocs(collection(db, getCollectionName('visachatbotQuestions', selectedLanguage)))
@@ -29,14 +35,15 @@ const ContentAdmin: React.FC = () => {
             };
           });
           setQuestions(data);
+          // Tüm soruları genişlet
+          setExpandedQuestions(new Set(data.map((_, idx) => idx)));
         })
-        .catch(() => setQuestions([]));
+        .catch(() => {
+          setQuestions([]);
+          setExpandedQuestions(new Set());
+        });
     });
   }, [selectedLanguage]);
-
-  const [questions, setQuestions] = useState<ChatbotStep[]>([]);
-  const [importError, setImportError] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Import questions from JSON file
   const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,10 +70,6 @@ const ContentAdmin: React.FC = () => {
         }
       }
       setQuestions(imported);
-      // Save imported questions to Firestore
-      await Promise.all(
-        imported.map(q => setDoc(doc(db, getCollectionName('visachatbotQuestions', selectedLanguage), q.id), q))
-      );
     } catch (err: any) {
       setImportError('Geçersiz JSON dosyası: ' + (err?.message || 'Bilinmeyen hata'));
     }
@@ -83,10 +86,14 @@ const ContentAdmin: React.FC = () => {
 
   // Yeni soru ekle
   const handleAddQuestion = () => {
+    const newIndex = questions.length
     setQuestions([
       ...questions,
       { id: generateId(), text: '', options: [{ label: '', next: '' }], redirect: undefined }
-    ]);
+    ])
+    setExpandedQuestions(prev => new Set(prev).add(newIndex))
+    // Scroll to bottom
+    setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 100)
   };
 
   // Update a question
@@ -134,7 +141,7 @@ const ContentAdmin: React.FC = () => {
       updated[qIdx].redirect = { type: 'url', value: '' };
     }
     if (field === 'type') {
-      updated[qIdx].redirect!.type = value as 'url' | 'route' | 'whatsapp' | 'instagram';
+      updated[qIdx].redirect!.type = value as 'route' | 'whatsapp' | 'instagram' | 'url';
     } else {
       updated[qIdx].redirect!.value = value;
     }
@@ -148,19 +155,62 @@ const ContentAdmin: React.FC = () => {
     setQuestions(updated);
   };
 
+  // Toggle question expansion
+  const toggleQuestionExpansion = (idx: number) => {
+    const newExpanded = new Set(expandedQuestions);
+    if (newExpanded.has(idx)) {
+      newExpanded.delete(idx);
+    } else {
+      newExpanded.add(idx);
+    }
+    setExpandedQuestions(newExpanded);
+  };
+
   // Save questions to Firestore
   const handleSave = async () => {
-    if (!questions.length) return;
-    await Promise.all(
-      questions.map(q => {
-        const dataToSave = { ...q };
-        if (dataToSave.redirect === undefined) {
-          delete dataToSave.redirect;
+    setSaving(true)
+    try {
+      // Validation
+      for (const q of questions) {
+        if (!q.id || !q.text) {
+          alert('Boş ID veya soru metni var')
+          return
         }
-        return setDoc(doc(db, getCollectionName('visachatbotQuestions', selectedLanguage), q.id), dataToSave);
-      })
-    );
-    alert('Sorular kaydedildi!');
+      }
+
+      const ids = questions.map(q => q.id)
+      if (new Set(ids).size !== ids.length) {
+        alert('Aynı ID birden fazla var')
+        return
+      }
+
+      for (const q of questions) {
+        for (const opt of q.options || []) {
+          if (!opt.label || !opt.next) {
+            alert('Boş seçenek alanı var')
+            return
+          }
+          if (!questions.some(x => x.id === opt.next)) {
+            alert(`Geçersiz next ID: ${opt.next}`)
+            return
+          }
+        }
+      }
+
+      const collectionName = getCollectionName('visachatbotQuestions', selectedLanguage)
+      await Promise.all(
+        questions.map(q => {
+          const dataToSave = { ...q };
+          if (dataToSave.redirect === undefined) {
+            delete dataToSave.redirect;
+          }
+          return setDoc(doc(db, collectionName, q.id), dataToSave);
+        })
+      );
+      alert('Kaydedildi');
+    } finally {
+      setSaving(false)
+    }
   };
 
   // Download current questions as JSON
@@ -175,8 +225,6 @@ const ContentAdmin: React.FC = () => {
   return (
     <div className={styles.adminChatbotBox}>
       <h2 className={styles.adminChatbotTitle} style={{color:'#C42127'}}>Chatbot Soruları Yönetimi</h2>
-
-      {/* Language Selector */}
       <LanguageSelector selectedLanguage={selectedLanguage} onLanguageChange={(lang) => {
         setSelectedLanguage(lang);
         // Reload questions
@@ -193,73 +241,120 @@ const ContentAdmin: React.FC = () => {
                 };
               });
               setQuestions(data);
+              // Reload expanded
+              setExpandedQuestions(new Set(data.map((_, idx) => idx)));
             })
-            .catch(() => setQuestions([]));
+            .catch(() => {
+              setQuestions([]);
+              setExpandedQuestions(new Set());
+            });
         });
       }} />
-
-      <div style={{marginBottom: 16, color: 'black', fontSize: 15}}>
+      <div style={{marginBottom: 20, padding: 16, background: '#f0f5fa8d', borderRadius: 8, border: '1px solid #f0f5fa'}}>
+        <h3 style={{margin: 0, color: '#000', fontSize: 16}}>Hızlı Başlangıç Rehberi</h3>
+        <ol style={{marginTop: 8, paddingLeft: 20, color: '#000'}}>
+          <li><b>Dil Seçin:</b> Üstteki dil seçiciden chatbot&apos;un dilini belirleyin.</li>
+          <li><b>Soru Ekleyin:</b> &quot;Yeni Soru Ekle&quot; butonuna tıklayarak yeni bir adım oluşturun.</li>
+          <li><b>Adım ID&apos;sini Ayarlayın:</b> Her adım için benzersiz bir ID girin (örn: start, adim1).</li>
+          <li><b>Soru Metnini Yazın:</b> Kullanıcıya gösterilecek soruyu girin.</li>
+          <li><b>Seçenekler Ekleyin:</b> Her seçenek için buton metni ve sonraki adım ID&apos;sini belirtin.</li>
+          <li><b>Yönlendirme Ekleyin (İsteğe Bağlı):</b> Sohbet bittiğinde kullanıcıyı yönlendirmek için.</li>
+          <li><b>Kaydedin:</b> Değişiklikleri Firestore&apos;a kaydetmek için &quot;Kaydet&quot; butonuna tıklayın.</li>
+        </ol>
+        <p style={{marginTop: 8, fontSize: 14, color: '#666'}}>İpucu: &quot;start&quot; ID&apos;li adım sohbetin başlangıç noktasıdır. Tüm ID&apos;ler eşsiz olmalı ve seçeneklerdeki &quot;Sonraki adım ID&quot; ile eşleşmelidir.</p>
+      </div>
+      <div style={{marginBottom: 16, color: '#000', fontSize: 15}}>
         <b>Adım ID:</b> Her sorunun benzersiz anahtarıdır. <br/>
         <b>Soru metni:</b> Kullanıcıya gösterilecek metin.<br/>
         <b>Seçenekler:</b> Her butonun metni ve tıklanınca geçilecek adımın ID&apos;si.<br/>
         <span style={{color:'#888'}}>Yeni soru eklediğinizde ID otomatik gelir, isterseniz değiştirebilirsiniz.</span>
       </div>
-
+      <div className={styles.adminChatbotActions}>
+       <input
+          type="file"
+          accept="application/json"
+          ref={fileInputRef}
+          style={{ display: 'none' }}
+          onChange={handleImport}
+        />
+      </div>
       {importError && <div className={styles.adminChatbotError}>{importError}</div>}
       <div className={styles.adminChatbotList}>
         {Array.isArray(questions) && questions.length > 0 ? (
-          questions.map((q, qIdx) => (
-            <div key={qIdx} className={styles.adminChatbotItem}>
-              <div style={{ display: 'flex', gap: 8, alignItems: 'center',  borderRadius: 8, padding: 8, marginBottom: 4 }}>
-                <input
-                  className={`${styles.adminChatbotId} ${styles.adminInputCustom}`}
-                  value={q.id}
-                  placeholder="Benzersiz adım ID (örn: start, adim1)"
-                  onChange={e => handleQuestionChange(qIdx, 'id', e.target.value)}
-                  style={{ width: 140, fontWeight: 600, color: '#C42127' }}
-                  title="Bu adımın benzersiz anahtarı."
-                />
-                <input
-                  className={`${styles.adminChatbotText} ${styles.adminInputCustom}`}
-                  value={q.text}
-                  placeholder="Kullanıcıya gösterilecek soru/metin"
-                  onChange={e => handleQuestionChange(qIdx, 'text', e.target.value)}
-                  style={{ flex: 1 }}
-                  title="Kullanıcıya gösterilecek metin."
-                />
-                <button className={styles.adminChatbotBtn}  style={{backgroundColor:'#C42127'}} onClick={() => handleRemoveQuestion(qIdx)} title="Soruyu Sil">Sil</button>
+          [...questions].map((q, originalIdx) => ({ q, originalIdx })).sort((a, b) => {
+            if (a.q.id === 'start') return -1;
+            if (b.q.id === 'start') return 1;
+            return a.q.id.localeCompare(b.q.id);
+          }).map(({ q, originalIdx }) => (
+            <div key={originalIdx} className={styles.adminChatbotItem}>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center', borderRadius: 8, padding: 8, marginBottom: 4, background: '#f0f0f0' }}>
+                <div style={{ width: 140 }}>
+                  <label style={{ fontSize: 12, color: '#666', display: 'block', marginBottom: 2 }}>Adım ID</label>
+                  <input
+                    className={`${styles.adminChatbotId} ${styles.adminInputCustom}`}
+                    value={q.id}
+                    placeholder="örn: start"
+                    onChange={e => handleQuestionChange(originalIdx, 'id', e.target.value)}
+                    style={{ fontWeight: 600, color: '#C42127' }}
+                    title="Bu adımın benzersiz anahtarı."
+                  />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label style={{ fontSize: 12, color: '#666', display: 'block', marginBottom: 2 }}>Soru Metni</label>
+                  <input
+                    className={`${styles.adminChatbotText} ${styles.adminInputCustom}`}
+                    value={q.text}
+                    placeholder="Kullanıcıya gösterilecek metin"
+                    onChange={e => handleQuestionChange(originalIdx, 'text', e.target.value)}
+                    title="Kullanıcıya gösterilecek metin."
+                    style={{ minWidth: '400px' }}
+                  />
+                </div>
+                <button className={styles.adminChatbotBtn} style={{backgroundColor:'#C42127', marginRight: 8}} onClick={() => toggleQuestionExpansion(originalIdx)}>
+                  {expandedQuestions.has(originalIdx) ? '▲' : '▼'}
+                </button>
+                <button className={styles.adminChatbotBtn} style={{backgroundColor:'#C42127'}} onClick={() => handleRemoveQuestion(originalIdx)} title="Soruyu Sil">Sil</button>
               </div>
-              <div style={{ marginLeft: 12, marginTop: 6, background: '#fcfcfc', borderRadius: 6, padding: 8 }}>
+              {expandedQuestions.has(originalIdx) && (
+                <>
+                  <div style={{ marginLeft: 12, marginTop: 6, background: '#f9f9fb', borderRadius: 6, padding: 8 }}>
                 <b>Seçenekler (Butonlar):</b>
                 <ul className={styles.adminChatbotOptions}>
                   {q.options && q.options.length > 0 ? (
                     q.options.map((opt, oIdx) => (
-                      <li key={oIdx} style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 2 }}>
-                        <input
-                          className={styles.adminInputCustom}
-                          value={opt.label}
-                          placeholder="Buton metni (örn: Evet, Hayır)"
-                          onChange={e => handleOptionChange(qIdx, oIdx, 'label', e.target.value)}
-                          style={{ width: 140 }}
-                          title="Butonun üstünde gözükecek metin."
-                        />
-                        <input
-                          className={styles.adminInputCustom}
-                          value={opt.next}
-                          placeholder="Sonraki adım ID (örn: adim2)"
-                          onChange={e => handleOptionChange(qIdx, oIdx, 'next', e.target.value)}
-                          style={{ width: 140 }}
-                          title="Tıklanınca geçilecek adımın ID'si."
-                        />
-                        <button className={styles.adminChatbotBtn}  style={{backgroundColor:'#C42127'}} onClick={() => handleRemoveOption(qIdx, oIdx)} title="Seçeneği Sil">Sil</button>
+                      <li key={oIdx} style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 8 }}>
+                        <div style={{ width: 140 }}>
+                          <label style={{ fontSize: 12, color: '#666', display: 'block', marginBottom: 2 }}>Buton Metni</label>
+                          <input
+                            className={styles.adminInputCustom}
+                            value={opt.label}
+                            placeholder="örn: Evet"
+                            onChange={e => handleOptionChange(originalIdx, oIdx, 'label', e.target.value)}
+                            title="Butonun üstünde gözükecek metin."
+                          />
+                        </div>
+                        <div style={{ width: 140 }}>
+                          <label style={{ fontSize: 12, color: '#666', display: 'block', marginBottom: 2 }}>Sonraki Adım ID</label>
+                          <select
+                            className={styles.adminInputCustom}
+                            value={opt.next}
+                            onChange={e => handleOptionChange(originalIdx, oIdx, 'next', e.target.value)}
+                          >
+                            <option value="">Adım seç</option>
+                            {[...questions].sort((a, b) => a.id.localeCompare(b.id)).map(q => (
+                              <option key={q.id} value={q.id}>{q.id}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <button className={styles.adminChatbotBtn} onClick={() => handleRemoveOption(originalIdx, oIdx)} title="Seçeneği Sil" style={{ marginTop: 18, backgroundColor:'#C42127'}}>Sil</button>
                       </li>
                     ))
                   ) : (
                     <li>Seçenek yok.</li>
                   )}
                 </ul>
-                <button className={styles.adminChatbotBtn}  style={{backgroundColor:'#C42127', marginTop: 4}} onClick={() => handleAddOption(qIdx)}>Seçenek Ekle</button>
-                <div style={{ color: '#888', fontSize: 13, marginTop: 2 }}>Buton metni ve tıklanınca geçilecek adım ID&apos;si girin.</div>
+                <button className={styles.adminChatbotBtn} onClick={() => handleAddOption(originalIdx)} style={{ marginTop: 4, backgroundColor:'#C42127' }}>Seçenek Ekle</button>
+                <div style={{ color: '#888', fontSize: 13, marginTop: 2 }}>Her seçenek için buton metni ve sonraki adım ID&apos;sini belirtin.</div>
               </div>
               <div style={{ marginLeft: 12, marginTop: 6, background: '#f0f0f0', borderRadius: 6, padding: 8 }}>
                 <b>Yönlendirme (İsteğe Bağlı):</b>
@@ -268,8 +363,9 @@ const ContentAdmin: React.FC = () => {
                     <select
                       className={styles.adminInputCustom}
                       value={q.redirect.type}
-                      onChange={e => handleRedirectChange(qIdx, 'type', e.target.value)}
+                      onChange={e => handleRedirectChange(originalIdx, 'type', e.target.value)}
                       style={{ width: 120 }}
+                      title="Yönlendirme türünü seçin"
                     >
                       <option value="route">Sayfa Route</option>
                       <option value="whatsapp">WhatsApp</option>
@@ -279,27 +375,38 @@ const ContentAdmin: React.FC = () => {
                     <input
                       className={styles.adminInputCustom}
                       value={q.redirect.value}
-                      placeholder="Yönlendirme değeri (örn: /contact, https://wa.me/..., @username)"
-                      onChange={e => handleRedirectChange(qIdx, 'value', e.target.value)}
+                      placeholder="Yönlendirme değeri girin"
+                      onChange={e => handleRedirectChange(originalIdx, 'value', e.target.value)}
                       style={{ flex: 1 }}
+                      title="Seçilen türe göre değer girin"
                     />
-                    <button className={styles.adminChatbotBtn} onClick={() => handleRemoveRedirect(qIdx)} title="Yönlendirmeyi Sil" style={{backgroundColor:'#C42127'}}>Sil</button>
+                    <button className={styles.adminChatbotBtn} style={{ backgroundColor:'#C42127'}} onClick={() => handleRemoveRedirect(originalIdx)} title="Yönlendirmeyi Sil">Sil</button>
                   </div>
                 ) : (
-                  <button className={styles.adminChatbotBtn} onClick={() => handleRedirectChange(qIdx, 'type', 'url')} style={{ marginTop: 4 ,backgroundColor:'#C42127'}}>Yönlendirme Ekle</button>
+                  <button className={styles.adminChatbotBtn} onClick={() => handleRedirectChange(originalIdx, 'type', 'url')} style={{ marginTop: 4 , backgroundColor:'#C42127'}}>Yönlendirme Ekle</button>
                 )}
                 <div style={{ color: '#888', fontSize: 13, marginTop: 2 }}>Bu adımda sohbet bittiğinde yönlendirme butonu göster.</div>
+                <div style={{ color: '#666', fontSize: 12, marginTop: 4 }}>
+                  <b>Route:</b> İç sayfa yolu (örn: /contact)<br/>
+                  <b>WhatsApp:</b> Telefon numarası (örn: 905457709777)<br/>
+                  <b>Instagram:</b> Kullanıcı adı (örn: @princemedical.tr)<br/>
+                  <b>URL:</b> Tam web adresi (örn: https://example.com)
+                </div>
               </div>
+                </>
+              )}
             </div>
           ))
         ) : (
-          <div>Henüz soru yok. </div>
+          <div>Henüz soru yok.</div>
         )}
       </div>
       <div style={{ display: 'flex', marginTop: 16 }}>
         <button className={styles.adminChatbotBtn} onClick={handleAddQuestion} style={{ backgroundColor:'#C42127' }}>Yeni Soru Ekle</button>
         <div style={{ flex: 1 }}></div>
-        <button className={styles.adminChatbotBtn} style={{ backgroundColor:'#C42127' }} onClick={handleSave}>Kaydet</button>
+        <button className={styles.adminChatbotBtn} style={{ backgroundColor:'#C42127' }} onClick={handleSave} disabled={saving}>
+          {saving ? 'Kaydediliyor...' : 'Kaydet'}
+        </button>
       </div>
 
       <div style={{marginTop: 18, color: '#888', fontSize: 13}}>
