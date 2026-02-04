@@ -4,7 +4,7 @@
             "home": "Page d’accueil",
             "organisation": "Hôtels",
             "results": "Résultats heureux",
-            "form": "Demande",
+            "form": "Formulaire",
             "blog": "Blog",
             "about": "À propos de nous",
             "contact": "Contact",
@@ -121,7 +121,7 @@
                 "kvkk": "Notice d’information RGPD",
                 "organisation": "Organisations",
                 "results": "Résultats heureux",
-                "form": "Demande"
+                "form": "Formulaire"
             },
             "contact": {
                 "title": "Nous contacter",
